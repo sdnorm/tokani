@@ -93,7 +93,7 @@ staging:
 
 production:
   <<: *default
-  # database: tokani_production
-  database: tokanipostgres
-  username: <%= Rails.application.credentials.dig(:database, :username) %>
-  password: <%= Rails.application.credentials.dig(:database, :password) %>
+  url: <%= ENV['DATABASE_URL'] %>
+  database: tokani_production
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
