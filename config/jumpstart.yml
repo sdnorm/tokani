@@ -1,0 +1,15 @@
+--- !ruby/object:Jumpstart::Configuration
+application_name: Tokani
+business_name: Tokani, LLC
+domain: example.com
+support_email: support@tokani.com
+default_from_email: Jumpstart <support@example.com>
+business_address: ''
+background_job_processor: async
+email_provider: mailjet
+personal_accounts: true
+solargraph: false
+register_with_account: false
+apns: false
+fcm: false
+collect_billing_address: false

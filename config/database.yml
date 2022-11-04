@@ -20,6 +20,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
 
   # If you'd like to use the docker development setup, uncomment the three
   # following lines. They will also be used for the test database.
@@ -84,6 +85,12 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+
+staging:
+  <<: *default
+  database: tokani_staging
+  password: <%= Rails.application.credentials.dig(:database, :password) %>
+
 production:
   <<: *default
   database: jumpstart_production
