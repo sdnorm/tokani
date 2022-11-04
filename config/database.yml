@@ -20,7 +20,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
+  # username: postgres
 
   # If you'd like to use the docker development setup, uncomment the three
   # following lines. They will also be used for the test database.
@@ -30,7 +30,7 @@ default: &default
 
 development:
   <<: *default
-  database: jumpstart_development
+  database: tokani_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -64,7 +64,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: jumpstart_test
+  database: tokani_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -93,6 +93,7 @@ staging:
 
 production:
   <<: *default
-  database: jumpstart_production
-  username: jumpstart
-  password: <%= ENV['JUMPSTART_DATABASE_PASSWORD'] %>
+  # database: tokani_production
+  database: tokanipostgres
+  username: <%= Rails.application.credentials.dig(:database, :username) %>
+  password: <%= Rails.application.credentials.dig(:database, :password) %>
