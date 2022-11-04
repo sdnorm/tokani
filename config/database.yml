@@ -93,8 +93,8 @@ staging:
 
 production:
   <<: *default
-  host: <%= ENV['DATABASE_URL'] %>
-  database: tokanipostgres
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  port: 5432
+  host: <%= Rails.application.credentials.dig(:database, :host) %>
+  database: <%= Rails.application.credentials.dig(:database, :database) %>
+  username: <%= Rails.application.credentials.dig(:database, :username) %>
+  password: <%= Rails.application.credentials.dig(:database, :password) %>
+  port: <%= Rails.application.credentials.dig(:database, :port) %>
