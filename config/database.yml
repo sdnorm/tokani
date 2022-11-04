@@ -94,7 +94,7 @@ staging:
 production:
   <<: *default
   host: <%= ENV['DATABASE_URL'] %>
-  database: tp-west-2 # tokanipostgres
-  username: postgres # <%= ENV['DATABASE_USERNAME'] %>
-  password: tpwest22 # <%= ENV['DATABASE_PASSWORD'] %>
+  database: tokanipostgres
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   port: 5432
