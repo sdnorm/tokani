@@ -93,7 +93,7 @@ staging:
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-  database: tokani_production
+  host: <%= ENV['DATABASE_URL'] %>
+  database: tokanipostgres
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
