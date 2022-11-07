@@ -158,7 +158,6 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
     countries (5.2.0)
-      sixarm_ruby_unaccent (~> 1.1)
       unaccent (~> 0.3)
     country_select (8.0.0)
       countries (~> 5.0)
@@ -403,12 +402,11 @@ GEM
       sprockets-rails
       tilt
     selectize-rails (0.12.6)
-    selenium-webdriver (4.5.0)
+    selenium-webdriver (4.6.1)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sixarm_ruby_unaccent (1.2.0)
     smart_properties (1.17.0)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
