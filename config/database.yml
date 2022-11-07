@@ -89,12 +89,11 @@ test:
 staging:
   <<: *default
   database: tokani_staging
-  password: <%= Rails.application.credentials.dig(:database, :password) %>
+  username: tokani
+  password: <%= ENV['JUMPSTART_DATABASE_PASSWORD'] %>
 
 production:
   <<: *default
-  host: <%= Rails.application.credentials.dig(:database, :host) %>
-  database: <%= Rails.application.credentials.dig(:database, :database) %>
-  username: <%= Rails.application.credentials.dig(:database, :username) %>
-  password: <%= Rails.application.credentials.dig(:database, :password) %>
-  port: <%= Rails.application.credentials.dig(:database, :port) %>
+  database: tokani_production
+  username: tokani
+  password: <%= ENV['JUMPSTART_DATABASE_PASSWORD'] %>
