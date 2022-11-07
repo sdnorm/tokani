@@ -13,3 +13,5 @@ register_with_account: false
 apns: false
 fcm: false
 collect_billing_address: false
+integrations:
+- honeybadger
