@@ -1,10 +1,12 @@
 --- !ruby/object:Jumpstart::Configuration
 application_name: Tokani
-business_name: Tokani, LLC
-domain: example.com
+business_name: Fluency, Inc.
+domain: tokani.com
 support_email: support@tokani.com
-default_from_email: Jumpstart <support@example.com>
-business_address: ''
+default_from_email: Tokani <support@tokani.com>
+business_address: |-
+  5921 Sutter Ave.
+  Carmichael, California 95608
 background_job_processor: async
 email_provider: mailjet
 personal_accounts: true
@@ -13,5 +15,3 @@ register_with_account: false
 apns: false
 fcm: false
 collect_billing_address: false
-integrations:
-- honeybadger

@@ -194,7 +194,6 @@ GEM
       activesupport (>= 5.0)
     hashids (1.0.6)
     hashie (5.0.0)
-    honeybadger (5.0.2)
     http (5.1.0)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -481,7 +480,6 @@ DEPENDENCIES
   devise (~> 4.8, >= 4.8.1)
   devise-i18n (~> 1.10)
   erb_lint
-  honeybadger
   image_processing (~> 1.12)
   inline_svg (~> 1.6)
   invisible_captcha (~> 2.0)
