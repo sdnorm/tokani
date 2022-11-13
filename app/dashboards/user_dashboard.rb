@@ -89,7 +89,8 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :name,
     :email,
-    :admin
+    :admin,
+    :terms_of_service,
   ].freeze
 
   # Overwrite this method to customize how users are displayed
