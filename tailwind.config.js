@@ -30,10 +30,24 @@ module.exports = {
       colors: {
         primary: colors.blue,
         secondary: colors.emerald,
+        tokanisecondary: "#9E20B2",
+        tokaniaccent: "#EF8059",
         tertiary: colors.gray,
         danger: colors.red,
         "code-400": "#fefcf9",
         "code-600": "#3c455b",
+        'tokaniprimary': {
+          '50': '#f2fcfc', 
+          '100': '#e6f9f8', 
+          '200': '#bff1ee', 
+          '300': '#99e8e3', 
+          '400': '#4dd6cf', 
+          '500': '#00c5ba', 
+          '600': '#00b1a7', 
+          '700': '#00948c', 
+          '800': '#007670', 
+          '900': '#00615b'
+      }
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
