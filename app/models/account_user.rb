@@ -23,7 +23,13 @@
 class AccountUser < ApplicationRecord
   # Add account roles to this line
   # Do NOT to use any reserved words like `user` or `account`
-  ROLES = [:admin, :member, :interpreter, :client]
+  ROLES = [
+    :admin, 
+    :member, 
+    :interpreter, 
+    :client,
+    :agency_admin
+  ]
 
   include Rolified
 
