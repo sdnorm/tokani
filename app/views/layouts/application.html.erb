@@ -20,7 +20,7 @@
     <%= render "shared/payments_dependencies" %>
 
     <%# Replace this with your FontAwesome Pro Kit code %>
-    <script defer src="https://kit.fontawesome.com/0e5ab6a736.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/642f04bc7d.js" crossorigin="anonymous"></script>
 
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
@@ -30,7 +30,9 @@
   <body class="h-full font-sans antialiased font-normal leading-normal bg-gray-50">
     <div class="main flex flex-col">
       <%= render partial: "shared/flash" %>
-      <%= render partial: "shared/navbar" %>
+      <% unless content_for?(:sidenav) %>
+        <%= render partial: "shared/navbar" %>
+      <% end %>
 
       <div class="px-3 lg:px-0 h-full">
         <%= yield %>

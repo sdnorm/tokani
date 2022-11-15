@@ -46,6 +46,7 @@
             <% if current_user.admin? %>
               <%= link_to t(".admin"), admin_root_path, class: 'block p-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100', data: { turbo: false } %>
             <% end %>
+            <%= content_for :which_navbar %>
             <%= link_to t(".sign_out"), destroy_user_session_path, method: :delete, class: 'block p-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100' %>
           </div>
         </div>

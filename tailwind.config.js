@@ -30,23 +30,45 @@ module.exports = {
       colors: {
         primary: colors.blue,
         secondary: colors.emerald,
-        tokanisecondary: "#9E20B2",
-        tokaniaccent: "#EF8059",
         tertiary: colors.gray,
         danger: colors.red,
         "code-400": "#fefcf9",
         "code-600": "#3c455b",
-        'tokaniprimary': {
+        tokaniprimary: {
           '50': '#f2fcfc', 
           '100': '#e6f9f8', 
           '200': '#bff1ee', 
           '300': '#99e8e3', 
           '400': '#4dd6cf', 
-          '500': '#00c5ba', 
+          '500': '#00c5ba', // base
           '600': '#00b1a7', 
           '700': '#00948c', 
           '800': '#007670', 
           '900': '#00615b'
+        },
+        tokanisecondary: {
+          '50': '#faf4fb', 
+          '100': '#f5e9f7', 
+          '200': '#e7c7ec', 
+          '300': '#d8a6e0', 
+          '400': '#bb63c9', 
+          '500': '#9e20b2', // base
+          '600': '#8e1da0', 
+          '700': '#771886', 
+          '800': '#5f136b', 
+          '900': '#4d1057'
+        },
+        tokaniaccent: {
+          '50': '#fef9f7', 
+          '100': '#fdf2ee', 
+          '200': '#fbdfd6', 
+          '300': '#f9ccbd', 
+          '400': '#f4a68b', 
+          '500': '#ef8059', // base
+          '600': '#d77350', 
+          '700': '#b36043', 
+          '800': '#8f4d35', 
+          '900': '#753f2c'
       }
       },
       fontFamily: {
