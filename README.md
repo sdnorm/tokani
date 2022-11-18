@@ -2,7 +2,7 @@
 
 ### Git flow
 
-Feature branch off of `main`. Push feature branch and create a pull request. Pull requests will need to be removed before merging.
+Feature branch off of `main`. Push feature branch and create a pull request. Pull requests will need to be reviewed before merging.
 
 ## Running Localy
 
