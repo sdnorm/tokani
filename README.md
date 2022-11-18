@@ -1,5 +1,9 @@
 # Tokani
 
+### Git flow
+
+Feature branch off of `main`. Push feature branch and create a pull request. Pull requests will need to be removed before merging.
+
 ## Running Localy
 
 All Homebrew dependencies are listed in `Brewfile`, so you can install them all at once like this:
