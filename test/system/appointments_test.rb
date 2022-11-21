@@ -42,7 +42,7 @@ class AppointmentsTest < ApplicationSystemTestCase
   end
 
   # will update this when we have more user roles and permissions defined
-  
+
   # test "updating a Appointment" do
   #   visit appointment_url(@appointment)
   #   click_on "Edit", match: :first
