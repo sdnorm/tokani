@@ -1,10 +1,10 @@
 # Tokani
 
-### Git flow
+## Git flow
 
 Feature branch off of `main`. Push feature branch and create a pull request. Pull requests will need to be reviewed before merging.
 
-## Running Localy
+### Running Localy
 
 All Homebrew dependencies are listed in `Brewfile`, so you can install them all at once like this:
 
@@ -58,9 +58,7 @@ We include a sample Docker Compose configuration that runs Rails, Postgresql, an
 
 Simply run:
 
-```
-docker-compose up
-```
+`docker-compose up`
 
 Then open <http://localhost:3000>
 
