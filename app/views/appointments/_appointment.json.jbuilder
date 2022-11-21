@@ -1,0 +1,2 @@
+json.extract! appointment, :id, :ref_number, :start_time, :finish_time, :duration, :modality, :sub_type, :gender_req, :admin_notes, :notes, :details, :status, :interpreter_type, :billing_notes, :canceled_by, :cancel_reason_code, :lock_version, :time_zone, :confirmation_date, :confirmation_phone, :confirmation_notes, :home_health_appointment, :created_at, :updated_at
+json.url appointment_url(appointment, format: :json)

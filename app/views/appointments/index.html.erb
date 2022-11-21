@@ -1,0 +1,55 @@
+<%= content_for :title, "Appointments" %>
+<%= turbo_stream_from :appointments %>
+
+<div class="container px-4 mx-auto my-8">
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <h1 class="h3">Appointments</h1>
+
+      <div class="text-sm font-medium">
+        <span class="text-gray-500">Sort by:</span>
+        <%= sortable @appointments, :ref_number, "Ref number", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :start_time, "Start time", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :finish_time, "Finish time", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :duration, "Duration", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :modality, "Modality", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :sub_type, "Sub type", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :gender_req, "Gender req", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :admin_notes, "Admin notes", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :notes, "Notes", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :details, "Details", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :status, "Status", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :interpreter_type, "Interpreter type", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :billing_notes, "Billing notes", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :canceled_by, "Canceled by", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :cancel_reason_code, "Cancel reason code", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :lock_version, "Lock version", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :time_zone, "Time zone", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :confirmation_date, "Confirmation date", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :confirmation_phone, "Confirmation phone", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :confirmation_notes, "Confirmation notes", class: "text-gray-700 mr-1" %>
+        <%= sortable @appointments, :home_health_appointment, "Home health appointment", class: "text-gray-700 mr-1" %>
+      </div>
+    </div>
+
+    <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "btn btn-white" %>
+  </div>
+
+  <%= tag.div id: ("appointments" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
+    <%= render partial: "appointments/index", collection: @appointments, as: :appointment, cached: true %>
+
+    <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="mb-4 h3">Create your first Appointment</p>
+        <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @pagy.pages > 1 %>
+    <div class="my-6 text-center">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  <% end %>
+</div>

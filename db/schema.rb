@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_31_201915) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_21_210446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -130,6 +130,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_31_201915) do
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_api_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.string "ref_number"
+    t.datetime "start_time"
+    t.datetime "finish_time"
+    t.integer "duration"
+    t.integer "modality"
+    t.integer "sub_type"
+    t.integer "gender_req"
+    t.text "admin_notes"
+    t.text "notes"
+    t.text "details"
+    t.boolean "status"
+    t.integer "interpreter_type"
+    t.text "billing_notes"
+    t.integer "canceled_by"
+    t.integer "cancel_reason_code"
+    t.integer "lock_version"
+    t.string "time_zone"
+    t.datetime "confirmation_date"
+    t.string "confirmation_phone"
+    t.text "confirmation_notes"
+    t.boolean "home_health_appointment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notification_tokens", force: :cascade do |t|
