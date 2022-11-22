@@ -1,5 +1,9 @@
 # Tokani
 
+## Development Things
+
+Testing sending and style of emails locally can be viewed at `localhost:3000/letter_opener`
+
 ## Git flow
 
 Feature branch off of `main`. Push feature branch and create a pull request. Pull requests will need to be reviewed before merging.
