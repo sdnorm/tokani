@@ -24,11 +24,12 @@ class AccountUser < ApplicationRecord
   # Add account roles to this line
   # Do NOT to use any reserved words like `user` or `account`
   ROLES = [
-    :admin,
-    :member,
+    :admin, # tokani admin user type
+    :member, # tokani member user type
     :interpreter,
-    :client,
-    :agency_admin
+    :client, # individual or a site (from old app, requester/receiver)
+    :agency_admin,
+    :site_admin,
   ]
 
   include Rolified
