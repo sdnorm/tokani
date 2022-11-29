@@ -35,7 +35,7 @@ class AccountUser < ApplicationRecord
   ]
 
   AGENCY_ROLES = [
-    :agency_admin, 
+    :agency_admin,
     :site_admin,
     :interpreter,
     :agency_member
