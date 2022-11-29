@@ -1,5 +1,5 @@
 class Accounts::AccountInvitationsController < Accounts::BaseController
-  before_action :set_account
+  before_action :set_account, except: [:tokani_agency_invitation]
   before_action :require_account_admin
   before_action :set_account_invitation, only: [:edit, :update, :destroy]
 
@@ -30,6 +30,10 @@ class Accounts::AccountInvitationsController < Accounts::BaseController
   def destroy
     @account_invitation.destroy
     redirect_to @account, status: :see_other, notice: t(".destroyed")
+  end
+
+  def tokani_agency_invitation
+    
   end
 
   private

@@ -26,6 +26,7 @@ class UserDashboard < Administrate::BaseDashboard
     confirmation_sent_at: Field::DateTime,
     unconfirmed_email: Field::String,
     admin: Field::Boolean,
+    agency_admin: Field::Boolean,
     time_zone: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -90,6 +91,7 @@ class UserDashboard < Administrate::BaseDashboard
     :name,
     :email,
     :admin,
+    :agency_admin,
     :terms_of_service
   ].freeze
 

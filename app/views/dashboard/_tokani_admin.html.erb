@@ -1,0 +1,7 @@
+<% if current_account_user.admin? %>
+  <h2>I am a Tokani Admin</h2>
+<% end %>
+
+<div class="text-center">
+  <%= link_to "Create Account", "#", class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
+</div>
