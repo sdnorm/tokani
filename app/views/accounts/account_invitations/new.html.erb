@@ -31,15 +31,15 @@
 
         <h5 class="mb-2"><%= t("accounts.roles") %></h5>
         <div class="form-group">
-          <% if current_account_user.admin? %>
-            <% AccountUser::TOKANI_ROLES.each do |role| %>
+          <% if current_account_user.agency_admin? || current_account_user.roles["agency_admin"] %>
+            <% AccountUser::AGENCY_ROLES.each do |role| %>
               <div>
                 <%= form.check_box role, id: role.to_s.parameterize, class: "form-checkbox mr-1" %>
                 <label for="<%= role.to_s.parameterize %>" class="inline-block"><%= role.to_s.humanize %></label>
               </div>
             <% end %>
-          <% elsif current_account_user.agency_admin? || current_account_user.roles["agency_admin"] %>
-            <% AccountUser::AGENCY_ROLES.each do |role| %>
+          <% elsif current_account_user.admin? %>
+            <% AccountUser::TOKANI_ROLES.each do |role| %>
               <div>
                 <%= form.check_box role, id: role.to_s.parameterize, class: "form-checkbox mr-1" %>
                 <label for="<%= role.to_s.parameterize %>" class="inline-block"><%= role.to_s.humanize %></label>
