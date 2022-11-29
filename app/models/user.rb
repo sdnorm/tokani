@@ -82,4 +82,8 @@ class User < ApplicationRecord
   def attachable_plain_text_representation(caption = nil)
     caption || name
   end
+
+  def interpreter_detail_filled_out?
+    interpreter_detail.present?
+  end
 end

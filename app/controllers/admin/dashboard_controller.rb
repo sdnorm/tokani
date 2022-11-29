@@ -8,7 +8,7 @@ module Admin
       @last_month = last_month
       @this_month = this_month
       @users = ::User.all.count
-      @subscriptions = ::Pay::Subscription.active.count
+      @subscriptions = 0 # ::Pay::Subscription.active.count
     end
 
     def total_revenue
