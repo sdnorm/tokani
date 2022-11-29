@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_29_044827) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_29_040336) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -352,6 +352,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_044827) do
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "interpreter_details", "users"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
