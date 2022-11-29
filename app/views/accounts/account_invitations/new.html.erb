@@ -31,7 +31,7 @@
 
         <h5 class="mb-2"><%= t("accounts.roles") %></h5>
         <div class="form-group">
-          <% AccountUser::ROLES.each do |role| %>
+          <% AccountUser::AGENCY_ROLES.each do |role| %>
             <div>
               <%= form.check_box role, id: role.to_s.parameterize, class: "form-checkbox mr-1" %>
               <label for="<%= role.to_s.parameterize %>" class="inline-block"><%= role.to_s.humanize %></label>

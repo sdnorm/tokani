@@ -29,8 +29,22 @@ class AccountUser < ApplicationRecord
     :interpreter,
     :client, # individual or a site (from old app, requester/receiver)
     :agency_admin,
-    :site_admin
+    :site_admin,
+    :agency_member,
+    :site_member
   ]
+
+  AGENCY_ROLES = [
+    :agency_admin, 
+    :site_admin,
+    :interpreter,
+    :agency_member
+  ].freeze
+
+  SITE_ROLES = [
+    :site_admin,
+    :site_member
+  ].freeze
 
   include Rolified
 
