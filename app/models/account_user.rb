@@ -29,7 +29,7 @@ class AccountUser < ApplicationRecord
     :interpreter,
     :client, # individual or a site (from old app, requester/receiver)
     :agency_admin,
-    :site_admin,
+    :site_admin
   ]
 
   include Rolified
