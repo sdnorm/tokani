@@ -12,7 +12,7 @@ class SubscriptionsController < ApplicationController
   def index
     @billing_address = current_account.billing_address
     @payment_processor = current_account.payment_processor
-    @subscriptions = current_account.subscriptions.active.order(created_at: :asc).includes([:customer])
+    @subscriptions = current_account.subscriptions.active.or(current_account.subscriptions.past_due).order(created_at: :asc).includes([:customer])
   end
 
   def show
@@ -74,6 +74,8 @@ class SubscriptionsController < ApplicationController
   def update
     @subscription.swap @plan.id_for_processor(current_account.payment_processor.processor)
     redirect_to subscriptions_path, notice: t(".success")
+  rescue Pay::ActionRequired => e
+    redirect_to pay.payment_path(e.payment.id)
   rescue Pay::Error => e
     edit # Reload plans
     flash[:alert] = e.message

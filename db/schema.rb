@@ -247,7 +247,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_210446) do
     t.decimal "application_fee_percent", precision: 8, scale: 2
     t.jsonb "metadata"
     t.bigint "customer_id"
+    t.datetime "current_period_start"
+    t.datetime "current_period_end"
+    t.boolean "metered"
+    t.string "pause_behavior"
+    t.datetime "pause_starts_at"
+    t.datetime "pause_resumes_at"
     t.index ["customer_id", "processor_id"], name: "index_pay_subscriptions_on_customer_id_and_processor_id", unique: true
+    t.index ["metered"], name: "index_pay_subscriptions_on_metered"
+    t.index ["pause_starts_at"], name: "index_pay_subscriptions_on_pause_starts_at"
   end
 
   create_table "pay_webhooks", force: :cascade do |t|
