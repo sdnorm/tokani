@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_21_210446) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_29_044827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -156,6 +156,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_210446) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "interpreter_details", force: :cascade do |t|
+    t.integer "interpreter_type"
+    t.integer "gender"
+    t.string "primary_phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_interpreter_details_on_user_id"
   end
 
   create_table "notification_tokens", force: :cascade do |t|
