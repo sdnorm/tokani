@@ -26,45 +26,47 @@
           <%= t ".personal_team_description" %>
         </div>
       <% else %>
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th class="p-3 text-xs text-left text-gray-600 uppercase"><%= AccountUser.human_attribute_name(:user) %></th>
-              <th class="p-3 text-xs text-left text-gray-600 uppercase"><%= AccountUser.human_attribute_name(:roles) %></th>
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @account.account_users.includes(:user).each do |account_user| %>
-              <% user = account_user.user %>
-              <tr class="border-t border-gray-100">
-                <td class="p-3 font-medium">
-                  <%= image_tag avatar_url_for(user), class: "hidden lg:inline-block h-6 rounded-full mr-2" %>
-                  <%= user.name || user.email %>
-                </td>
-                <td class="p-3 text-sm font-medium text-gray-700"><%= account_user_roles(@account, account_user).join(", ") %></td>
-                <td class="p-3 text-right"><%= link_to t(".edit"), edit_account_account_user_path(@account, account_user), class: "btn btn-link" if account_admin?(@account, current_user) %></td>
+        <% if current_account_user.agency_admin? || current_account_user.admin? %>
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th class="p-3 text-xs text-left text-gray-600 uppercase"><%= AccountUser.human_attribute_name(:user) %></th>
+                <th class="p-3 text-xs text-left text-gray-600 uppercase"><%= AccountUser.human_attribute_name(:roles) %></th>
+                <th></th>
               </tr>
-            <% end %>
+            </thead>
 
-            <%# Invitations %>
-            <% @account.account_invitations.each do |account_invitation| %>
-              <tr class="border-t border-gray-200">
-                <td class="p-3 font-medium">
-                  <%= image_tag avatar_url_for(account_invitation), class: "hidden lg:inline-block h-6 rounded-full mr-2" %>
-                  <%= account_invitation.name %>
-                  <%= badge "Awaiting response" %>
-                  <%= tag.button t(".copy_link"), class: "btn btn-link", data: { controller: "clipboard", clipboard_text: account_invitation_url(account_invitation) } if account_admin?(@account, current_user) %>
-                </td>
-                <td class="p-3 text-sm font-medium text-gray-700"><%= account_user_roles(@account, account_invitation).join(", ") %></td>
-                <td class="p-3 text-right">
-                  <%= link_to t(".edit"), edit_account_account_invitation_path(@account, account_invitation), class: "btn btn-link" if account_admin?(@account, current_user) %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+            <tbody>
+              <% @account.account_users.includes(:user).each do |account_user| %>
+                <% user = account_user.user %>
+                <tr class="border-t border-gray-100">
+                  <td class="p-3 font-medium">
+                    <%= image_tag avatar_url_for(user), class: "hidden lg:inline-block h-6 rounded-full mr-2" %>
+                    <%= user.name || user.email %>
+                  </td>
+                  <td class="p-3 text-sm font-medium text-gray-700"><%= account_user_roles(@account, account_user).join(", ") %></td>
+                  <td class="p-3 text-right"><%= link_to t(".edit"), edit_account_account_user_path(@account, account_user), class: "btn btn-link" if account_admin?(@account, current_user) %></td>
+                </tr>
+              <% end %>
+
+              <%# Invitations %>
+              <% @account.account_invitations.each do |account_invitation| %>
+                <tr class="border-t border-gray-200">
+                  <td class="p-3 font-medium">
+                    <%= image_tag avatar_url_for(account_invitation), class: "hidden lg:inline-block h-6 rounded-full mr-2" %>
+                    <%= account_invitation.name %>
+                    <%= badge "Awaiting response" %>
+                    <%= tag.button t(".copy_link"), class: "btn btn-link", data: { controller: "clipboard", clipboard_text: account_invitation_url(account_invitation) } if account_admin?(@account, current_user) %>
+                  </td>
+                  <td class="p-3 text-sm font-medium text-gray-700"><%= account_user_roles(@account, account_invitation).join(", ") %></td>
+                  <td class="p-3 text-right">
+                    <%= link_to t(".edit"), edit_account_account_invitation_path(@account, account_invitation), class: "btn btn-link" if account_admin?(@account, current_user) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
 
         <%= link_to t(".invite"), new_account_account_invitation_path(@account), class: "mt-2 btn btn-light-gray" if !@account.personal? && account_admin?(@account, current_user) %>
       <% end %>
