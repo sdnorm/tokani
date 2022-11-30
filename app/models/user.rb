@@ -71,6 +71,8 @@ class User < ApplicationRecord
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :notification_tokens, dependent: :destroy
 
+  has_many :interpreter_languages, dependent: :destroy, foreign_key: :interpreter_id
+
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
