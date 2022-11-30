@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: interpreter_languages
+#
+#  id             :bigint           not null, primary key
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  interpreter_id :bigint           not null
+#  language_id    :bigint           not null
+#
+# Indexes
+#
+#  index_interpreter_languages_on_interpreter_id  (interpreter_id)
+#  index_interpreter_languages_on_language_id     (language_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (interpreter_id => users.id)
+#  fk_rails_...  (language_id => languages.id)
+#
+require "test_helper"
+
+class InterpreterLanguageTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
