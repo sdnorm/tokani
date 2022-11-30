@@ -33,7 +33,6 @@ class Accounts::AccountInvitationsController < Accounts::BaseController
   end
 
   def tokani_agency_invitation
-    
   end
 
   private
