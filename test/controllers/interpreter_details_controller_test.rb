@@ -10,10 +10,10 @@ class InterpreterDetailsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_interpreter_detail_url
-    assert_response :success
-  end
+  # test "should get new" do
+  #   get new_interpreter_detail_url
+  #   assert_response :success
+  # end
 
   test "should create interpreter_detail" do
     assert_difference("InterpreterDetail.count") do
@@ -28,10 +28,10 @@ class InterpreterDetailsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_interpreter_detail_url(@interpreter_detail)
-    assert_response :success
-  end
+  # test "should get edit" do
+  #   get edit_interpreter_detail_url(@interpreter_detail)
+  #   assert_response :success
+  # end
 
   test "should update interpreter_detail" do
     patch interpreter_detail_url(@interpreter_detail), params: {interpreter_detail: {gender: @interpreter_detail.gender, interpreter_type: @interpreter_detail.interpreter_type, primary_phone: @interpreter_detail.primary_phone}}

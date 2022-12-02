@@ -2,19 +2,33 @@
 #
 # Table name: interpreter_details
 #
-#  id               :bigint           not null, primary key
-#  gender           :integer
-#  interpreter_type :integer
-#  primary_phone    :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  user_id          :bigint
+#  id                      :bigint           not null, primary key
+#  address                 :string
+#  city                    :string
+#  dob                     :date
+#  drivers_license         :string
+#  email                   :string
+#  emergency_contact_name  :string
+#  emergency_contact_phone :string
+#  fname                   :string
+#  gender                  :integer
+#  interpreter_type        :integer
+#  lname                   :string
+#  primary_phone           :string
+#  ssn                     :string
+#  start_date              :date
+#  state                   :string
+#  zip                     :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  user_id                 :bigint
 #
 # Indexes
 #
 #  index_interpreter_details_on_user_id  (user_id)
 #
 class InterpreterDetail < ApplicationRecord
+  encrypts :ssn
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
   after_update_commit -> { broadcast_replace_later_to self }

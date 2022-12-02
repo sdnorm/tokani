@@ -1,28 +1,251 @@
 <%= form_with(model: interpreter_detail) do |form| %>
-  <%= render "shared/error_messages", resource: form.object %>
+<%= render "shared/error_messages", resource: form.object %>
+  <div class="mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+          <h3 class="text-lg font-medium leading-6 text-tokaniprimary-900">Personal Information</h3>
+          <p class="mt-1 text-sm text-tokaniaccent-500">Use a permanent address where you can receive mail.</p>
+        </div>
+      </div>
+      <div class="mt-5 md:col-span-2 md:mt-0">
+        <form action="#" method="POST">
+          <div class="overflow-hidden shadow sm:rounded-md">
+            <div class="bg-white px-4 py-5 sm:p-6">
+              <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                  <div class="form-group">
+                    <%= form.label :first_name, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :fname, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+  
+                <div class="col-span-6 sm:col-span-3">
+                  <div class="form-group">
+                    <%= form.label :last_name, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :lname, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+  
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :SSN, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :ssn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+  
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :drivers_license, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :drivers_license, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
 
-  <div class="form-group">
-    <%= form.label :interpreter_type %>
-    <%= form.number_field :interpreter_type, class: "form-control" %>
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :birth_date, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :dob, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :start_date, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
+                  </div>
+                </div>
+      
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :emergency_contact_name, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :emergency_contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                 </div>
+      
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :emergency_contact_phone, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :emergency_contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+    
+                <div class="col-span-6 sm:col-span-3">
+                    <div class="form-group">
+                        <%= form.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
+                        <%= form.select :interpreter_type, options_for_select(interpreter_type_options), {}, class: "form-control" %>
+                      </div>
+                </div>
+    
+                <div class="col-span-6 sm:col-span-3">
+                    <div class="form-group">
+                        <%= form.label :gender , class: "block text-sm font-medium text-gray-700"%>
+                        <%= form.select :gender, options_for_select(gender_options), {}, {class: 'form-control' } %>
+                      </div>
+                </div>
+      
+                <div class="col-span-6 sm:col-span-4">
+                  <div class="form-group">
+                    <%= form.label :email_address, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+    
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                    <div class="form-group">
+                        <%= form.label :primary_phone, class:" block text-sm font-medium text-gray-700" %>
+                        <%= form.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                      </div>
+                </div>
+
+                <div class="col-span-6">
+                  <div class="form-group">
+                    <%= form.label :street_address, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+      
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :city, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+      
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :state, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+      
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <div class="form-group">
+                    <%= form.label :zip_code, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :zip, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div>
+                    <%= form.hidden_field :user_id, value: current_user.id %>
+                    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-tokani_purple" %>
+                
+                    <% if form.object.new_record? %>
+                      <%= link_to t("cancel"), interpreter_details_path, class: "btn btn-white" %>
+                    <% else %>
+                      <%= link_to t("cancel"), interpreter_detail_path(@interpreter_detail), class: "btn btn-white" %>
+                    <% end %>
+                  </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <%= form.label :gender %>
-    <%= form.number_field :gender, class: "form-control" %>
+  <% end %>  
+  <div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+      <div class="border-t border-gray-200"></div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <%= form.label :primary_phone %>
-    <%= form.text_field :primary_phone, class: "form-control" %>
+  
+  <div class="mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
+          <p class="mt-1 text-sm text-gray-600">Decide which communications you'd like to receive and how.</p>
+        </div>
+      </div>
+      <div class="mt-5 md:col-span-2 md:mt-0">
+        <form action="#" method="POST">
+          <div class="overflow-hidden shadow sm:rounded-md">
+            <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+                <fieldset>
+                    <legend class="text-base font-medium text-gray-900">By Email</legend>
+                    <div class="mt-4 space-y-4">
+                      <div class="flex items-start">
+                        <div class="flex h-5 items-center">
+                          <input id="offered" name="offered" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                        </div>
+                        <div class="ml-3 text-sm">
+                          <label for="offered" class="font-medium text-gray-700">Appointments Offered</label>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex items-start">
+                          <div class="flex h-5 items-center">
+                            <input id="scheduled" name="scheduled" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                          </div>
+                          <div class="ml-3 text-sm">
+                              <label for="scheduled" class="font-medium text-gray-700">Appointments Scheduled</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex items-start">
+                          <div class="flex h-5 items-center">
+                            <input id="cancelled" name="cancelled" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                          </div>
+                          <div class="ml-3 text-sm">
+                              <label for="cancelled" class="font-medium text-gray-700">Appointments Cancelled</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex items-start">
+                          <div class="flex h-5 items-center">
+                            <input id="edited" name="edited" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                          </div>
+                          <div class="ml-3 text-sm">
+                            <label for="edited" class="font-medium text-gray-700">Appointments Edited</label>
+                          </div>
+                        </div>
+                        </div>
+                        <div>
+                        <div class="flex items-start">
+                          <div class="flex h-5 items-center">
+                            <input id="checklist" name="checklist" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                          </div>
+                          <div class="ml-3 text-sm">
+                            <label for="checklist" class="font-medium text-gray-700">Checklist Items</label>
+                            <p class="text-gray-500">Get notified when a checklist item will soon expire.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </fieldset>
+                <fieldset class="mt-6">
+                    <legend class="text-base font-medium text-gray-900">Push Notifications</legend>
+                    <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
+                    <div class="mt-4 space-y-4">
+                      <div class="flex items-center">
+                        <input id="push-everything" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                        <label for="push-everything" class="ml-3">
+                          <span class="block text-sm font-medium text-gray-700">Everything</span>
+                        </label>
+                      </div>
+                      <div class="flex items-center">
+                        <input id="push-email" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                        <label for="push-email" class="ml-3">
+                          <span class="block text-sm font-medium text-gray-700">Same as email</span>
+                        </label>
+                      </div>
+                      <div class="flex items-center">
+                        <input id="push-nothing" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                        <label for="push-nothing" class="ml-3">
+                          <span class="block text-sm font-medium text-gray-700">No push notifications</span>
+                        </label>
+                      </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+              <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
-
-    <% if form.object.new_record? %>
-      <%= link_to t("cancel"), interpreter_details_path, class: "btn btn-white" %>
-    <% else %>
-      <%= link_to t("cancel"), interpreter_detail_path(@interpreter_detail), class: "btn btn-white" %>
-    <% end %>
-  </div>
-<% end %>

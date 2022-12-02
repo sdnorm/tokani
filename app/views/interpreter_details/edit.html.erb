@@ -10,7 +10,7 @@
     <%= button_to t("delete"), @interpreter_detail, method: :delete, class: "btn btn-white", form: { data: { turbo_confirm: t("are_you_sure") } } %>
   </div>
 
-  <div class="p-8 bg-white rounded shadow">
+  <div class="p-8 bg-gray-100 rounded shadow">
     <%= render "form", interpreter_detail: @interpreter_detail %>
   </div>
 </div>
