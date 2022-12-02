@@ -1,5 +1,4 @@
 class RateDeterminationService
-
   attr_accessor :appointment
 
   def initialize(appointment)
@@ -67,7 +66,7 @@ class RateDeterminationService
       # return one based on effective date (most recent).
 
       case criterium.type_key
-      when 'sites_departments'
+      when "sites_departments"
 
         # Use the size of the matches array to determine the match count
         matches = []
@@ -106,7 +105,7 @@ class RateDeterminationService
 
         pay_bill_rates = matches if matches.size > 1
 
-      when 'specialty'
+      when "specialty"
         next if @appointment.specialties.blank?
 
         matches = []
@@ -140,7 +139,7 @@ class RateDeterminationService
 
         pay_bill_rates = matches if matches.size > 1
 
-      when 'language'
+      when "language"
         # Bail early if the appointment somehow does not have a language present
         next if @appointment.language.blank?
 
@@ -157,7 +156,7 @@ class RateDeterminationService
 
         pay_bill_rates = matches if matches.size > 1
 
-      when 'interpreter_type'
+      when "interpreter_type"
         next if @interpreter.blank?
 
         # Gets a value like 2, as opposed to 'independent_contractor'
@@ -192,18 +191,17 @@ class RateDeterminationService
   def filter_by_modality(pay_bill_rates)
     pay_bill_rates.select do |pbr|
       case @appointment.modality
-      when 'in_person'
+      when "in_person"
         pbr.in_person
-      when 'phone'
+      when "phone"
         pbr.phone
-      when 'video'
+      when "video"
         pbr.video
       end
     end
   end
 
   def default_rate(rates)
-    rates.sort_by(&:effective_date).reverse.first
+    rates.max_by(&:effective_date)
   end
-
 end

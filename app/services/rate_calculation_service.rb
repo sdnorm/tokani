@@ -1,5 +1,4 @@
 class RateCalculationService
-
   def initialize(appointment, pay_bill_rate = nil, pay_bill_config = nil)
     @appointment = appointment
     @pay_bill_rate = pay_bill_rate.presence || @appointment.pay_bill_rate
@@ -18,49 +17,48 @@ class RateCalculationService
 
   # rubocop:disable Style/IdenticalConditionalBranches
   def determine_rate_type
-
     # CHECK FOR CANCELLATION
     case @appointment.cancel_type
-    when 'requestor'
+    when "requestor"
       # Difference between when the appointment was cancelled and the start time
       cancellation_time_diff = TimeDifference.between(@appointment.start_time, @appointment.cancelled_at).in_hours
 
       if cancellation_time_diff < @pay_bill_config.trigger_for_cancel_level1
-        @rate_type = 'cancel_level_1'
+        @rate_type = "cancel_level_1"
         return @rate_type
       elsif cancellation_time_diff < @pay_bill_config.trigger_for_cancel_level2
-        @rate_type = 'cancel_level_2'
+        @rate_type = "cancel_level_2"
         return @rate_type
       else
-        @rate_type = 'cancelled_unbillable'
+        @rate_type = "cancelled_unbillable"
         return @rate_type
       end
-    when 'agency'
-      @rate_type = 'cancelled_unbillable'
+    when "agency"
+      @rate_type = "cancelled_unbillable"
       return @rate_type
     end
 
     # CHECK FOR RUSH & AFTER HOURS
     if rush_rate? && after_hours_rate?
-      @rate_type = 'rush_and_after_hours'
+      @rate_type = "rush_and_after_hours"
       return @rate_type
     end
 
     # CHECK FOR RUSH
     if rush_rate?
-      @rate_type = 'rush'
+      @rate_type = "rush"
       return @rate_type
     end
 
     # CHECK FOR AFTER HOURS
     if after_hours_rate?
-      @rate_type = 'after_hours'
+      @rate_type = "after_hours"
       return @rate_type
     end
 
     # If we get here, it must be the default, "regular" rate
-    @rate_type = 'regular'
-    return @rate_type
+    @rate_type = "regular"
+    @rate_type
   end
   # rubocop:enable Style/IdenticalConditionalBranches
 
@@ -104,7 +102,7 @@ class RateCalculationService
     determine_rate_type if @rate_type.blank?
 
     return [] if cancelled_unbillable?
-    return billing_line_items_cancelled if %w(cancel_level_1 cancel_level_2).include?(@rate_type)
+    return billing_line_items_cancelled if %w[cancel_level_1 cancel_level_2].include?(@rate_type)
 
     hours = @appointment.calculated_appointment_duration_in_hours
     line_items = []
@@ -112,7 +110,7 @@ class RateCalculationService
     # Handle regular rate line item
     billable_minutes_regular = ensure_pay_bill_config_enforced_minimum_minutes_billed(calculate_billable_minutes_at_regular_rate)
     billable_hours_regular = (billable_minutes_regular / 60.0).round(2)
-    b = BillingLineItemStruct.new('regular', 'Regular billing rate', @pay_bill_rate.bill_rate, billable_hours_regular, @pay_bill_rate.name)
+    b = BillingLineItemStruct.new("regular", "Regular billing rate", @pay_bill_rate.bill_rate, billable_hours_regular, @pay_bill_rate.name)
     line_items << b
 
     if discount_rate_triggered?
@@ -121,18 +119,18 @@ class RateCalculationService
       billable_hours_discount = (billable_minutes_discount / 60.0).round(2)
 
       rate = @pay_bill_rate.bill_rate - @pay_bill_rate.discount_bill_rate
-      line_items << BillingLineItemStruct.new('discount', 'Discount billing rate', rate, billable_hours_discount, @pay_bill_rate.name)
+      line_items << BillingLineItemStruct.new("discount", "Discount billing rate", rate, billable_hours_discount, @pay_bill_rate.name)
     end
 
     # rubocop:disable Style/IfUnlessModifier
     # CHECK FOR RUSH
     if rush_rate?
-      line_items << BillingLineItemStruct.new('rush', 'Rush billing rate', @pay_bill_rate.rush_bill_rate, hours, @pay_bill_rate.name)
+      line_items << BillingLineItemStruct.new("rush", "Rush billing rate", @pay_bill_rate.rush_bill_rate, hours, @pay_bill_rate.name)
     end
 
     # CHECK FOR AFTER HOURS
     if after_hours_rate?
-      line_items << BillingLineItemStruct.new('after_hours', 'After hours billing rate', @pay_bill_rate.after_hours_bill_rate, hours, @pay_bill_rate.name)
+      line_items << BillingLineItemStruct.new("after_hours", "After hours billing rate", @pay_bill_rate.after_hours_bill_rate, hours, @pay_bill_rate.name)
     end
     # rubocop:enable Style/IfUnlessModifier
 
@@ -143,20 +141,20 @@ class RateCalculationService
     hours = (@appointment.duration / 60.0).round(2)
 
     case @rate_type
-    when 'cancel_level_1'
+    when "cancel_level_1"
       if @pay_bill_config.is_minutes_billed_cancelled_appointment_duration
-        li = BillingLineItemStruct.new('cancel_level_1', 'Cancelled Level 1 billing rate (appointment duration)', @pay_bill_rate.cancel_level_1_bill_rate, hours)
+        li = BillingLineItemStruct.new("cancel_level_1", "Cancelled Level 1 billing rate (appointment duration)", @pay_bill_rate.cancel_level_1_bill_rate, hours)
       else
         hours = (@pay_bill_config.minimum_minutes_billed_cancelled_level1 / 60.0).round(2)
-        li = BillingLineItemStruct.new('cancel_level_1', 'Cancelled Level 1 billing rate (configured minimum)', @pay_bill_rate.cancel_level_1_bill_rate, hours)
+        li = BillingLineItemStruct.new("cancel_level_1", "Cancelled Level 1 billing rate (configured minimum)", @pay_bill_rate.cancel_level_1_bill_rate, hours)
       end
       return [li]
-    when 'cancel_level_2'
+    when "cancel_level_2"
       if @pay_bill_config.is_minutes_billed_cancelled_appointment_duration
-        li = BillingLineItemStruct.new('cancel_level_2', 'Cancelled Level 2 billing rate (appointment duration)', @pay_bill_rate.cancel_level_2_bill_rate, hours)
+        li = BillingLineItemStruct.new("cancel_level_2", "Cancelled Level 2 billing rate (appointment duration)", @pay_bill_rate.cancel_level_2_bill_rate, hours)
       else
         hours = (@pay_bill_config.minimum_minutes_billed_cancelled_level2 / 60.0).round(2)
-        li = BillingLineItemStruct.new('cancel_level_2', 'Cancelled Level 2 billing rate (configured minimum)', @pay_bill_rate.cancel_level_2_bill_rate, hours)
+        li = BillingLineItemStruct.new("cancel_level_2", "Cancelled Level 2 billing rate (configured minimum)", @pay_bill_rate.cancel_level_2_bill_rate, hours)
       end
       return [li]
     end
@@ -168,7 +166,7 @@ class RateCalculationService
     determine_rate_type if @rate_type.blank?
 
     return [] if cancelled_unbillable?
-    return payment_line_items_cancelled if %w(cancel_level_1 cancel_level_2).include?(@rate_type)
+    return payment_line_items_cancelled if %w[cancel_level_1 cancel_level_2].include?(@rate_type)
 
     hours = @appointment.calculated_appointment_duration_in_hours
     line_items = []
@@ -176,7 +174,7 @@ class RateCalculationService
     billable_minutes_regular = ensure_pay_bill_config_enforced_minimum_minutes_paid(calculate_billable_minutes_at_regular_rate)
     billable_hours_regular = (billable_minutes_regular / 60.0).round(2)
     # Handle regular rate line item
-    li = PaymentLineItemStruct.new('regular', 'Regular payment rate', @pay_bill_rate.pay_rate, billable_hours_regular, @pay_bill_rate.name)
+    li = PaymentLineItemStruct.new("regular", "Regular payment rate", @pay_bill_rate.pay_rate, billable_hours_regular, @pay_bill_rate.name)
     line_items << li
 
     if discount_rate_triggered?
@@ -185,18 +183,18 @@ class RateCalculationService
       billable_hours_discount = (billable_minutes_discount / 60.0).round(2)
 
       rate = @pay_bill_rate.pay_rate - @pay_bill_rate.discount_pay_rate
-      line_items << PaymentLineItemStruct.new('discount', 'Discount payment rate', rate, billable_hours_discount, @pay_bill_rate.name)
+      line_items << PaymentLineItemStruct.new("discount", "Discount payment rate", rate, billable_hours_discount, @pay_bill_rate.name)
     end
 
     # rubocop:disable Style/IfUnlessModifier
     # CHECK FOR RUSH
     if rush_rate?
-      line_items << PaymentLineItemStruct.new('rush', 'Rush pay rate', @pay_bill_rate.rush_pay_rate, hours, @pay_bill_rate.name)
+      line_items << PaymentLineItemStruct.new("rush", "Rush pay rate", @pay_bill_rate.rush_pay_rate, hours, @pay_bill_rate.name)
     end
 
     # CHECK FOR AFTER HOURS
     if after_hours_rate?
-      line_items << PaymentLineItemStruct.new('after_hours', 'After hours payment rate', @pay_bill_rate.after_hours_pay_rate, hours, @pay_bill_rate.name)
+      line_items << PaymentLineItemStruct.new("after_hours", "After hours payment rate", @pay_bill_rate.after_hours_pay_rate, hours, @pay_bill_rate.name)
     end
     # rubocop:enable Style/IfUnlessModifier
 
@@ -207,20 +205,20 @@ class RateCalculationService
     hours = (@appointment.duration / 60.0).round(2)
 
     case @rate_type
-    when 'cancel_level_1'
+    when "cancel_level_1"
       if @pay_bill_config.is_minutes_billed_cancelled_appointment_duration
-        li = PaymentLineItemStruct.new('cancel_level_1', 'Cancelled Level 1 pay rate (appointment duration)', @pay_bill_rate.cancel_level_1_pay_rate, hours)
+        li = PaymentLineItemStruct.new("cancel_level_1", "Cancelled Level 1 pay rate (appointment duration)", @pay_bill_rate.cancel_level_1_pay_rate, hours)
       else
         hours = (@pay_bill_config.minimum_minutes_paid_cancelled_level1 / 60.0).round(2)
-        li = PaymentLineItemStruct.new('cancel_level_1', 'Cancelled Level 1 pay rate (configured minimum)', @pay_bill_rate.cancel_level_1_pay_rate, hours)
+        li = PaymentLineItemStruct.new("cancel_level_1", "Cancelled Level 1 pay rate (configured minimum)", @pay_bill_rate.cancel_level_1_pay_rate, hours)
       end
       return [li]
-    when 'cancel_level_2'
+    when "cancel_level_2"
       if @pay_bill_config.is_minutes_billed_cancelled_appointment_duration
-        li = PaymentLineItemStruct.new('cancel_level_2', 'Cancelled Level 2 pay rate (appointment duration)', @pay_bill_rate.cancel_level_2_pay_rate, hours)
+        li = PaymentLineItemStruct.new("cancel_level_2", "Cancelled Level 2 pay rate (appointment duration)", @pay_bill_rate.cancel_level_2_pay_rate, hours)
       else
         hours = (@pay_bill_config.minimum_minutes_paidcancelled_level2 / 60.0).round(2)
-        li = BillingLineItemStruct.new('cancel_level_2', 'Cancelled Level 2 pay rate (configured minimum)', @pay_bill_rate.cancel_level_2_pay_rate, hours)
+        li = BillingLineItemStruct.new("cancel_level_2", "Cancelled Level 2 pay rate (configured minimum)", @pay_bill_rate.cancel_level_2_pay_rate, hours)
       end
       return [li]
     end
@@ -239,15 +237,14 @@ class RateCalculationService
   end
 
   def total_bill_with_expenses
-    if @appointment.expense_items.blank?
-      @expense_items = []
+    @expense_items = if @appointment.expense_items.blank?
+      []
     else
-      @expense_items = @appointment.expense_items
+      @appointment.expense_items
     end
     billing_totals = sum_line_items(billing_line_items)
     expense_totals = @expense_items.map(&:cost).sum.round(2)
-    total_bill = billing_totals + expense_totals
-    return total_bill
+    billing_totals + expense_totals
   end
 
   def total_pay
@@ -255,15 +252,14 @@ class RateCalculationService
   end
 
   def total_pay_with_expenses
-    if @appointment.expense_items.blank?
-      @expense_items = []
+    @expense_items = if @appointment.expense_items.blank?
+      []
     else
-      @expense_items = @appointment.expense_items
+      @appointment.expense_items
     end
     payment_totals = sum_line_items(payment_line_items)
     expense_totals = @expense_items.map(&:cost).sum.round(2)
-    total_pay = payment_totals + expense_totals
-    return total_pay
+    payment_totals + expense_totals
   end
 
   def rush_rate?
@@ -282,11 +278,11 @@ class RateCalculationService
   private
 
   def canceled_billable?
-    %w(cancel_level_1 cancel_level_2).include?(@rate_type)
+    %w[cancel_level_1 cancel_level_2].include?(@rate_type)
   end
 
   def cancelled_unbillable?
-    @rate_type == 'cancelled_unbillable'
+    @rate_type == "cancelled_unbillable"
   end
 
   def calculate_billable_minutes_via_trigger_algorithm(duration_in_minutes)
@@ -411,5 +407,4 @@ class RateCalculationService
 
     appointment_minutes_set
   end
-
 end

@@ -1,5 +1,4 @@
 class PayBillRateDuplicateFinderService
-
   attr_accessor :pay_bill_rate
 
   def initialize(pay_bill_rate)
@@ -39,9 +38,9 @@ class PayBillRateDuplicateFinderService
 
   def fetch_base_matches
     @matches = PayBillRate.where.not(id: pay_bill_rate.id)
-                          .where(in_person: pay_bill_rate.in_person)
-                          .where(phone: pay_bill_rate.phone)
-                          .where(video: pay_bill_rate.video)
+      .where(in_person: pay_bill_rate.in_person)
+      .where(phone: pay_bill_rate.phone)
+      .where(video: pay_bill_rate.video)
 
     @matches = @matches.to_a
   end
@@ -87,5 +86,4 @@ class PayBillRateDuplicateFinderService
       pbr.interpreters.map(&:id).to_set == pay_bill_rate.interpreters.map(&:id).to_set
     end
   end
-
 end

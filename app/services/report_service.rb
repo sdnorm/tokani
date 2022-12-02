@@ -1,5 +1,4 @@
 class ReportService
-
   def initialize(report)
     @report = report
   end
@@ -18,14 +17,14 @@ class ReportService
   end
 
   def filter_by_status(scope)
-    scope.where(status: Appointment.statuses['exported'])
+    scope.where(status: Appointment.statuses["exported"])
   end
 
   def filter_by_date(scope)
     return scope unless @report.date_begin.present? && @report.date_end.present?
 
-    scope.where('appointments.start_time > ?', @report.date_begin.beginning_of_day)
-         .where('appointments.start_time < ?', @report.date_end.end_of_day)
+    scope.where("appointments.start_time > ?", @report.date_begin.beginning_of_day)
+      .where("appointments.start_time < ?", @report.date_end.end_of_day)
   end
 
   def filter_by_modality(scope)
@@ -36,21 +35,21 @@ class ReportService
     return scope if @report.interpreter_type.blank?
 
     scope.joins(:interpreter)
-         .where(interpreter: { interpreter_type: @report.interpreter_type })
+      .where(interpreter: {interpreter_type: @report.interpreter_type})
   end
 
   def filter_by_site(scope)
     return scope if @report.site_id.blank?
 
     scope.joins(:site)
-         .where(site: { id: @report.site_id })
+      .where(site: {id: @report.site_id})
   end
 
   def filter_by_department(scope)
     return scope if @report.department_id.blank?
 
     scope.joins(:department)
-         .where(department: { id: @report.department_id })
+      .where(department: {id: @report.department_id})
   end
 
   def filter_by_language(scope)
@@ -63,7 +62,6 @@ class ReportService
     return scope if @report.agency_customers.empty?
 
     scope.joins(:agency_customer)
-         .where(agency_customer: { id: @report.agency_customers.collect(&:id) })
+      .where(agency_customer: {id: @report.agency_customers.collect(&:id)})
   end
-
 end

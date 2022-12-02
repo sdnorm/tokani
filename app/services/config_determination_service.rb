@@ -1,5 +1,4 @@
 class ConfigDeterminationService
-
   attr_accessor :appointment
 
   def initialize(appointment)
@@ -25,5 +24,4 @@ class ConfigDeterminationService
 
     nil
   end
-
 end
