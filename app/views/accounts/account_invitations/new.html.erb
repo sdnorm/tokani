@@ -39,7 +39,8 @@
               </div>
             <% end %>
           <% elsif current_account_user.admin? %>
-            <% AccountUser::TOKANI_ROLES.each do |role| %>
+            <!-- <%# AccountUser::TOKANI_ROLES.each do |role| %> -->
+            <% AccountUser::AGENCY_ROLES.each do |role| %>
               <div>
                 <%= form.check_box role, id: role.to_s.parameterize, class: "form-checkbox mr-1" %>
                 <label for="<%= role.to_s.parameterize %>" class="inline-block"><%= role.to_s.humanize %></label>

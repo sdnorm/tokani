@@ -108,6 +108,24 @@ button[disabled]        .when-enabled { display: none; }
     }
   }
 
+  .btn-tokani_purple {
+    @apply bg-tokanisecondary-600 text-white focus:ring-tokanisecondary-500;
+
+    &:hover,
+    &:focus {
+      @apply bg-tokanisecondary-500 text-white;
+    }
+
+    &.outline {
+      @apply bg-transparent outline-1 text-tokanisecondary-500 shadow-none;
+
+      &:hover,
+      &:focus {
+        @apply bg-tokanisecondary-500 text-white;
+      }
+    }
+  }
+
   .btn-gray {
     @apply bg-gray-100 text-gray-800 hover:bg-gray-200 hover:text-gray-800 focus:ring-gray-600;
   }
