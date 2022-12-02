@@ -2,13 +2,26 @@
 #
 # Table name: interpreter_details
 #
-#  id               :bigint           not null, primary key
-#  gender           :integer
-#  interpreter_type :integer
-#  primary_phone    :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  user_id          :bigint
+#  id                      :bigint           not null, primary key
+#  address                 :string
+#  city                    :string
+#  dob                     :date
+#  drivers_license         :string
+#  email                   :string
+#  emergency_contact_name  :string
+#  emergency_contact_phone :string
+#  fname                   :string
+#  gender                  :integer
+#  interpreter_type        :integer
+#  lname                   :string
+#  primary_phone           :string
+#  ssn                     :string
+#  start_date              :date
+#  state                   :string
+#  zip                     :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  user_id                 :bigint
 #
 # Indexes
 #

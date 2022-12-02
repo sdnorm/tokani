@@ -294,7 +294,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
     t.decimal "application_fee_percent", precision: 8, scale: 2
     t.jsonb "metadata"
     t.bigint "customer_id"
+    t.datetime "current_period_start"
+    t.datetime "current_period_end"
+    t.boolean "metered"
+    t.string "pause_behavior"
+    t.datetime "pause_starts_at"
+    t.datetime "pause_resumes_at"
     t.index ["customer_id", "processor_id"], name: "index_pay_subscriptions_on_customer_id_and_processor_id", unique: true
+    t.index ["metered"], name: "index_pay_subscriptions_on_metered"
+    t.index ["pause_starts_at"], name: "index_pay_subscriptions_on_pause_starts_at"
   end
 
   create_table "pay_webhooks", force: :cascade do |t|
@@ -382,11 +390,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
-  add_foreign_key "interpreter_details", "users"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
-  add_foreign_key "interpreter_details", "users"
+  add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
+  add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
+  add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "user_connected_accounts", "users"
 end
