@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_02_221153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -326,6 +326,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
     t.integer "interval_count", default: 1
     t.string "description"
     t.string "unit"
+  end
+
+  create_table "rate_criteria", force: :cascade do |t|
+    t.bigint "account_id"
+    t.integer "type_key", null: false
+    t.string "name"
+    t.integer "sort_order", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_rate_criteria_on_account_id"
   end
 
   create_table "user_connected_accounts", force: :cascade do |t|
