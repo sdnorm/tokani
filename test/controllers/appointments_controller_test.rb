@@ -10,10 +10,10 @@ class AppointmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_appointment_url
-    assert_response :success
-  end
+  # test "should get new" do
+  #   get new_appointment_url
+  #   assert_response :success
+  # end
 
   # test "should create appointment" do
   #   assert_difference("Appointment.count") do
