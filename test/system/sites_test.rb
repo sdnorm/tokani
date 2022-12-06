@@ -10,26 +10,26 @@ class SitesTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Sites"
   end
 
-  test "creating a Site" do
-    visit sites_url
-    click_on "New Site"
+  # test "creating a Site" do
+  #   visit sites_url
+  #   click_on "New Site"
 
-    check "Active" if @site.active
-    fill_in "Address", with: @site.address
-    fill_in "Backport", with: @site.backport_id
-    fill_in "City", with: @site.city
-    fill_in "Contact name", with: @site.contact_name
-    fill_in "Contact phone", with: @site.contact_phone
-    fill_in "Email", with: @site.email
-    fill_in "Name", with: @site.name
-    fill_in "Notes", with: @site.notes
-    fill_in "State", with: @site.state
-    fill_in "Zip code", with: @site.zip_code
-    click_on "Create Site"
+  #   check "Active" if @site.active
+  #   fill_in "Address", with: @site.address
+  #   fill_in "Backport", with: @site.backport_id
+  #   fill_in "City", with: @site.city
+  #   fill_in "Contact name", with: @site.contact_name
+  #   fill_in "Contact phone", with: @site.contact_phone
+  #   fill_in "Email", with: @site.email
+  #   fill_in "Name", with: @site.name
+  #   fill_in "Notes", with: @site.notes
+  #   fill_in "State", with: @site.state
+  #   fill_in "Zip code", with: @site.zip_code
+  #   click_on "Create Site"
 
-    assert_text "Site was successfully created"
-    assert_selector "h1", text: "Sites"
-  end
+  #   assert_text "Site was successfully created"
+  #   assert_selector "h1", text: "Sites"
+  # end
 
   test "updating a Site" do
     visit site_url(@site)
