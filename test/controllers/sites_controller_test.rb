@@ -34,7 +34,7 @@ class SitesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update site" do
-    patch site_url(@site), params: { site: { active: @site.active, address: @site.address, backport_id: @site.backport_id, city: @site.city, contact_name: @site.contact_name, contact_phone: @site.contact_phone, email: @site.email, name: @site.name, notes: @site.notes, state: @site.state, zip_code: @site.zip_code } }
+    patch site_url(@site), params: {site: {active: @site.active, address: @site.address, backport_id: @site.backport_id, city: @site.city, contact_name: @site.contact_name, contact_phone: @site.contact_phone, email: @site.email, name: @site.name, notes: @site.notes, state: @site.state, zip_code: @site.zip_code}}
     assert_redirected_to site_url(@site)
   end
 
