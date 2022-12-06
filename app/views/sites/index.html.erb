@@ -1,0 +1,45 @@
+<%= content_for :title, "Sites" %>
+<%= turbo_stream_from :sites %>
+
+<div class="container px-4 mx-auto my-8">
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <h1 class="h3">Sites</h1>
+
+      <div class="text-sm font-medium">
+        <span class="text-gray-500">Sort by:</span>
+        <%= sortable @sites, :name, "Name", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :contact_name, "Contact name", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :email, "Email", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :address, "Address", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :city, "City", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :state, "State", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :zip_code, "Zip code", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :active, "Active", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :backport_id, "Backport", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :notes, "Notes", class: "text-gray-700 mr-1" %>
+        <%= sortable @sites, :contact_phone, "Contact phone", class: "text-gray-700 mr-1" %>
+      </div>
+    </div>
+
+    <%= link_to t("shared.scaffold.new.title", model: "Site"), new_site_path, class: "btn btn-white" %>
+  </div>
+
+  <%= tag.div id: ("sites" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
+    <%= render partial: "sites/index", collection: @sites, as: :site, cached: true %>
+
+    <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="mb-4 h3">Create your first Site</p>
+        <%= link_to t("shared.scaffold.new.title", model: "Site"), new_site_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @pagy.pages > 1 %>
+    <div class="my-6 text-center">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  <% end %>
+</div>
