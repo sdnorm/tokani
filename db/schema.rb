@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_02_221153) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_144418) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "account_invitations", force: :cascade do |t|
@@ -165,6 +166,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_221153) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "agency_id"
+    t.bigint "customer_id"
+    t.index ["agency_id"], name: "index_appointments_on_agency_id"
+    t.index ["customer_id"], name: "index_appointments_on_customer_id"
   end
 
   create_table "interpreter_details", force: :cascade do |t|
@@ -402,6 +407,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_221153) do
   add_foreign_key "api_tokens", "users"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
+  add_foreign_key "appointments", "accounts", column: "agency_id"
+  add_foreign_key "appointments", "accounts", column: "customer_id"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"

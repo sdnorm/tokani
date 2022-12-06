@@ -26,6 +26,18 @@
 #  time_zone               :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  agency_id               :bigint
+#  customer_id             :bigint
+#
+# Indexes
+#
+#  index_appointments_on_agency_id    (agency_id)
+#  index_appointments_on_customer_id  (customer_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (agency_id => accounts.id)
+#  fk_rails_...  (customer_id => accounts.id)
 #
 class Appointment < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
@@ -34,4 +46,7 @@ class Appointment < ApplicationRecord
   after_destroy_commit -> { broadcast_remove_to :appointments, target: dom_id(self, :index) }
 
   has_many :appointment_languages, dependent: :destroy
+
+  belongs_to :agency, class_name: "Account"
+  belongs_to :customer, class_name: "Account"
 end
