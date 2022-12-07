@@ -29,6 +29,7 @@
 #
 class InterpreterDetail < ApplicationRecord
   encrypts :ssn
+  belongs_to :user
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
   after_update_commit -> { broadcast_replace_later_to self }

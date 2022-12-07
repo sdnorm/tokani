@@ -6,8 +6,4 @@ module InterpreterDetailsHelper
   def gender_options
     InterpreterDetail.genders.to_a.map { |entry| [entry[0].titleize, entry[0]] }
   end
-
-  def view_name
-    "#{lname}, #{fname}"
-  end
 end

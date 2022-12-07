@@ -1,0 +1,146 @@
+
+<div class="container px-4 mx-auto my-8">
+    <div class="flex items-center justify-between mb-4">
+    </div>
+<div class="p-8 bg-gray-100 rounded shadow">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+          <h3 class="text-lg font-medium leading-6 text-tokaniprimary-900">Requestor Information</h3>
+          <p class="mt-1 text-sm text-tokaniaccent-500">What customer and site are you associated with.</p>
+        </div>
+      </div>
+      <div class="mt-5 md:col-span-2 md:mt-0">
+        <form action="#" method="POST">
+          <div class="overflow-hidden shadow sm:rounded-md">
+            <div class="bg-white px-4 py-5 sm:p-6">
+              <div class="grid grid-cols-6 gap-6">
+
+                <div class="col-span-8 sm:col-span-6">
+                    <label for="agency_customer" class="block text-sm font-medium text-gray-700">Agency Customer</label>
+                    <select id="agency_customer" name="agency_customer" autocomplete="interpreter-type" class="mt-1 block w-full rounded-md border border-tokanisecondary-300 bg-white py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+                      <option>Kaiser</option>
+                      <option>Oakland Schools</option>
+                      <option>Law Offices United</option>
+                      <option>Etc.</option>
+                    </select>
+                </div>
+    
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="site" class="block text-sm font-medium text-gray-700">Site</label>
+                    <select id="site" name="site" autocomplete="site" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+                      <option>Kaiser North</option>
+                      <option>Kaiser South</option>
+                      <option>Kaiser Main</option>
+                      <option>Etc.</option>
+                    </select>
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                    <select id="department" name="department" autocomplete="department" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+                      <option>Radiology</option>
+                      <option>Pediatrics</option>
+                      <option>Dermatology</option>
+                      <option>Etc.</option>
+                    </select>
+                </div>
+      
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                    <label for="work_phone" class="block text-sm font-medium text-gray-700">Work Phone</label>
+                    <input type="text" name="work_phone" id="work_phone" autocomplete="work_phone" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+                </div>
+
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                    <label for="mobile_phone" class="block text-sm font-medium text-gray-700">Mobile Phone</label>
+                    <input type="text" name="mobile_phone" id="mobile_phone" autocomplete="mobile_phone" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+                </div>
+            
+              </div>
+            
+            <fieldset class="space-y-5">
+                <legend class="sr-only">Access Level</legend>
+                <div class="relative flex items-start">
+                  <div class="flex h-5 items-center">
+                    <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label for="comments" class="font-medium text-gray-700">OffSite Requestor</label>
+                    <p id="comments-description" class="text-gray-500">Can request for offsite appointments.</p>
+                  </div>
+                </div>
+                <div class="relative flex items-start">
+                  <div class="flex h-5 items-center">
+                    <input id="candidates" aria-describedby="candidates-description" name="candidates" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label for="candidates" class="font-medium text-gray-700">View Interpreter Documents</label>
+                    <p id="candidates-description" class="text-gray-500">Requestor can view interpreter documents.</p>
+                  </div>
+                </div>
+                <div class="relative flex items-start">
+                  <div class="flex h-5 items-center">
+                    <input id="offers" aria-describedby="offers-description" name="offers" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label for="offers" class="font-medium text-gray-700">View Checklist Items</label>
+                    <p id="offers-description" class="text-gray-500">Requestor can view Interpreter Checklist Items.</p>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="p-8 bg-gray-100 rounded shadow">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+          <h3 class="text-lg font-medium leading-6 text-tokaniprimary-900">Notifications</h3>
+          <p class="mt-1 text-sm text-tokaniaccent-600">How do you want to get notified.</p>
+        </div>
+      </div>
+      <div class="mt-5 md:col-span-2 md:mt-0">
+        <form action="#" method="POST">
+          <div class="overflow-hidden shadow sm:rounded-md">
+            <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+                <fieldset>
+                    <legend class="text-base font-medium text-gray-900">Notifications</legend>
+                    <div class="mt-4 space-y-4">
+                      <div class="flex items-start">
+                        <div class="flex h-5 items-center">
+                          <input id="offered" name="offered" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                        </div>
+                        <div class="ml-3 text-sm">
+                          <label for="offered" class="font-medium text-gray-700">Allow Text Reminders</label>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex items-start">
+                          <div class="flex h-5 items-center">
+                            <input id="scheduled" name="scheduled" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                          </div>
+                          <div class="ml-3 text-sm">
+                              <label for="scheduled" class="font-medium text-gray-700">Allow Email Reminders</label>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                </fieldset>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+              <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_184907) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -180,13 +180,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
     t.string "city"
     t.string "state"
     t.string "zip"
-    t.string "fname"
-    t.string "lname"
     t.date "start_date"
     t.string "drivers_license"
     t.string "emergency_contact_name"
     t.string "emergency_contact_phone"
-    t.string "email"
     t.index ["user_id"], name: "index_interpreter_details_on_user_id"
   end
 
@@ -294,15 +291,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
     t.decimal "application_fee_percent", precision: 8, scale: 2
     t.jsonb "metadata"
     t.bigint "customer_id"
-    t.datetime "current_period_start"
-    t.datetime "current_period_end"
-    t.boolean "metered"
-    t.string "pause_behavior"
-    t.datetime "pause_starts_at"
-    t.datetime "pause_resumes_at"
     t.index ["customer_id", "processor_id"], name: "index_pay_subscriptions_on_customer_id_and_processor_id", unique: true
-    t.index ["metered"], name: "index_pay_subscriptions_on_metered"
-    t.index ["pause_starts_at"], name: "index_pay_subscriptions_on_pause_starts_at"
   end
 
   create_table "pay_webhooks", force: :cascade do |t|
@@ -392,6 +381,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_000230) do
   add_foreign_key "api_tokens", "users"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
+  add_foreign_key "interpreter_details", "users"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
