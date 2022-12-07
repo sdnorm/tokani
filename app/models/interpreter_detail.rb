@@ -18,23 +18,25 @@
 #  zip                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  user_id                 :bigint
+#  interpreter_id          :bigint
 #
 # Indexes
 #
-#  index_interpreter_details_on_user_id  (user_id)
+#  index_interpreter_details_on_interpreter_id  (interpreter_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (interpreter_id => users.id)
 #
 class InterpreterDetail < ApplicationRecord
   encrypts :ssn
-  belongs_to :user
+
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
   after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :interpreter_details, target: dom_id(self, :index) }
+
+  belongs_to :interpreter, class_name: "User"
 
   enum interpreter_type: {staff: 1, independent_contractor: 2, agency: 3, volunteer: 4}
   enum gender: {unspecified: 0, male: 1, female: 2, non_binary: 3}, _suffix: "gender"

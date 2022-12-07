@@ -18,15 +18,15 @@
 #  zip                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  user_id                 :bigint
+#  interpreter_id          :bigint
 #
 # Indexes
 #
-#  index_interpreter_details_on_user_id  (user_id)
+#  index_interpreter_details_on_interpreter_id  (interpreter_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (interpreter_id => users.id)
 #
 require "test_helper"
 
