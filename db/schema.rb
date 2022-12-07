@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_184907) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_202903) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "account_invitations", force: :cascade do |t|
@@ -165,6 +166,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_184907) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "agency_id"
+    t.bigint "customer_id"
+    t.bigint "interpreter_id"
+    t.index ["agency_id"], name: "index_appointments_on_agency_id"
+    t.index ["customer_id"], name: "index_appointments_on_customer_id"
+    t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
   end
 
   create_table "interpreter_details", force: :cascade do |t|
@@ -317,6 +324,35 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_184907) do
     t.string "unit"
   end
 
+  create_table "rate_criteria", force: :cascade do |t|
+    t.bigint "account_id"
+    t.integer "type_key", null: false
+    t.string "name"
+    t.integer "sort_order", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_rate_criteria_on_account_id"
+  end
+
+  create_table "sites", force: :cascade do |t|
+    t.string "name"
+    t.string "contact_name"
+    t.string "email"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.boolean "active"
+    t.bigint "backport_id"
+    t.text "notes"
+    t.string "contact_phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "customer_id"
+    t.index ["backport_id"], name: "index_sites_on_backport_id"
+    t.index ["customer_id"], name: "index_sites_on_customer_id"
+  end
+
   create_table "user_connected_accounts", force: :cascade do |t|
     t.bigint "user_id"
     t.string "provider"
@@ -382,10 +418,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_184907) do
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
   add_foreign_key "interpreter_details", "users"
+  add_foreign_key "appointments", "accounts", column: "agency_id"
+  add_foreign_key "appointments", "accounts", column: "customer_id"
+  add_foreign_key "appointments", "users", column: "interpreter_id"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "sites", "accounts", column: "customer_id"
   add_foreign_key "user_connected_accounts", "users"
 end
