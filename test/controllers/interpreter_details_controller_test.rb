@@ -3,6 +3,7 @@ require "test_helper"
 class InterpreterDetailsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @interpreter_detail = interpreter_details(:one)
+    @user = users(:one)
   end
 
   test "should get index" do
@@ -17,7 +18,7 @@ class InterpreterDetailsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create interpreter_detail" do
     assert_difference("InterpreterDetail.count") do
-      post interpreter_details_url, params: {interpreter_detail: {gender: @interpreter_detail.gender, interpreter_type: @interpreter_detail.interpreter_type, primary_phone: @interpreter_detail.primary_phone}}
+      post interpreter_details_url, params: {interpreter_detail: {gender: @interpreter_detail.gender, interpreter_type: @interpreter_detail.interpreter_type, primary_phone: @interpreter_detail.primary_phone, user_id: @user.id}}
     end
 
     assert_redirected_to interpreter_detail_url(InterpreterDetail.last)
@@ -34,7 +35,7 @@ class InterpreterDetailsControllerTest < ActionDispatch::IntegrationTest
   # end
 
   test "should update interpreter_detail" do
-    patch interpreter_detail_url(@interpreter_detail), params: {interpreter_detail: {gender: @interpreter_detail.gender, interpreter_type: @interpreter_detail.interpreter_type, primary_phone: @interpreter_detail.primary_phone}}
+    patch interpreter_detail_url(@interpreter_detail), params: {interpreter_detail: {gender: @interpreter_detail.gender, interpreter_type: @interpreter_detail.interpreter_type, primary_phone: @interpreter_detail.primary_phone, user_id: @user.id}}
     assert_redirected_to interpreter_detail_url(@interpreter_detail)
   end
 
