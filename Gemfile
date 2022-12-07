@@ -47,7 +47,7 @@ group :development, :test do
   gem "debug", ">= 1.0.0", platforms: %i[mri mingw x64_mingw]
 
   # Optional other debugging tools
-   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   # gem "pry-rails"
 
   gem "annotate", github: "excid3/annotate_models", branch: "rails7"
