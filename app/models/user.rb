@@ -74,6 +74,7 @@ class User < ApplicationRecord
   has_many :interpreter_languages, dependent: :destroy, foreign_key: :interpreter_id
   has_one :interpreter_detail, dependent: :destroy
   has_many :appointments, foreign_key: :interpreter_id
+  has_one :interpreter_detail, dependent: :destroy, foreign_key: :interpreter_id
 
   # We don't need users to confirm their email address on create,
   # just when they change it

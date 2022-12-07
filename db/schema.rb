@@ -421,6 +421,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_202903) do
   add_foreign_key "appointments", "accounts", column: "agency_id"
   add_foreign_key "appointments", "accounts", column: "customer_id"
   add_foreign_key "appointments", "users", column: "interpreter_id"
+  add_foreign_key "interpreter_details", "users"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
