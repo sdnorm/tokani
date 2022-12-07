@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_202903) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -180,21 +180,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_202903) do
     t.string "primary_phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
+    t.bigint "interpreter_id"
     t.string "ssn"
     t.date "dob"
     t.string "address"
     t.string "city"
     t.string "state"
     t.string "zip"
-    t.string "fname"
-    t.string "lname"
     t.date "start_date"
     t.string "drivers_license"
     t.string "emergency_contact_name"
     t.string "emergency_contact_phone"
-    t.string "email"
-    t.index ["user_id"], name: "index_interpreter_details_on_user_id"
+    t.index ["interpreter_id"], name: "index_interpreter_details_on_interpreter_id"
   end
 
   create_table "interpreter_languages", force: :cascade do |t|
@@ -431,6 +428,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_202903) do
   add_foreign_key "appointments", "accounts", column: "agency_id"
   add_foreign_key "appointments", "accounts", column: "customer_id"
   add_foreign_key "appointments", "users", column: "interpreter_id"
+  add_foreign_key "interpreter_details", "users", column: "interpreter_id"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"

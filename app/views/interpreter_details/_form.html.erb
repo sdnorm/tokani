@@ -13,19 +13,21 @@
           <div class="overflow-hidden shadow sm:rounded-md">
             <div class="bg-white px-4 py-5 sm:p-6">
               <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
+
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                   <div class="form-group">
-                    <%= form.label :first_name, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :fname, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                      <%= form.label :primary_phone, class:" block text-sm font-medium text-gray-700" %>
+                      <%= form.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                   </div>
                 </div>
-  
-                <div class="col-span-6 sm:col-span-3">
+
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                   <div class="form-group">
-                    <%= form.label :last_name, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :lname, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                    <%= form.label :start_date, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
                   </div>
                 </div>
+                
   
                 <div class="col-span-6 sm:col-span-6 lg:col-span-2">
                   <div class="form-group">
@@ -48,21 +50,16 @@
                   </div>
                 </div>
 
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                  <div class="form-group">
-                    <%= form.label :start_date, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
-                  </div>
-                </div>
+               
       
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                   <div class="form-group">
                     <%= form.label :emergency_contact_name, class:" block text-sm font-medium text-gray-700" %>
                     <%= form.text_field :emergency_contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                   </div>
                  </div>
       
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                   <div class="form-group">
                     <%= form.label :emergency_contact_phone, class:" block text-sm font-medium text-gray-700" %>
                     <%= form.text_field :emergency_contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
@@ -83,19 +80,7 @@
                       </div>
                 </div>
       
-                <div class="col-span-6 sm:col-span-4">
-                  <div class="form-group">
-                    <%= form.label :email_address, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
-                </div>
-    
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                    <div class="form-group">
-                        <%= form.label :primary_phone, class:" block text-sm font-medium text-gray-700" %>
-                        <%= form.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                      </div>
-                </div>
+                
 
                 <div class="col-span-6">
                   <div class="form-group">

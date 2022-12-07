@@ -7,13 +7,10 @@
 #  city                    :string
 #  dob                     :date
 #  drivers_license         :string
-#  email                   :string
 #  emergency_contact_name  :string
 #  emergency_contact_phone :string
-#  fname                   :string
 #  gender                  :integer
 #  interpreter_type        :integer
-#  lname                   :string
 #  primary_phone           :string
 #  ssn                     :string
 #  start_date              :date
@@ -21,11 +18,15 @@
 #  zip                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  user_id                 :bigint
+#  interpreter_id          :bigint
 #
 # Indexes
 #
-#  index_interpreter_details_on_user_id  (user_id)
+#  index_interpreter_details_on_interpreter_id  (interpreter_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (interpreter_id => users.id)
 #
 require "test_helper"
 

@@ -83,8 +83,8 @@ class InterpreterDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def interpreter_detail_params
-    params.require(:interpreter_detail).permit(:interpreter_type, :gender, :primary_phone, :user_id, :ssn, :dob, :address, :email,
-      :city, :state, :zip, :fname, :lname, :start_date, :drivers_license, :emergency_contact_name, :emergency_contact_phone)
+    params.require(:interpreter_detail).permit(:interpreter_type, :gender, :primary_phone, :interpreter_id, :ssn, :dob, :address,
+      :city, :state, :zip, :start_date, :drivers_license, :emergency_contact_name, :emergency_contact_phone)
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:interpreter_detail).permit(policy(@interpreter_detail).permitted_attributes)

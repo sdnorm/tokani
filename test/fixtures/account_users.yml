@@ -32,6 +32,12 @@ two:
   roles:
     admin: true
 
+three:
+  user: one
+  account: one
+  roles:
+    interpreter: true
+
 company_admin:
   account: company
   user: one
