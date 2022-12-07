@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get "requestor/index"
   resources :sites
-  get 'requestor/index'
+  get "requestor/index"
   resources :interpreter_details
   get "interpreter/index"
   resources :appointments
