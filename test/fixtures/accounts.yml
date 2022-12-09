@@ -10,15 +10,11 @@
 #  subdomain          :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  owner_id           :bigint
+#  owner_id           :uuid
 #
 # Indexes
 #
 #  index_accounts_on_owner_id  (owner_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (owner_id => users.id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

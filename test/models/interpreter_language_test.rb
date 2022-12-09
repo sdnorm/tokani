@@ -5,7 +5,7 @@
 #  id             :bigint           not null, primary key
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  interpreter_id :bigint           not null
+#  interpreter_id :uuid
 #  language_id    :bigint           not null
 #
 # Indexes
@@ -15,7 +15,6 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (interpreter_id => users.id)
 #  fk_rails_...  (language_id => languages.id)
 #
 require "test_helper"

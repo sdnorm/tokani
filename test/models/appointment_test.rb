@@ -28,7 +28,7 @@
 #  updated_at              :datetime         not null
 #  agency_id               :bigint
 #  customer_id             :bigint
-#  interpreter_id          :bigint
+#  interpreter_id          :uuid
 #
 # Indexes
 #
@@ -40,7 +40,6 @@
 #
 #  fk_rails_...  (agency_id => accounts.id)
 #  fk_rails_...  (customer_id => accounts.id)
-#  fk_rails_...  (interpreter_id => users.id)
 #
 require "test_helper"
 

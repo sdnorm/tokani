@@ -410,6 +410,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sidekiq (7.0.2)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
     smart_properties (1.17.0)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
@@ -516,6 +521,7 @@ DEPENDENCIES
   rqrcode (~> 2.1)
   ruby-oembed (~> 0.16.0)
   selenium-webdriver
+  sidekiq
   sprockets-rails (>= 3.4.1)
   standard
   stimulus-rails (~> 1.2)

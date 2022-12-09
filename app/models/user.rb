@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                     :bigint           not null, primary key
+#  id                     :uuid             not null, primary key
 #  accepted_privacy_at    :datetime
 #  accepted_terms_at      :datetime
 #  admin                  :boolean

@@ -43,12 +43,13 @@ class Jumpstart::AccountInvitationsTest < ActionDispatch::IntegrationTest
   end
 
   test "accepts invitation automatically through sign up" do
+    user_email = "new@inviteduser.com"
     assert_difference "User.count" do
-      post user_registration_path(invite: @account_invitation.token), params: {user: {name: "Invited User", email: "new@inviteduser.com", password: "password", password_confirmation: "password", terms_of_service: "1"}}
+      post user_registration_path(invite: @account_invitation.token), params: {user: {name: "Invited User", email: user_email, password: "password", password_confirmation: "password", terms_of_service: "1"}}
     end
     assert_redirected_to root_path
-    assert_equal 1, User.last.accounts.count
-    assert_equal @account, User.last.accounts.first
+    assert_equal 1, User.find_by(email: user_email).accounts.count
+    assert_equal @account, User.find_by(email: user_email).accounts.first
     assert_raises ActiveRecord::RecordNotFound do
       @account_invitation.reload
     end

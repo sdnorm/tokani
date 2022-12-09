@@ -33,7 +33,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    user = User.last
+    user = User.find_by(email: "api-user@example.com")
 
     # Account name should match user's name
     assert_equal "API User", user.personal_account.name
@@ -52,7 +52,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         assert_response :success
       end
 
-      user = User.last
+      user = User.find_by(email: "api-user@example.com")
       # Should not have created a personal account
       assert_nil user.personal_account
       # Account should use name from request
