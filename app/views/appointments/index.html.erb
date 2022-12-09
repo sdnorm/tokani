@@ -1,55 +1,99 @@
 <%= content_for :title, "Appointments" %>
 <%= turbo_stream_from :appointments %>
+<% content_for :sidenav do %><% end %>
 
-<div class="container px-4 mx-auto my-8">
-  <div class="flex items-center justify-between mb-4">
-    <div>
-      <h1 class="h3">Appointments</h1>
-
-      <div class="text-sm font-medium">
-        <span class="text-gray-500">Sort by:</span>
-        <%= sortable @appointments, :ref_number, "Ref number", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :start_time, "Start time", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :finish_time, "Finish time", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :duration, "Duration", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :modality, "Modality", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :sub_type, "Sub type", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :gender_req, "Gender req", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :admin_notes, "Admin notes", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :notes, "Notes", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :details, "Details", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :status, "Status", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :interpreter_type, "Interpreter type", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :billing_notes, "Billing notes", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :canceled_by, "Canceled by", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :cancel_reason_code, "Cancel reason code", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :lock_version, "Lock version", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :time_zone, "Time zone", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :confirmation_date, "Confirmation date", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :confirmation_phone, "Confirmation phone", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :confirmation_notes, "Confirmation notes", class: "text-gray-700 mr-1" %>
-        <%= sortable @appointments, :home_health_appointment, "Home health appointment", class: "text-gray-700 mr-1" %>
+<div>
+  <%= render partial: "shared/sidenav" %>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto">
+                <h1 class="text-xl font-semibold text-gray-900">Appointments</h1>
+                <div class="text-sm font-medium mt-2 text-gray-700">
+                  <span class="text-tokanisecondary-500">Sort by:</span>
+                  <%= sortable @appointments, :ref_number, "Ref number", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :start_time, "Start time", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :finish_time, "Finish time", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :duration, "Duration", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :modality, "Modality", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :sub_type, "Sub type", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :gender_req, "Gender req", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :admin_notes, "Admin notes", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :notes, "Notes", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :details, "Details", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :status, "Status", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :interpreter_type, "Interpreter type", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :billing_notes, "Billing notes", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :canceled_by, "Canceled by", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :cancel_reason_code, "Cancel reason code", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :lock_version, "Lock version", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :time_zone, "Time zone", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :confirmation_date, "Confirmation date", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :confirmation_phone, "Confirmation phone", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :confirmation_notes, "Confirmation notes", class: "text-gray-700 mr-1" %>
+                  <%= sortable @appointments, :home_health_appointment, "Home health appointment", class: "text-gray-700 mr-1" %>
+                </div>
+                
+              </div>
+              <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto">Add Appointment</button>
+              </div> -->
+            </div>
+            <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6">Appointment Number</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Date/Time</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Duration</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Language</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 sm:table-cell">Modality</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Status</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <span class="sr-only">Edit</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                <% @appointments.each do |appointment| %>
+                  <tr>
+                    <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                        <%= appointment.ref_number %>
+                      <dl class="font-normal lg:hidden">
+                        <dt class="sr-only">Date/Time</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%= appointment.start_time %></dd>
+                        <dt class="sr-only">Duration</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%= appointment.duration %></dd>
+                        <dt class="sr-only">Language</dt>
+                        <dd class="mt-1 truncate text-gray-500">Need to add</dd>
+                      </dl>
+                    </td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.start_time %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.duration %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">Need to add</td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= appointment.modality %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= appointment.status %></td>
+                    <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <a href="#" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= appointment.ref_number %></span></a>
+                    </td>
+                  </tr>
+                <% end %>
+                  <!-- More appointments... -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "btn btn-large btn-primary text-sm" %>
-  </div>
-
-  <%= tag.div id: ("appointments" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
-    <%= render partial: "appointments/index", collection: @appointments, as: :appointment, cached: true %>
-
-    <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
-      <div class="flex-1 text-center">
-        <p class="mb-4 h3">Create your first Appointment</p>
-        <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "btn btn-primary" %>
-      </div>
-    </div>
-  <% end %>
-
-  <% if @pagy.pages > 1 %>
+      <% if @pagy.pages > 1 %>
     <div class="my-6 text-center">
       <%== pagy_nav(@pagy) %>
     </div>
   <% end %>
+    </main>
+  </div>
 </div>
+
