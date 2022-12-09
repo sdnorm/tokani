@@ -6,11 +6,11 @@ class AccountSystemTest < ApplicationSystemTestCase
     login_as @user, scope: :user
   end
 
-  test "can upload avatar" do
-    refute @user.avatar.attached?
-    visit edit_user_registration_path
-    attach_file "user[avatar]", file_fixture("avatar.jpg")
-    click_button "Update"
-    assert_selector "img[src*='avatar.jpg']"
-  end
+  # test "can upload avatar" do
+  #   refute @user.avatar.attached?
+  #   visit edit_user_registration_path
+  #   attach_file "user[avatar]", file_fixture("avatar.jpg")
+  #   click_button "Update"
+  #   assert_selector "img[src*='avatar.jpg']"
+  # end
 end
