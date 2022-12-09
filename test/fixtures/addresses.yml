@@ -13,11 +13,7 @@
 #  state            :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  addressable_id   :bigint           not null
-#
-# Indexes
-#
-#  index_addresses_on_addressable  (addressable_type,addressable_id)
+#  addressable_id   :uuid             not null
 #
 
 one:

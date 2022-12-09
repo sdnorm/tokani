@@ -9,8 +9,8 @@
 #  token         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  account_id    :bigint           not null
 #  invited_by_id :uuid
+#  account_id    :uuid             not null
 #
 # Indexes
 #
@@ -21,6 +21,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (invited_by_id => users.id)
 #
 class AccountInvitation < ApplicationRecord
   ROLES = AccountUser::ROLES

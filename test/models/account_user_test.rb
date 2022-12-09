@@ -6,7 +6,7 @@
 #  roles      :jsonb            not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  account_id :bigint
+#  account_id :uuid
 #  user_id    :uuid
 #
 # Indexes
@@ -17,6 +17,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 require "test_helper"

@@ -2,7 +2,7 @@
 #
 # Table name: accounts
 #
-#  id                 :bigint           not null, primary key
+#  id                 :uuid             not null, primary key
 #  domain             :string
 #  extra_billing_info :text
 #  name               :string           not null
@@ -14,7 +14,8 @@
 #
 # Indexes
 #
-#  index_accounts_on_owner_id  (owner_id)
+#  index_accounts_on_created_at  (created_at)
+#  index_accounts_on_owner_id    (owner_id)
 #
 
 class Account < ApplicationRecord
