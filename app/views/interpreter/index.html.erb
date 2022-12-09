@@ -35,23 +35,23 @@
                 <% @interpreters_all.each do |interpreter| %>
                   <tr>
                     <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                        <%= interpreter.user.last_name %>,  <%= interpreter.user.first_name %>
+                        <%= interpreter.last_name %>,  <%= interpreter.first_name %>
                       <dl class="font-normal lg:hidden">
                         <dt class="sr-only">Email</dt>
-                        <dd class="mt-1 truncate text-gray-700"><%= interpreter.user.email %></dd>
+                        <dd class="mt-1 truncate text-gray-700"><%= interpreter.email %></dd>
                         <dt class="sr-only">Type</dt>
-                        <dd class="mt-1 truncate text-gray-700"><%= interpreter.interpreter_type %></dd>
+                        <dd class="mt-1 truncate text-gray-700"><%= interpreter.interpreter_detail.interpreter_type %></dd>
                         <dt class="sr-only">Gender</dt>
-                        <dd class="mt-1 truncate text-gray-500"><%= interpreter.gender %></dd>
+                        <dd class="mt-1 truncate text-gray-500"><%= interpreter.interpreter_detail.gender %></dd>
                       </dl>
                     </td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= interpreter.user.email %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= interpreter.interpreter_type %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= interpreter.gender %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= interpreter.address %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= interpreter.primary_phone %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= interpreter.email %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= interpreter.interpreter_detail.interpreter_type %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= interpreter.interpreter_detail.gender %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= interpreter.interpreter_detail.address %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= interpreter.interpreter_detail.primary_phone %></td>
                     <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= interpreter.user.last_name %></span></a>
+                      <a href="#" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= interpreter.last_name %></span></a>
                     </td>
                   </tr>
                 <% end %>
