@@ -2,7 +2,7 @@ class UpdateUserToUuid < ActiveRecord::Migration[7.0]
   def change
     enable_extension "pgcrypto"
 
-    add_column :users, :uuid, :uuid, default: "gen_random_uuid()"#, null: false
+    add_column :users, :uuid, :uuid, default: "gen_random_uuid()" # , null: false
 
     add_column :api_tokens, :user_uuid, :uuid
     add_column :accounts, :owner_uuid, :uuid
