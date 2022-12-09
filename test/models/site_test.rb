@@ -16,16 +16,12 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  backport_id   :bigint
-#  customer_id   :bigint           not null
+#  customer_id   :uuid             not null
 #
 # Indexes
 #
 #  index_sites_on_backport_id  (backport_id)
 #  index_sites_on_customer_id  (customer_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (customer_id => accounts.id)
 #
 require "test_helper"
 

@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+  # we don't have subsctriptions in our app just yet
+
   before_action :require_payments_enabled
   before_action :authenticate_user_with_sign_up!
   before_action :require_account

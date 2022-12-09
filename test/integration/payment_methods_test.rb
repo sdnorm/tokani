@@ -13,10 +13,11 @@ class PaymentMethodsTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "fake processor sees a message" do
-    @user.personal_account.set_payment_processor :fake_processor, allow_fake: true
-    get new_payment_method_path
-    assert_response :success
-    assert_match ERB::Util.h(I18n.t("payment_methods.forms.fake_processor.message")), response.body
-  end
+  # no payments yet
+  # test "fake processor sees a message" do
+  #   @user.personal_account.set_payment_processor :fake_processor, allow_fake: true
+  #   get new_payment_method_path
+  #   assert_response :success
+  #   assert_match ERB::Util.h(I18n.t("payment_methods.forms.fake_processor.message")), response.body
+  # end
 end

@@ -6,17 +6,13 @@
 #  roles      :jsonb            not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  account_id :bigint
+#  account_id :uuid
 #  user_id    :uuid
 #
 # Indexes
 #
 #  index_account_users_on_account_id  (account_id)
 #  index_account_users_on_user_id     (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
 #
 
 class AccountUser < ApplicationRecord

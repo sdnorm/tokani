@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_09_185210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "account_invitations", force: :cascade do |t|
-    t.bigint "account_id", null: false
     t.string "token", null: false
     t.string "name", null: false
     t.string "email", null: false
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "account_id", null: false
     t.uuid "invited_by_id"
     t.index ["account_id"], name: "index_account_invitations_on_account_id"
     t.index ["invited_by_id"], name: "index_account_invitations_on_invited_by_id"
@@ -30,16 +30,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
   end
 
   create_table "account_users", force: :cascade do |t|
-    t.bigint "account_id"
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "account_id"
     t.uuid "user_id"
     t.index ["account_id"], name: "index_account_users_on_account_id"
     t.index ["user_id"], name: "index_account_users_on_user_id"
   end
 
-  create_table "accounts", force: :cascade do |t|
+  create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.boolean "personal", default: false
     t.datetime "created_at", null: false
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
     t.string "domain"
     t.string "subdomain"
     t.uuid "owner_id"
+    t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
 
@@ -98,7 +99,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "addressable_type", null: false
-    t.bigint "addressable_id", null: false
     t.integer "address_type"
     t.string "line1"
     t.string "line2"
@@ -108,7 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+    t.uuid "addressable_id", null: false
   end
 
   create_table "announcements", force: :cascade do |t|
@@ -166,8 +166,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "agency_id"
-    t.bigint "customer_id"
+    t.uuid "agency_id"
+    t.uuid "customer_id"
     t.uuid "interpreter_id"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
@@ -219,7 +219,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "account_id", null: false
     t.string "recipient_type", null: false
     t.bigint "recipient_id", null: false
     t.string "type"
@@ -228,6 +227,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "interacted_at", precision: nil
+    t.uuid "account_id", null: false
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
@@ -333,12 +333,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
   end
 
   create_table "rate_criteria", force: :cascade do |t|
-    t.bigint "account_id"
     t.integer "type_key", null: false
     t.string "name"
     t.integer "sort_order", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "account_id"
     t.index ["account_id"], name: "index_rate_criteria_on_account_id"
   end
 
@@ -356,7 +356,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
     t.string "contact_phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "customer_id", null: false
+    t.uuid "customer_id", null: false
     t.index ["backport_id"], name: "index_sites_on_backport_id"
     t.index ["customer_id"], name: "index_sites_on_customer_id"
   end
@@ -416,16 +416,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "account_invitations", "accounts"
-  add_foreign_key "account_users", "accounts"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
-  add_foreign_key "appointments", "accounts", column: "agency_id"
-  add_foreign_key "appointments", "accounts", column: "customer_id"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
-  add_foreign_key "sites", "accounts", column: "customer_id"
 end
