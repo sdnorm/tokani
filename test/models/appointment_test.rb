@@ -36,10 +36,6 @@
 #  index_appointments_on_customer_id     (customer_id)
 #  index_appointments_on_interpreter_id  (interpreter_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (interpreter_id => users.id)
-#
 require "test_helper"
 
 class AppointmentTest < ActiveSupport::TestCase

@@ -26,19 +26,15 @@
 #  time_zone               :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  interpreter_id          :uuid
 #  agency_id               :uuid
 #  customer_id             :uuid
+#  interpreter_id          :uuid
 #
 # Indexes
 #
 #  index_appointments_on_agency_id       (agency_id)
 #  index_appointments_on_customer_id     (customer_id)
 #  index_appointments_on_interpreter_id  (interpreter_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (interpreter_id => users.id)
 #
 class Appointment < ApplicationRecord
   # Broadcast changes in realtime with Hotwire

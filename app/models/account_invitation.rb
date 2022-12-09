@@ -9,19 +9,14 @@
 #  token         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  invited_by_id :uuid
 #  account_id    :uuid             not null
+#  invited_by_id :uuid
 #
 # Indexes
 #
 #  index_account_invitations_on_account_id     (account_id)
 #  index_account_invitations_on_invited_by_id  (invited_by_id)
 #  index_account_invitations_on_token          (token) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (invited_by_id => users.id)
 #
 class AccountInvitation < ApplicationRecord
   ROLES = AccountUser::ROLES

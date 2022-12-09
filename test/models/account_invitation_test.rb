@@ -18,11 +18,6 @@
 #  index_account_invitations_on_invited_by_id  (invited_by_id)
 #  index_account_invitations_on_token          (token) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (invited_by_id => users.id)
-#
 require "test_helper"
 
 class AccountInvitationTest < ActiveSupport::TestCase

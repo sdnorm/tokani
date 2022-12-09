@@ -22,19 +22,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_185210) do
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "invited_by_id"
     t.uuid "account_id", null: false
+    t.uuid "invited_by_id"
     t.index ["account_id"], name: "index_account_invitations_on_account_id"
     t.index ["invited_by_id"], name: "index_account_invitations_on_invited_by_id"
     t.index ["token"], name: "index_account_invitations_on_token", unique: true
   end
 
   create_table "account_users", force: :cascade do |t|
-    t.uuid "user_id"
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "account_id"
+    t.uuid "user_id"
     t.index ["account_id"], name: "index_account_users_on_account_id"
     t.index ["user_id"], name: "index_account_users_on_user_id"
   end
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_185210) do
     t.text "extra_billing_info"
     t.string "domain"
     t.string "subdomain"
+    t.uuid "owner_id"
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
@@ -165,9 +166,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_185210) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "interpreter_id"
     t.uuid "agency_id"
     t.uuid "customer_id"
+    t.uuid "interpreter_id"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
@@ -415,31 +416,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_185210) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-<<<<<<< HEAD
-  add_foreign_key "account_invitations", "accounts"
-  add_foreign_key "account_users", "accounts"
-=======
-  add_foreign_key "account_invitations", "users", column: "invited_by_id"
-  add_foreign_key "account_users", "users"
-  add_foreign_key "accounts", "users", column: "owner_id"
->>>>>>> 6b6c5e8 (account uuid)
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
-<<<<<<< HEAD
-  add_foreign_key "appointments", "accounts", column: "agency_id"
-  add_foreign_key "appointments", "accounts", column: "customer_id"
-=======
-  add_foreign_key "appointments", "users", column: "interpreter_id"
-  add_foreign_key "interpreter_details", "users", column: "interpreter_id"
->>>>>>> 6b6c5e8 (account uuid)
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
-<<<<<<< HEAD
-  add_foreign_key "sites", "accounts", column: "customer_id"
-=======
-  add_foreign_key "user_connected_accounts", "users"
->>>>>>> 6b6c5e8 (account uuid)
 end
