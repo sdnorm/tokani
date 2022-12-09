@@ -18,15 +18,11 @@
 #  zip                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  interpreter_id          :bigint
+#  interpreter_id          :uuid
 #
 # Indexes
 #
 #  index_interpreter_details_on_interpreter_id  (interpreter_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (interpreter_id => users.id)
 #
 
 one:

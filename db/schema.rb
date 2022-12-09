@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_09_162059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "account_invitations", force: :cascade do |t|
     t.bigint "account_id", null: false
-    t.bigint "invited_by_id"
     t.string "token", null: false
     t.string "name", null: false
     t.string "email", null: false
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "invited_by_id"
     t.index ["account_id"], name: "index_account_invitations_on_account_id"
     t.index ["invited_by_id"], name: "index_account_invitations_on_invited_by_id"
     t.index ["token"], name: "index_account_invitations_on_token", unique: true
@@ -31,23 +31,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
 
   create_table "account_users", force: :cascade do |t|
     t.bigint "account_id"
-    t.bigint "user_id"
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
     t.index ["account_id"], name: "index_account_users_on_account_id"
     t.index ["user_id"], name: "index_account_users_on_user_id"
   end
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "owner_id"
     t.boolean "personal", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "extra_billing_info"
     t.string "domain"
     t.string "subdomain"
+    t.uuid "owner_id"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
 
@@ -120,7 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
   end
 
   create_table "api_tokens", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "token"
     t.string "name"
     t.jsonb "metadata", default: {}
@@ -129,6 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
     t.datetime "expires_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
     t.index ["token"], name: "index_api_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
@@ -168,7 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
     t.datetime "updated_at", null: false
     t.bigint "agency_id"
     t.bigint "customer_id"
-    t.bigint "interpreter_id"
+    t.uuid "interpreter_id"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
@@ -180,7 +180,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
     t.string "primary_phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "interpreter_id"
     t.string "ssn"
     t.date "dob"
     t.string "address"
@@ -191,14 +190,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
     t.string "drivers_license"
     t.string "emergency_contact_name"
     t.string "emergency_contact_phone"
+    t.uuid "interpreter_id"
     t.index ["interpreter_id"], name: "index_interpreter_details_on_interpreter_id"
   end
 
   create_table "interpreter_languages", force: :cascade do |t|
     t.bigint "language_id", null: false
-    t.bigint "interpreter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "interpreter_id"
     t.index ["interpreter_id"], name: "index_interpreter_languages_on_interpreter_id"
     t.index ["language_id"], name: "index_interpreter_languages_on_language_id"
   end
@@ -210,11 +210,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
   end
 
   create_table "notification_tokens", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "token", null: false
     t.string "platform", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
     t.index ["user_id"], name: "index_notification_tokens_on_user_id"
   end
 
@@ -356,13 +356,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
     t.string "contact_phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "customer_id"
+    t.bigint "customer_id", null: false
     t.index ["backport_id"], name: "index_sites_on_backport_id"
     t.index ["customer_id"], name: "index_sites_on_customer_id"
   end
 
   create_table "user_connected_accounts", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "provider"
     t.string "uid"
     t.string "refresh_token"
@@ -372,10 +371,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "access_token"
     t.string "access_token_secret"
+    t.uuid "user_id"
     t.index ["user_id"], name: "index_user_connected_accounts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -417,23 +417,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_200323) do
   end
 
   add_foreign_key "account_invitations", "accounts"
-  add_foreign_key "account_invitations", "users", column: "invited_by_id"
   add_foreign_key "account_users", "accounts"
-  add_foreign_key "account_users", "users"
-  add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "api_tokens", "users"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
   add_foreign_key "appointments", "accounts", column: "agency_id"
   add_foreign_key "appointments", "accounts", column: "customer_id"
-  add_foreign_key "appointments", "users", column: "interpreter_id"
-  add_foreign_key "interpreter_details", "users", column: "interpreter_id"
   add_foreign_key "interpreter_languages", "languages"
-  add_foreign_key "interpreter_languages", "users", column: "interpreter_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "sites", "accounts", column: "customer_id"
-  add_foreign_key "user_connected_accounts", "users"
 end

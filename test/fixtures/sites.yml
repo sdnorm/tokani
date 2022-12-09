@@ -16,7 +16,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  backport_id   :bigint
-#  customer_id   :bigint
+#  customer_id   :bigint           not null
 #
 # Indexes
 #

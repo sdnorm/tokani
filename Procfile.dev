@@ -4,3 +4,4 @@ js: yarn build --reload
 
 
 # docker: docker-compose up
+worker: bundle exec sidekiq

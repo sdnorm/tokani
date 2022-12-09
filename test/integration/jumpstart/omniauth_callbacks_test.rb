@@ -9,7 +9,7 @@ class Jumpstart::OmniauthCallbacksTest < ActionDispatch::IntegrationTest
   test "can register and login with a social account" do
     get "/users/auth/developer/callback"
 
-    user = User.last
+    user = User.find_by(email: "twitter@example.com")
     assert_equal "twitter@example.com", user.email
     assert_equal "developer", user.connected_accounts.last.provider
     assert_equal "12345", user.connected_accounts.last.uid
