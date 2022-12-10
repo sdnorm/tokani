@@ -90,6 +90,7 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :name,
     :email,
+    :password,
     :admin,
     :agency_admin,
     :terms_of_service
