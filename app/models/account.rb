@@ -3,6 +3,7 @@
 # Table name: accounts
 #
 #  id                 :uuid             not null, primary key
+#  customer           :boolean          default(FALSE)
 #  domain             :string
 #  extra_billing_info :text
 #  name               :string           not null
@@ -33,6 +34,12 @@ class Account < ApplicationRecord
   has_many :appointments, foreign_key: :agency_id
   has_many :appointments, foreign_key: :customer_id
   has_many :sites, dependent: :destroy, foreign_key: :customer_id
+
+  has_many :agency_customers, foreign_key: :agency_id
+  has_many :customers, through: :agency_customers
+
+  has_many :customer_agencies, foreign_key: :customer_id
+  has_many :agencies, through: :customer_agencies
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }
