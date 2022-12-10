@@ -5,8 +5,8 @@
 #  id          :bigint           not null, primary key
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  agency_id   :uuid             not null
-#  customer_id :uuid             not null
+#  agency_id   :uuid
+#  customer_id :uuid
 #
 # Indexes
 #

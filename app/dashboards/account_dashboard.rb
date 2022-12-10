@@ -21,7 +21,7 @@ class AccountDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     extra_billing_info: Field::Text,
-    customer: Field::Boolean,
+    customer: Field::Boolean
     # agen: Field::String
   }.freeze
 
