@@ -880,10 +880,10 @@ select@^1.1.2:
   resolved "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
   integrity sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==
 
-slim-select@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/slim-select/-/slim-select-2.3.0.tgz#c8255345d9741971c35cfcb34768bdab3ee68055"
-  integrity sha512-kfrAL3PH5I+29CDuiRW6IMAmigA30x3GgcQdOQLBjg0N9o4r7ecr6kcvhrIHWpmmTSLLn63BMb26PiLKXHXfYA==
+slim-select@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/slim-select/-/slim-select-2.3.3.tgz#8bdfd891124cf5f2329c204088ba5f43a58e450b"
+  integrity sha512-BZNgU1DWDPtfSKKVfEdVMhLDCurzTTdX7n0AFuR/MNy2BzVYHN3WfkceAK1rttLqGgzFAHotq7Qm2JdrhOH5Ag==
 
 source-map-js@^1.0.2:
   version "1.0.2"
