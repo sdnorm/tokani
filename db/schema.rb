@@ -22,8 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_144624) do
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "account_id", null: false
     t.uuid "invited_by_id"
+    t.uuid "account_id", null: false
     t.index ["account_id"], name: "index_account_invitations_on_account_id"
     t.index ["invited_by_id"], name: "index_account_invitations_on_invited_by_id"
     t.index ["token"], name: "index_account_invitations_on_token", unique: true
@@ -33,8 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_144624) do
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "account_id"
     t.uuid "user_id"
+    t.uuid "account_id"
     t.index ["account_id"], name: "index_account_users_on_account_id"
     t.index ["user_id"], name: "index_account_users_on_user_id"
   end
@@ -176,9 +176,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_144624) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "interpreter_id"
     t.uuid "agency_id"
     t.uuid "customer_id"
-    t.uuid "interpreter_id"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"

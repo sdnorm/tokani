@@ -45,7 +45,7 @@
                     <%= user.name || user.email %>
                   </td>
                   <td class="p-3 text-sm font-medium text-gray-700"><%= account_user_roles(@account, account_user).join(", ") %></td>
-                  <td class="p-3 text-right"><%= link_to t(".edit"), edit_account_account_user_path(@account, account_user), class: "btn btn-link" if account_admin?(@account, current_user) %></td>
+                  <td class="p-3 text-right"><%= link_to t(".edit"), edit_account_account_user_path(@account, account_user), class: "btn btn-link" if account_agency_admin?(@account, current_user) %></td>
                 </tr>
               <% end %>
 
@@ -68,7 +68,7 @@
           </table>
         <% end %>
 
-        <%= link_to t(".invite"), new_account_account_invitation_path(@account), class: "mt-2 btn btn-light-gray" if !@account.personal? && account_admin?(@account, current_user) %>
+        <%= link_to t(".invite"), new_account_account_invitation_path(@account), class: "mt-2 btn btn-light-gray" if !@account.personal? && account_agency_admin?(@account, current_user) %>
       <% end %>
     </div>
   </div>

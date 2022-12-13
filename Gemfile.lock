@@ -186,6 +186,8 @@ GEM
       rubocop
       smart_properties
     erubi (1.11.0)
+    faker (3.0.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -489,6 +491,7 @@ DEPENDENCIES
   devise (~> 4.8, >= 4.8.1)
   devise-i18n (~> 1.10)
   erb_lint
+  faker
   image_processing (~> 1.12)
   inline_svg (~> 1.6)
   invisible_captcha (~> 2.0)

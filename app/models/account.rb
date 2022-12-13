@@ -31,8 +31,10 @@ class Account < ApplicationRecord
   has_many :addresses, as: :addressable, dependent: :destroy
   has_one :billing_address, -> { where(address_type: :billing) }, class_name: "Address", as: :addressable
   has_one :shipping_address, -> { where(address_type: :shipping) }, class_name: "Address", as: :addressable
+
   has_many :appointments, foreign_key: :agency_id
-  has_many :appointments, foreign_key: :customer_id
+  # has_many :appointments, foreign_key: :customer_id
+
   has_many :sites, dependent: :destroy, foreign_key: :customer_id
 
   has_many :agency_customers, foreign_key: :agency_id
@@ -90,7 +92,7 @@ class Account < ApplicationRecord
     user = account_user.user
 
     ApplicationRecord.transaction do
-      account_user.update!(admin: true)
+      # account_user.update!(admin: true)
       update!(owner: user)
 
       # Add any additional logic for updating records here

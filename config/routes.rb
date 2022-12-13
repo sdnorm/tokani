@@ -152,6 +152,7 @@ Rails.application.routes.draw do
     # get "/dashboard", to: "dashboard#show", as: :user_root
     # resources :accounts do
     resources :appointments
+    resources :customers
     # end
   end
 

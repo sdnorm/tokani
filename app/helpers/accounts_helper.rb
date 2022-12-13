@@ -36,6 +36,10 @@ module AccountsHelper
     roles
   end
 
+  def account_agency_admin?(account, account_user)
+    AccountUser.find_by(account: account, user: account_user).agency_admin?
+  end
+
   def account_admin?(account, account_user)
     AccountUser.find_by(account: account, user: account_user).admin?
   end
