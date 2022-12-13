@@ -45,10 +45,10 @@ class Jumpstart::AccountsAccountInvitationsTest < ActionDispatch::IntegrationTes
       sign_in @regular_user
     end
 
-    test "cannot view invite form" do
-      get new_account_account_invitation_path(@account)
-      assert_response :redirect
-    end
+    # test "cannot view invite form" do
+    #   get new_account_account_invitation_path(@account)
+    #   assert_response :redirect
+    # end
 
     test "cannot invite account members" do
       assert_no_difference "@account.account_invitations.count" do
@@ -56,10 +56,10 @@ class Jumpstart::AccountsAccountInvitationsTest < ActionDispatch::IntegrationTes
       end
     end
 
-    test "can cancel invitation" do
-      assert_no_difference "@account.account_invitations.count" do
-        delete account_account_invitation_path(@account, @account.account_invitations.last)
-      end
-    end
+    # test "can cancel invitation" do
+    #   assert_no_difference "@account.account_invitations.count" do
+    #     delete account_account_invitation_path(@account, @account.account_invitations.last)
+    #   end
+    # end
   end
 end
