@@ -1,7 +1,6 @@
 web: bundle exec bin/rails server -p $PORT
 css: bundle exec yarn build:css --watch
-js: bundle exec yarn build --watch
-
+js: bundle exec yarn build --reload
+worker: bundle exec sidekiq
 
 # docker: docker-compose up
-# worker: bundle exec sidekiq
