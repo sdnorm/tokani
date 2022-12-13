@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get "requestor/index"
   resources :interpreter_details
   get "interpreter/index"
-  resources :appointments
   draw :turbo
 
   # Jumpstart views
@@ -151,6 +150,9 @@ Rails.application.routes.draw do
     root to: "dashboard#show", as: :user_root
     # Alternate route to use if logged in users should still see public root
     # get "/dashboard", to: "dashboard#show", as: :user_root
+    # resources :accounts do
+    resources :appointments
+    # end
   end
 
   # Public marketing homepage
