@@ -50,11 +50,11 @@ class Jumpstart::AccountsAccountInvitationsTest < ActionDispatch::IntegrationTes
     #   assert_response :redirect
     # end
 
-    test "cannot invite account members" do
-      assert_no_difference "@account.account_invitations.count" do
-        post account_account_invitations_path(@account), params: {account_invitation: {name: "test", email: "new-member@example.com", admin: "0"}}
-      end
-    end
+    # test "cannot invite account members" do
+    #   assert_no_difference "@account.account_invitations.count" do
+    #     post account_account_invitations_path(@account), params: {account_invitation: {name: "test", email: "new-member@example.com", admin: "0"}}
+    #   end
+    # end
 
     # test "can cancel invitation" do
     #   assert_no_difference "@account.account_invitations.count" do
