@@ -118,5 +118,3 @@ module ApplicationHelper
     "text-gray-100 group-hover:text-gray-500"
   end
 end
-
-
