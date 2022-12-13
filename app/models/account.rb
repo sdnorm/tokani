@@ -33,7 +33,7 @@ class Account < ApplicationRecord
   has_one :shipping_address, -> { where(address_type: :shipping) }, class_name: "Address", as: :addressable
 
   has_many :appointments, foreign_key: :agency_id
-  # has_many :appointments, foreign_key: :customer_id
+  has_many :customer_appointments, class_name: "Appointment", foreign_key: :customer_id
 
   has_many :sites, dependent: :destroy, foreign_key: :customer_id
 
