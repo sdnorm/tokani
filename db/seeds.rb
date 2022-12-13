@@ -14,15 +14,15 @@ User.create!(name: "Super Admin", email: "super@admin.com", password: "password"
     name: Faker::Name.name,
     email: Faker::Internet.email,
     password: "password",
-    terms_of_service: true,
+    terms_of_service: true
   )
 end
 
 # 3.times do |account|
-  Account.create!(
-    name: Faker::Company.name,
-    owner_id: User.all.sample.id
-  )
+Account.create!(
+  name: Faker::Company.name,
+  owner_id: User.all.sample.id
+)
 # end
 
 agency_with_things = Account.where(customer: false, personal: false).first
@@ -40,11 +40,11 @@ possible_owner_ids = User.where.not(id: agency_owner_ids).pluck(:id) - agency_ow
 end
 
 # Account.where(customer: false, personal: false).each do |agency|
-  AccountUser.create!(
-    account_id: agency_with_things.id, 
-    user_id: agency_with_things.owner_id, 
-    roles: {agency_admin: true}
-  )
+AccountUser.create!(
+  account_id: agency_with_things.id,
+  user_id: agency_with_things.owner_id,
+  roles: {agency_admin: true}
+)
 # end
 
 start_time = Faker::Time.between(from: DateTime.now + 1, to: DateTime.now + 20)
