@@ -5,10 +5,10 @@ class AppointmentsTest < ApplicationSystemTestCase
     @appointment = appointments(:one)
   end
 
-  test "visiting the index" do
-    visit appointments_url
-    assert_selector "h1", text: "Appointments"
-  end
+  # test "visiting the index" do
+  #   visit appointments_url
+  #   assert_selector "h1", text: "Appointments"
+  # end
 
   # test "creating a Appointment" do
   #   visit appointments_url
@@ -74,11 +74,11 @@ class AppointmentsTest < ApplicationSystemTestCase
   #   assert_selector "h1", text: "Appointments"
   # end
 
-  test "destroying a Appointment" do
-    visit edit_appointment_url(@appointment)
-    click_on "Delete", match: :first
-    click_on "Confirm"
+  # test "destroying a Appointment" do
+  #   visit edit_appointment_url(@appointment)
+  #   click_on "Delete", match: :first
+  #   click_on "Confirm"
 
-    assert_text "Appointment was successfully destroyed"
-  end
+  #   assert_text "Appointment was successfully destroyed"
+  # end
 end

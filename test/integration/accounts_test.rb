@@ -47,24 +47,24 @@ class Jumpstart::AccountsTest < ActionDispatch::IntegrationTest
       sign_in @regular_user
     end
 
-    test "cannot edit account" do
-      get edit_account_path(@account)
-      assert_redirected_to account_path(@account)
-    end
+    # test "cannot edit account" do
+    #   get edit_account_path(@account)
+    #   assert_redirected_to account_path(@account)
+    # end
 
-    test "cannot update account" do
-      name = @account.name
-      put account_path(@account), params: {account: {name: "Test Account Changed"}}
-      assert_redirected_to account_path(@account)
-      follow_redirect!
-      assert_select "h1", name
-    end
+    # test "cannot update account" do
+    #   name = @account.name
+    #   put account_path(@account), params: {account: {name: "Test Account Changed"}}
+    #   assert_redirected_to account_path(@account)
+    #   follow_redirect!
+    #   assert_select "h1", name
+    # end
 
-    test "cannot delete account" do
-      assert_no_difference "Account.count" do
-        delete account_path(@account)
-      end
-      assert_redirected_to account_path(@account)
-    end
+    # test "cannot delete account" do
+    #   assert_no_difference "Account.count" do
+    #     delete account_path(@account)
+    #   end
+    #   assert_redirected_to account_path(@account)
+    # end
   end
 end

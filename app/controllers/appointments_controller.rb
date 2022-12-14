@@ -1,13 +1,16 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
 
+  before_action :authenticate_user!
+  before_action :set_account
+
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # GET /appointments
   def index
-    @pagy, @appointments = pagy(Appointment.sort_by_params(params[:sort], sort_direction))
+    @pagy, @appointments = pagy(@account.appointments.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @appointments
@@ -35,6 +38,8 @@ class AppointmentsController < ApplicationController
 
     # Uncomment to authorize with Pundit
     # authorize @appointment
+
+    @appointment.agency_id = @account.id
 
     respond_to do |format|
       if @appointment.save
@@ -79,6 +84,10 @@ class AppointmentsController < ApplicationController
     # authorize @appointment
   rescue ActiveRecord::RecordNotFound
     redirect_to appointments_path
+  end
+
+  def set_account
+    @account = current_account
   end
 
   # Only allow a list of trusted parameters through.

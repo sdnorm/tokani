@@ -57,4 +57,68 @@ module ApplicationHelper
   def yes_no(a_boolean)
     a_boolean ? "yes" : "no"
   end
+
+  def sidenav_highlight?(controller_name)
+    if controller_name == controller.controller_name
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def sidenav_highlight_icon?(controller_name)
+    if controller_name == controller.controller_name
+      highlighted_icon
+    else
+      unhighlighted_icon
+    end
+  end
+
+  def dashboard_highlight?
+    if current_page?(root_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def dashboard_highlight_icon?
+    if current_page?(root_path)
+      highlighted_icon
+    else
+      unhighlighted_icon
+    end
+  end
+
+  def system_admin_highlight?
+    if controller_name == "sites" || controller_name == "requestor" || controller_name == "interpreter"
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def system_admin_highlight_icon?
+    if controller_name == "sites" || controller_name == "requestor" || controller_name == "interpreter"
+      highlighted_icon
+    else
+      unhighlighted_icon
+    end
+  end
+
+  def highlighted
+    "bg-gray-100 text-gray-900"
+  end
+
+  def highlighted_icon
+    "text-gray-9"
+  end
+
+  def unhighlighted
+    "text-gray-100 hover:bg-gray-50 hover:text-gray-900"
+  end
+
+  def unhighlighted_icon
+    "text-gray-100 group-hover:text-gray-500"
+  end
 end
