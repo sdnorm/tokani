@@ -32,10 +32,6 @@
     <%= site.active %>
   </div>
   <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Backport</p>
-    <%= site.backport_id %>
-  </div>
-  <div class="mb-4">
     <p class="text-sm font-medium text-gray-500">Notes</p>
     <%= site.notes %>
   </div>
@@ -43,4 +39,30 @@
     <p class="text-sm font-medium text-gray-500">Contact phone</p>
     <%= site.contact_phone %>
   </div>
+
+  <h4>Departments</h4>
+  <% if @site.departments.any? %>
+    <table class='table-auto' style="width: 50%">
+      <thead>
+        <tr>
+          <th class="">Department Name</th>
+          <th class="">Location</th>
+          <th class="">Accounting Unit Code</th>
+        </tr>
+      </thead>
+      <tbody>
+       <% @site.departments.each do |department| %>
+          <tr>
+            <td><%= department.name %></td>
+            <td><%= department.location %></td>
+            <td><%= department.accounting_unit_code %></td>
+          </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+  <% else %>
+    <p>No departments present.</p>
+  <% end %>
+
 </div>

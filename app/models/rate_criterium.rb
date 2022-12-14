@@ -2,7 +2,7 @@
 #
 # Table name: rate_criteria
 #
-#  id         :bigint           not null, primary key
+#  id         :uuid             not null, primary key
 #  name       :string
 #  sort_order :integer          not null
 #  type_key   :integer          not null

@@ -11,6 +11,8 @@
             <div class="sm:flex sm:items-center">
               <div class="sm:flex-auto">
                 <h1 class="text-xl font-semibold text-gray-900">Sites</h1>
+
+                <!--
                 <div class="text-sm font-medium mt-2 text-gray-700">
                   <span class="text-tokanisecondary-500">Sort by:</span>
                   <%= sortable @sites, :name, "Name", class: "text-gray-700 mr-1" %>
@@ -25,22 +27,20 @@
                   <%= sortable @sites, :notes, "Notes", class: "text-gray-700 mr-1" %>
                   <%= sortable @sites, :contact_phone, "Contact phone", class: "text-gray-700 mr-1" %>
                 </div>
-                
+                -->
               </div>
-              <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto">Add Appointment</button>
-              </div> -->
+               <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" onclick="window.location.href='/sites/new'">Add Site</button>
+              </div>
             </div>
             <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
               <table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
                   <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6">Name</th>
-                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Email</th>
-                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Address</th>
-                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Name</th>
-                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 sm:table-cell">Contact Phone</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active Status</th>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @sites, :name, "Name" %></th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Customer</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Departments</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span class="sr-only">Edit</span>
                     </th>
@@ -60,17 +60,14 @@
                         <dd class="mt-1 truncate text-gray-500"><%= site.contact_name %></dd>
                       </dl>
                     </td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.email %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.address %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.contact_name %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= site.contact_phone %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= site.active %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.customer&.name %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.departments.map(&:name).join(', ') %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(site.active) %></td>
                     <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= site.id %></span></a>
+                      <a href="<%= edit_site_path(site) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= site.id %></span></a>
                     </td>
                   </tr>
                 <% end %>
-                  <!-- More appointments... -->
                 </tbody>
               </table>
             </div>
@@ -78,10 +75,10 @@
         </div>
       </div>
       <% if @pagy.pages > 1 %>
-    <div class="my-6 text-center">
-      <%== pagy_nav(@pagy) %>
-    </div>
-  <% end %>
+        <div class="my-6 text-center">
+          <%== pagy_nav(@pagy) %>
+        </div>
+      <% end %>
     </main>
   </div>
 </div>

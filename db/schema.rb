@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_14_040305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -22,8 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "account_id", null: false
     t.uuid "invited_by_id"
+    t.uuid "account_id", null: false
     t.index ["account_id"], name: "index_account_invitations_on_account_id"
     t.index ["invited_by_id"], name: "index_account_invitations_on_invited_by_id"
     t.index ["token"], name: "index_account_invitations_on_token", unique: true
@@ -33,8 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "account_id"
     t.uuid "user_id"
+    t.uuid "account_id"
     t.index ["account_id"], name: "index_account_users_on_account_id"
     t.index ["user_id"], name: "index_account_users_on_user_id"
   end
@@ -176,9 +176,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.boolean "home_health_appointment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "interpreter_id"
     t.uuid "agency_id"
     t.uuid "customer_id"
-    t.uuid "interpreter_id"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
@@ -191,6 +191,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.datetime "updated_at", null: false
     t.index ["agency_id"], name: "index_customer_agencies_on_agency_id"
     t.index ["customer_id"], name: "index_customer_agencies_on_customer_id"
+  end
+
+  create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "location"
+    t.string "accounting_unit_code"
+    t.text "accounting_unit_desc"
+    t.boolean "is_active", default: true, null: false
+    t.uuid "site_id", null: false
+    t.integer "backport_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_departments_on_site_id"
   end
 
   create_table "interpreter_details", force: :cascade do |t|
@@ -351,7 +364,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.string "unit"
   end
 
-  create_table "rate_criteria", force: :cascade do |t|
+  create_table "rate_criteria", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "type_key", null: false
     t.string "name"
     t.integer "sort_order", null: false
@@ -361,7 +374,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.index ["account_id"], name: "index_rate_criteria_on_account_id"
   end
 
-  create_table "sites", force: :cascade do |t|
+  create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "contact_name"
     t.string "email"
@@ -369,13 +382,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
     t.string "city"
     t.string "state"
     t.string "zip_code"
-    t.boolean "active"
+    t.boolean "active", default: true
     t.bigint "backport_id"
     t.text "notes"
     t.string "contact_phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "customer_id", null: false
+    t.uuid "account_id"
+    t.index ["account_id"], name: "index_sites_on_account_id"
     t.index ["backport_id"], name: "index_sites_on_backport_id"
     t.index ["customer_id"], name: "index_sites_on_customer_id"
   end
@@ -438,8 +453,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_001307) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
+  add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "sites", "accounts"
 end

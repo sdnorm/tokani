@@ -34,6 +34,7 @@ class Account < ApplicationRecord
   has_many :appointments, foreign_key: :agency_id
   has_many :appointments, foreign_key: :customer_id
   has_many :sites, dependent: :destroy, foreign_key: :customer_id
+  has_many :account_sites, dependent: :destroy, foreign_key: :account_id, class_name: "Site"
 
   has_many :agency_customers, foreign_key: :agency_id
   has_many :customers, through: :agency_customers

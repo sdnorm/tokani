@@ -67,6 +67,9 @@ group :development do
   # A fully configurable and extendable Git hook manager
   gem "overcommit", require: false
 
+  # Alternative web/app server for development
+  gem "thin", "~> 1.8"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler", ">= 2.3.3"
 
