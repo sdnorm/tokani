@@ -1,4 +1,6 @@
 class SitesController < ApplicationController
+  include CurrentHelper
+
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   # Uncomment to enforce Pundit authorization
@@ -7,7 +9,8 @@ class SitesController < ApplicationController
 
   # GET /sites
   def index
-    @pagy, @sites = pagy(Site.sort_by_params(params[:sort], sort_direction))
+    # @pagy, @sites = pagy(Site.sort_by_params(params[:sort], sort_direction))
+    @pagy, @sites = pagy(current_account.account_sites.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @sites
@@ -21,6 +24,7 @@ class SitesController < ApplicationController
   def new
     @site = Site.new
 
+    setup_site_vars
     # Uncomment to authorize with Pundit
     # authorize @site
   end
@@ -32,6 +36,7 @@ class SitesController < ApplicationController
   # POST /sites or /sites.json
   def create
     @site = Site.new(site_params)
+    @site.account_id = current_account.id
 
     # Uncomment to authorize with Pundit
     # authorize @site
@@ -41,6 +46,7 @@ class SitesController < ApplicationController
         format.html { redirect_to @site, notice: "Site was successfully created." }
         format.json { render :show, status: :created, location: @site }
       else
+        setup_site_vars
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @site.errors, status: :unprocessable_entity }
       end
@@ -54,6 +60,7 @@ class SitesController < ApplicationController
         format.html { redirect_to @site, notice: "Site was successfully updated." }
         format.json { render :show, status: :ok, location: @site }
       else
+        setup_site_vars
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @site.errors, status: :unprocessable_entity }
       end
@@ -71,9 +78,14 @@ class SitesController < ApplicationController
 
   private
 
+  def setup_site_vars
+    @customers = current_account.customers
+    @customer_id = site_params[:customer_id] if params[:site].present? && site_params[:customer_id].present?
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_site
-    @site = Site.find(params[:id])
+    @site = current_account.account_sites.find(params[:id])
 
     # Uncomment to authorize with Pundit
     # authorize @site
@@ -83,7 +95,8 @@ class SitesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def site_params
-    params.require(:site).permit(:name, :contact_name, :email, :address, :city, :state, :zip_code, :active, :backport_id, :notes, :contact_phone)
+    params.require(:site).permit(:name, :contact_name, :email, :address, :city, :state, :zip_code, :active, :notes, :contact_phone, :customer_id, :departments,
+      departments_attributes: %i[id name location accounting_unit_code])
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:site).permit(policy(@site).permitted_attributes)

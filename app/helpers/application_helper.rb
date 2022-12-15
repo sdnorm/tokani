@@ -54,6 +54,10 @@ module ApplicationHelper
     @pagy.page == 1
   end
 
+  def yes_no(a_boolean)
+    a_boolean ? "yes" : "no"
+  end
+
   def sidenav_highlight?(controller_name)
     if controller_name == controller.controller_name
       highlighted
