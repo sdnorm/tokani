@@ -2,16 +2,29 @@
 #
 # Table name: accounts
 #
-#  id                 :uuid             not null, primary key
-#  customer           :boolean          default(FALSE)
-#  domain             :string
-#  extra_billing_info :text
-#  name               :string           not null
-#  personal           :boolean          default(FALSE)
-#  subdomain          :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  owner_id           :uuid
+#  id                     :uuid             not null, primary key
+#  address                :string
+#  appointments_in_person :boolean          default(TRUE)
+#  appointments_phone     :boolean          default(TRUE)
+#  appointments_video     :boolean          default(TRUE)
+#  city                   :string
+#  contact_name           :string
+#  customer               :boolean          default(FALSE)
+#  domain                 :string
+#  email                  :string
+#  extra_billing_info     :text
+#  fax                    :string
+#  is_active              :boolean          default(TRUE)
+#  name                   :string           not null
+#  notes                  :text
+#  personal               :boolean          default(FALSE)
+#  phone                  :string
+#  state                  :string
+#  subdomain              :string
+#  zip                    :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  owner_id               :uuid
 #
 # Indexes
 #

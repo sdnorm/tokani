@@ -2,16 +2,29 @@
 #
 # Table name: accounts
 #
-#  id                 :uuid             not null, primary key
-#  customer           :boolean          default(FALSE)
-#  domain             :string
-#  extra_billing_info :text
-#  name               :string           not null
-#  personal           :boolean          default(FALSE)
-#  subdomain          :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  owner_id           :uuid
+#  id                     :uuid             not null, primary key
+#  address                :string
+#  appointments_in_person :boolean          default(TRUE)
+#  appointments_phone     :boolean          default(TRUE)
+#  appointments_video     :boolean          default(TRUE)
+#  city                   :string
+#  contact_name           :string
+#  customer               :boolean          default(FALSE)
+#  domain                 :string
+#  email                  :string
+#  extra_billing_info     :text
+#  fax                    :string
+#  is_active              :boolean          default(TRUE)
+#  name                   :string           not null
+#  notes                  :text
+#  personal               :boolean          default(FALSE)
+#  phone                  :string
+#  state                  :string
+#  subdomain              :string
+#  zip                    :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  owner_id               :uuid
 #
 # Indexes
 #
@@ -23,7 +36,7 @@ class Account < ApplicationRecord
   RESERVED_DOMAINS = [Jumpstart.config.domain]
   RESERVED_SUBDOMAINS = %w[app help support]
 
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: "User", optional: true
   has_many :account_invitations, dependent: :destroy
   has_many :account_users, dependent: :destroy
   has_many :notifications, dependent: :destroy
@@ -61,9 +74,9 @@ class Account < ApplicationRecord
     billing_address || build_billing_address
   end
 
-  def email
-    account_users.includes(:user).order(created_at: :asc).first.user.email
-  end
+  # def email
+  #   account_users.includes(:user).order(created_at: :asc).first.user.email
+  # end
 
   def impersonal?
     !personal?

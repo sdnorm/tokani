@@ -31,31 +31,19 @@
 #  index_accounts_on_created_at  (created_at)
 #  index_accounts_on_owner_id    (owner_id)
 #
+class Customer < Account
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+  # Broadcast changes in realtime with Hotwire
+  after_create_commit  -> { broadcast_prepend_later_to :customers, partial: "customers/index", locals: { customer: self } }
+  after_update_commit  -> { broadcast_replace_later_to self }
+  after_destroy_commit -> { broadcast_remove_to :customers, target: dom_id(self, :index) }
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one:
-  owner: one
-  name: "User One"
-  personal: true
+  before_create :set_customer_flag
 
-two:
-  owner: two
-  name: "User Two"
-  personal: true
+  private
 
-company:
-  owner: one
-  name: "Company"
-  personal: false
-  domain: company.com
-  subdomain: company
+  def set_customer_flag
+    self.customer = true
+  end
 
-invited:
-  owner: invited
-  name: "Invited User"
-  personal: true
+end

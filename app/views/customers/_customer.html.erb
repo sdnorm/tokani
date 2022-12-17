@@ -1,0 +1,58 @@
+<div id="<%= dom_id customer %>">
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Name</p>
+    <%= customer.name %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Contact name</p>
+    <%= customer.contact_name %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Email</p>
+    <%= customer.email %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Address</p>
+    <%= customer.address %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">City</p>
+    <%= customer.city %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">State</p>
+    <%= customer.state %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Zip</p>
+    <%= customer.zip %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Is active?</p>
+    <%= yes_no(customer.is_active) %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Notes</p>
+    <%= customer.notes %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Fax</p>
+    <%= customer.fax %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Phone</p>
+    <%= customer.phone %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Appointments in person?</p>
+    <%= yes_no(customer.appointments_in_person) %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Appointments video?</p>
+    <%= yes_no(customer.appointments_video) %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Appointments phone?</p>
+    <%= yes_no(customer.appointments_phone) %>
+  </div>
+</div>

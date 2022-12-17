@@ -1,0 +1,84 @@
+<% form_url = customer.new_record? ? customers_path : customer_path(customer) %>
+<%= form_with(model: customer, url: form_url) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :contact_name %>
+    <%= form.text_field :contact_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :address %>
+    <%= form.text_field :address, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :city %>
+    <%= form.text_field :city, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :state %>
+    <%= form.text_field :state, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :zip %>
+    <%= form.text_field :zip, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :is_active %>
+    <%= form.check_box :is_active, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :notes %>
+    <%= form.text_area :notes, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :fax %>
+    <%= form.text_field :fax, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :phone %>
+    <%= form.text_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :appointments_in_person %>
+    <%= form.check_box :appointments_in_person, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :appointments_video %>
+    <%= form.check_box :appointments_video, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :appointments_phone %>
+    <%= form.check_box :appointments_phone, class: "form-checkbox" %>
+  </div>
+
+  <div>
+    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), customers_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), customer_path(@customer), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>
