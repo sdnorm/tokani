@@ -32,10 +32,9 @@
 #  index_accounts_on_owner_id    (owner_id)
 #
 class Customer < Account
-
   # Broadcast changes in realtime with Hotwire
-  after_create_commit  -> { broadcast_prepend_later_to :customers, partial: "customers/index", locals: { customer: self } }
-  after_update_commit  -> { broadcast_replace_later_to self }
+  after_create_commit -> { broadcast_prepend_later_to :customers, partial: "customers/index", locals: {customer: self} }
+  after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :customers, target: dom_id(self, :index) }
 
   before_create :set_customer_flag
@@ -45,5 +44,4 @@ class Customer < Account
   def set_customer_flag
     self.customer = true
   end
-
 end
