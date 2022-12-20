@@ -163,7 +163,7 @@ GEM
     country_select (8.0.0)
       countries (~> 5.0)
     crass (1.0.6)
-    cssbundling-rails (1.1.1)
+    cssbundling-rails (1.1.2)
       railties (>= 6.0.0)
     daemons (1.4.1)
     date (3.3.3)
@@ -494,7 +494,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   country_select (~> 8.0)
-  cssbundling-rails (~> 1.1.0)
+  cssbundling-rails (~> 1.1.2)
   debug (>= 1.0.0)
   devise (~> 4.8, >= 4.8.1)
   devise-i18n (~> 1.10)
