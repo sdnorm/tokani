@@ -15,12 +15,14 @@ class AccountDashboard < Administrate::BaseDashboard
     account_users: Field::HasMany,
     users: Field::HasMany,
     avatar: Field::ActiveStorage,
-    id: Field::Number,
+    id: Field::String,
     name: Field::String,
     personal: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    extra_billing_info: Field::Text
+    extra_billing_info: Field::Text,
+    customer: Field::Boolean
+    # agen: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -48,6 +50,7 @@ class AccountDashboard < Administrate::BaseDashboard
     :users,
     :avatar,
     :name,
+    :customer,
     :personal,
     :created_at,
     :updated_at,
@@ -60,6 +63,8 @@ class AccountDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :owner,
     :name,
+    :customer,
+    # :customer_id,
     :personal,
     :extra_billing_info
   ].freeze

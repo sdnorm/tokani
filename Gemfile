@@ -67,6 +67,9 @@ group :development do
   # A fully configurable and extendable Git hook manager
   gem "overcommit", require: false
 
+  # Alternative web/app server for development
+  gem "thin", "~> 1.8"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler", ">= 2.3.3"
 
@@ -84,16 +87,16 @@ end
 # Jumpstart dependencies
 gem "jumpstart", path: "lib/jumpstart", group: :omit
 
-gem "acts_as_tenant", "~> 0.5.3"
+gem "acts_as_tenant", "~> 0.6.0"
 gem "administrate", github: "excid3/administrate", branch: "jumpstart" # '~> 0.10.0'
 gem "administrate-field-active_storage", "~> 0.4.1"
-gem "cssbundling-rails", "~> 1.1.0"
+gem "cssbundling-rails", "~> 1.1.2"
 gem "country_select", "~> 8.0"
 gem "devise", "~> 4.8", ">= 4.8.1"
 gem "devise-i18n", "~> 1.10"
 gem "inline_svg", "~> 1.6"
 gem "invisible_captcha", "~> 2.0"
-gem "jsbundling-rails", "~> 1.0.0"
+gem "jsbundling-rails", "~> 1.1.1"
 gem "local_time", "~> 2.1"
 gem "name_of_person", "~> 1.0"
 gem "noticed", "~> 1.5"
@@ -101,7 +104,7 @@ gem "oj", "~> 3.13"
 gem "omniauth", "~> 2.0", ">= 2.0.4"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "pagy", "~> 5.1"
-gem "pay", "~> 6.1.0"
+gem "pay", "~> 6.1.2"
 gem "pg_search", "~> 2.3"
 gem "prawn", github: "prawnpdf/prawn"
 gem "prefixed_ids", "~> 1.2"
@@ -121,3 +124,5 @@ end
 
 # We recommend using strong migrations when your app is in production
 # gem "strong_migrations", "~> 0.7.6"
+
+gem "faker"

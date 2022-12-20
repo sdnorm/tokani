@@ -6,7 +6,7 @@
     <h1 class="h3">
       <%= link_to "Sites", sites_path, class: "text-black" %>
       <span class="text-gray-400 font-light mx-2">\</span>
-      Site #<%= @site.id %>
+      <%= @site.name %>
     </h1>
     <%= link_to t("edit"), edit_site_path(@site), class: "btn btn-white" %>
   </div>

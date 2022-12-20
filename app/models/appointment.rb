@@ -45,6 +45,6 @@ class Appointment < ApplicationRecord
   has_many :appointment_languages, dependent: :destroy
 
   belongs_to :agency, class_name: "Account"
-  belongs_to :customer, class_name: "Account"
-  belongs_to :interpreter, class_name: "User"
+  belongs_to :customer, class_name: "Account", optional: true
+  belongs_to :interpreter, class_name: "User", optional: true
 end

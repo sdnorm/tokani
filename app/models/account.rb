@@ -3,6 +3,7 @@
 # Table name: accounts
 #
 #  id                 :uuid             not null, primary key
+#  customer           :boolean          default(FALSE)
 #  domain             :string
 #  extra_billing_info :text
 #  name               :string           not null
@@ -30,9 +31,18 @@ class Account < ApplicationRecord
   has_many :addresses, as: :addressable, dependent: :destroy
   has_one :billing_address, -> { where(address_type: :billing) }, class_name: "Address", as: :addressable
   has_one :shipping_address, -> { where(address_type: :shipping) }, class_name: "Address", as: :addressable
+
   has_many :appointments, foreign_key: :agency_id
-  has_many :appointments, foreign_key: :customer_id
+  has_many :customer_appointments, class_name: "Appointment", foreign_key: :customer_id
+
   has_many :sites, dependent: :destroy, foreign_key: :customer_id
+  has_many :account_sites, dependent: :destroy, foreign_key: :account_id, class_name: "Site"
+
+  has_many :agency_customers, foreign_key: :agency_id
+  has_many :customers, through: :agency_customers
+
+  has_many :customer_agencies, foreign_key: :customer_id
+  has_many :agencies, through: :customer_agencies
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }
@@ -83,7 +93,7 @@ class Account < ApplicationRecord
     user = account_user.user
 
     ApplicationRecord.transaction do
-      account_user.update!(admin: true)
+      # account_user.update!(admin: true)
       update!(owner: user)
 
       # Add any additional logic for updating records here

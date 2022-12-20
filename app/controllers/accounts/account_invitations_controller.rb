@@ -1,6 +1,6 @@
 class Accounts::AccountInvitationsController < Accounts::BaseController
   before_action :set_account, except: [:tokani_agency_invitation]
-  before_action :require_account_admin
+  # before_action :require_account_admin
   before_action :set_account_invitation, only: [:edit, :update, :destroy]
 
   def new
