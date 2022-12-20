@@ -9,9 +9,9 @@ business_address: |-
   Carmichael, California 95608
 background_job_processor: sidekiq
 email_provider: mailjet
-personal_accounts: true
+personal_accounts: false
 solargraph: false
-register_with_account: false
+register_with_account: true
 apns: false
 fcm: false
 collect_billing_address: false
