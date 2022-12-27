@@ -72,4 +72,8 @@ Account.where(customer: true).each do |customer|
 end
 
 # Super Admin
+<<<<<<< HEAD
 User.create!(name: "Super Admin", email: "super@admin.com", password: "password", password_confirmation: "password", admin: true, terms_of_service: true)
+=======
+User.create!(name: "Super Admin", email: "super@admin.com", password: "password", password_confirmation: "password", admin: true, terms_of_service: true)
+>>>>>>> 1932a54 (some tweaks and updating seed data)
