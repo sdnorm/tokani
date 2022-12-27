@@ -26,6 +26,9 @@ class AppointmentsController < ApplicationController
 
     # Uncomment to authorize with Pundit
     # authorize @appointment
+
+    @customers = current_account.customers
+    @customer_id = site_params[:customer_id] if params[:site].present? && site_params[:customer_id].present?
   end
 
   # GET /appointments/1/edit
@@ -92,7 +95,30 @@ class AppointmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def appointment_params
-    params.require(:appointment).permit(:ref_number, :start_time, :finish_time, :duration, :modality, :sub_type, :gender_req, :admin_notes, :notes, :details, :status, :interpreter_type, :billing_notes, :canceled_by, :cancel_reason_code, :lock_version, :time_zone, :confirmation_date, :confirmation_phone, :confirmation_notes, :home_health_appointment)
+    params.require(:appointment).permit(
+      :customer_id,
+      :ref_number,
+      :start_time,
+      :finish_time,
+      :duration,
+      :modality,
+      :sub_type,
+      :gender_req,
+      :admin_notes,
+      :notes,
+      :details,
+      :status,
+      :interpreter_type,
+      :billing_notes,
+      :canceled_by,
+      :cancel_reason_code,
+      :lock_version,
+      :time_zone,
+      :confirmation_date,
+      :confirmation_phone,
+      :confirmation_notes,
+      :home_health_appointment
+    )
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:appointment).permit(policy(@appointment).permitted_attributes)
