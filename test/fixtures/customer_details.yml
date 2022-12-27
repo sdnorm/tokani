@@ -29,6 +29,7 @@ one:
   appointments_in_person: false
   appointments_video: false
   appointments_phone: false
+  customer: company
 
 two:
   contact_name: MyString
@@ -39,3 +40,4 @@ two:
   appointments_in_person: false
   appointments_video: false
   appointments_phone: false
+  customer: company
