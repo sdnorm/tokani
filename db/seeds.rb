@@ -22,11 +22,8 @@ end
 Account.first.update(customer: false)
 
 agency_with_things = Account.find_by(customer: false)
-
 agency_owner_id = agency_with_things.owner_id
-
 possible_owner_ids = User.where.not(id: agency_owner_id).pluck(:id)
-
 start_time = Faker::Time.between(from: DateTime.now + 1, to: DateTime.now + 20)
 
 AccountUser.all.each do |account_user|
