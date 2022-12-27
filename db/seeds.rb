@@ -6,10 +6,7 @@
 # Uncomment the following to create an Admin user for Production in Jumpstart Pro
 # User.create name: "name", email: "email", password: "password", password_confirmation: "password", admin: true, terms_of_service: true
 
-# Super Admin
-User.create!(name: "Super Admin", email: "super@admin.com", password: "password", password_confirmation: "password", admin: true, terms_of_service: true)
-
-10.times do |user|
+4.times do |user|
   User.create!(
     name: Faker::Name.name,
     email: Faker::Internet.email,
@@ -18,41 +15,26 @@ User.create!(name: "Super Admin", email: "super@admin.com", password: "password"
   )
 end
 
-# 3.times do |account|
-Account.create!(
-  name: Faker::Company.name,
-  owner_id: User.all.sample.id
-)
-# end
-
-agency_with_things = Account.where(customer: false, personal: false).first
-
-agency_owner_ids = Account.where(personal: false).pluck(:owner_id)
-
-possible_owner_ids = User.where.not(id: agency_owner_ids).pluck(:id) - agency_owner_ids
-
-3.times do |account|
-  Account.create!(
-    customer: true,
-    name: Faker::Company.name,
-    owner_id: possible_owner_ids.pop
-  )
+Account.all.each do |account|
+  account.update(name: Faker::Company.name, customer: true)
 end
 
-# Account.where(customer: false, personal: false).each do |agency|
-AccountUser.create!(
-  account_id: agency_with_things.id,
-  user_id: agency_with_things.owner_id,
-  roles: {agency_admin: true}
-)
-# end
+Account.first.update(customer: false)
 
+agency_with_things = Account.find_by(customer: false)
+agency_owner_id = agency_with_things.owner_id
 start_time = Faker::Time.between(from: DateTime.now + 1, to: DateTime.now + 20)
+
+AccountUser.all.each do |account_user|
+  account_user.update(roles: {"admin" => false})
+end
+
+AccountUser.where(account_id: agency_with_things.id, user_id: agency_owner_id).update(roles: {"agency_admin" => true})
 
 100.times do |appointment|
   Appointment.create!(
-    agency_id: Account.where(customer: false, personal: false).sample.id,
-    # customer_id: Account.all.sample.id,
+    agency_id: agency_with_things.id,
+    customer_id: Account.where(customer: true).sample.id,
     start_time: start_time,
     finish_time: start_time + 1.hour,
     notes: Faker::Lorem.sentence,
@@ -63,6 +45,7 @@ end
 20.times do |site|
   Site.create(
     customer_id: Account.where(customer: true).sample.id,
+    account_id: agency_with_things.id,
     name: Faker::University.name
   )
 end
@@ -87,3 +70,6 @@ Account.where(customer: true).each do |customer|
     customer_id: customer.id
   )
 end
+
+# Super Admin
+User.create!(name: "Super Admin", email: "super@admin.com", password: "password", password_confirmation: "password", admin: true, terms_of_service: true)

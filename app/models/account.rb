@@ -83,6 +83,8 @@ class Account < ApplicationRecord
     owner_id == user.id
   end
 
+  # stop auto admin
+
   # An account can be transferred by the owner if it:
   # * Isn't a personal account
   # * Has more than one user in it
