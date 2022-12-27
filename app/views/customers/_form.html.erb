@@ -7,69 +7,75 @@
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :contact_name %>
-    <%= form.text_field :contact_name, class: "form-control" %>
-  </div>
+  <%= form.fields_for :customer_detail do |customer_detail| %>
+    <div class="form-group">
+      <%= customer_detail.label :contact_name %>
+      <%= customer_detail.text_field :contact_name, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :email %>
-    <%= form.text_field :email, class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= customer_detail.label :email %>
+      <%= customer_detail.text_field :email, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :address %>
-    <%= form.text_field :address, class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= customer_detail.label :notes %>
+      <%= customer_detail.text_area :notes, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :city %>
-    <%= form.text_field :city, class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= customer_detail.label :fax %>
+      <%= customer_detail.text_field :fax, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :state %>
-    <%= form.text_field :state, class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= customer_detail.label :phone %>
+      <%= customer_detail.text_field :phone, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :zip %>
-    <%= form.text_field :zip, class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= customer_detail.label :appointments_in_person %>
+      <%= customer_detail.check_box :appointments_in_person, class: "form-checkbox" %>
+    </div>
+
+    <div class="form-group">
+      <%= customer_detail.label :appointments_video %>
+      <%= customer_detail.check_box :appointments_video, class: "form-checkbox" %>
+    </div>
+
+    <div class="form-group">
+      <%= customer_detail.label :appointments_phone %>
+      <%= customer_detail.check_box :appointments_phone, class: "form-checkbox" %>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :physical_address do |physical_address| %>
+    <%= physical_address.hidden_field :address_type, value: "physical" %>
+
+    <div class="form-group">
+      <%= physical_address.label :address %>
+      <%= physical_address.text_field :line1, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= physical_address.label :city %>
+      <%= physical_address.text_field :city, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= physical_address.label :state %>
+      <%= physical_address.text_field :state, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= physical_address.label :zip %>
+      <%= physical_address.text_field :postal_code, class: "form-control" %>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <%= form.label :is_active %>
     <%= form.check_box :is_active, class: "form-checkbox" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :notes %>
-    <%= form.text_area :notes, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :fax %>
-    <%= form.text_field :fax, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :phone %>
-    <%= form.text_field :phone, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :appointments_in_person %>
-    <%= form.check_box :appointments_in_person, class: "form-checkbox" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :appointments_video %>
-    <%= form.check_box :appointments_video, class: "form-checkbox" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :appointments_phone %>
-    <%= form.check_box :appointments_phone, class: "form-checkbox" %>
   </div>
 
   <div>

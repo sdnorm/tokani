@@ -54,9 +54,9 @@
             <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
               <%= link_to customer.name, customer_path(customer) %>
             </td>
-            <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.contact_name %></td>
-            <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.phone %></td>
-            <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.email %></td>
+            <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.contact_name %></td>
+            <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.phone %></td>
+            <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.email %></td>
             <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(customer.is_active) %></td>
           </tr>
         <% end %>

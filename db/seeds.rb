@@ -73,3 +73,17 @@ Account.where(customer: true).each do |customer|
     agency_id: agency_with_things.id
   )
 end
+
+Account.where(customer: true).each do |customer|
+  CustomerDetail.create!(
+    contact_name: Faker::Name.name,
+    email: Faker::Internet.email,
+    fax: Faker::PhoneNumber.phone_number,
+    notes: Faker::Lorem.sentence,
+    phone: Faker::PhoneNumber.phone_number,
+    appointments_in_person: true,
+    appointments_phone: true,
+    appointments_video: true,
+    customer_id: customer.id
+  )
+end

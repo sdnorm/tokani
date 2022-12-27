@@ -2,29 +2,17 @@
 #
 # Table name: accounts
 #
-#  id                     :uuid             not null, primary key
-#  address                :string
-#  appointments_in_person :boolean          default(TRUE)
-#  appointments_phone     :boolean          default(TRUE)
-#  appointments_video     :boolean          default(TRUE)
-#  city                   :string
-#  contact_name           :string
-#  customer               :boolean          default(FALSE)
-#  domain                 :string
-#  email                  :string
-#  extra_billing_info     :text
-#  fax                    :string
-#  is_active              :boolean          default(TRUE)
-#  name                   :string           not null
-#  notes                  :text
-#  personal               :boolean          default(FALSE)
-#  phone                  :string
-#  state                  :string
-#  subdomain              :string
-#  zip                    :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  owner_id               :uuid
+#  id                 :uuid             not null, primary key
+#  customer           :boolean          default(FALSE)
+#  domain             :string
+#  extra_billing_info :text
+#  is_active          :boolean          default(TRUE)
+#  name               :string           not null
+#  personal           :boolean          default(FALSE)
+#  subdomain          :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  owner_id           :uuid
 #
 # Indexes
 #
@@ -44,6 +32,7 @@ class Account < ApplicationRecord
   has_many :addresses, as: :addressable, dependent: :destroy
   has_one :billing_address, -> { where(address_type: :billing) }, class_name: "Address", as: :addressable
   has_one :shipping_address, -> { where(address_type: :shipping) }, class_name: "Address", as: :addressable
+  has_one :physical_address, -> { where(address_type: :physical) }, class_name: "Address", as: :addressable
 
   has_many :appointments, foreign_key: :agency_id
   has_many :customer_appointments, class_name: "Appointment", foreign_key: :customer_id
@@ -56,6 +45,10 @@ class Account < ApplicationRecord
 
   has_many :customer_agencies, foreign_key: :customer_id
   has_many :agencies, through: :customer_agencies
+
+  has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
+
+  accepts_nested_attributes_for :physical_address, :customer_detail
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

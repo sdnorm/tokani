@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_16_223144) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_21_211839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -49,19 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_16_223144) do
     t.string "subdomain"
     t.uuid "owner_id"
     t.boolean "customer", default: false
-    t.string "contact_name"
-    t.string "email"
-    t.string "address"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
     t.boolean "is_active", default: true
-    t.text "notes"
-    t.string "phone"
-    t.string "fax"
-    t.boolean "appointments_in_person", default: true
-    t.boolean "appointments_video", default: true
-    t.boolean "appointments_phone", default: true
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
@@ -204,6 +192,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_16_223144) do
     t.datetime "updated_at", null: false
     t.index ["agency_id"], name: "index_customer_agencies_on_agency_id"
     t.index ["customer_id"], name: "index_customer_agencies_on_customer_id"
+  end
+
+  create_table "customer_details", force: :cascade do |t|
+    t.string "contact_name"
+    t.string "email"
+    t.text "notes"
+    t.string "phone"
+    t.string "fax"
+    t.boolean "appointments_in_person", default: true
+    t.boolean "appointments_video", default: true
+    t.boolean "appointments_phone", default: true
+    t.uuid "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end
 
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

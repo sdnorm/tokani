@@ -22,6 +22,8 @@ class CustomersController < ApplicationController
   # GET /customers/new
   def new
     @customer = Customer.new
+    @customer.build_customer_detail
+    @customer.build_physical_address
 
     # Uncomment to authorize with Pundit
     # authorize @customer
@@ -86,7 +88,30 @@ class CustomersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def customer_params
-    params.require(:customer).permit(:name, :contact_name, :email, :address, :city, :state, :zip, :is_active, :notes, :fax, :phone, :appointments_in_person, :appointments_video, :appointments_phone)
+    params.require(:customer).permit(
+      :name,
+      :is_active,
+      physical_address_attributes: [
+        :id,
+        :line1,
+        :line2,
+        :city,
+        :state,
+        :postal_code,
+        :address_type
+      ],
+      customer_detail_attributes: [
+        :id,
+        :contact_name,
+        :email,
+        :fax,
+        :phone,
+        :notes,
+        :appointments_in_person,
+        :appointments_video,
+        :appointments_phone
+      ]
+    )
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:customer).permit(policy(@customer).permitted_attributes)
