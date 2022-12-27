@@ -6,6 +6,7 @@
 #  customer           :boolean          default(FALSE)
 #  domain             :string
 #  extra_billing_info :text
+#  is_active          :boolean          default(TRUE)
 #  name               :string           not null
 #  personal           :boolean          default(FALSE)
 #  subdomain          :string

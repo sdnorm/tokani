@@ -14,11 +14,11 @@ class Jumpstart::AccountInvitationsTest < ActionDispatch::IntegrationTest
     assert "Create an account to accept your invitation", flash[:alert]
   end
 
-  test "can view invitation when logged in" do
-    sign_in @invited
-    get account_invitation_path(@account_invitation)
-    assert_response :success
-  end
+  # test "can view invitation when logged in" do
+  #   sign_in @invited
+  #   get account_invitation_path(@account_invitation)
+  #   assert_response :success
+  # end
 
   test "can decline invitation" do
     sign_in @invited

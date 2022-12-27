@@ -6,6 +6,7 @@
 #  customer           :boolean          default(FALSE)
 #  domain             :string
 #  extra_billing_info :text
+#  is_active          :boolean          default(TRUE)
 #  name               :string           not null
 #  personal           :boolean          default(FALSE)
 #  subdomain          :string
@@ -23,7 +24,7 @@ class Account < ApplicationRecord
   RESERVED_DOMAINS = [Jumpstart.config.domain]
   RESERVED_SUBDOMAINS = %w[app help support]
 
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: "User", optional: true
   has_many :account_invitations, dependent: :destroy
   has_many :account_users, dependent: :destroy
   has_many :notifications, dependent: :destroy
@@ -31,6 +32,7 @@ class Account < ApplicationRecord
   has_many :addresses, as: :addressable, dependent: :destroy
   has_one :billing_address, -> { where(address_type: :billing) }, class_name: "Address", as: :addressable
   has_one :shipping_address, -> { where(address_type: :shipping) }, class_name: "Address", as: :addressable
+  has_one :physical_address, -> { where(address_type: :physical) }, class_name: "Address", as: :addressable
 
   has_many :appointments, foreign_key: :agency_id
   has_many :customer_appointments, class_name: "Appointment", foreign_key: :customer_id
@@ -43,6 +45,10 @@ class Account < ApplicationRecord
 
   has_many :customer_agencies, foreign_key: :customer_id
   has_many :agencies, through: :customer_agencies
+
+  has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
+
+  accepts_nested_attributes_for :physical_address, :customer_detail
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }
@@ -61,9 +67,9 @@ class Account < ApplicationRecord
     billing_address || build_billing_address
   end
 
-  def email
-    account_users.includes(:user).order(created_at: :asc).first.user.email
-  end
+  # def email
+  #   account_users.includes(:user).order(created_at: :asc).first.user.email
+  # end
 
   def impersonal?
     !personal?
