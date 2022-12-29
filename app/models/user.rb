@@ -75,6 +75,9 @@ class User < ApplicationRecord
   has_one :interpreter_detail, dependent: :destroy, foreign_key: :interpreter_id
   has_many :appointments, foreign_key: :interpreter_id
 
+  has_many :interpreter_specialties, dependent: :destroy, foreign_key: :interpreter_id
+  has_many :specialties, through: :interpreter_specialties
+
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
