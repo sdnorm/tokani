@@ -19,7 +19,7 @@
 #
 class InterpreterSpecialty < ApplicationRecord
   belongs_to :specialty
-  belongs_to :interpreter
+  belongs_to :interpreter, class_name: "User", foreign_key: :interpreter_id
 
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :interpreter_specialties, partial: "interpreter_specialties/index", locals: {interpreter_specialty: self} }

@@ -16,7 +16,7 @@ class Specialty < ApplicationRecord
   after_destroy_commit -> { broadcast_remove_to :specialties, target: dom_id(self, :index) }
 
   has_many :interpreter_specialties, dependent: :destroy
-  has_many :interpreters, through: :interpreter_specialties
+  has_many :interpreters, through: :interpreter_specialties, foreign_key: :interpreter_id
   has_many :appointment_specialties, dependent: :destroy
   has_many :appointments, through: :appointment_specialties
 end
