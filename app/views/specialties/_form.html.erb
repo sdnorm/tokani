@@ -1,0 +1,28 @@
+<%= form_with(model: specialty) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :display_code %>
+    <%= form.text_field :display_code, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :is_active %>
+    <%= form.check_box :is_active, class: "form-checkbox" %>
+  </div>
+
+  <div>
+    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), specialties_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), specialty_path(@specialty), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>

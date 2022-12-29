@@ -43,6 +43,8 @@ class Appointment < ApplicationRecord
   after_destroy_commit -> { broadcast_remove_to :appointments, target: dom_id(self, :index) }
 
   has_many :appointment_languages, dependent: :destroy
+  has_many :appointment_specialties, dependent: :destroy
+  has_many :specialties, through: :appointment_specialties
 
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account", optional: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_21_211839) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_29_205026) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -153,6 +153,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_211839) do
     t.index ["language_id"], name: "index_appointment_languages_on_language_id"
   end
 
+  create_table "appointment_specialties", force: :cascade do |t|
+    t.bigint "appointment_id", null: false
+    t.bigint "specialty_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_specialties_on_appointment_id"
+    t.index ["specialty_id"], name: "index_appointment_specialties_on_specialty_id"
+  end
+
   create_table "appointments", force: :cascade do |t|
     t.string "ref_number"
     t.datetime "start_time"
@@ -249,6 +258,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_211839) do
     t.uuid "interpreter_id"
     t.index ["interpreter_id"], name: "index_interpreter_languages_on_interpreter_id"
     t.index ["language_id"], name: "index_interpreter_languages_on_language_id"
+  end
+
+  create_table "interpreter_specialties", force: :cascade do |t|
+    t.bigint "specialty_id", null: false
+    t.uuid "interpreter_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interpreter_id"], name: "index_interpreter_specialties_on_interpreter_id"
+    t.index ["specialty_id"], name: "index_interpreter_specialties_on_specialty_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -411,6 +429,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_211839) do
     t.index ["customer_id"], name: "index_sites_on_customer_id"
   end
 
+  create_table "specialties", force: :cascade do |t|
+    t.string "name"
+    t.string "display_code"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_connected_accounts", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
@@ -469,8 +495,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_211839) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
+  add_foreign_key "appointment_specialties", "appointments"
+  add_foreign_key "appointment_specialties", "specialties"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
+  add_foreign_key "interpreter_specialties", "specialties"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
