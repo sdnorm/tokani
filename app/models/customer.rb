@@ -26,7 +26,7 @@ class Customer < Account
   after_destroy_commit -> { broadcast_remove_to :customers, target: dom_id(self, :index) }
 
   before_create :set_customer_flag
-
+  has_many :sites
   private
 
   def set_customer_flag
