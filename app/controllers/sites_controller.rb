@@ -24,7 +24,7 @@ class SitesController < ApplicationController
   def new
     @site = Site.new
     @customer_id = params[:customer_id]
-    setup_site_vars 
+    setup_site_vars
     # Uncomment to authorize with Pundit
     # authorize @site
   end

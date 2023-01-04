@@ -27,6 +27,7 @@ class Customer < Account
 
   before_create :set_customer_flag
   has_many :sites
+
   private
 
   def set_customer_flag
