@@ -13,9 +13,11 @@
 one:
   name: MyString
   display_code: MyString
+  account: one
   is_active: false
 
 two:
   name: MyString
   display_code: MyString
+  account: one
   is_active: false
