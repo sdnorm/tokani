@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_29_205026) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_05_231512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -273,6 +273,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_205026) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "account_id", null: false
+    t.boolean "is_active"
+    t.index ["account_id"], name: "index_languages_on_account_id"
   end
 
   create_table "notification_tokens", force: :cascade do |t|
@@ -435,6 +438,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_205026) do
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "account_id", null: false
+    t.index ["account_id"], name: "index_specialties_on_account_id"
   end
 
   create_table "user_connected_accounts", force: :cascade do |t|
@@ -500,8 +505,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_205026) do
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_specialties", "specialties"
+  add_foreign_key "languages", "accounts"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "sites", "accounts"
+  add_foreign_key "specialties", "accounts"
 end

@@ -48,6 +48,12 @@ class Account < ApplicationRecord
 
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
+  has_many :specialties, dependent: :destroy, foreign_key: :account_id
+  has_many :account_specialties, dependent: :destroy, foreign_key: :account_id, class_name: "Specialty"
+
+  has_many :languages, dependent: :destroy, foreign_key: :account_id
+  has_many :account_languages, dependent: :destroy, foreign_key: :account_id, class_name: "Language"
+
   accepts_nested_attributes_for :physical_address, :customer_detail
 
   scope :personal, -> { where(personal: true) }

@@ -83,7 +83,7 @@ class SpecialtiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def specialty_params
-    params.require(:specialty).permit(:name, :display_code, :is_active)
+    params.require(:specialty).permit(:name, :display_code, :is_active, :account_id)
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:specialty).permit(policy(@specialty).permitted_attributes)
