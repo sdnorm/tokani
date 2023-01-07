@@ -46,6 +46,8 @@ class Account < ApplicationRecord
   has_many :customer_agencies, foreign_key: :customer_id
   has_many :agencies, through: :customer_agencies
 
+  has_many :pay_bill_rates
+
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
   accepts_nested_attributes_for :physical_address, :customer_detail

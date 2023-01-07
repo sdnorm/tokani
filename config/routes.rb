@@ -1,8 +1,14 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :pay_bill_rates
   resources :specialties
   get "requestor/index"
-  resources :sites
+  resources :sites do
+    collection do
+      get :dropdown
+      get :departments_dropdown
+    end
+  end
   get "requestor/index"
   resources :interpreter_details
   get "interpreter/index"
