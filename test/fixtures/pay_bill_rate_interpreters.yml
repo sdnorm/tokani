@@ -9,10 +9,3 @@
 #  user_id          :uuid
 #
 
-one:
-  pay_bill_rate_id: 1
-  interpreter_id: 
-
-two:
-  pay_bill_rate_id: 1
-  interpreter_id: 
