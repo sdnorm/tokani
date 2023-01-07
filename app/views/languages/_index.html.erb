@@ -1,0 +1,6 @@
+<div id="<%= dom_id(language, :index) %>">
+  <%= turbo_stream_from language %>
+  <%= render language %>
+  <%= link_to "View", language, class: "btn btn-white" %>
+</div>
+

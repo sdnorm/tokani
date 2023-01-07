@@ -1,58 +1,73 @@
-<div id="<%= dom_id customer %>">
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Name</p>
-    <%= customer.name %>
+<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900"><%= customer.name %></h3>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Contact name</p>
-    <%= customer.customer_detail.contact_name %>
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Customer name</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Contact Name</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.customer_detail.contact_name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Email address</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.customer_detail.email %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Address</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.physical_address.line1 %><br>
+          <%= customer.physical_address.city %>, <%= customer.physical_address.state %> <%= customer.physical_address.postal_code %></dd> 
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Phone</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.customer_detail.phone %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Fax</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.customer_detail.fax %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Is Active?</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= yes_no(customer.is_active) %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Notes</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= customer.customer_detail.notes %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">In-Person Appointments?</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= yes_no(customer.customer_detail.appointments_in_person) %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Video Appointments?</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= yes_no(customer.customer_detail.appointments_video) %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Phone Appointments?</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= yes_no(customer.customer_detail.appointments_phone) %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Sites</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+
+          <% @customer.sites.each do |site| %>
+          <%= link_to site.name, site_path(site) %>
+          
+          <br>    
+        <% end %>
+        </dd>
+        
+      </div>
+      
+    </dl>
+
+    <div class=" px-4 pb-6 text-right sm:px-6">
+      <%= link_to "Add New Site", new_site_path(customer_id: @customer.id), class: "inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+      <br>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Email</p>
-    <%= customer.customer_detail.email %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Address</p>
-    <%= customer.physical_address.line1 %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">City</p>
-    <%= customer.physical_address.city %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">State</p>
-    <%= customer.physical_address.state %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Zip</p>
-    <%= customer.physical_address.postal_code %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Is active?</p>
-    <%= yes_no(customer.is_active) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Notes</p>
-    <%= customer.customer_detail.notes %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Fax</p>
-    <%= customer.customer_detail.fax %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Phone</p>
-    <%= customer.customer_detail.phone %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Appointments in person?</p>
-    <%= yes_no(customer.customer_detail.appointments_in_person) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Appointments video?</p>
-    <%= yes_no(customer.customer_detail.appointments_video) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Appointments phone?</p>
-    <%= yes_no(customer.customer_detail.appointments_phone) %>
   </div>
 </div>
+

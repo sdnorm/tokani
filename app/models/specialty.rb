@@ -19,6 +19,7 @@ class Specialty < ApplicationRecord
   has_many :interpreters, through: :interpreter_specialties, foreign_key: :interpreter_id
   has_many :appointment_specialties, dependent: :destroy
   has_many :appointments, through: :appointment_specialties
+  belongs_to :account
 
   scope :active, -> { where(is_active: true) }
 end

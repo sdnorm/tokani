@@ -15,4 +15,5 @@ class Language < ApplicationRecord
 
   has_many :appointment_languages, dependent: :destroy
   has_many :interpreter_languages, dependent: :destroy
+  belongs_to :account
 end

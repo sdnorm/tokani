@@ -1,6 +1,6 @@
-<%= content_for :title, t("shared.scaffold.edit.title", model: "Customer") %>
-<%= content_for :title, "Customers ##{@customer.id}" %>
-<%= turbo_stream_from @customer %>
+<%= content_for :title, t("shared.scaffold.edit.title", model: "Language") %>
+<%= content_for :title, "Language ##{@language.id}" %>
+<%= turbo_stream_from @language %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -10,17 +10,17 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Customers", customers_path, class: "text-tokanisecondary-500" %>
+                    <%= link_to "Languages", languages_path, class: "text-tokanisecondary-500" %>
                       <span class="text-gray-400 font-light mx-2">\</span>
-                      <%= @customer.name %>
+                      <%= @language.name %>
                   </h1>
                 </div>
-                 
+                  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <%# button_to t("delete"), @language, method: :delete, class: "btn btn-white", form: { data: { turbo_confirm: t("are_you_sure") } } %>
+                  </div>
                 </div>
-          
-
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render "form", customer: @customer %>
+                  <%= render "form", language: @language %>
                  
                 </div>
             </div>
@@ -28,4 +28,3 @@
         </div>
   </main>
 </div>
-
