@@ -24,7 +24,7 @@
     "js-cookie": "^3.0.1",
     "jstz": "^2.1.1",
     "local-time": "^2.1.0",
-    "postcss": "^8.4.20",
+    "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "slim-select": "2.3.3",
     "stimulus-flatpickr": "^3.0.0-0",
