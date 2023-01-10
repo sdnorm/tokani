@@ -29,10 +29,16 @@ class AppointmentsController < ApplicationController
 
     @customers = current_account.customers
     @customer_id = site_params[:customer_id] if params[:site].present? && site_params[:customer_id].present?
+
+    @interpreters = current_account.interpreters
   end
 
   # GET /appointments/1/edit
   def edit
+    @customers = current_account.customers
+    @customer_id = site_params[:customer_id] if params[:site].present? && site_params[:customer_id].present?
+
+    @interpreters = current_account.interpreters
   end
 
   # POST /appointments or /appointments.json
@@ -97,6 +103,7 @@ class AppointmentsController < ApplicationController
   def appointment_params
     params.require(:appointment).permit(
       :customer_id,
+      :interpreter_id,
       :ref_number,
       :start_time,
       :finish_time,

@@ -89,6 +89,9 @@ class Account < ApplicationRecord
     owner_id == user.id
   end
 
+  def interpreters
+    User.where(id: self.account_users.interpreter.pluck(:user_id))
+  end
   # stop auto admin
 
   # An account can be transferred by the owner if it:
