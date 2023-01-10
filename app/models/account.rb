@@ -90,7 +90,7 @@ class Account < ApplicationRecord
   end
 
   def interpreters
-    User.where(id: self.account_users.interpreter.pluck(:user_id))
+    User.where(id: account_users.interpreter.pluck(:user_id))
   end
   # stop auto admin
 
