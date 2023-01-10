@@ -155,6 +155,7 @@ Rails.application.routes.draw do
     # resources :accounts do
     resources :appointments
     resources :customers
+    resources :interpreters
     # end
   end
 
