@@ -8,7 +8,6 @@ class InterpreterController < ApplicationController
     @interpreters_all = User.includes(:interpreter_detail).where(id: @interpreter_account_ids)
   end
 
-	def my_scheduled
-
-	end
+  def my_scheduled
+  end
 end
