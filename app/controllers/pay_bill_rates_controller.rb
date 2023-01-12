@@ -30,7 +30,7 @@ class PayBillRatesController < ApplicationController
     # else
     #   @avail_interpreters = Interpreter.where(is_active: true).order('lname ASC')
     # end
-    @avail_interpreters = current_account.interpreters
+    @avail_interpreters = current_account.account_interpreters
   end
 
   # GET /pay_bill_rates/new

@@ -70,7 +70,7 @@ class Account < ApplicationRecord
   validates :subdomain, exclusion: {in: RESERVED_SUBDOMAINS, message: :reserved}, format: {with: /\A[a-zA-Z0-9]+[a-zA-Z0-9\-_]*[a-zA-Z0-9]+\Z/, message: :format, allow_blank: true}
   validates :avatar, resizable_image: true
 
-  def interpreters
+  def account_interpreters
     interpreter_account_ids = AccountUser.where(roles: {interpreter: true}).where(account_id: id).pluck(:user_id)
     User.includes(:interpreter_detail).where(id: interpreter_account_ids)
   end
