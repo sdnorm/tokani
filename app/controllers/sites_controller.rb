@@ -33,6 +33,18 @@ class SitesController < ApplicationController
   def edit
   end
 
+  def dropdown
+    @account_id = params[:account_id]
+    @sites = current_account.account_sites.where(customer_id: @account_id).order("name ASC")
+    render layout: nil
+  end
+
+  def departments_dropdown
+    site_ids = (params[:site_ids] || "").split(",")
+    @departments = Department.where(site_id: site_ids).order("name ASC")
+    render layout: nil
+  end
+
   # POST /sites or /sites.json
   def create
     @site = Site.new(site_params)

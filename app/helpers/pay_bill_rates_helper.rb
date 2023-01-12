@@ -1,0 +1,2 @@
+module PayBillRatesHelper
+end
