@@ -17,15 +17,29 @@ class PayBillRatesController < ApplicationController
 
   # GET /pay_bill_rates/1 or /pay_bill_rates/1.json
   def show
+    @customers = current_account.customers
+
+    # TODO - We eventually need to port over this logic that restricts the Interpreters by language.
+
+    # pbr_language_ids = @pay_bill_rate.languages.pluck(:id)
+    # pbr_language_ids ||= []
+
+    # if !pbr_language_ids.empty?
+    #   interpreter_ids = Interpreter.joins(:interpreter_languages).select(:user_id).where(interpreter_languages: {language_id: pbr_language_ids}).group(:user_id)
+    #   @avail_interpreters = Interpreter.where(is_active: true, id: interpreter_ids).order('lname ASC')
+    # else
+    #   @avail_interpreters = Interpreter.where(is_active: true).order('lname ASC')
+    # end
+    @avail_interpreters = current_account.interpreters
   end
 
   # GET /pay_bill_rates/new
   def new
     @pay_bill_rate = PayBillRate.new
 
-    @languages = Language.all.order("name ASC")
+    @languages = current_account.languages.all.order("name ASC")
     @customers = current_account.customers.order("name ASC")
-    @specialties = Specialty.active.order("name ASC")
+    @specialties = current_account.specialties.active.order("name ASC")
 
     # Uncomment to authorize with Pundit
     # authorize @pay_bill_rate
@@ -80,20 +94,10 @@ class PayBillRatesController < ApplicationController
   private
 
   def setup_form_vars
-    @languages = Language.all.order("name ASC")
+    @languages = current_account.languages.all.order("name ASC")
     @selected_language_ids = pay_bill_rate_params[:language_ids] if pay_bill_rate_params[:language_ids]
     @customers = current_account.customers.order("name ASC")
-    @specialties = Specialty.active.order("name ASC")
-
-    # if pay_bill_rate_params[:account_ids].present?
-    #   @agency_customer = AgencyCustomer.find(pay_bill_rate_params[:agency_customer_ids])
-    #   @sites = Site.where(agency_customer_id: @agency_customer.id).order('name ASC')
-    # end
-    # if pay_bill_rate_params[:site_ids].present?
-    #   @selected_site_ids = pay_bill_rate_params[:site_ids]
-    #   @departments = Department.where(site_id: @selected_site_ids).order('name ASC')
-    # end
-    # @selected_department_ids = pay_bill_rate_params[:department_ids] if pay_bill_rate_params[:department_ids]
+    @specialties = current_account.specialties.active.order("name ASC")
     @pay_bill_rate_params = pay_bill_rate_params
   end
 
@@ -115,8 +119,5 @@ class PayBillRatesController < ApplicationController
       :phone, :video, :interpreter_types, :is_active, :customer_ids, :account_ids,
       language_ids: [], account_ids: [], site_ids: [], department_ids: [], interpreter_ids: [],
       specialty_ids: [], interpreter_type_ids: [])
-
-    # Uncomment to use Pundit permitted attributes
-    # params.require(:pay_bill_rate).permit(policy(@pay_bill_rate).permitted_attributes)
   end
 end

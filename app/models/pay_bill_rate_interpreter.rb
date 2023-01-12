@@ -10,5 +10,5 @@
 #
 class PayBillRateInterpreter < ApplicationRecord
   belongs_to :pay_bill_rate
-  belongs_to :user
+  belongs_to :interpreter, class_name: "User", foreign_key: :user_id
 end

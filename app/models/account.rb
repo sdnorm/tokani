@@ -51,7 +51,6 @@ class Account < ApplicationRecord
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
   has_many :specialties, dependent: :destroy, foreign_key: :account_id
-  has_many :account_specialties, dependent: :destroy, foreign_key: :account_id, class_name: "Specialty"
 
   has_many :languages, dependent: :destroy, foreign_key: :account_id
   has_many :account_languages, dependent: :destroy, foreign_key: :account_id, class_name: "Language"
@@ -70,6 +69,11 @@ class Account < ApplicationRecord
   validates :domain, exclusion: {in: RESERVED_DOMAINS, message: :reserved}
   validates :subdomain, exclusion: {in: RESERVED_SUBDOMAINS, message: :reserved}, format: {with: /\A[a-zA-Z0-9]+[a-zA-Z0-9\-_]*[a-zA-Z0-9]+\Z/, message: :format, allow_blank: true}
   validates :avatar, resizable_image: true
+
+  def interpreters
+    interpreter_account_ids = AccountUser.where(roles: {interpreter: true}).where(account_id: id).pluck(:user_id)
+    User.includes(:interpreter_detail).where(id: interpreter_account_ids)
+  end
 
   def find_or_build_billing_address
     billing_address || build_billing_address
