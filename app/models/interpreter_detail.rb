@@ -32,7 +32,7 @@ class InterpreterDetail < ApplicationRecord
   after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :interpreter_details, target: dom_id(self, :index) }
 
-  belongs_to :interpreter, class_name: "User"
+  belongs_to :interprerter, class_name: "User", foreign_key: "interpreter_id"
 
   enum interpreter_type: {staff: 1, independent_contractor: 2, agency: 3, volunteer: 4}
   enum gender: {unspecified: 0, male: 1, female: 2, non_binary: 3}, _suffix: "gender"
