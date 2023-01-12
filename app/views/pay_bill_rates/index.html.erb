@@ -1,0 +1,52 @@
+<%= content_for :title, "Pay Bill Rates" %>
+<%= turbo_stream_from :pay_bill_rates %>
+
+<div class="container px-4 mx-auto my-8">
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <h1 class="h3">Pay Bill Rates</h1>
+    </div>
+
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" onclick="window.location.href='/pay_bill_rates/new'">New Pay/Bill Rate</button>
+    </div>
+    <!-- <%= link_to t("shared.scaffold.new.title", model: "Pay Bill Rate"), new_pay_bill_rate_path, class: "btn btn-white" %> -->
+  </div>
+
+  <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @pay_bill_rates, :name, "Name" %></th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Bill</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Pay</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Modality</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Language</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Effective Date</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+      <% @pay_bill_rates.each do |pay_bill_rate| %>
+        <tr>
+          <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+              <%= link_to(pay_bill_rate.name, pay_bill_rate_path(pay_bill_rate)) %>
+          </td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= number_to_currency(pay_bill_rate.bill_rate) %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= number_to_currency(pay_bill_rate.pay_rate) %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= pay_bill_rate.modality_list.titleize %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= pay_bill_rate.language_list.titleize %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= pay_bill_rate.effective_date.strftime("%m/%d/%Y") %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(pay_bill_rate.is_active) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @pagy.pages > 1 %>
+    <div class="my-6 text-center">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  <% end %>
+</div>

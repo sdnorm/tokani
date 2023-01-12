@@ -301,6 +301,83 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_05_231512) do
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
 
+  create_table "pay_bill_rate_customers", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.uuid "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rate_departments", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.uuid "department_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rate_interpreter_types", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.integer "interpreter_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rate_interpreters", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rate_languages", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.integer "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rate_sites", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.uuid "site_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rate_specialties", force: :cascade do |t|
+    t.integer "pay_bill_rate_id"
+    t.integer "specialty_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_rates", force: :cascade do |t|
+    t.uuid "account_id"
+    t.string "name"
+    t.boolean "is_default"
+    t.date "effective_date"
+    t.decimal "bill_rate"
+    t.decimal "pay_rate"
+    t.decimal "after_hours_bill_rate"
+    t.decimal "after_hours_pay_rate"
+    t.decimal "rush_bill_rate"
+    t.decimal "rush_pay_rate"
+    t.decimal "discount_bill_rate"
+    t.decimal "discount_pay_rate"
+    t.decimal "cancel_level_1_bill_rate"
+    t.decimal "cancel_level_1_pay_rate"
+    t.decimal "cancel_level_2_bill_rate"
+    t.decimal "cancel_level_2_pay_rate"
+    t.decimal "mileage_rate"
+    t.decimal "travel_time_rate"
+    t.boolean "in_person"
+    t.boolean "phone"
+    t.boolean "video"
+    t.jsonb "interpreter_types"
+    t.boolean "is_active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pay_charges", force: :cascade do |t|
     t.string "processor_id", null: false
     t.integer "amount", null: false

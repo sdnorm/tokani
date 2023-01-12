@@ -77,7 +77,7 @@
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= appointment.modality %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= appointment.status %></td>
                     <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= appointment.ref_number %></span></a>
+                      <%= link_to "Edit", edit_appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900" %>
                     </td>
                   </tr>
                 <% end %>

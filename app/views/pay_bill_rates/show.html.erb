@@ -1,0 +1,17 @@
+<%= content_for :title, "Pay/Bill Rate - #{@pay_bill_rate.name}" %>
+<%= turbo_stream_from @pay_bill_rate %>
+
+<div class="container px-4 mx-auto my-8">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="h3">
+      <%= link_to "Pay Bill Rates", pay_bill_rates_path, class: "text-black" %>
+      <span class="text-gray-400 font-light mx-2">\</span>
+      <%= @pay_bill_rate.name %>
+    </h1>
+    <!-- <%= link_to t("edit"), edit_pay_bill_rate_path(@pay_bill_rate), class: "btn btn-white" %> -->
+  </div>
+
+  <div class="p-8 bg-white rounded shadow">
+    <%= render @pay_bill_rate %>
+  </div>
+</div>

@@ -20,4 +20,6 @@ class Specialty < ApplicationRecord
   has_many :appointment_specialties, dependent: :destroy
   has_many :appointments, through: :appointment_specialties
   belongs_to :account
+
+  scope :active, -> { where(is_active: true) }
 end

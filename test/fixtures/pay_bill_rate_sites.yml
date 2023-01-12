@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: pay_bill_rate_sites
+#
+#  id               :bigint           not null, primary key
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  pay_bill_rate_id :integer
+#  site_id          :uuid
+#
+
+one:
+  pay_bill_rate_id: 1
+  site_id: 
+
+two:
+  pay_bill_rate_id: 1
+  site_id: 
