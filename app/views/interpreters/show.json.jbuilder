@@ -1,1 +1,1 @@
-json.partial! "customers/customer", customer: @customer
+json.partial! "interpreters/interpreter", interpreter: @interpreter

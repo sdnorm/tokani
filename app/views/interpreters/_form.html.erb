@@ -2,10 +2,6 @@
     <% form_url = interpreter.new_record? ? interpreters_path : interpreter_path(interpreter) %>
     <%= form_with(model: interpreter, url: form_url) do |form| %>
     <%# form_with url: form_url do |form| %>
-    
-    <%# form.hidden_field :terms_of_service, value: true %>
-    <%# form.hidden_field :accepted_terms_at, value: Time.current %>
-    
         <div class="mt-5 md:col-span-2 md:mt-0">
           <div class="overflow-hidden shadow sm:rounded-md">
             <div class="bg-white px-4 py-5 sm:p-6">
@@ -84,14 +80,14 @@
                 <div class="col-span-6 sm:col-span-3">
                   <div class="form-group">
                       <%= interpreter_detail.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
-                      <%= interpreter_detail.select :interpreter_type, options_for_select(interpreter_type_options), {}, class: "form-control" %>
+                      <%= interpreter_detail.select :interpreter_type, options_for_select(interpreter_type_options, interpreter.interpreter_detail.interpreter_type), {}, class: "form-control" %>
                     </div>
               </div>
   
               <div class="col-span-6 sm:col-span-3">
                   <div class="form-group">
                       <%= interpreter_detail.label :gender , class: "block text-sm font-medium text-gray-700"%>
-                      <%= interpreter_detail.select :gender, options_for_select(gender_options), {}, {class: 'form-control' } %>
+                      <%= interpreter_detail.select :gender, options_for_select(gender_options, interpreter.interpreter_detail.gender), {}, {class: 'form-control' } %>
                     </div>
               </div>
               </div>
@@ -102,8 +98,13 @@
              
             </div>
             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                <%= form.submit "Create Interpreter", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-                
+                <%# form.submit "Create Interpreter", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <% if form.object.new_record? %>
+                    <%= link_to t("cancel"), interpreters_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <% else %>
+                    <%= link_to t("cancel"), interpreter_path(@interpreter), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <% end %>
             </div>
           </div> 
         </div>

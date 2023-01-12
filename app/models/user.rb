@@ -73,7 +73,8 @@ class User < ApplicationRecord
 
   has_many :interpreter_languages, dependent: :destroy, foreign_key: :interpreter_id
 
-  has_one :interpreter_detail, dependent: :destroy, foreign_key: :interpreter_id
+  # has_one :interpreter_detail, dependent: :destroy, foreign_key: :interpreter_id
+  has_one :interpreter_detail, foreign_key: :interpreter_id, dependent: :destroy, inverse_of: :interpreter, autosave: true
   has_many :appointments, foreign_key: :interpreter_id
 
   has_many :interpreter_specialties, dependent: :destroy, foreign_key: :interpreter_id

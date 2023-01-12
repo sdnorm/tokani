@@ -4,9 +4,8 @@ Rails.application.routes.draw do
   resources :specialties
   get "requestor/index"
   resources :sites
-  get "requestor/index"
   resources :interpreter_details
-  get "interpreter/index"
+
   draw :turbo
 
   # Jumpstart views

@@ -1,6 +1,6 @@
-<%= content_for :title, t("shared.scaffold.edit.title", model: "Customer") %>
-<%= content_for :title, "Customers ##{@customer.id}" %>
-<%= turbo_stream_from @customer %>
+<%= content_for :title, t("shared.scaffold.edit.title", model: "Interpreters") %>
+<%= content_for :title, "interpreters ##{@interpreter.id}" %>
+<%= turbo_stream_from @interpreter %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -10,9 +10,9 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Customers", customers_path, class: "text-tokanisecondary-500" %>
+                    <%= link_to "Interpreters", interpreters_path, class: "text-tokanisecondary-500" %>
                       <span class="text-gray-400 font-light mx-2">\</span>
-                      <%= @customer.name %>
+                      <%= @interpreter.last_name %>, <%= @interpreter.first_name %>
                   </h1>
                 </div>
                  
@@ -20,7 +20,7 @@
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render "form", customer: @customer %>
+                  <%= render "form", interpreter: @interpreter %>
                  
                 </div>
             </div>

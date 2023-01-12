@@ -2,18 +2,18 @@ class InterpretersController < ApplicationController
   include CurrentHelper
 
   before_action :authenticate_user!
-
+  before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # GET /interpreters
   def index
-     # # current_account_id = current_account.id
+    # # current_account_id = current_account.id
     # @interpreter_account_ids = AccountUser.where(roles: {interpreter: true}).where(account_id: current_account.id).pluck(:user_id)
     # # @interpreter_account_ids = AccountUser.where("roles->>'interpreter' = 'true'").where(account_id: current_account_id).pluck(:user_id)
     # @interpreters_all = User.includes(:interpreter_detail).where(id: @interpreter_account_ids)
-    
+
     @pagy, @interpreters = pagy(User.where(id: current_account.account_users.interpreter.pluck(:user_id)).sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
@@ -23,24 +23,26 @@ class InterpretersController < ApplicationController
   def new
     @interpreter = User.new
     @interpreter.build_interpreter_detail
-
   end
 
   def show
+    # int = current_account.account_users.interpreter.find_by(user_id: params[:id])
+    # int_id = int.user_id
+    # @interpreter = User.find_by(id: int_id)
+    # @interpreter.build_interpreter_detail
   end
 
   def create
-  #  interpreter_params[:user][:terms_of_service] == true
-  #  @interpreter = User.new(params[:user])
- 
+    #  interpreter_params[:user][:terms_of_service] == true
+    #  @interpreter = User.new(params[:user])
+
     @interpreter = User.new(interpreter_params)
     @interpreter.terms_of_service = true
-    byebug
+
     respond_to do |format|
       if @interpreter.save
-        
-        AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles:{"interpreter" => true})
-        format.html { redirect_to @interpreter, notice: "Interpreter was successfully created." }
+        AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles: {"interpreter" => true})
+        format.html { redirect_to interpreter_path(@interpreter), notice: "Interpreter was successfully created." }
         format.json { render :show, status: :created, location: @interpreter }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -53,7 +55,7 @@ class InterpretersController < ApplicationController
   def update
     respond_to do |format|
       if @interpreter.update(interpreter_params)
-        format.html { redirect_to @interpreter, notice: "Interpreter was successfully updated." }
+        format.html { redirect_to interpreter_path(@interpreter), notice: "Interpreter was successfully updated." }
         format.json { render :show, status: :ok, location: @interpreter }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,9 +68,15 @@ class InterpretersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_interpreter
-    @interpreter = current_account.interpreters.find(params[:id])
-    @interpreter = @interpreter.becomes(Interpreter)
-    
+    int = current_account.account_users.interpreter.find_by(user_id: params[:id])
+    int_id = int.user_id
+    @interpreter = User.find_by(id: int_id)
+    #  @interpreter = User.where(id: current_account.account_users.interpreter.pluck(int_id))
+    # int = current_account.account_users.interpreter.find(params[:id])
+
+    #  @interpreter = current_account.account_users.interpreter.find(params[:id])
+
+    # @interpreter = @interpreter.becomes(Interpreter)
   rescue ActiveRecord::RecordNotFound
     redirect_to interpreters_path
   end
@@ -99,8 +107,5 @@ class InterpretersController < ApplicationController
         :zip
       ]
     )
-
-
   end
-  
 end
