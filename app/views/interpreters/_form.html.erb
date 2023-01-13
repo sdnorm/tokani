@@ -1,0 +1,114 @@
+<div>
+    <% form_url = interpreter.new_record? ? interpreters_path : interpreter_path(interpreter) %>
+    <%= form_with(model: interpreter, url: form_url) do |form| %>
+    <%# form_with url: form_url do |form| %>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="overflow-hidden shadow sm:rounded-md">
+            <div class="bg-white px-4 py-5 sm:p-6">
+              <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                    <%= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :first_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                  <%= form.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :last_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :password, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+
+                <%= form.fields_for :interpreter_detail do |interpreter_detail| %>
+                <div class="col-span-8 sm:col-span-6">
+                    <%= interpreter_detail.label :address, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-8 sm:col-span-3">
+                    <%= interpreter_detail.label :city, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                    <%= interpreter_detail.label :state, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                    <%= interpreter_detail.label :zip, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :zip, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+               
+                
+                
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                    <%= interpreter_detail.label :primary_phone, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                    <%= interpreter_detail.label :SSN, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :ssn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                    <%= interpreter_detail.label :drivers_license, class: "block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :drivers_license, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>  
+                <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                  <div class="form-group">
+                    <%= interpreter_detail.label :birth_date, class:" block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :dob, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
+                  </div>
+                </div>
+                <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                  <div class="form-group">
+                    <%= interpreter_detail.label :start_date, class:" block text-sm font-medium text-gray-700" %>
+                    <%= interpreter_detail.text_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
+                  </div>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <%= interpreter_detail.label :emergency_contact_name, class: "block text-sm font-medium text-gray-700" %>
+                  <%= interpreter_detail.text_field :emergency_contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                  <%= interpreter_detail.label :emergency_contact_phone, class: "block text-sm font-medium text-gray-700" %>
+                  <%= interpreter_detail.text_field :emergency_contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+              </div>
+                
+                <div class="col-span-6 sm:col-span-3">
+                  <div class="form-group">
+                      <%= interpreter_detail.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
+                      <%= interpreter_detail.select :interpreter_type, options_for_select(interpreter_type_options, interpreter.interpreter_detail.interpreter_type), {}, class: "form-control" %>
+                    </div>
+              </div>
+  
+              <div class="col-span-6 sm:col-span-3">
+                  <div class="form-group">
+                      <%= interpreter_detail.label :gender , class: "block text-sm font-medium text-gray-700"%>
+                      <%= interpreter_detail.select :gender, options_for_select(gender_options, interpreter.interpreter_detail.gender), {}, {class: 'form-control' } %>
+                    </div>
+              </div>
+              </div>
+              
+              <% end %>
+              <br>
+              
+             
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <%# form.submit "Create Interpreter", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <% if form.object.new_record? %>
+                    <%= link_to t("cancel"), interpreters_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <% else %>
+                    <%= link_to t("cancel"), interpreter_path(@interpreter), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <% end %>
+            </div>
+          </div> 
+        </div>
+      
+</div>
+<% end %>
+</div>

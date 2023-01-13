@@ -1,0 +1,30 @@
+<%# content_for :title, "Interpreters ##{@interpreter.id}" %>
+<%= turbo_stream_from @interpreter %>
+<%= render partial: "shared/sidenav" %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center pb-6">
+                <div class="sm:flex-auto"> 
+                  <h1 class="text-xl font-semibold text-gray-900">
+                    <%= link_to "Interpreters", interpreters_path, class: "text-tokanisecondary-500" %>
+                      <span class="text-gray-400 font-light mx-2">\</span>
+                      <%= @interpreter.last_name %>, <%= @interpreter.first_name %>
+                  </h1>
+                </div>
+                  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <%= link_to t("edit"), edit_interpreter_path(@interpreter), class: "btn btn-tokani_purple" %>
+                  </div>
+                </div>
+          
+
+                <div class="p-8 bg-white rounded shadow">
+                  <%= render partial: 'interpreter', locals: { interpreter: @interpreter } %>
+                </div>
+            </div>
+          </div>
+        </div>
+  </main>
+</div>
