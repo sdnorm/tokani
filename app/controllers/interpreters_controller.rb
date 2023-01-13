@@ -17,4 +17,7 @@ class InterpretersController < ApplicationController
 
 	def my_scheduled
   end
+
+	def my_scheduled_details
+	end
 end

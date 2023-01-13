@@ -1,0 +1,62 @@
+<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+	<div class="mt-4">
+		<%= link_to "< Back", interpreters_my_scheduled_path, class: "text-blue-600 underline" %>
+	</div>
+	<div class="border border-gray-500 bg-white px-4 py-5 sm:px-6 mt-5">
+		<h3 class="text-lg font-medium leading-6 text-gray-900">M21-156 Details</h3>
+		<div class="grid grid-cols-2 gap-4 mt-5">
+		<div>
+			<ul class="list-none list-outside">
+				<li><i class="fa fa-calendar mr-4"></i>Start date and Time</li>
+				<li><i class="fa fa-male mr-4"></i> In-Person</li>
+				<li><i class="fa fa-language mr-2"></i> Language</li>
+				<li><i class="fa fa-book mr-3"></i> Subject</li>
+			</ul>
+		</div>
+		<!-- ... -->
+		<div>
+			<ul class="list-none">
+				<li>Site</li>
+				<li>Department</li>
+				<li>Duration</li>
+				<li>Provider</li>
+				<li>Requester</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+	<div class="border border-gray-500 bg-white px-4 py-5 sm:px-6 mt-10">
+		<h3 class="text-lg font-medium leading-6 text-gray-900">M21-156 Time Finish</h3>
+
+		<div>
+			 <div class="mt-6 grid grid-cols-4 sm:grid-cols-6 justify-items-center">
+        <div class="sm:col-span-3 col">
+          <label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
+          <div class="mt-1 relative">
+            <input type="date" name="end-date" id="end-date" class="inline-block w-60 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+						<i class="fa fa-2xl fa-calendar ml-1"></i>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label for="end-time" class="block text-sm font-medium text-gray-700">End Time</label>
+          <div class="mt-1 relative">
+            <input type="time" name="end-time" id="end-time" class="inline-block w-60 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+						<i class="fa fa-2xl fa-clock mr-1"></i>
+					</div>
+        </div>
+			</div>
+		
+	
+			<div class="m-4">
+				<textarea rows="12" name="comment" id="comment" class="block w-full rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Billing Notes"></textarea>
+			</div>
+
+			<div class="m>
+		
+		</div>
+
+
+	</div>
+
+</div>
