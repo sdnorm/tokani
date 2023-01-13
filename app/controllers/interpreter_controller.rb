@@ -11,6 +11,5 @@ class InterpreterController < ApplicationController
     @pagy, @interpreters = pagy(User.where(id: current_account.account_users.interpreter.pluck(:user_id)).sort_by_params(params[:sort], sort_direction))
   end
 
-  def my_scheduled
-  end
+  
 end
