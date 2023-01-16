@@ -1,7 +1,7 @@
 class InterpretersController < ApplicationController
   include CurrentHelper
 
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
