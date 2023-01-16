@@ -15,9 +15,9 @@ class InterpretersController < ApplicationController
     # authorize @interpreters
   end
 
-	def my_scheduled
+  def my_scheduled
   end
 
-	def my_scheduled_details
-	end
+  def my_scheduled_details
+  end
 end

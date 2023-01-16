@@ -10,6 +10,4 @@ class InterpreterController < ApplicationController
     # @interpreters_all = User.includes(:interpreter_detail).where(id: @interpreter_account_ids)
     @pagy, @interpreters = pagy(User.where(id: current_account.account_users.interpreter.pluck(:user_id)).sort_by_params(params[:sort], sort_direction))
   end
-
-  
 end
