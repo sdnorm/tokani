@@ -39,6 +39,7 @@
                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @sites, :name, "Name" %></th>
                     <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Customer</th>
                     <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Departments</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Email</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>  
                   </tr>
@@ -49,16 +50,17 @@
                     <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                       <%= link_to site.name, site_path(site) %>
                       <dl class="font-normal lg:hidden">
+                        <dt class="sr-only">Customer</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%= site.customer&.name %></dd>
+                        <dt class="sr-only">Departments</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%=  site.departments.map(&:name).join(', ') %></dd>
                         <dt class="sr-only">Email</dt>
-                        <dd class="mt-1 truncate text-gray-700"><%= site.email %></dd>
-                        <dt class="sr-only">Address</dt>
-                        <dd class="mt-1 truncate text-gray-700"><%= site.address %></dd>
-                        <dt class="sr-only">Contact Name</dt>
-                        <dd class="mt-1 truncate text-gray-500"><%= site.contact_name %></dd>
+                        <dd class="mt-1 truncate text-gray-500"><%= site.email %></dd>
                       </dl>
                     </td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.customer&.name %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.departments.map(&:name).join(', ') %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= site.email %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(site.active) %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       <a href="<%= edit_site_path(site) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= site.id %></span></a>
