@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   get "requestor/index"
   resources :interpreter_details
   get "interpreter/index"
-  get "interpreter/my_scheduled"
+  get "interpreters/my_scheduled"
+  get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
   draw :turbo
 
   # Jumpstart views
