@@ -28,6 +28,8 @@ class RequestorDetail < ApplicationRecord
 
   belongs_to :requestor, class_name: "User", foreign_key: "requestor_id", inverse_of: :requestor_detail
 
+  belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
+
   enum requestor_type: {site_admin: 1, site_member: 2, client: 3}
 
   validates :requestor_type, presence: true

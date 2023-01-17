@@ -46,7 +46,7 @@
             <div class="col-span-6 sm:col-span-3">
                 <div class="form-group">
                     <%= requestor_detail.label :customer_id , class: "block text-sm font-medium text-gray-700"%>
-                    <%= requestor_detail.select :customer_id, options_from_collection_for_select(@account_customers, :id, :name, requestor.requestor_detail.customer_id), {prompt: "Please select A Customer"}, {class: 'form-control' } %>
+                    <%= requestor_detail.select :customer_id, options_from_collection_for_select(account_customers, :id, :name, requestor.requestor_detail.customer_id), {prompt: "Please select A Customer"}, {class: 'form-control' } %>
                   </div>
             </div>
            
