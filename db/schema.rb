@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_05_231512) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_14_001450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -486,6 +486,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_05_231512) do
     t.datetime "updated_at", null: false
     t.uuid "account_id"
     t.index ["account_id"], name: "index_rate_criteria_on_account_id"
+  end
+
+  create_table "requestor_details", force: :cascade do |t|
+    t.boolean "allow_offsite"
+    t.boolean "allow_view_docs"
+    t.boolean "allow_view_checklist"
+    t.string "primary_phone"
+    t.string "work_phone"
+    t.uuid "customer_id"
+    t.uuid "site_id"
+    t.uuid "department_id"
+    t.uuid "requestor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "requestor_type"
+    t.index ["requestor_id"], name: "index_requestor_details_on_requestor_id"
   end
 
   create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

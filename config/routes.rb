@@ -1,16 +1,17 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :requestor_details
   resources :pay_bill_rates
   resources :languages
   resources :specialties
-  get "requestor/index"
+  # get "requestor/index"
   resources :sites do
     collection do
       get :dropdown
       get :departments_dropdown
     end
   end
-  get "requestor/index"
+  
   resources :interpreter_details
   get "interpreter/index"
   get "interpreter/my_scheduled"
@@ -163,6 +164,7 @@ Rails.application.routes.draw do
     resources :appointments
     resources :customers
     resources :interpreters
+    resources :requestors
     # end
   end
 
