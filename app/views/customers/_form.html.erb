@@ -1,7 +1,7 @@
 <div>
     <% form_url = customer.new_record? ? customers_path : customer_path(customer) %>
     <%= form_with(model: customer, url: form_url) do |form| %>
-    <%= render "shared/error_messages", resource: form.object %>
+      <%= render "shared/error_messages", resource: form.object %>
       
         <div class="mt-5 md:col-span-2 md:mt-0">
           <div class="overflow-hidden shadow sm:rounded-md">

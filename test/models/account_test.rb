@@ -3,6 +3,7 @@
 # Table name: accounts
 #
 #  id                 :uuid             not null, primary key
+#  agency             :boolean
 #  customer           :boolean          default(FALSE)
 #  domain             :string
 #  extra_billing_info :text
