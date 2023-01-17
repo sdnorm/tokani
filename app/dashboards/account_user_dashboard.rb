@@ -12,6 +12,8 @@ class AccountUserDashboard < Administrate::BaseDashboard
     user: Field::BelongsTo,
     id: Field::Number,
     admin: Field::Boolean,
+    agency_admin: Field::Boolean,
+    site_member: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -25,7 +27,9 @@ class AccountUserDashboard < Administrate::BaseDashboard
     :id,
     :account,
     :user,
-    :admin
+    :admin,
+    :agency_admin,
+    :site_member
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +40,9 @@ class AccountUserDashboard < Administrate::BaseDashboard
     :id,
     :admin,
     :created_at,
-    :updated_at
+    :updated_at,
+    :agency_admin,
+    :site_member
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -45,7 +51,9 @@ class AccountUserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :account,
     :user,
-    :admin
+    :admin,
+    :agency_admin,
+    :site_member
   ].freeze
 
   # Overwrite this method to customize how account members are displayed
