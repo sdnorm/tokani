@@ -48,9 +48,9 @@ Rails.application.routes.draw do
         resources :payment_methods
         resources :subscriptions
       end
-
       root to: "dashboard#show"
     end
+    resources :agencies
   end
 
   # API routes

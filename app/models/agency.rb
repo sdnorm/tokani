@@ -20,31 +20,17 @@
 #  index_accounts_on_created_at  (created_at)
 #  index_accounts_on_owner_id    (owner_id)
 #
+class Agency < Account
+  # Broadcast changes in realtime with Hotwire
+  after_create_commit -> { broadcast_prepend_later_to :agencies, partial: "agencies/index", locals: {agency: self} }
+  after_update_commit -> { broadcast_replace_later_to self }
+  after_destroy_commit -> { broadcast_remove_to :agencies, target: dom_id(self, :index) }
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+  before_create :set_agency_flag
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one:
-  owner: one
-  name: "User One"
-  personal: true
+  private
 
-two:
-  owner: two
-  name: "User Two"
-  personal: true
-
-company:
-  owner: one
-  name: "Company"
-  personal: false
-  domain: company.com
-  subdomain: company
-
-invited:
-  owner: invited
-  name: "Invited User"
-  personal: true
+  def set_agency_flag
+    self.agency = true
+  end
+end
