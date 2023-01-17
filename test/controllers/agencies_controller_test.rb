@@ -17,7 +17,7 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create agency" do
     assert_difference("Agency.count") do
-      post agencies_url, params: { agency: {  } }
+      post agencies_url, params: {agency: {}}
     end
 
     assert_redirected_to agency_url(Agency.last)
@@ -34,7 +34,7 @@ class AgenciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update agency" do
-    patch agency_url(@agency), params: { agency: {  } }
+    patch agency_url(@agency), params: {agency: {}}
     assert_redirected_to agency_url(@agency)
   end
 
