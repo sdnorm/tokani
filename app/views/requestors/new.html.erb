@@ -14,7 +14,7 @@
                 </div>      
                 </div>
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render "form", requestor: @requestor %>
+                  <%= render partial: "form", locals: { requestor: @requestor, account_customers: @account_customers } %>
                 </div>
             </div>
           </div>
