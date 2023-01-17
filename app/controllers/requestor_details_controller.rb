@@ -83,9 +83,7 @@ class RequestorDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def requestor_detail_params
-    params.fetch(:requestor_detail, {})
-
-    # Uncomment to use Pundit permitted attributes
-    # params.require(:requestor_detail).permit(policy(@requestor_detail).permitted_attributes)
+    params.require(:requestor_detail).permit(:requestor_type, :primary_phone, :requestor_id, :work_phone, :site_id,
+      :department_id, :customer_id, :allow_offsite, :allow_view_docs, :allow_view_checklist)
   end
 end

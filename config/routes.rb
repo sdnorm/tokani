@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get :departments_dropdown
     end
   end
-  
+
   resources :interpreter_details
   get "interpreter/index"
   get "interpreter/my_scheduled"
