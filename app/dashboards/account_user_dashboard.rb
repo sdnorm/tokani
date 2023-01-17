@@ -15,7 +15,7 @@ class AccountUserDashboard < Administrate::BaseDashboard
     agency_admin: Field::Boolean,
     site_member: Field::Boolean,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
