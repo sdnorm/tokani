@@ -25,7 +25,7 @@ module UserAccounts
     return accounts.first if accounts.any?
 
     account = accounts.new(owner: self, name: name, personal: Jumpstart.config.personal_accounts)
-    account.account_users.new(user: self, admin: true)
+    # account.account_users.new(user: self, admin: true)
     account.save!
     account
   end
