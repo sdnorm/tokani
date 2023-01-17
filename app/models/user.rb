@@ -73,7 +73,7 @@ class User < ApplicationRecord
 
   has_many :interpreter_languages, dependent: :destroy, foreign_key: :interpreter_id
 
-  # has_one :interpreter_detail, dependent: :destroy, foreign_key: :interpreter_id
+  has_one :requestor_detail, dependent: :destroy, foreign_key: :requestor_id, inverse_of: :requestor, autosave: true
   has_one :interpreter_detail, foreign_key: :interpreter_id, dependent: :destroy, inverse_of: :interpreter, autosave: true
   has_many :appointments, foreign_key: :interpreter_id
 
@@ -81,6 +81,7 @@ class User < ApplicationRecord
   has_many :specialties, through: :interpreter_specialties
 
   accepts_nested_attributes_for :interpreter_detail
+  accepts_nested_attributes_for :requestor_detail
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
