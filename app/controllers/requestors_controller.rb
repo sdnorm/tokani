@@ -31,6 +31,7 @@ class RequestorsController < ApplicationController
   end
 
   def create
+    @account_customers = current_account.customers
     @requestor = User.new(requestor_params)
     @requestor.terms_of_service = true
     req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
