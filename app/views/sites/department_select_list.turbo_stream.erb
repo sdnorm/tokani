@@ -1,0 +1,9 @@
+<%= turbo_stream.update @target do %>
+  <%= options_for_select(@department_list, '') %>
+<% end %>
+
+<% if @clear_target.present? %>
+  <%= turbo_stream.update @clear_target do%>
+    <%= options_for_select([["Please select a Site first", '']]) %>
+  <% end %>
+<% end %>

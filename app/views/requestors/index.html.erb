@@ -48,7 +48,7 @@
                     </td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= requestor.email %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= get_customer(requestor.requestor_detail) %></td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"> Need to Add Sites</td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= get_site(requestor.requestor_detail) %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= requestor.requestor_detail.requestor_type.titleize %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= requestor.requestor_detail.primary_phone %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
