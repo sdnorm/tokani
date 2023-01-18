@@ -1,0 +1,284 @@
+<%= form_with(model: pay_bill_config) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-10 mx-auto">
+          <div class="" data-controller="pay-bill-config" data-pay-bill-config-inverted-value="true">
+
+            <div class="mt-4 mb-5 justify-content-center">
+              <div class="input-group input-group-static">
+                <%= form.label "Config Name *"%>
+                <%= form.text_field :name, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="mb-3 content-center">
+              <%= form.label :is_minutes_billed_appointment_duration %>
+              <%= form.check_box :is_minutes_billed_appointment_duration, class:"form-check-input", data: {action: 'change->pay-bill-config#toggleHideMinMinutesBilled' } %>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4" class="min_minutes" data-pay-bill-config-target="toggleHideMinMinutesBilled">
+              <div class="">
+                <%= form.label :minimum_minutes_billed %>
+                <%= form.number_field :minimum_minutes_billed, class: "form-control" %>
+              </div>
+              <div class="">
+                <%= form.label :minimum_minutes_paid %>
+                <%= form.number_field :minimum_minutes_paid, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="row mb-3 justify-content-center">
+              <div class="col-5">
+                <div class="form-check">
+                  <%= form.label :is_minutes_billed_cancelled_appointment_duration %>
+                  <%= form.check_box :is_minutes_billed_cancelled_appointment_duration,  class:"form-check-input", data: {action: 'change->pay-bill-config#toggleHideMinMinutesBilledCancel' }%>
+                </div>
+              </div>
+            </div>
+
+            <div id="cancel_wrapper" class="min_mins cancel_levels" data-pay-bill-config-target="toggleHideMinMinutesBilledCancel">
+              <div class="grid grid-cols-2 gap-4 mb-3">
+                <div class="">
+                  <div class="input-group input-group-static">
+                    <%= form.label :minimum_minutes_billed_cancelled_level1 %>
+                    <%= form.number_field :minimum_minutes_billed_cancelled_level1 , class: "form-control" %>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="input-group input-group-static">
+                    <%= form.label :minimum_minutes_paid_cancelled_level1 %>
+                    <%= form.number_field :minimum_minutes_paid_cancelled_level1 , class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 mb-3">
+                <div class="">
+                  <div class="input-group input-group-static">
+                    <%= form.label :minimum_minutes_billed_cancelled_level2 %>
+                    <%= form.number_field :minimum_minutes_billed_cancelled_level2 , class: "form-control" %>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="input-group input-group-static">
+                    <%= form.label :minimum_minutes_paid_cancelled_level2 %>
+                    <%= form.number_field :minimum_minutes_paid_cancelled_level2, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-3 mt-4">
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :trigger_for_billing_increment %>
+                  <%= form.number_field :trigger_for_billing_increment,  class: "form-control" %>
+                </div>
+              </div>
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :billing_increment %>
+                  <%= form.number_field :billing_increment, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+            <br/>
+
+            <div class="grid grid-cols-2 gap-4 mb-3">
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :trigger_for_rush_rate %>
+                  <%= form.number_field :trigger_for_rush_rate, class:"form-control" %>
+                </div>
+              </div>
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :trigger_for_discount_rate %>
+                  <%= form.number_field :trigger_for_discount_rate , class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-3">
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :trigger_for_cancel_level1, "Trigger for cancel level 1" %>
+                  <%= form.number_field :trigger_for_cancel_level1, class: "form-control" %>
+                </div>
+              </div>
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :trigger_for_cancel_level2, "Trigger for cancel level 2" %>
+                  <%= form.number_field :trigger_for_cancel_level2 , class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-3">
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :maximum_travel_time %>
+                  <%= form.number_field :maximum_travel_time, class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="">
+                <div class="input-group input-group-static">
+                  <%= form.label :trigger_for_travel_time %>
+                  <%= form.number_field :trigger_for_travel_time, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-3">
+              <div class="col-span-1">
+                  <%= form.label :trigger_for_mileage %>
+                  <%= form.number_field :trigger_for_mileage , class: "form-control" %>
+              </div>
+              <div class="col-span-1">
+                  <%= form.label :maximum_mileage %>
+                  <%= form.number_field :maximum_mileage, class: "form-control" %>
+              </div>
+            </div>
+
+            <div>
+              <%= form.label :fixed_roundtrip_mileage %>
+              <%= form.number_field :fixed_roundtrip_mileage , class: "form-control" %>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="grid grid-cols-2 gap-4 content-center mb-2">
+              <div class="content-center"><strong>After Hours (M-F) Start Time 1</strong></div>
+              <div class="content-center"><strong>After Hours (M-F) End Time 1</strong></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 content-center pb-3">
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.start_hour(:afterhours_availability_start_seconds1), { ampm: true, field_name: 'afterhours_availability_start_seconds1[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@pay_bill_config, 'times_start_hour'),  class: "form-select"}  %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[afterhours_availability_start_seconds1][minute]', options_for_select((0..45).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), {id: dom_id(@pay_bill_config, 'times_start_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 content-center">
+                <div>
+                  <%= select_hour @pay_bill_config.end_hour(:afterhours_availability_end_seconds1), { ampm: true, field_name: 'afterhours_availability_end_seconds1[hour]', prefix: 'times', prompt: 'None'}, {id: dom_id(@pay_bill_config, 'times_end_hour'), class: "form-select"} %>
+                </div>
+                <div>
+                  <%= select_tag 'times[afterhours_availability_end_seconds1][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), { id: dom_id(@pay_bill_config, 'times_end_minute'), :include_blank => 'None', class: "form-select"} %>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 content-center mb-2">
+              <div class="content-center"><strong>After Hours (M-F) Start Time 2</strong></div>
+              <div class="content-center"><strong>After Hours (M-F) End Time 2</strong></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 content-center pb-3">
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.start_hour(:afterhours_availability_start_seconds2), { ampm: true, field_name: 'afterhours_availability_start_seconds2[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@pay_bill_config, 'times_start_hour'),  class: "form-select"}  %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[afterhours_availability_start_seconds2][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), {id: dom_id(@pay_bill_config, 'times_start_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.end_hour(:afterhours_availability_end_seconds2), { ampm: true, field_name: 'afterhours_availability_end_seconds2[hour]', prefix: 'times', prompt: 'None' }, {id: dom_id(@pay_bill_config, 'times_end_hour'), class: "form-select"} %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[afterhours_availability_end_seconds2][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), { id: dom_id(@pay_bill_config, 'times_end_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <hr class="dark">
+            <br>
+
+            <div class="grid grid-cols-2 gap-4 content-center mb-2">
+              <div class="content-center"><strong>Weekend (Sat-Sun) Start Time 1</strong></div>
+              <div class="content-center"><strong>Weekend(Sat-Sun) End Time 1</strong></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 content-center pb-3">
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.start_hour(:weekend_availability_start_seconds1), { ampm: true, field_name: 'weekend_availability_start_seconds1[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@pay_bill_config, 'times_start_hour'),  class: "form-select"}  %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[weekend_availability_start_seconds1][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), {id: dom_id(@pay_bill_config, 'times_start_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.end_hour(:weekend_availability_end_seconds1), { ampm: true, field_name: 'weekend_availability_end_seconds1[hour]', prefix: 'times', prompt: 'None'}, {id: dom_id(@pay_bill_config, 'times_end_hour'), class: "form-select"} %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[weekend_availability_end_seconds1][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), { id: dom_id(@pay_bill_config, 'times_end_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 content-center mb-2">
+              <div class="content-center"><strong>Weekend (Sat-Sun) Start Time 2</strong></div>
+              <div class="content-center"><strong>Weekend (Sat-Sun) End Time 2</strong></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 content-center pb-3">
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.start_hour(:weekend_availability_start_seconds2), { ampm: true, field_name: 'weekend_availability_start_seconds2[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@pay_bill_config, 'times_start_hour'),  class: "form-select"}  %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[weekend_availability_start_seconds2][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), {id: dom_id(@pay_bill_config, 'times_start_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <div class="grid grid-cols-2 gap-4 content-center">
+                  <div>
+                    <%= select_hour @pay_bill_config.end_hour(:weekend_availability_end_seconds2), { ampm: true, field_name: 'weekend_availability_end_seconds2[hour]', prefix: 'times', prompt: 'None' }, {id: dom_id(@pay_bill_config, 'times_end_hour'), class: "form-select"} %>
+                  </div>
+                  <div>
+                    <%= select_tag 'times[weekend_availability_end_seconds2][minute]', options_for_select((0..60).step(15).map {|i| [lpad_number(i), lpad_number(i) ]}), { id: dom_id(@pay_bill_config, 'times_end_minute'), :include_blank => 'None', class: "form-select"} %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div>
+    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), pay_bill_configs_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), pay_bill_config_path(@pay_bill_config), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>

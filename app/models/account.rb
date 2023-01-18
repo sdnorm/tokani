@@ -47,6 +47,7 @@ class Account < ApplicationRecord
   has_many :agencies, through: :customer_agencies
 
   has_many :pay_bill_rates
+  has_many :pay_bill_configs
 
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
