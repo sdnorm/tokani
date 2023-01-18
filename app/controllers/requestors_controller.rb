@@ -63,6 +63,7 @@ class RequestorsController < ApplicationController
     if req_type == "client"
       req_type = {"client" => true}
     end
+    @requestor.skip_default_account = true
 
     respond_to do |format|
       if @requestor.save
