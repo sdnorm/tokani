@@ -21,11 +21,11 @@ class InterpretersController < ApplicationController
   def my_scheduled_details
   end
 
-	def my_assigned
-	end
+  def my_assigned
+  end
 
-	def my_assigned_details
-	end
+  def my_assigned_details
+  end
 
   def new
     @interpreter = User.new
