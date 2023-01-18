@@ -15,6 +15,12 @@ class InterpretersController < ApplicationController
     # authorize @interpreters
   end
 
+  def my_scheduled
+  end
+
+  def my_scheduled_details
+  end
+
   def new
     @interpreter = User.new
     @interpreter.build_interpreter_detail

@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_045848) do
     t.uuid "owner_id"
     t.boolean "customer", default: false
     t.boolean "is_active", default: true
+    t.boolean "agency"
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
@@ -535,6 +536,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_045848) do
     t.datetime "updated_at", null: false
     t.uuid "account_id"
     t.index ["account_id"], name: "index_rate_criteria_on_account_id"
+  end
+
+  create_table "requestor_details", force: :cascade do |t|
+    t.boolean "allow_offsite"
+    t.boolean "allow_view_docs"
+    t.boolean "allow_view_checklist"
+    t.string "primary_phone"
+    t.string "work_phone"
+    t.uuid "customer_id"
+    t.uuid "site_id"
+    t.uuid "department_id"
+    t.uuid "requestor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "requestor_type"
+    t.index ["requestor_id"], name: "index_requestor_details_on_requestor_id"
   end
 
   create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

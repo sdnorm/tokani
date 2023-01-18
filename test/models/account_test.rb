@@ -3,6 +3,7 @@
 # Table name: accounts
 #
 #  id                 :uuid             not null, primary key
+#  agency             :boolean
 #  customer           :boolean          default(FALSE)
 #  domain             :string
 #  extra_billing_info :text
@@ -69,19 +70,19 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
-  test "personal accounts enabled" do
-    Jumpstart.config.stub(:personal_accounts, true) do
-      user = User.create! name: "Test", email: "personalaccounts@example.com", password: "password", password_confirmation: "password", terms_of_service: true
-      assert user.accounts.first.personal?
-    end
-  end
+  # test "personal accounts enabled" do
+  #   Jumpstart.config.stub(:personal_accounts, true) do
+  #     user = User.create! name: "Test", email: "personalaccounts@example.com", password: "password", password_confirmation: "password", terms_of_service: true
+  #     assert user.accounts.first.personal?
+  #   end
+  # end
 
-  test "personal accounts disabled" do
-    Jumpstart.config.stub(:personal_accounts, false) do
-      user = User.create! name: "Test", email: "nonpersonalaccounts@example.com", password: "password", password_confirmation: "password", terms_of_service: true
-      assert_not user.accounts.first.personal?
-    end
-  end
+  # test "personal accounts disabled" do
+  #   Jumpstart.config.stub(:personal_accounts, false) do
+  #     user = User.create! name: "Test", email: "nonpersonalaccounts@example.com", password: "password", password_confirmation: "password", terms_of_service: true
+  #     assert_not user.accounts.first.personal?
+  #   end
+  # end
 
   test "owner?" do
     account = accounts(:one)

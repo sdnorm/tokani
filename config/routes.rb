@@ -1,20 +1,22 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :requestor_details
   resources :pay_bill_configs
   resources :pay_bill_rates
   resources :languages
   resources :specialties
-  get "requestor/index"
+  # get "requestor/index"
   resources :sites do
     collection do
       get :dropdown
       get :departments_dropdown
     end
   end
-  get "requestor/index"
+
   resources :interpreter_details
   get "interpreter/index"
-  get "interpreter/my_scheduled"
+  get "interpreters/my_scheduled"
+  get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
   draw :turbo
 
   # Jumpstart views
@@ -47,9 +49,9 @@ Rails.application.routes.draw do
         resources :payment_methods
         resources :subscriptions
       end
-
       root to: "dashboard#show"
     end
+    resources :agencies
   end
 
   # API routes
@@ -164,6 +166,7 @@ Rails.application.routes.draw do
     resources :appointments
     resources :customers
     resources :interpreters
+    resources :requestors
     # end
   end
 
