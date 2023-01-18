@@ -1,0 +1,199 @@
+<div id="<%= dom_id pay_bill_config %>">
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-10 mx-auto">
+        <div id="pay_bill_config">
+
+          <div class="row">
+            <div class="row mt-3">
+              <div class="col-12 col-md-6 col-xl-4 position-relative">
+                <div class="card card-plain h-100">
+                  <div class="card-header pb-0 p-3">
+                    <div class="row">
+                      <div class="col-md-8 d-flex align-items-center">
+                        <h6 class="mb-3">Minimum Minutes</h6>
+                      </div>
+                      <div class="col-md-4 text-end">
+                        <i class=" fas fa-regular fa-hourglass-half text-secondary"></i>
+                      </div>
+                    </div>
+                    </div>
+                  <div class="card-body p-3">
+                    <ul class="list-group text-blueCoral text-uppercase text-xs font-weight-bolder">
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Billed: </h6>
+                        <%= @pay_bill_config.minimum_minutes_billed %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Paid: </h6>
+                        <%= @pay_bill_config.minimum_minutes_paid %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 text-sm">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Billing Increment: </h6>
+                        <%= @pay_bill_config.billing_increment %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Billed Cancel Level 1: </h6>
+                        <%= @pay_bill_config.minimum_minutes_billed_cancelled_level_1 %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Paid Cancel Level 1: </h6>
+                        <%= @pay_bill_config.minimum_minutes_paid_cancelled_level_1 %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Billed Cancel Level 2: </h6>
+                        <%= @pay_bill_config.minimum_minutes_billed_cancelled_level_2 %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Paid Cancel Level 2: </h6>
+                        <%= @pay_bill_config.minimum_minutes_billed_cancelled_level_2 %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Default to Appt. Duration: </h6>
+                        <%= @pay_bill_config.is_minutes_billed_appointment_duration %>
+                      </li>
+                      <li class="list-group-item border-0 px-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Minimum Minutes Cancelled Default to Appt. Duration:  </h6>
+                        <%= @pay_bill_config.is_minutes_billed_cancelled_appointment_duration %>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <hr class="vertical dark">
+              </div>
+              <div class="col-12 col-md-6 col-xl-4 mt-md-0 mt-4 position-relative">
+                <div class="card card-plain h-100">
+                  <div class="card-header pb-0 p-3">
+                    <div class="row">
+                      <div class="col-md-8 d-flex align-items-center">
+                        <h6 class="mb-3">Triggers</h6>
+                      </div>
+                      <div class="col-md-4 text-end">
+                          <i class="fas fa-user-edit text-secondary text-sm"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body p-3">
+                    <ul class="list-group text-blueCoral text-uppercase text-xs font-weight-bolder">
+                      <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Billing Increment: </h6>
+                        <%= @pay_bill_config.trigger_for_billing_increment %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 text-sm">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Rush Rate: </h6>
+                        <%= @pay_bill_config.trigger_for_rush_rate %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 text-sm">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Discount Rate: </h6>
+                        <%= @pay_bill_config.trigger_for_discount_rate %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 pb-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Cancel Level 1: </h6>
+                        <%= @pay_bill_config.trigger_for_cancel_level1 %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 pb-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Cancel Level 2: </h6>
+                        <%= @pay_bill_config.trigger_for_cancel_level2 %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 pb-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Travel Time: </h6>
+                        <%= @pay_bill_config.trigger_for_travel_time %>
+                      </li>
+                      <li class="list-group-item border-0 ps-0 pb-0">
+                        <!-- <h6 class="text-uppercase text-body text-xs font-weight-bolder">Trigger for Mileage: </h6> -->
+                        <strong class="text-uppercase text-body text-xs">Trigger for Mileage: </strong>
+                        <%= @pay_bill_config.trigger_for_mileage %>
+                      </li>
+                    </ul>
+                    <hr class="dark">
+                    <div class="row">
+                      <div class="col-md-8 d-flex align-items-center">
+                        <h6 class="mb-3">General</h6>
+                      </div>
+                      <div class="col-md-4 text-end">
+
+                        <i class="fas fa-user-edit text-secondary text-sm"></i>
+
+                      </div>
+                    </div>
+                    <ul class="list-group text-blueCoral text-uppercase text-xs font-weight-bolder">
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0">
+                        <strong class="text-uppercase text-body text-xs">Config Name:</strong>
+                       &nbsp; <%= @pay_bill_config.name %>
+                      </li>
+
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Active Status: </h6>
+                        <div class="form-check ms-3">
+                          <%= yes_no(@pay_bill_config.is_active) %>
+                          <%#= form.label :is_active, class: "text-blueCoral" %>
+                          <%#= form.check_box :is_active, class:"form-check-input" %>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <hr class="vertical dark">
+              </div>
+              <div class="col-12 col-xl-4 mt-xl-0 mt-4">
+                <div class="card card-plain h-100">
+                  <div class="card-header pb-0 p-3">
+                    <div class="row">
+                      <div class="col-md-8 d-flex align-items-center">
+                        <h6 class="mb-3">Travel & Mileage</h6>
+                      </div>
+                      <div class="col-md-4 text-end">
+                        <i class="fas fa-sharp fa-solid fa-car text-secondary"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body p-3">
+                    <ul class="list-group text-blueCoral text-uppercase text-xs font-weight-bolder">
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Maximum Mileage: </h6>
+                        <%= @pay_bill_config.maximum_mileage %>
+                      </li>
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Maximum Travel Time: </h6>
+                        <%= @pay_bill_config.maximum_travel_time %>
+                      </li>
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Fixed Rountrip Mileage: </h6>
+                        <%= @pay_bill_config.fixed_roundtrip_mileage %>
+                      </li>
+                    </ul>
+                    <hr class="dark">
+                    <div class="row">
+                      <div class="col-md-8 d-flex align-items-center">
+                        <h6 class="mb-3">After Hours & Weekend </h6>
+                      </div>
+                      <div class="col-md-4 text-end">
+                        <i class="fas fa-solid fa-clock text-secondary"></i>
+                      </div>
+                    </div>
+
+                    <ul class="list-group text-blueCoral text-uppercase text-xs font-weight-bolder">
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">After Hours (M-F) Times:  </h6>
+                        <%= start_config(@pay_bill_config, "afterhours_availability_start_seconds1") %> to <%= end_config(@pay_bill_config, "afterhours_availability_end_seconds1" ) %>
+                        <%= start_config(@pay_bill_config, "afterhours_availability_start_seconds2") %> to <%= end_config(@pay_bill_config, "afterhours_availability_end_seconds2" ) %>
+                      </li>
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Weekend (Sat-Sun) Times: </h6>
+                        <%= start_config(@pay_bill_config, "weekend_availability_start_seconds1") %> to <%= end_config(@pay_bill_config, "weekend_availability_end_seconds1" ) %>
+                        <%= start_config(@pay_bill_config, "weekend_availability_start_seconds2") %> to <%= end_config(@pay_bill_config, "weekend_availability_end_seconds2" ) %>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

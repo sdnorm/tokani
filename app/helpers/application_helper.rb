@@ -137,4 +137,9 @@ module ApplicationHelper
   def unhighlighted_icon
     "text-gray-100 group-hover:text-gray-500"
   end
+
+  def lpad_number(number)
+    return "00" if number.nil?
+    format("%02d", number)
+  end
 end
