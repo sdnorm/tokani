@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     collection do
       get :dropdown
       get :departments_dropdown
+      get :select_list
+      get :department_select_list
     end
   end
 

@@ -20,6 +20,17 @@ class RequestorsController < ApplicationController
     @requestor = User.new
     @requestor.build_requestor_detail
     @account_customers = current_account.customers
+
+    if params[:customer_id].present?
+        @customer_id = params[:customer_id]
+        @customer = Customer.find(@customer_id)
+        @sites = @customer.sites.order('name ASC')
+        @departments = Department.where(site_id: @site_id).order('name ASC')
+  
+      end
+      @sites ||= []
+      @departments ||= []
+      @remote = params[:remote] == 'true'
   end
 
   def show
@@ -28,6 +39,15 @@ class RequestorsController < ApplicationController
 
   def edit
     @account_customers = current_account.customers
+    @sites = current_account.account_sites.order("name ASC")
+    
+    
+    if @requestor.requestor_detail.site_id.present?
+      @departments = Department.where(site_id: @requestor.requestor_detail.site_id).order('name ASC')
+    else
+      @departments = []
+    end
+
   end
 
   def create
@@ -62,6 +82,7 @@ class RequestorsController < ApplicationController
   def update
     respond_to do |format|
       @account_customers = current_account.customers
+      @sites = current_account.account_sites.order("name ASC")
 
       if @requestor.update(requestor_params)
 
