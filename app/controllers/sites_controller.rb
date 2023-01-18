@@ -37,15 +37,14 @@ class SitesController < ApplicationController
     @target = params[:target]
     @clear_target = params[:clear]
     customer_id = params[:customer_id]
-    
+
     if @target.blank? || customer_id.blank?
-      render turbo_stream: '', status: :unprocessable_entity
+      render turbo_stream: "", status: :unprocessable_entity
       return false
     end
 
     sites = current_account.account_sites.where(customer_id: customer_id).order("name ASC")
-    @site_list = [['Please Select Site', '']] + sites.map { |site| [site.name, site.id] }
- 
+    @site_list = [["Please Select Site", ""]] + sites.map { |site| [site.name, site.id] }
   end
 
   def department_select_list
@@ -53,14 +52,13 @@ class SitesController < ApplicationController
     site_id = params[:site_id]
 
     if @target.blank? || site_id.blank?
-      render turbo_stream: '', status: :unprocessable_entity
+      render turbo_stream: "", status: :unprocessable_entity
       return false
     end
 
-    departments = Department.where(site_id: site_id).order('name ASC')
-    @department_list = [['None', '']]
+    departments = Department.where(site_id: site_id).order("name ASC")
+    @department_list = [["None", ""]]
     @department_list += departments.map { |dept| [dept.name, dept.id] } if departments.present?
-
   end
 
   def dropdown

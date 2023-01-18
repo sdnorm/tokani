@@ -22,15 +22,15 @@ class RequestorsController < ApplicationController
     @account_customers = current_account.customers
 
     if params[:customer_id].present?
-        @customer_id = params[:customer_id]
-        @customer = Customer.find(@customer_id)
-        @sites = @customer.sites.order('name ASC')
-        @departments = Department.where(site_id: @site_id).order('name ASC')
-  
-      end
-      @sites ||= []
-      @departments ||= []
-      @remote = params[:remote] == 'true'
+      @customer_id = params[:customer_id]
+      @customer = Customer.find(@customer_id)
+      @sites = @customer.sites.order("name ASC")
+      @departments = Department.where(site_id: @site_id).order("name ASC")
+
+    end
+    @sites ||= []
+    @departments ||= []
+    @remote = params[:remote] == "true"
   end
 
   def show
@@ -40,14 +40,12 @@ class RequestorsController < ApplicationController
   def edit
     @account_customers = current_account.customers
     @sites = current_account.account_sites.order("name ASC")
-    
-    
-    if @requestor.requestor_detail.site_id.present?
-      @departments = Department.where(site_id: @requestor.requestor_detail.site_id).order('name ASC')
-    else
-      @departments = []
-    end
 
+    @departments = if @requestor.requestor_detail.site_id.present?
+      Department.where(site_id: @requestor.requestor_detail.site_id).order("name ASC")
+    else
+      []
+    end
   end
 
   def create
