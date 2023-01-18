@@ -1,8 +1,8 @@
 class InterpretersController < ApplicationController
   include CurrentHelper
 
-  # before_action :authenticate_user!
-  # before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
