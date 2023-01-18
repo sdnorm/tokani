@@ -61,8 +61,8 @@ default:
   weekend_availability_start_seconds2: nil
   weekend_availability_end_seconds2: nil
   is_minutes_billed_appointment_duration: false
-  minimum_minutes_billed_cancelled_level1: 60
-  minimum_minutes_paid_cancelled_level1: 60
-  minimum_minutes_billed_cancelled_level2: 30
-  minimum_minutes_paid_cancelled_level2: 30
+  minimum_minutes_billed_cancelled_level_1: 60
+  minimum_minutes_paid_cancelled_level_1: 60
+  minimum_minutes_billed_cancelled_level_2: 30
+  minimum_minutes_paid_cancelled_level_2: 30
   is_minutes_billed_cancelled_appointment_duration: false
