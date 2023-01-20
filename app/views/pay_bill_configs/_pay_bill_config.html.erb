@@ -191,6 +191,69 @@
               </div>
             </div>
 
+
+            <%= form_with model: @pay_bill_config, data: {turbo: false}, class: 'form' do |form| %>
+
+              <div class="grid grid-cols-2 gap-4 mt-4 mb-4">
+                <div class="">
+                  <h5>Agency Customers:</h5>
+                </div>
+                <div class="">
+                  <h5>Interpreters:</h5>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 ">
+                  <div class="form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:50vh; overflow-y:auto">
+                    <% @pay_bill_config.customers.each do |cust| %>
+                      <div class="ml-3">
+                        <%= check_box_tag 'pay_bill_config[customer_ids][]', cust.id, true, class:"form-check-input" %>
+                        <%= cust.name %>
+                        <br>
+                      </div>
+                    <% end %>
+
+                    <% @customers.each do |cust| %>
+                      <% next if @pay_bill_config.customers.include?(cust) %>
+                      <div class="ml-3">
+                        <%= check_box_tag 'pay_bill_config[customer_ids][]', cust.id, false, class:"form-check-input"%>
+                        <%= cust.name %>
+                        <br>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <div class="form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:50vh; overflow-y:auto">
+                    <% @pay_bill_config.interpreters.each do |int| %>
+                      <div class="ml-3">
+                        <%= check_box_tag 'pay_bill_config[interpreter_ids][]', int.id, true, class:"form-check-input" %>
+                        <%= int.view_name %>
+                        <br>
+                      </div>
+                    <% end %>
+
+                    <% @interpreters.each do |int| %>
+                      <% next if @pay_bill_config.interpreters.include?(int) %>
+                      <div class="ml-3">
+                        <%= check_box_tag 'pay_bill_config[interpreter_ids][]', int.id, false, class:"form-check-input" %>
+                        <%= int.view_name %>
+                        <br>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <%= form.hidden_field :is_active %>
+
+              <div class="justify-content-center mt-4">
+                <div class="actions text-center">
+                  <%= form.button 'Apply Configurations', type: 'submit', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+                </div>
+              </div>
+
+            <% end %>
+
           </div>
         </div>
       </div>
