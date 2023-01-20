@@ -91,7 +91,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
       highlighted
     else
       unhighlighted
@@ -99,7 +99,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight_icon?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
       highlighted_icon
     else
       unhighlighted_icon

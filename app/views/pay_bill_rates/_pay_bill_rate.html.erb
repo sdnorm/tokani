@@ -1,202 +1,229 @@
-<div id="<%= dom_id pay_bill_rate %>">
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Name</p>
-    <%= pay_bill_rate.name %>
+<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-tokanisecondary-900">Pay/Bill Rate Information</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500"></p>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Is default?</p>
-    <%= yes_no(pay_bill_rate.is_default) %>
+  <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Rate Name</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_bill_rate.name %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Effective Date</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_bill_rate.effective_date %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Is Default?</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= yes_no(pay_bill_rate.is_default) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Is Active?</dt>
+        <dd class="mt-1 text-sm text-gray-900"> <%= yes_no(pay_bill_rate.is_active) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Bill Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.bill_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Pay Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"> <%= number_to_currency(pay_bill_rate.pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">After Hours Bill Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.after_hours_bill_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">After Hours Pay Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.after_hours_pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Rush Bill Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.rush_bill_rate)  %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Rush Pay Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.rush_pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Discount Bill Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.after_hours_bill_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Discount Pay Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.discount_pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Cancel Level 1 Bill Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.cancel_level_1_bill_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Cancel Level 1 Pay Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.cancel_level_1_pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Cancel Level 2 Bill Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.cancel_level_2_bill_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Cancel Level 2 Pay Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_bill_rate.cancel_level_2_pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Mileage Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_bill_rate.mileage_rate %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Travel Time</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_bill_rate.travel_time_rate %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Modalities</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_bill_rate.modality_list.titleize %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Languages</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if pay_bill_rate.languages.empty? %>
+            <p>Rate not applied to any Languges</p>
+          <% else %>
+            <%= pay_bill_rate.language_list.titleize %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Interpreter Type</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if pay_bill_rate.pay_bill_rate_interpreter_types.empty? %>
+            <p>Rate not applied to any Interpreter Types</p>
+          <% else %>
+            <%= pay_bill_rate.interpreter_types_list.titleize %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-gray-500">Specialties</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if pay_bill_rate.specialties.empty? %>
+            <p>Rate not applied to any Specialties</p>
+          <% else %>
+            <ul>
+              <% pay_bill_rate.specialties.each do |specialty| %>
+                <li><%= specialty.name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </dd>
+      </div>
+      <div class="sm:col-span-2">
+        <dt class="text-sm font-medium text-gray-500">Customer/Site/Department</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if pay_bill_rate.sites.empty? && pay_bill_rate.departments.empty? %>
+            <p>Rate not applied to any Sites / Departments.</p>
+          <% else %>
+            <% if pay_bill_rate.sites.any? %>
+              <label>Sites</label>
+              <% pay_bill_rate.sites.each do |site| %>
+                <div><p><%= site.customer.name %> &raquo; <%= site.name %></p></div>
+              <% end %>
+              <br>
+            <% end %>
+    
+            <% if pay_bill_rate.departments.any? %>
+              <label>Departments</label>
+              <% pay_bill_rate.departments.each do |department| %>
+                <div><p><%= department.site.customer.name %> &raquo; <%= department.site.name %> &raquo; <%= department.name %> </p></div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </dd>
+      </div>
+  </dl>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Effective date</p>
-    <%= pay_bill_rate.effective_date %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Bill rate</p>
-    <%= number_to_currency(pay_bill_rate.bill_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Pay rate</p>
-    <%= number_to_currency(pay_bill_rate.pay_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">After hours bill rate</p>
-    <%= number_to_currency(pay_bill_rate.after_hours_bill_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">After hours pay rate</p>
-    <%= number_to_currency(pay_bill_rate.after_hours_pay_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Rush bill rate</p>
-    <%= number_to_currency(pay_bill_rate.rush_bill_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Rush pay rate</p>
-    <%= number_to_currency(pay_bill_rate.rush_pay_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Discount bill rate</p>
-    <%= number_to_currency(pay_bill_rate.discount_bill_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Discount pay rate</p>
-    <%= number_to_currency(pay_bill_rate.discount_pay_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel level 1 bill rate</p>
-    <%= number_to_currency(pay_bill_rate.cancel_level_1_bill_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel level 1 pay rate</p>
-    <%= number_to_currency(pay_bill_rate.cancel_level_1_pay_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel level 2 bill rate</p>
-    <%= number_to_currency(pay_bill_rate.cancel_level_2_bill_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel level 2 pay rate</p>
-    <%= number_to_currency(pay_bill_rate.cancel_level_2_pay_rate) %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Mileage rate</p>
-    <%= pay_bill_rate.mileage_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Travel time rate</p>
-    <%= pay_bill_rate.travel_time_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Modalities</p>
-    <%= pay_bill_rate.modality_list.titleize %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Is active?</p>
-    <%= yes_no(pay_bill_rate.is_active) %>
-  </div>
-
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Languages</p>
-    <% if pay_bill_rate.languages.empty?  %>
-      <p>Rate not applied to any Languges</p>
-    <% else %>
-      <%= pay_bill_rate.language_list.titleize %>
-    <% end %>
-  </div>
-
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Specialties</p>
-    <% if pay_bill_rate.specialties.empty?  %>
-      <p>Rate not applied to any Specialties</p>
-    <% else %>
-      <ul>
-        <% pay_bill_rate.specialties.each do |specialty| %>
-          <li><%= specialty.name %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Interpreter Types</p>
-    <% if pay_bill_rate.pay_bill_rate_interpreter_types.empty?  %>
-      <p>Rate not applied to any Interpreter Types</p>
-    <% else %>
-      <%= pay_bill_rate.interpreter_types_list.titleize %>
-    <% end %>
-  </div>
-
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Customer / Sites / Departments</p>
-    <% if pay_bill_rate.sites.empty? && pay_bill_rate.departments.empty? %>
-      <p>Rate not applied to any Sites / Departments.</p>
-    <% else %>
-
-      <% if pay_bill_rate.sites.any? %>
-        <label>Sites</label>
-        <% pay_bill_rate.sites.each do |site| %>
-          <div><p><%= site.customer.name %> &raquo; <%= site.name %></p></div>
-        <% end %>
-        <br>
-      <% end %>
-
-      <% if pay_bill_rate.departments.any? %>
-        <label>Departments</label>
-        <% pay_bill_rate.departments.each do |department| %>
-          <div><p><%= department.site.customer.name %> &raquo; <%= department.site.name %> &raquo; <%= department.name %> </p></div>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-
+      
   <%= form_with model: @pay_bill_rate, data: {turbo: @remote}, class: 'form' do |form| %>
-
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <div class="">
-        <h5>Agency Customers:  </h5>
-      </div>
-      <div class="">
-        <h5>Interpreters:  </h5>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 gap-4 mb-3">
-      <% if @pay_bill_rate.site_or_department_selected? %>
-
-        <div class="form-check mb-3 ps-5 mx-3"  style="height:50vh;">
-
-          <p>This rate is already associated with a specific Customer Site and/or Department, and may not be associated with any other customers.</p>
-
-        </div>
-
-      <% else %>
-
-        <div class="form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3"  style="height:50vh; overflow-y:auto">
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <dl class="grid grid-cols-2 gap-x-4 gap-y-8 mb-3">
+      <div class="sm:col-span-1">
+        <dt class="text-md font-medium text-tokanisecondary-500">Agency Customers</dt>
+        <dd class="mt-3 text-sm text-gray-900">
+          <% if @pay_bill_rate.site_or_department_selected? %>
+            <p>This rate is already associated with a specific Customer Site and/or Department, and may not be associated with any other customers.</p>
+          <% else %>
           <% @pay_bill_rate.accounts.each do |cust| %>
-            <div class="ml-3">
-              <%= check_box_tag 'pay_bill_rate[account_ids][]', cust.id, true, class:"form-check-input" %>
+          <div class="relative flex items-start mt-1">
+            <div class="flex h-5 items-center">
+              <%= check_box_tag 'pay_bill_rate[account_ids][]', cust.id, true, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+            </div>
+            <div class="ml-3 text-sm">
               <%= cust.name %>
               <br>
             </div>
+          </div>  
           <% end %>
           <% @customers.each do |cust| %>
             <% next if @pay_bill_rate.accounts.include?(cust) %>
-            <div class="ml-3">
-              <%= check_box_tag 'pay_bill_rate[account_ids][]', cust.id, false, class:"form-check-input"%>
-              <%= cust.name %>
-              <br>
+            <div class="relative flex items-start mt-1">
+              <div class="flex h-5 items-center">
+                <%= check_box_tag 'pay_bill_rate[account_ids][]', cust.id, false, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+              </div>
+              <div class="ml-3 text-sm">
+                <%= cust.name %>
+                <br>
+              </div>
+            </div>    
+          <% end %> 
+        <% end %>
+        </dd>
+      </div>
+
+      <div class="sm:col-span-1">
+        <dt class="text-md font-medium text-tokanisecondary-500">Interpreters</dt>
+        <dd  class="mt-3 text-sm text-gray-900">
+          <% if @pay_bill_rate.site_or_department_selected? %>
+            <p>This rate is already associated with a specific Customer Site and/or Department, and may not be associated with any other customers.</p>
+          <% else %>
+            <% @pay_bill_rate.interpreters.each do |int| %>
+            <div class="relative flex items-start mt-1">
+              <div class="flex h-5 items-center">
+                <%= check_box_tag 'pay_bill_rate[interpreter_ids][]', int.id, true, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+              </div>
+              <div class="ml-3 text-sm">
+                <%= int.last_name %>, <%= int.first_name %>
+                <br>
+              </div>
             </div>
+            <% end %>
+            <% @avail_interpreters.each do |int| %>
+              <% next if @pay_bill_rate.interpreters.include?(int) %>
+              <div class="relative flex items-start mt-1">
+                <div class="flex h-5 items-center">
+                  <%= check_box_tag 'pay_bill_rate[interpreter_ids][]', int.id, false, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+                </div>
+                <div class="ml-3 text-sm">
+                  <%= int.last_name %>, <%= int.first_name %>
+                  <br>
+                </div>
+              </div>
+            <% end %>
           <% end %>
-        </div>
-      <% end %>
-
-      <div class="form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:50vh; overflow-y:auto">
-        <% @pay_bill_rate.interpreters.each do |int| %>
-          <div class="ml-3">
-            <%= check_box_tag 'pay_bill_rate[interpreter_ids][]', int.id, true, class:"form-check-input" %>
-            <%= int.view_name %>
-            <br>
-          </div>
-        <% end %>
-        <% @avail_interpreters.each do |int| %>
-          <% next if @pay_bill_rate.interpreters.include?(int) %>
-          <div class="ml-3">
-            <%= check_box_tag 'pay_bill_rate[interpreter_ids][]', int.id, false, class:"form-check-input" %>
-            <%= int.view_name %>
-            <br>
-          </div>
-        <% end %>
+        </dd>
       </div>
-    </div>
+    </dl>
+  </div>
+      <%= form.hidden_field :is_default %>
 
-    <%= form.hidden_field :is_default %>
-
-    <div class="row justify-content-center mt-4">
-      <div class="col-md-7 actions text-center">
-        <%= form.button 'Apply Configurations', type: 'submit', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+      <div class="flex justify-center mb-4">
+          <%= form.button 'Apply Configurations', type: 'submit', class: "bg-tokanisecondary-600 hover:bg-tokanisecondary-700 text-white font-bold py-2 px-4 rounded-full" %>
       </div>
-    </div>
 
-  <% end %> <!-- / end form -->
-
+    
+  <% end %>
+      
+</dl>
+  </div>
 </div>
+
+<div>
+  
+
