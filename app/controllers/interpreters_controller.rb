@@ -1,8 +1,8 @@
 class InterpretersController < ApplicationController
   include CurrentHelper
 
-  before_action :authenticate_user!
-  before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
+  # before_action :authenticate_user!
+  # before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -13,18 +13,6 @@ class InterpretersController < ApplicationController
 
     # Uncomment to authorize with Pundit
     # authorize @interpreters
-  end
-
-  def my_scheduled
-  end
-
-  def my_scheduled_details
-  end
-
-  def my_assigned
-  end
-
-  def my_assigned_details
   end
 
   def new
@@ -63,6 +51,21 @@ class InterpretersController < ApplicationController
       end
     end
   end
+
+	def my_scheduled
+  end
+
+  def my_scheduled_details
+  end
+
+  def my_assigned
+  end
+
+  def my_assigned_details
+  end
+
+	def profile
+	end
 
   private
 

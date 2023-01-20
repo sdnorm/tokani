@@ -1,0 +1,40 @@
+<div class="container m-8">
+	<div data-controller="tabs" data-tabs-active-tab="-mb-px border-l border-t border-r rounded-t">
+		<ul class="list-reset list-none flex border-b w-1/2">
+			<li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+				<a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-700 font-semibold no-underline" href="#">Profile</a>
+			</li>
+			<li class="mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+				<a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-700 font-semibold no-underline" href="#">Notifications</a>
+			</li>
+			<li class="mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+				<a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-700 font-semibold no-underline" href="#">Security</a>
+			</li>
+		</ul>
+
+		<div class="hidden py-4 px-4 border-l border-b border-r w-1/2" data-tabs-target="panel">
+			Tab panel 1
+		</div>
+
+		<div class="hidden py-4 px-4 border-l border-b border-r w-1/2" data-tabs-target="panel">
+			<div class="mt-5 ml-10">
+				<p>Email: testing@gmail.com</p>
+				<p>Primary Phone: +1 555 1234</p>
+				<p>Mobile Phone: +1 555-1234</p>
+				<br/>
+				<p><strong>Alerts</strong></p>
+				<p>When Appointment Canceled: Email, SMS</p>
+				<p>When Appointment is Assigned: Email</p>
+				<p>When Appointment is Scheduled: Email, SMS</p>
+				<p>When Appointment is Updated: Email</p>
+				<br/>
+				<p><strong>Reminders</strong></p>
+				<p>Remind me <strong>10 minutes</strong> before an appointment</p>
+				<p class="mt-5 text-blue-500"><%= link_to "Edit...", "#" %></p>
+			</div>
+		</div>
+
+		<div class="hidden py-4 px-4 border-l border-b border-r w-1/2" data-tabs-target="panel">
+		</div>
+	</div>
+</div>
