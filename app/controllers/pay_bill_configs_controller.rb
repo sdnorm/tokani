@@ -17,6 +17,8 @@ class PayBillConfigsController < ApplicationController
 
   # GET /pay_bill_configs/1 or /pay_bill_configs/1.json
   def show
+    @customers = current_account.customers.order('name ASC')
+    @interpreters = current_account.account_interpreters
   end
 
   # GET /pay_bill_configs/new
@@ -94,7 +96,7 @@ class PayBillConfigsController < ApplicationController
       :weekend_availability_start_seconds2, :weekend_availability_end_seconds2, :is_minutes_billed_appointment_duration,
       :minimum_minutes_billed_cancelled_level_1, :minimum_minutes_paid_cancelled_level_1, :minimum_minutes_billed_cancelled_level_2,
       :minimum_minutes_paid_cancelled_level_2, :is_minutes_billed_cancelled_appointment_duration,
-      account_ids: [], interpreter_ids: [])
+      customer_ids: [], interpreter_ids: [])
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:pay_bill_config).permit(policy(@pay_bill_config).permitted_attributes)
