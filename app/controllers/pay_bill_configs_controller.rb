@@ -17,7 +17,7 @@ class PayBillConfigsController < ApplicationController
 
   # GET /pay_bill_configs/1 or /pay_bill_configs/1.json
   def show
-    @customers = current_account.customers.order('name ASC')
+    @customers = current_account.customers.order("name ASC")
     @interpreters = current_account.account_interpreters
   end
 
