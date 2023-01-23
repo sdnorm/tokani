@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 3.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 7.0.0"
+gem "rails", "~> 7.0.4"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails", ">= 3.4.1"
@@ -87,7 +87,7 @@ end
 # Jumpstart dependencies
 gem "jumpstart", path: "lib/jumpstart", group: :omit
 
-gem "acts_as_tenant", "~> 0.6.0"
+gem "acts_as_tenant", "~> 0.6.1"
 gem "administrate", github: "excid3/administrate", branch: "jumpstart" # '~> 0.10.0'
 gem "administrate-field-active_storage", "~> 0.4.2"
 gem "cssbundling-rails", "~> 1.1.2"
@@ -101,10 +101,10 @@ gem "local_time", "~> 2.1"
 gem "name_of_person", "~> 1.0"
 gem "noticed", "~> 1.5"
 gem "oj", "~> 3.13"
-gem "omniauth", "~> 2.0", ">= 2.0.4"
+gem "omniauth", "~> 2.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "pagy", "~> 6.0"
-gem "pay", "~> 6.2.3"
+gem "pay", "~> 6.3.1"
 gem "pg_search", "~> 2.3"
 gem "prawn", github: "prawnpdf/prawn"
 gem "prefixed_ids", "~> 1.2"
