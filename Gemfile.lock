@@ -295,7 +295,7 @@ GEM
       http (>= 4.0.0)
       rails (>= 5.2.0)
     oj (3.13.23)
-    omniauth (2.1.0)
+    omniauth (2.1.1)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
@@ -331,7 +331,7 @@ GEM
     pundit (2.3.0)
       activesupport (>= 3.0.0)
     racc (1.6.2)
-    rack (2.2.6)
+    rack (2.2.6.2)
     rack-protection (3.0.5)
       rack
     rack-test (2.0.2)
@@ -511,7 +511,7 @@ DEPENDENCIES
   nokogiri (>= 1.12.5)
   noticed (~> 1.5)
   oj (~> 3.13)
-  omniauth (~> 2.0, >= 2.0.4)
+  omniauth (~> 2.1)
   omniauth-rails_csrf_protection (~> 1.0)
   overcommit
   pagy (~> 6.0)
