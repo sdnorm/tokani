@@ -52,7 +52,7 @@ class InterpretersController < ApplicationController
     end
   end
 
-	def my_scheduled
+  def my_scheduled
   end
 
   def my_scheduled_details
@@ -64,17 +64,17 @@ class InterpretersController < ApplicationController
   def my_assigned_details
   end
 
-	def profile
-	end
+  def profile
+  end
 
-	def profile_notifications_edit
-	end
+  def profile_notifications_edit
+  end
 
-	def profile_personal_edit
-	end
+  def profile_personal_edit
+  end
 
-	def profile_security_edit
-	end
+  def profile_security_edit
+  end
 
   private
 
