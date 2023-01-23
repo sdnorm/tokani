@@ -67,6 +67,15 @@ class InterpretersController < ApplicationController
 	def profile
 	end
 
+	def profile_notifications_edit
+	end
+
+	def profile_personal_edit
+	end
+
+	def profile_security_edit
+	end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
