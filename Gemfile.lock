@@ -122,7 +122,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    acts_as_tenant (0.6.0)
+    acts_as_tenant (0.6.1)
       rails (>= 5.2)
       request_store (>= 1.0.5)
     addressable (2.8.1)
@@ -156,7 +156,7 @@ GEM
     childprocess (4.1.0)
     chronic (0.10.2)
     chunky_png (1.4.0)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     connection_pool (2.3.0)
     countries (5.3.0)
       unaccent (~> 0.3)
@@ -195,7 +195,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     hashids (1.0.6)
     hashie (5.0.0)
@@ -331,7 +331,7 @@ GEM
     pundit (2.3.0)
       activesupport (>= 3.0.0)
     racc (1.6.2)
-    rack (2.2.6)
+    rack (2.2.6.2)
     rack-protection (3.0.5)
       rack
     rack-test (2.0.2)
@@ -353,7 +353,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.4)
+    rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
     railties (7.0.4)
       actionpack (= 7.0.4)
@@ -485,7 +485,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  acts_as_tenant (~> 0.6.0)
+  acts_as_tenant (~> 0.6.1)
   administrate!
   administrate-field-active_storage (~> 0.4.2)
   annotate!
