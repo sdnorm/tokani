@@ -236,7 +236,7 @@
                       <% next if @pay_bill_config.interpreters.include?(int) %>
                       <div class="ml-3">
                         <%= check_box_tag 'pay_bill_config[interpreter_ids][]', int.id, false, class:"form-check-input" %>
-                        <%= int.view_name %>
+                        <%= int.last_name %>, <%= int.first_name %>
                         <br>
                       </div>
                     <% end %>
