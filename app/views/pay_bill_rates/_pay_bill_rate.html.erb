@@ -78,7 +78,7 @@
 
   <div class="mb-4">
     <p class="text-sm font-medium text-gray-500">Languages</p>
-    <% if pay_bill_rate.languages.empty?  %>
+    <% if pay_bill_rate.languages.empty? %>
       <p>Rate not applied to any Languges</p>
     <% else %>
       <%= pay_bill_rate.language_list.titleize %>
@@ -87,7 +87,7 @@
 
   <div class="mb-4">
     <p class="text-sm font-medium text-gray-500">Specialties</p>
-    <% if pay_bill_rate.specialties.empty?  %>
+    <% if pay_bill_rate.specialties.empty? %>
       <p>Rate not applied to any Specialties</p>
     <% else %>
       <ul>
@@ -100,7 +100,7 @@
 
   <div class="mb-4">
     <p class="text-sm font-medium text-gray-500">Interpreter Types</p>
-    <% if pay_bill_rate.pay_bill_rate_interpreter_types.empty?  %>
+    <% if pay_bill_rate.pay_bill_rate_interpreter_types.empty? %>
       <p>Rate not applied to any Interpreter Types</p>
     <% else %>
       <%= pay_bill_rate.interpreter_types_list.titleize %>
@@ -162,7 +162,7 @@
           <% @customers.each do |cust| %>
             <% next if @pay_bill_rate.accounts.include?(cust) %>
             <div class="ml-3">
-              <%= check_box_tag 'pay_bill_rate[account_ids][]', cust.id, false, class:"form-check-input"%>
+              <%= check_box_tag 'pay_bill_rate[account_ids][]', cust.id, false, class:"form-check-input" %>
               <%= cust.name %>
               <br>
             </div>
