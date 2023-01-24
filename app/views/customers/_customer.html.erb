@@ -53,7 +53,7 @@
         <dt class="text-sm font-medium text-tokanisecondary-600">Sites</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
 
-          <% @customer.sites.each do |site| %>
+          <% customer.sites.each do |site| %>
           <%= link_to site.name, site_path(site) %>
           
           <br>    
