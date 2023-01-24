@@ -53,7 +53,7 @@
                         <dt class="sr-only">Customer</dt>
                         <dd class="mt-1 truncate text-gray-700"><%= site.customer&.name %></dd>
                         <dt class="sr-only">Departments</dt>
-                        <dd class="mt-1 truncate text-gray-700"><%=  site.departments.map(&:name).join(', ') %></dd>
+                        <dd class="mt-1 truncate text-gray-700"><%= site.departments.map(&:name).join(', ') %></dd>
                         <dt class="sr-only">Email</dt>
                         <dd class="mt-1 truncate text-gray-500"><%= site.email %></dd>
                       </dl>

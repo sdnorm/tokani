@@ -10,7 +10,7 @@
                     <% if @site.new_record? %>
                         <div class="form-group">
                             <%= form.label :customer_id, "Agency Customer*" %>
-                            <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: 'form-select' }  %>
+                            <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: 'form-select' } %>
                         </div>
                         <% else %>
 
@@ -99,7 +99,7 @@
                     <p class="mt-2 text-sm text-gray-500">The departments associated with this site.</p>
                   </div>
                   <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <%= button_tag '+ Add Department'.html_safe, type:'button', data: {action: 'click->form#addFields'}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokaniprimary-600 px-4 py-2 text-xs font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2 sm:w-auto"  %>
+                    <%= button_tag '+ Add Department'.html_safe, type:'button', data: {action: 'click->form#addFields'}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokaniprimary-600 px-4 py-2 text-xs font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2 sm:w-auto" %>
                   </div>
                 </div>
                 <div class="mt-8 flex flex-col">

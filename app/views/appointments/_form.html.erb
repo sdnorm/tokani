@@ -3,12 +3,12 @@
 
   <div class="form-group">
     <%= form.label :customer_id, "Agency Customer*" %>
-    <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: 'form-select' }  %>
+    <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: 'form-select' } %>
   </div>
 
   <div class="form-group">
     <%= form.label :interpreter_id, "Interpreter*" %>
-    <%= form.select :interpreter_id, options_from_collection_for_select(@interpreters, :id, :name), {prompt: "Please select An Interpreter"}, {class: 'form-select' }  %>
+    <%= form.select :interpreter_id, options_from_collection_for_select(@interpreters, :id, :name), {prompt: "Please select An Interpreter"}, {class: 'form-select' } %>
   </div>
 
   <div class="form-group">

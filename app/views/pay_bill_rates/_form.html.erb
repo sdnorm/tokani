@@ -122,7 +122,7 @@
         <div class="ml-4 mb-2">
           <% @languages.each do |lang| %>
             <% next if @pay_bill_rate.languages.include?(lang) %>
-            <%= check_box_tag 'pay_bill_rate[language_ids][]', lang.id, false, class:"form-check-input"%>
+            <%= check_box_tag 'pay_bill_rate[language_ids][]', lang.id, false, class:"form-check-input" %>
             <%= lang.name %>
             <br>
           <% end %>
@@ -148,7 +148,7 @@
         <div class="ml-4 mb-2">
           <% @specialties.each do |specialty| %>
             <% next if @pay_bill_rate.specialties.include?(specialty) %>
-            <%= check_box_tag 'pay_bill_rate[specialty_ids][]', specialty.id, false, class:"form-check-input"%>
+            <%= check_box_tag 'pay_bill_rate[specialty_ids][]', specialty.id, false, class:"form-check-input" %>
             <%= specialty.name %>
             <br>
           <% end %>
