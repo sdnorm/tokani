@@ -1,0 +1,32 @@
+<div class="container m-10">
+	<div class="mt-4 mb-8">
+		<%= link_to "< Back", interpreters_profile_path, class: "text-blue-600 underline" %>
+	</div>
+	<form class="space-y-8 divide-y divide-gray-200 grid justify-items-center">
+		<div class="space-y-8 sm:space-y-5">
+			<div class="space-y-6 sm:space-y-5">
+				<div>
+					<h3 class="text-lg font-medium leading-6 text-gray-900">Change Password</h3>
+				</div>
+			</div>
+			<div class="sm:col-span-3">
+				<label for="new-password" class="block text-sm font-medium text-gray-700">New Password</label>
+				<div class="mt-1">
+					<input type="password" name="new-password" id="new-password" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+				</div>
+			</div>
+
+			<div class="sm:col-span-3">
+				<label for="password-confirmation" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+				<div class="mt-1">
+					<input type="text" name="password-confirmation" id="password-confirmation" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+				</div>
+			</div>
+			<div class="pt-5">
+				<div class="flex justify-center">
+					<button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Change Password</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
