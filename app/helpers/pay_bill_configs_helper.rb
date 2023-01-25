@@ -4,7 +4,8 @@ module PayBillConfigsHelper
       time_string = "N/A"
     else
       time = "#{pay_bill_config.start_hour(start_column).to_s.rjust(2, "0")}:#{pay_bill_config.start_minute(start_column).to_s.rjust(2, "0")}"
-      time_string = Time.find_zone(Agency.timezone).parse(time).strftime("%I:%M %p")
+      # time_string = Time.find_zone(Agency.timezone).parse(time).strftime("%I:%M %p")
+      time_string = Time.find_zone("Pacific Time (US & Canada)").parse(time).strftime("%I:%M %p")
     end
 
     time_string
@@ -15,7 +16,8 @@ module PayBillConfigsHelper
       time_string = "N/A"
     else
       time = "#{pay_bill_config.end_hour(end_column).to_s.rjust(2, "0")}:#{pay_bill_config.end_minute(end_column).to_s.rjust(2, "0")}"
-      time_string = Time.find_zone(Agency.timezone).parse(time).strftime("%I:%M %p")
+      # time_string = Time.find_zone(Agency.timezone).parse(time).strftime("%I:%M %p")
+      time_string = Time.find_zone("Pacific Time (US & Canada)").parse(time).strftime("%I:%M %p")
     end
     time_string
   end

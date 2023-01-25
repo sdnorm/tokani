@@ -37,6 +37,10 @@ class PayBillConfigsController < ApplicationController
   def create
     @pay_bill_config = PayBillConfig.new(pay_bill_config_params)
     @pay_bill_config.account_id = current_account.id
+    @pay_bill_config.make_afterhours1_times_from_hash(params[:times])
+    @pay_bill_config.make_afterhours2_times_from_hash(params[:times])
+    @pay_bill_config.make_weekend1_times_from_hash(params[:times])
+    @pay_bill_config.make_weekend2_times_from_hash(params[:times])
 
     # Uncomment to authorize with Pundit
     # authorize @pay_bill_config

@@ -1,5 +1,5 @@
 <%= content_for :title, "Pay/Bill Rate - #{@pay_bill_rate.name}" %>
-<%= turbo_stream_from @customer %>
+
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -21,7 +21,8 @@
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render @pay_bill_rate %>
+                  <%= render partial: 'pay_bill_rate', locals: { pay_bill_rate: @pay_bill_rate, customers: @customers } %>
+                  <%# render @pay_bill_rate %>
                 </div>
             </div>
           </div>
