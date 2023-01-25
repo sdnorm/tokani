@@ -23,3 +23,5 @@ require("local-time").start()
 
 // Start Rails UJS
 Rails.start()
+
+import "chartkick/chart.js"

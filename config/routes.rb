@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   end
 
   resources :interpreter_details
+  get "interpreters/availability", to: "interpreters#availability"
+  get "interpreters/dashboard", to: "interpreters#dashboard"
   get "interpreter/index"
   get "interpreters/my_scheduled"
   get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
@@ -24,6 +26,9 @@ Rails.application.routes.draw do
   get "interpreters/profile/personal_edit", to: "interpreters#profile_personal_edit"
   get "interpreters/profile/notifications_edit", to: "interpreters#profile_notifications_edit"
   get "interpreters/profile/security_edit", to: "interpreters#profile_security_edit"
+  get "interpreters/public", to: "interpreters#public_folder"
+  get "interpreters/public/details", to: "interpreters#public_details"
+  get "interpreters/time-off", to: "interpreters#time_off"
 
   draw :turbo
 
