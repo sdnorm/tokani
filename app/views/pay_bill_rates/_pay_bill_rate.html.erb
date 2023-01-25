@@ -128,7 +128,7 @@
               <% end %>
               <br>
             <% end %>
-    
+
             <% if pay_bill_rate.departments.any? %>
               <label>Departments</label>
               <% pay_bill_rate.departments.each do |department| %>
@@ -140,7 +140,7 @@
       </div>
   </dl>
   </div>
-      
+
   <%= form_with model: @pay_bill_rate, data: {turbo: false}, class: 'form' do |form| %>
     <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
       <dl class="grid grid-cols-2 gap-x-4 gap-y-8 mb-3">
@@ -159,7 +159,7 @@
               <%= cust.name %>
               <br>
             </div>
-          </div>  
+          </div>
           <% end %>
           <% @customers.each do |cust| %>
             <% next if pay_bill_rate.accounts.include?(cust) %>
@@ -171,8 +171,8 @@
                 <%= cust.name %>
                 <br>
               </div>
-            </div>    
-          <% end %> 
+            </div>
+          <% end %>
         <% end %>
         </dd>
       </div>
@@ -217,13 +217,13 @@
           <%= form.button 'Apply Configurations', type: 'submit', class: "bg-tokanisecondary-600 hover:bg-tokanisecondary-700 text-white font-bold py-2 px-4 rounded-full" %>
       </div>
 
-    
+
   <% end %>
-      
+
 </dl>
   </div>
 </div>
 
 <div>
-  
+
 

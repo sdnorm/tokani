@@ -1,8 +1,8 @@
 class InterpretersController < ApplicationController
   include CurrentHelper
 
-  before_action :authenticate_user!
-  before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
+  # before_action :authenticate_user!
+  # before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -13,18 +13,6 @@ class InterpretersController < ApplicationController
 
     # Uncomment to authorize with Pundit
     # authorize @interpreters
-  end
-
-  def my_scheduled
-  end
-
-  def my_scheduled_details
-  end
-
-  def my_assigned
-  end
-
-  def my_assigned_details
   end
 
   def new
@@ -38,7 +26,7 @@ class InterpretersController < ApplicationController
   def create
     @interpreter = User.new(interpreter_params)
     @interpreter.terms_of_service = true
-
+    @interpreter.skip_default_account = true
     respond_to do |format|
       if @interpreter.save
         AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles: {"interpreter" => true})
@@ -62,6 +50,30 @@ class InterpretersController < ApplicationController
         format.json { render json: @interpreter.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def my_scheduled
+  end
+
+  def my_scheduled_details
+  end
+
+  def my_assigned
+  end
+
+  def my_assigned_details
+  end
+
+  def profile
+  end
+
+  def profile_notifications_edit
+  end
+
+  def profile_personal_edit
+  end
+
+  def profile_security_edit
   end
 
   private

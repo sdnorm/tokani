@@ -1,0 +1,182 @@
+<div class="container mt-10">
+	<div class="mt-4 mb-8 ml-8">
+		<%= link_to "< Back", interpreters_profile_path, class: "text-blue-600 underline" %>
+	</div>
+	<form class="space-y-8 divide-y divide-gray-200 grid justify-items-center">
+		<div class="space-y-8 sm:space-y-5">
+			<div class="space-y-6 sm:space-y-5">
+				<div>
+					<h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
+				</div>
+			</div>
+
+			<div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
+				<div class="space-y-6 sm:space-y-5">
+					<div class="sm:grid sm:items-start sm:gap-4 sm:pt-5">
+						<label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Email Address</label>
+						<div class="mt-1 sm:col-span-2 sm:mt-0">
+							<input id="email" name="email" type="email" class="block w-1/2 max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+						</div>
+					</div>
+					<div class="sm:grid sm:items-start sm:gap-4 sm:pt-5">
+						<label for="primary-phone" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Primary Phone</label>
+						<div class="mt-1 sm:col-span-2 sm:mt-0">
+							<input id="primary-phone" name="primary-phone" type="tel" class="block w-1/2 max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+						</div>
+					</div>
+					<div class="sm:grid sm:items-start sm:gap-4 sm:pt-5">
+						<label for="mobile-phone" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Mobile Phone</label>
+						<div class="mt-1 sm:col-span-2 sm:mt-0">
+							<input id="mobile-phone" name="mobile-phone" type="tel" class="block w-1/2 max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="space-y-6 divide-y divide-gray-200 pt-8 sm:space-y-5 sm:pt-10">
+				<div>
+					<h3 class="text-lg font-medium leading-6 text-gray-900">Alerts</h3>
+					<p class="mt-1 max-w-2xl text-sm text-gray-500">Select how you'd like to be notified for each event.</p>
+				</div>
+				<div class="space-y-6 divide-y divide-gray-200 sm:space-y-5">
+					<div class="pt-6 sm:pt-5">
+						<div role="group" aria-labelledby="label-email">
+							<div class="sm:grid sm:items-baseline sm:gap-4">
+								<div>
+									<div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700" id="label-email">By Email</div>
+								</div>
+								<div class="mt-4 sm:col-span-2 sm:mt-0">
+									<div class="max-w-lg space-y-4">
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="cancelled-appt" name="cancelled-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="cancelled-appt" class="font-medium text-gray-700">When Appointment Cancelled?</label>
+											</div>
+										</div>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="assigned-appt" name="assigned-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="assigned-appt" class="font-medium text-gray-700">When Appointment Assigned?</label>
+											</div>
+										</div>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="scheduled-appt" name="scheduled-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="scheduled-appt" class="font-medium text-gray-700">When Appointment Scheduled?</label>
+											</div>
+										</div>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="updated-appt" name="updated-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="updated-appt" class="font-medium text-gray-700">When Appointment Updated?</label>
+											</div>
+										</div>					
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="pt-6 sm:pt-5">
+						<div role="group" aria-labelledby="label-email">
+							<div class="sm:grid sm:items-baseline sm:gap-4">
+								<div>
+									<div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700" id="label-sms">Push Notifications</div>
+								</div>
+								<div class="mt-4 sm:col-span-2 sm:mt-0">
+									<div class="max-w-lg space-y-4">
+										<p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="cancelled-appt" name="cancelled-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="cancelled-appt" class="font-medium text-gray-700">When Appointment Cancelled?</label>
+											</div>
+										</div>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="assigned-appt" name="assigned-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="assigned-appt" class="font-medium text-gray-700">When Appointment Assigned?</label>
+											</div>
+										</div>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="scheduled-appt" name="scheduled-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="scheduled-appt" class="font-medium text-gray-700">When Appointment Scheduled?</label>
+											</div>
+										</div>
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="updated-appt" name="updated-appt" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+											</div>
+											<div class="ml-3 text-sm">
+												<label for="updated-appt" class="font-medium text-gray-700">When Appointment Updated?</label>
+											</div>
+										</div>					
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="space-y-6 divide-y divide-gray-200 pt-8 sm:space-y-5 sm:pt-10">
+				<div>
+					<h3 class="text-lg font-medium leading-6 text-gray-900">Reminders</h3>
+					<p class="mt-1 max-w-2xl text-sm text-gray-500">When would you like to be reminded of upcoming appointments?</p>
+				</div>
+				<div class="space-y-6 divide-y divide-gray-200 sm:space-y-5">
+					<div class="pt-6 sm:pt-5">
+						<div role="group" aria-labelledby="label-reminder">
+							<div class="sm:grid sm:items-baseline sm:gap-4">
+								<div>
+									<div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700" id="label-reminder">Notify me</div>
+								</div>
+								<div class="mt-4 sm:col-span-2 sm:mt-0">
+									<div class="max-w-lg space-y-4">
+										<div class="relative flex items-start">
+											<div class="flex h-5 items-center">
+												<input id="reminder-number" name="reminder-number" type="number" class="inline-block rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" placeholder="Enter a number">
+											</div>
+										</div>
+										<div class="relative flex items-start-2 pt-4">
+											<div class="flex h-5 items-center">
+												<select id="reminder-timeframe" name="reminder-timeframe" class="inline-block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+													<option>Minutes</option>
+													<option>Hour(s)</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="mt-5">
+										<div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700">before a scheduled appointment starts.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="pt-5">
+			<div class="flex justify-center">
+				<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
+				<button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+			</div>
+		</div>
+	</form>
+</div>
