@@ -1,15 +1,25 @@
 <%= content_for :title, t("shared.scaffold.new.title", model: "Pay Bill Rate") %>
-
-<div class="container px-4 mx-auto my-8">
-  <div class="flex items-center justify-between mb-4">
-    <h1 class="h3">
-      <%= link_to "Pay Bill Rates", pay_bill_rates_path, class: "text-black" %>
-      <span class="text-gray-400 font-light mx-2">\</span>
-      <%= t("shared.scaffold.new.title", model: "Pay Bill Rate") %>
-    </h1>
-  </div>
-
-  <div class="p-8 bg-white rounded shadow">
-    <%= render "form", pay_bill_rate: @pay_bill_rate %>
-  </div>
+<%= render partial: "shared/sidenav" %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center pb-6">
+                <div class="sm:flex-auto"> 
+                  <h1 class="text-xl font-semibold text-gray-900">
+                    <%= link_to "Pay Bill Rates", pay_bill_rates_path, class: "text-tokanisecondary-500" %>
+                      <span class="text-gray-400 font-light mx-2">\ New Pay Bill Rate</span>    
+                  </h1>
+                </div>      
+                </div>
+                <div class="p-8 bg-white rounded shadow">
+                  <%= render "form", pay_bill_rate: @pay_bill_rate %>
+                </div>
+            </div>
+          </div>
+        </div>
+  </main>
 </div>
+
+

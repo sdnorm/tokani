@@ -1,6 +1,4 @@
-<%= content_for :title, t("shared.scaffold.edit.title", model: "Pay Bill Rate") %>
-<%= content_for :title, "Pay Bill rates ##{@pay_bill_rate.id}" %>
-
+<%= content_for :title, t("shared.scaffold.new.title", model: "Pay Bill Config") %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -10,22 +8,16 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Pay Bill Rates", pay_bill_rates_path, class: "text-tokanisecondary-500" %>
-                      <span class="text-gray-400 font-light mx-2">\</span>
-                      <%= @pay_bill_rate.name %>
+                    <%= link_to "Pay/Bill Configs", pay_bill_configs_path, class: "text-tokanisecondary-500" %>
+                      <span class="text-gray-400 font-light mx-2">\ New Pay Bill Config</span>    
                   </h1>
+                </div>      
                 </div>
-                 
-                </div>
-          
-
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render "form", pay_bill_rate: @pay_bill_rate %>
-                 
+                  <%= render "form", pay_bill_config: @pay_bill_config %>
                 </div>
             </div>
           </div>
         </div>
   </main>
 </div>
-

@@ -40,7 +40,7 @@
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @customers, :name, "Name" %></th>
                         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Name</th>
                         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Phone</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Email</th>
+                        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Email</th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
                       </tr>
                     </thead>
@@ -49,6 +49,14 @@
                       <tr>
                         <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-tokanisecondary-900 sm:w-auto sm:max-w-none sm:pl-6">
                           <%= link_to customer.name, customer_path(customer) %>
+                          <dl class="font-normal lg:hidden">
+                            <dt class="sr-only">Contact Name</dt>
+                            <dd class="mt-1 truncate text-gray-700"><%= customer.customer_detail.contact_name %></dd>
+                            <dt class="sr-only">Contact Phone</dt>
+                            <dd class="mt-1 truncate text-gray-700"><%=  customer.customer_detail.phone %></dd>
+                            <dt class="sr-only">Email</dt>
+                            <dd class="mt-1 truncate text-gray-500"><%= customer.customer_detail.email %></dd>
+                          </dl>
                         </td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.contact_name %></td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.phone %></td>

@@ -1,5 +1,5 @@
-<%= content_for :title, "Pay/Bill Rate - #{@pay_bill_rate.name}" %>
-
+<%= content_for :title, "Pay Bill Configs ##{@pay_bill_config.id}" %>
+<%= turbo_stream_from @pay_bill_config %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -9,23 +9,24 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Pay Bill Rates", pay_bill_rates_path, class: "text-tokanisecondary-500" %>
+                    <%= link_to "Pay Bill Configs", pay_bill_configs_path, class: "text-tokanisecondary-500" %>
                       <span class="text-gray-400 font-light mx-2">\</span>
-                      <%= @pay_bill_rate.name %>
+                      <%= @pay_bill_config.name %>
                   </h1>
                 </div>
                   <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <%= link_to t("edit"), edit_pay_bill_rate_path(@pay_bill_rate), class: "btn btn-tokani_purple" %>
+                    <%= link_to t("edit"), edit_pay_bill_config_path(@pay_bill_config), class: "btn btn-tokani_purple" %>
                   </div>
                 </div>
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render partial: 'pay_bill_rate', locals: { pay_bill_rate: @pay_bill_rate, customers: @customers } %>
-                  <%# render @pay_bill_rate %>
+                  <%= render @pay_bill_config %>
+                 
                 </div>
             </div>
           </div>
         </div>
   </main>
 </div>
+
