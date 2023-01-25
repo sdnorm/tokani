@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get "interpreters/profile/security_edit", to: "interpreters#profile_security_edit"
   get "interpreters/public", to: "interpreters#public_folder"
   get "interpreters/public/details", to: "interpreters#public_details"
+	get "interpreters/time-off", to: "interpreters#time_off"
 
   draw :turbo
 
