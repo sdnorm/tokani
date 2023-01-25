@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   end
 
   resources :interpreter_details
-	get "interpreters/availability", to: "interpreters#availability"
-	get "interpreters/dashboard", to: "interpreters#dashboard"
+  get "interpreters/availability", to: "interpreters#availability"
+  get "interpreters/dashboard", to: "interpreters#dashboard"
   get "interpreter/index"
   get "interpreters/my_scheduled"
   get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
