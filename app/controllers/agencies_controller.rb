@@ -22,6 +22,7 @@ class AgenciesController < ApplicationController
   def new
     @agency = Agency.new
     @agency.build_physical_address
+    @user = User.new
     # Uncomment to authorize with Pundit
     # authorize @agency
   end
@@ -70,6 +71,30 @@ class AgenciesController < ApplicationController
     end
   end
 
+  def tokani_create
+    puts "HERE"
+    @agency = Agency.new(agency_params) # .merge(agency: true)
+    @user = User.new(user_params)
+    @user.password = SecureRandom.alphanumeric
+    @user.terms_of_service = true
+    @user.accepted_terms_at = Time.current
+    @agency.account_users.new(user: @user)
+
+    respond_to do |format|
+      if @agency.save! && @user.save!
+        @agency.account_users.update!(agency_admin: true)
+        # @agency.account_users.new(user: @user)
+        # AccountUser.create!(account: @agency, user: @user)
+        @agency.update(owner: @user)
+        format.html { redirect_to @agency, notice: "Agency was successfully created." }
+        format.json { render :show, status: :created, location: @agency }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @agency.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -80,6 +105,10 @@ class AgenciesController < ApplicationController
     # authorize @agency
   rescue ActiveRecord::RecordNotFound
     redirect_to agencies_path
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :name)
   end
 
   # Only allow a list of trusted parameters through.
