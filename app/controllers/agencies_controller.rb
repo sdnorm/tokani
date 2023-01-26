@@ -86,6 +86,7 @@ class AgenciesController < ApplicationController
         # @agency.account_users.new(user: @user)
         # AccountUser.create!(account: @agency, user: @user)
         @agency.update(owner: @user)
+        TokaniAgencyCreationMailer.welcome(@user).deliver_later
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
       else
