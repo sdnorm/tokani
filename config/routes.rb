@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       root to: "dashboard#show"
     end
     resources :agencies
+    post "tokani_agency_creation", to: "agencies#tokani_create", as: "tokani_agency_creation"
   end
 
   # API routes
