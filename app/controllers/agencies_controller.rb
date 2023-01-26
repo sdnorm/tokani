@@ -73,8 +73,8 @@ class AgenciesController < ApplicationController
 
   def tokani_create
     puts "HERE"
-    @agency = Agency.new(agency_params)#.merge(agency: true)
-    @user = User.new(user_params) 
+    @agency = Agency.new(agency_params) # .merge(agency: true)
+    @user = User.new(user_params)
     @user.password = SecureRandom.alphanumeric
     @user.terms_of_service = true
     @user.accepted_terms_at = Time.current
@@ -85,7 +85,7 @@ class AgenciesController < ApplicationController
         @agency.account_users.update!(agency_admin: true)
         # @agency.account_users.new(user: @user)
         # AccountUser.create!(account: @agency, user: @user)
-        @agency.update(owner:  @user)
+        @agency.update(owner: @user)
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
       else
@@ -93,7 +93,7 @@ class AgenciesController < ApplicationController
         format.json { render json: @agency.errors, status: :unprocessable_entity }
       end
     end
-  end  
+  end
 
   private
 
