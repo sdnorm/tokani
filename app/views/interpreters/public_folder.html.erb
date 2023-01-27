@@ -1,0 +1,141 @@
+<div class="px-4 sm:px-6 lg:px-8 container">
+	<div>
+		<fieldset class="mt-4">
+			<div class="space-y-4">
+				<div class="flex items-center">
+					<input id="today" name="display-range" type="radio" checked class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+					<label for="today" class="ml-3 block text-sm font-bold text-gray-700">Today's Appointments</label>
+				</div>
+
+				<div class="flex items-center">
+					<input id="tomorrow" name="display-range" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+					<label for="tomorrow" class="ml-3 block text-sm font-medium text-gray-700">Tomorrow's Appointments</label>
+				</div>
+
+				<div class="flex items-center">
+					<input id="date-range" name="display-range" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+					<label for="date-range" class="ml-3 block text-sm font-medium text-gray-700">Date Range</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="ml-12">
+		<label for="start-date" class="block font-medium text-gray-700 mt-2">Start Date</label>
+		<div class="relative rounded-md">
+			<input type="date" name="start-date" id="start-date" class="inline-block w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+			<i class="fa fa-2xl fa-calendar ml-1"></i>
+		</div>
+		<label for="end-date" class="block font-medium text-gray-700 mt-2">End Date</label>
+		<div class="relative rounded-md">
+			<input type="date" name="end-date" id="end-date" class="inline-block w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+			<i class="fa fa-2xl fa-calendar ml-1"></i>
+		</div>
+	</div>
+
+	<div class="mb-10 flex justify-end">
+
+<div>
+  <label for="search-appointment" class="block text-sm font-medium text-gray-700"></label>
+  <div class="relative mt-1 rounded-md shadow-sm">
+    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+      <i class="fa fa-search"></i>
+    </div>
+    <input type="search" name="search-appointment" id="search-appointment" class="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search Appointment">
+  </div>
+</div>
+
+	</div>
+	
+	<div class="flex justify-end">
+		<div class="form-check form-check-inline justify-left">
+			<input class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox1" value="option1">
+			<label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox1">InPerson</label>
+		</div>
+		<div class="form-check form-check-inline justify-left">
+			<input class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox2" value="option2">
+			<label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox2">Phone</label>
+		</div>
+		<div class="form-check form-check-inline justify-left">
+			<input class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox3" value="option3">
+			<label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox3">Video</label>
+		</div>
+		<div class="form-check form-check-inline justify-left">
+			<input class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox3" value="option3">
+			<label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox4">All</label>
+		</div>
+		<div class="mr-2">
+			<i class="far fa-download mr-1"></i><span class="inline-block text-gray-800 text-sm"> Download</span>
+		</div>
+	</div>
+
+  <div class="mt-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300 border">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Appointment Number</th>
+								<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Time</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Language</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+              </tr>
+            </thead>
+            <tbody class="bg-blue-50">
+              <!-- Odd row -->
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to "M21-156", "#" %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Aug. 25 2021</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">9:00AM - 9:30AM</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Spanish</td>
+								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pending</td>
+              </tr>
+            </tbody>
+						<tbody class="bg-white">
+							<!-- Even row -->
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to "T21-175", "#" %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Sept. 16 2021</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">1:00PM - 2:00PM</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Farsi</td>
+								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pending</td>
+              </tr>
+            </body>       
+            </tbody>
+						  <tbody class="bg-gray-50">
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to "V21-175", "#" %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Oct. 16 2021</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">3:00PM - 3:30PM</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Russian</td>
+								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pending</td>
+              </tr>
+            </tbody>
+						<tbody class="bg-white">
+							<!-- Even row -->
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to "M21-166", "#" %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Nov. 25 2021</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">9:00AM - 9:30AM</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Farsi</td>
+								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pending</td>
+              </tr>
+            </body>       
+            </tbody>
+						  <tbody class="bg-gray-50">
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to "M21-177", "#" %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Dec. 4 2021</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">9:00AM - 9:30AM</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Spanish</td>
+								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div id="<%= dom_id(provider, :index) %>">
+  <%= turbo_stream_from provider %>
+  <%= render provider %>
+  <%= link_to "View", provider, class: "btn btn-white" %>
+</div>
+

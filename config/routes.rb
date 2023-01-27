@@ -1,6 +1,8 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :providers
   resources :requestor_details
+  resources :pay_bill_configs
   resources :pay_bill_rates
   resources :languages
   resources :specialties
@@ -23,6 +25,8 @@ Rails.application.routes.draw do
   end
 
   resources :interpreter_details
+  get "interpreters/availability", to: "interpreters#availability"
+  get "interpreters/dashboard", to: "interpreters#dashboard"
   get "interpreter/index"
   get "interpreters/my_scheduled"
   get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
@@ -32,6 +36,9 @@ Rails.application.routes.draw do
   get "interpreters/profile/personal_edit", to: "interpreters#profile_personal_edit"
   get "interpreters/profile/notifications_edit", to: "interpreters#profile_notifications_edit"
   get "interpreters/profile/security_edit", to: "interpreters#profile_security_edit"
+  get "interpreters/public", to: "interpreters#public_folder"
+  get "interpreters/public/details", to: "interpreters#public_details"
+  get "interpreters/time-off", to: "interpreters#time_off"
 
   draw :turbo
 
@@ -68,6 +75,7 @@ Rails.application.routes.draw do
       root to: "dashboard#show"
     end
     resources :agencies
+    post "tokani_agency_creation", to: "agencies#tokani_create", as: "tokani_agency_creation"
   end
 
   # API routes

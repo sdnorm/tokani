@@ -1,11 +1,9 @@
-<label>Departments</label>
-
-<div class="row mt-0 mb-3 justify-content-center">
-  <div class="col-md-10 mx-3 mb-3 input-group input-group-static" >
+<label class="text-md my-2 font-medium text-tokanisecondary-500">Departments</label>
+  <div class="" >
     <% if @departments&.any? %>
       <%= select_tag 'pay_bill_rate[department_ids]', options_from_collection_for_select(@departments, 'id', 'name', selected: @selected_department_ids), multiple: true, size: 3, class: 'form-select' %>
     <% else %>
       <p>Selected site(s) do not have any associated departments.</p>
     <% end %>
   </div>
-</div>
+

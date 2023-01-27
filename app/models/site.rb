@@ -41,6 +41,7 @@ class Site < ApplicationRecord
   belongs_to :account
   belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
   has_many :departments
+  has_many :providers
 
   accepts_nested_attributes_for :departments
 

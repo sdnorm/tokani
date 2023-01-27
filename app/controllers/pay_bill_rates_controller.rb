@@ -47,6 +47,9 @@ class PayBillRatesController < ApplicationController
 
   # GET /pay_bill_rates/1/edit
   def edit
+    @languages = current_account.languages.all.order("name ASC")
+    @customers = current_account.customers.order("name ASC")
+    @specialties = current_account.specialties.active.order("name ASC")
   end
 
   # POST /pay_bill_rates or /pay_bill_rates.json

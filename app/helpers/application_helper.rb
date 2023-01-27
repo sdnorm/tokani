@@ -91,7 +91,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
       highlighted
     else
       unhighlighted
@@ -99,7 +99,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight_icon?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
       highlighted_icon
     else
       unhighlighted_icon
@@ -136,5 +136,10 @@ module ApplicationHelper
 
   def unhighlighted_icon
     "text-gray-100 group-hover:text-gray-500"
+  end
+
+  def lpad_number(number)
+    return "00" if number.nil?
+    format("%02d", number)
   end
 end

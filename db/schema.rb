@@ -530,6 +530,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_051624) do
     t.string "unit"
   end
 
+<<<<<<< HEAD
   create_table "process_batch_appointments", force: :cascade do |t|
     t.integer "process_batch_id"
     t.integer "appointment_id"
@@ -545,6 +546,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_051624) do
     t.boolean "is_processed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+=======
+  create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "last_name"
+    t.string "first_name"
+    t.string "email"
+    t.string "primary_phone"
+    t.boolean "allow_text"
+    t.boolean "allow_email"
+    t.uuid "site_id"
+    t.uuid "department_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "customer_id", null: false
+    t.index ["customer_id"], name: "index_providers_on_customer_id"
+    t.index ["department_id"], name: "index_providers_on_department_id"
+    t.index ["site_id"], name: "index_providers_on_site_id"
+>>>>>>> main
   end
 
   create_table "rate_criteria", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -671,6 +689,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_051624) do
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "providers", "accounts", column: "customer_id"
+  add_foreign_key "providers", "departments"
+  add_foreign_key "providers", "sites"
   add_foreign_key "sites", "accounts"
   add_foreign_key "specialties", "accounts"
 end
