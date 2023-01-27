@@ -47,6 +47,7 @@ class Appointment < ApplicationRecord
   has_many :appointment_languages, dependent: :destroy
   has_many :appointment_specialties, dependent: :destroy
   has_many :specialties, through: :appointment_specialties
+  has_many :appointment_statuses, dependent: :destroy
 
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account", optional: true
