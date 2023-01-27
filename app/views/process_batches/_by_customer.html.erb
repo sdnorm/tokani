@@ -1,0 +1,58 @@
+<table>
+  <tr>
+    <th width="40%"></th>
+    <th width="15%"></th>
+    <th width="30%"></th>
+    <th width="15%"></th>
+  </tr>
+  <% @appointments.each do |customer_name, sites_hash| %>
+    <% customer_subtotal = customer_subtotal(sites_hash) %>
+    <tr>
+      <td><%= customer_name %></td>
+      <td></td>
+      <td></td>
+      <td>Customer Billed <%= number_to_currency(customer_subtotal) %></td>
+    </tr>
+    <% sites_hash.each do |site_id, appts| %>
+      <% subtotal = subtotal_billed_appointments(appts) %>
+      <% if site_id == 'no-site' %>
+        <% site_name = '(No Site Selected)' %>
+      <% else %>
+        <% site = Site.find(site_id) %>
+        <% site_name = site.name %>
+      <% end %>
+      <tr>
+        <td>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= site_name %>
+        </td>
+        <td></td>
+        <td>Subtotal <%= number_to_currency(subtotal) %></td>
+        <td></td>
+      </tr>
+      <% appts.each do |appt| %>
+        <tr>
+          <td>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <%= appt.refnumber %>
+          </td>
+          <td></td>
+          <td><%= number_to_currency(appt.total_billed) %> Billed (<%= appt.billing_types %>)</td>
+          <td></td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>Grand total for All Customers in this Process</td>
+    <td></td>
+    <td></td>
+    <td>Total Billed <%= number_to_currency(subtotal_billed_appointments(@process_batch.appointments)) %></td>
+  </tr>
+</table>

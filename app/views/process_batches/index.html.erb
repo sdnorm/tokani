@@ -1,0 +1,57 @@
+<%= content_for :title, "Invoice Process Batches" %>
+
+<div>
+  <%= render partial: "shared/sidenav" %>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto">
+                <h1 class="text-xl font-semibold text-gray-900">Process Batches</h1>
+                <!-- <p class="mt-2 text-sm text-gray-700"></p> -->
+              </div>
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to "Create Process Batch", new_process_batch_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
+              </div>
+            </div>
+            <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Process</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Batch Type</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell"># Appointments</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Processed On</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <% @process_batches.each do |process_batch| %>
+                    <tr>
+                      <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                        <%= link_to "Process ##{process_batch.process_id}", process_batch_path(process_batch)%>
+                      </td>
+                      <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= process_batch.batch_type.titleize %></td>
+                      <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= process_batch.appointments.count %></td>
+                      <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= process_batch.created_at.strftime('%d/%m/%Y') %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<% if @pagy.pages > 1 %>
+  <div class="my-6 text-center">
+    <%== pagy_nav(@pagy) %>
+  </div>
+<% end %>
+<br>
+

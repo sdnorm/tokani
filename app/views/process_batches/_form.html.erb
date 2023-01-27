@@ -1,0 +1,58 @@
+<%= form_with model: @process_batch, url: "/process_batches", class: 'form' do |form| %>
+  <div class="grid grid-cols-2 gap-4 mt-4 mb-3 justify-center align-center">
+    <div class="mx-3 mb-3">
+      <div class="input-group input-group-static">
+        Start date:
+        <%= form.text_field :start_date, class: "form-control", data: {controller: "flatpickr", flatpickr_enable_time: false, flatpickr_date_format: "F j, Y"} %>
+      </div>
+    </div>
+    <div class="mx-3">
+      <div class="input-group input-group-static">
+        End date:
+        <%= form.text_field :end_date, class: "form-control", data: {controller: "flatpickr", flatpickr_enable_time: false, flatpickr_date_format: "F j, Y"} %>
+      </div>
+    </div>
+  </div>
+
+  <div data-controller="process-batches">
+    <div class="grid grid-cols-2 gap-4 mt-4 mb-3 justify-center align-center">
+      <div class="mx-3 mb-3 justify-center align-center">
+        <%= radio_button_tag 'process_batch[batch_type]', 'customer', false, id: 'batch-type-customer', data: {action: 'change->process-batches#processBy' } %>
+        <%= label_tag 'batch-type-customer', 'Process by Customer' %>
+      </div>
+      <div class="mx-3 justify-center align-center">
+        <%= radio_button_tag 'process_batch[batch_type]', 'interpreter', false, id: 'batch-type-interpreter', data: {action: 'change->process-batches#processBy' } %>
+        <%= label_tag 'batch-type-interpreter', 'Process by Interpreter' %>
+      </div>
+    </div>
+
+    <div class="row mt-4 mb-3 hidden" data-process-batches-target="customers">
+      <div class="col-7 form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:40vh; overflow-y:auto">
+        <%  @customers.each do |customer| %>
+          <div class="ml-4">
+            <%= check_box_tag 'process_batch[customer_ids][]', customer.id, false, class: "form-check-input" %>
+            <%= customer.name %>
+            <br>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row mt-4 mb-3 hidden" data-process-batches-target="interpreters">
+      <div class="col-7 form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:40vh; overflow-y:auto">
+        <%  @interpreters.each do |interpreter| %>
+            <%= check_box_tag 'process_batch[interpreter_ids][]', interpreter.id, false, class: "form-check-input" %>
+            <%= interpreter.last_first_name %>
+          <br>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-sm-2 actions text-center">
+      <%= form.submit 'Process', class: "inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+    </div>
+  </div>
+<% end %>

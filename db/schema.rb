@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_192624) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_27_051624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -190,6 +190,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_192624) do
     t.uuid "interpreter_id"
     t.uuid "agency_id"
     t.uuid "customer_id"
+    t.boolean "processed_by_customer", default: false
+    t.boolean "processed_by_interpreter", default: false
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
@@ -300,6 +302,55 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_192624) do
     t.uuid "account_id", null: false
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
+  end
+
+  create_table "pay_bill_config_customers", force: :cascade do |t|
+    t.integer "pay_bill_config_id"
+    t.uuid "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_config_interpreters", force: :cascade do |t|
+    t.integer "pay_bill_config_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_bill_configs", force: :cascade do |t|
+    t.uuid "account_id"
+    t.string "name"
+    t.integer "minimum_minutes_billed"
+    t.integer "minimum_minutes_paid"
+    t.integer "billing_increment"
+    t.integer "trigger_for_billing_increment"
+    t.integer "trigger_for_rush_rate"
+    t.integer "trigger_for_discount_rate"
+    t.integer "trigger_for_cancel_level1"
+    t.integer "trigger_for_cancel_level2"
+    t.integer "trigger_for_travel_time"
+    t.integer "trigger_for_mileage"
+    t.integer "maximum_mileage"
+    t.integer "maximum_travel_time"
+    t.integer "fixed_roundtrip_mileage"
+    t.integer "afterhours_availability_start_seconds1"
+    t.integer "afterhours_availability_end_seconds1"
+    t.integer "afterhours_availability_start_seconds2"
+    t.integer "afterhours_availability_end_seconds2"
+    t.integer "weekend_availability_start_seconds1"
+    t.integer "weekend_availability_end_seconds1"
+    t.integer "weekend_availability_start_seconds2"
+    t.integer "weekend_availability_end_seconds2"
+    t.boolean "is_minutes_billed_appointment_duration", default: false
+    t.integer "minimum_minutes_billed_cancelled_level_1"
+    t.integer "minimum_minutes_paid_cancelled_level_1"
+    t.integer "minimum_minutes_billed_cancelled_level_2"
+    t.integer "minimum_minutes_paid_cancelled_level_2"
+    t.boolean "is_minutes_billed_cancelled_appointment_duration", default: false
+    t.boolean "is_active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pay_bill_rate_customers", force: :cascade do |t|
@@ -477,6 +528,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_192624) do
     t.integer "interval_count", default: 1
     t.string "description"
     t.string "unit"
+  end
+
+  create_table "process_batch_appointments", force: :cascade do |t|
+    t.integer "process_batch_id"
+    t.integer "appointment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "process_batches", force: :cascade do |t|
+    t.uuid "account_id"
+    t.integer "process_id"
+    t.integer "batch_type"
+    t.decimal "total"
+    t.boolean "is_processed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rate_criteria", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

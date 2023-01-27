@@ -14,6 +14,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :process_batches, only: [:index, :new, :create, :show, :destroy] do
+    member do
+      get :download_pdf
+      get :download_csv
+      get :download_interpreter_csv
+    end
+  end
+
   resources :interpreter_details
   get "interpreter/index"
   get "interpreters/my_scheduled"

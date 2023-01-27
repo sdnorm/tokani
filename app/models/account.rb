@@ -57,6 +57,7 @@ class Account < ApplicationRecord
   has_many :account_languages, dependent: :destroy, foreign_key: :account_id, class_name: "Language"
 
   has_many :requestor_details, dependent: :destroy, foreign_key: :customer_id
+  has_many :process_batches, dependent: :destroy
 
   accepts_nested_attributes_for :physical_address, :customer_detail
 
