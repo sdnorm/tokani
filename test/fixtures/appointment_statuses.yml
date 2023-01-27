@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: appointment_statuses
+#
+#  id          :bigint           not null, primary key
+#  appointment :uuid             not null
+#  current     :boolean
+#  name        :integer
+#  user        :uuid             not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+one:
+  name: 1
+  user: one
+  appointment: one
+
+two:
+  name: 1
+  user: two
+  appointment: two
