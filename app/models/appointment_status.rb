@@ -12,8 +12,8 @@
 #
 class AppointmentStatus < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit  -> { broadcast_prepend_later_to :appointment_statuses, partial: "appointment_statuses/index", locals: { appointment_status: self } }
-  after_update_commit  -> { broadcast_replace_later_to self }
+  after_create_commit -> { broadcast_prepend_later_to :appointment_statuses, partial: "appointment_statuses/index", locals: {appointment_status: self} }
+  after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :appointment_statuses, target: dom_id(self, :index) }
 
   belongs_to :user
@@ -21,7 +21,7 @@ class AppointmentStatus < ApplicationRecord
 
   enum name: {
     created: 1,
-    rejected: 2, 
+    rejected: 2,
     offered: 3,
     scheduled: 4,
     cancelled: 5,
@@ -32,6 +32,6 @@ class AppointmentStatus < ApplicationRecord
   }
 
   def changed_by
-    self.user
+    user
   end
 end
