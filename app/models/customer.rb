@@ -29,6 +29,7 @@ class Customer < Account
   before_create :set_customer_flag
   has_many :sites
   has_many :providers
+  has_many :recipients
 
   private
 

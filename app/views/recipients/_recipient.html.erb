@@ -1,0 +1,41 @@
+<div id="<%= dom_id recipient %>" class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900"><%= recipient.last_name %>, <%= recipient.first_name %></h3>
+  </div>
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Customer </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= recipient.customer&.name %></dd>
+      </div>
+      
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Email Address</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= recipient.email %></dd>
+      </div>
+
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">SRN </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= recipient.srn %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Primary Phone </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= recipient.primary_phone %></dd>
+      </div>
+      
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Mobile Phone</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= recipient.mobile_phone %></dd>
+      </div>
+         
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Allow texts?</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= yes_no(recipient.allow_text) %></dd>
+      </div>      
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Allow Email?</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= yes_no(recipient.allow_email) %></dd>
+      </div>           
+    </dl>   
+  </div>
+</div>

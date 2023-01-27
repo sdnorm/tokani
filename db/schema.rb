@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_26_174716) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_26_203522) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -555,6 +555,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_174716) do
     t.index ["account_id"], name: "index_rate_criteria_on_account_id"
   end
 
+  create_table "recipients", force: :cascade do |t|
+    t.string "last_name"
+    t.string "first_name"
+    t.string "email"
+    t.string "srn"
+    t.string "primary_phone"
+    t.string "mobile_phone"
+    t.boolean "allow_text"
+    t.boolean "allow_email"
+    t.uuid "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_recipients_on_customer_id"
+  end
+
   create_table "requestor_details", force: :cascade do |t|
     t.boolean "allow_offsite"
     t.boolean "allow_view_docs"
@@ -672,6 +687,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_174716) do
   add_foreign_key "providers", "accounts", column: "customer_id"
   add_foreign_key "providers", "departments"
   add_foreign_key "providers", "sites"
+  add_foreign_key "recipients", "accounts", column: "customer_id"
   add_foreign_key "sites", "accounts"
   add_foreign_key "specialties", "accounts"
 end
