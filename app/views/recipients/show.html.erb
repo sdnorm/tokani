@@ -1,4 +1,5 @@
-<%= content_for :title, t("shared.scaffold.edit.title", model: "Provider") %>
+<%= content_for :title, "Recipients ##{@recipient.id}" %>
+<%= turbo_stream_from @recipient %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -8,19 +9,19 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Providers", providers_path, class: "text-tokanisecondary-500" %>
+                    <%= link_to "Recipients", recipients_path, class: "text-tokanisecondary-500" %>
                       <span class="text-gray-400 font-light mx-2">\</span>
-                      <%= @provider.last_name %>, <%= @provider.first_name %>
+                      <%= @recipient.last_name %>, <%= @recipient.first_name %>
                   </h1>
                 </div>
-                 
+                  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <%= link_to t("edit"), edit_recipient_path(@recipient), class: "btn btn-tokani_purple" %>
+                  </div>
                 </div>
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render partial: "form", locals: { provider: @provider, account_customers: @account_customers, customers: @customers, sites: @sites, departments: @departments } %>
-                 
-                 
+                  <%= render partial: 'recipient', locals: { recipient: @recipient} %>
                 </div>
             </div>
           </div>
