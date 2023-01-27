@@ -2,13 +2,13 @@
 #
 # Table name: appointment_statuses
 #
-#  id          :bigint           not null, primary key
-#  appointment :uuid             not null
-#  current     :boolean
-#  name        :integer
-#  user        :uuid             not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id             :bigint           not null, primary key
+#  current        :boolean
+#  name           :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  appointment_id :uuid             not null
+#  user_id        :uuid             not null
 #
 class AppointmentStatus < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
