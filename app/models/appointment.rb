@@ -50,4 +50,8 @@ class Appointment < ApplicationRecord
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account", optional: true
   belongs_to :interpreter, class_name: "User", optional: true
+  
+  def status
+    appointment_statuses.current.name
+  end
 end
