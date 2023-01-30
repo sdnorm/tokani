@@ -30,8 +30,8 @@ class AppointmentStatus < ApplicationRecord
   before_create :set_current
 
   # scope :current, -> (appointment) { find_by(appointment_id: appointment, current: true) }
-  scope :current, -> { find_by(current: true)}
-  scope :by_appoitnment, -> (appointment_id) { where(appointment_id: appointment_id) }
+  scope :current, -> { find_by(current: true) }
+  scope :by_appoitnment, ->(appointment_id) { where(appointment_id: appointment_id) }
 
   enum name: {
     created: 1,
@@ -51,7 +51,7 @@ class AppointmentStatus < ApplicationRecord
 
   def set_current
     # by_appointment(self.appointment_id).update_all(current: false)
-    AppointmentStatus.where(appointment_id: self.appointment_id).update_all(current: false)
+    AppointmentStatus.where(appointment_id: appointment_id).update_all(current: false)
     self.current = true
   end
 end
