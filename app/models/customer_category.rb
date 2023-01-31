@@ -20,27 +20,27 @@
 #
 class CustomerCategory < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit  -> { broadcast_prepend_later_to :customer_categories, partial: "customer_categories/index", locals: { customer_category: self } }
-  after_update_commit  -> { broadcast_replace_later_to self }
+  after_create_commit -> { broadcast_prepend_later_to :customer_categories, partial: "customer_categories/index", locals: {customer_category: self} }
+  after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :customer_categories, target: dom_id(self, :index) }
 
   # has_many :agency_customers
 
   validates :telephone_prefix, :video_prefix, :appointment_prefix, presence: true
-  validates :telephone_prefix, length: { maximum: 10 }
-  validates :video_prefix, length: { maximum: 10 }
-  validates :appointment_prefix, length: { maximum: 10 }
+  validates :telephone_prefix, length: {maximum: 10}
+  validates :video_prefix, length: {maximum: 10}
+  validates :appointment_prefix, length: {maximum: 10}
 
   def modality_prefix(modality)
     case modality
-    when 'phone'
-      return self.telephone_prefix
-    when 'in_person', 'written'
-      return self.appointment_prefix
-    when 'video'
-      return self.video_prefix
+    when "phone"
+      return telephone_prefix
+    when "in_person", "written"
+      return appointment_prefix
+    when "video"
+      return video_prefix
     end
 
-    raise StandardError('unknown modality')
+    raise StandardError("unknown modality")
   end
 end
