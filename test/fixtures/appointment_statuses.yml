@@ -7,8 +7,16 @@
 #  name           :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  appointment_id :uuid             not null
+#  appointment_id :bigint
 #  user_id        :uuid             not null
+#
+# Indexes
+#
+#  index_appointment_statuses_on_appointment_id  (appointment_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (appointment_id => appointments.id)
 #
 
 one:

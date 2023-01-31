@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_27_194614) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_045728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -119,7 +119,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_194614) do
     t.uuid "customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "customer_category_id"
     t.index ["agency_id"], name: "index_agency_customers_on_agency_id"
+    t.index ["customer_category_id"], name: "index_agency_customers_on_customer_category_id"
     t.index ["customer_id"], name: "index_agency_customers_on_customer_id"
   end
 
@@ -166,10 +168,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_194614) do
   create_table "appointment_statuses", force: :cascade do |t|
     t.integer "name"
     t.uuid "user_id", null: false
-    t.uuid "appointment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "current"
+    t.bigint "appointment_id"
+    t.index ["appointment_id"], name: "index_appointment_statuses_on_appointment_id"
   end
 
   create_table "appointments", force: :cascade do |t|
@@ -213,6 +216,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_194614) do
     t.datetime "updated_at", null: false
     t.index ["agency_id"], name: "index_customer_agencies_on_agency_id"
     t.index ["customer_id"], name: "index_customer_agencies_on_customer_id"
+  end
+
+  create_table "customer_categories", force: :cascade do |t|
+    t.string "display_value"
+    t.string "appointment_prefix"
+    t.string "telephone_prefix"
+    t.string "video_prefix"
+    t.bigint "backport_id"
+    t.bigint "sort_order"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["backport_id"], name: "index_customer_categories_on_backport_id"
+    t.index ["display_value"], name: "index_customer_categories_on_display_value"
   end
 
   create_table "customer_details", force: :cascade do |t|
@@ -718,10 +735,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_194614) do
   end
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agency_customers", "customer_categories"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
   add_foreign_key "appointment_specialties", "appointments"
   add_foreign_key "appointment_specialties", "specialties"
+  add_foreign_key "appointment_statuses", "appointments"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_specialties", "specialties"
