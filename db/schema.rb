@@ -750,6 +750,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_163756) do
   end
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agency_customers", "customer_categories"
   add_foreign_key "appointment_languages", "appointments"
   add_foreign_key "appointment_languages", "languages"
   add_foreign_key "appointment_specialties", "appointments"
