@@ -41,7 +41,7 @@
 #  provider_id             :uuid
 #  recipient_id            :uuid
 #  requestor_id            :uuid
-#  site_id                 :uuid
+#  site_id                  :uuid
 #
 # Indexes
 #

@@ -81,4 +81,19 @@ class Appointment < ApplicationRecord
   def status
     appointment_statuses.current.name
   end
+
+  def refnumber
+    # Temporary placeholder until this is implemented
+    "REFNUMBER"
+  end
+
+  def billing_types
+    "NOT - IMPLEMENTED"
+    # billing_line_items.map { |li| li.type_key.titleize }.join(' - ')
+  end
+
+  def payment_types
+    "NOT - IMPLEMENTED"
+    # payment_line_items.map { |li| li.type_key.titleize }.join(' - ')
+  end
 end
