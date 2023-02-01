@@ -26,11 +26,14 @@
 #  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
+#  total_billed             :decimal(, )
+#  total_paid               :decimal(, )
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
 #  customer_id              :uuid
 #  interpreter_id           :uuid
+#  site_id                  :uuid
 #
 # Indexes
 #

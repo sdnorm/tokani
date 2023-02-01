@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_045728) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_01_104831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -204,6 +204,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_045728) do
     t.uuid "customer_id"
     t.boolean "processed_by_customer", default: false
     t.boolean "processed_by_interpreter", default: false
+    t.uuid "site_id"
+    t.decimal "total_billed"
+    t.decimal "total_paid"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
@@ -588,23 +591,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_045728) do
     t.index ["customer_id"], name: "index_providers_on_customer_id"
     t.index ["department_id"], name: "index_providers_on_department_id"
     t.index ["site_id"], name: "index_providers_on_site_id"
-  end
-  
-  create_table "process_batch_appointments", force: :cascade do |t|
-    t.integer "process_batch_id"
-    t.integer "appointment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "process_batches", force: :cascade do |t|
-    t.uuid "account_id"
-    t.integer "process_id"
-    t.integer "batch_type"
-    t.decimal "total"
-    t.boolean "is_processed", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "rate_criteria", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

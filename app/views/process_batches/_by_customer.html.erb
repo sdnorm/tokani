@@ -13,13 +13,18 @@
       <td></td>
       <td>Customer Billed <%= number_to_currency(customer_subtotal) %></td>
     </tr>
+
     <% sites_hash.each do |site_id, appts| %>
       <% subtotal = subtotal_billed_appointments(appts) %>
       <% if site_id == 'no-site' %>
         <% site_name = '(No Site Selected)' %>
       <% else %>
-        <% site = Site.find(site_id) %>
-        <% site_name = site.name %>
+        <% site = Site.find(site_id) if site_id.present? %>
+        <% if site %>
+          <% site_name = site.name %>
+        <% else %>
+          <% site_name = '(No Site Selected)' %>
+        <% end %>
       <% end %>
       <tr>
         <td>
@@ -35,7 +40,7 @@
           <td>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <%= appt.refnumber %>
+            <%= appt.refnumber rescue 'REFNUMBER' %>
           </td>
           <td></td>
           <td><%= number_to_currency(appt.total_billed) %> Billed (<%= appt.billing_types %>)</td>

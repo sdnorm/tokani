@@ -15,6 +15,7 @@ class ProcessBatchesController < ApplicationController
   def create
     @process_batch = ProcessBatch.new(process_batch_params)
     @process_batch.account_id = current_account.id
+    @process_batch.current_user = current_user
 
     respond_to do |format|
       if @process_batch.save
@@ -51,7 +52,8 @@ class ProcessBatchesController < ApplicationController
   end
 
   def destroy
-    @process_batch.revert_batch!
+    @process_batch.current_user = current_user
+    @process_batch.revert_batch!(current_user)
     @process_batch.destroy
     redirect_to process_batches_path, notice: "Process batch deleted."
   end

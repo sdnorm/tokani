@@ -7,9 +7,9 @@
   </tr>
   <% @appointments.each do |interpreter_id, appts| %>
     <% interpreter_subtotal = subtotal_paid_appointments(appts) %>
-    <% interpreter = Interpreter.find(interpreter_id) %>
+    <% interpreter = User.find(interpreter_id) %>
     <tr>
-      <td><%= interpreter.last_first_name %></td>
+      <td><%= interpreter.name %></td>
       <td></td>
       <td></td>
       <td>Interpreter Paid <%= number_to_currency(interpreter_subtotal) %></td>

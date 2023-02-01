@@ -27,7 +27,7 @@ class ProcessBatch < ApplicationRecord
 
   scope :latest, -> { order(created_at: :desc) }
 
-  attr_accessor :start_date, :end_date, :customer_ids, :interpreter_ids
+  attr_accessor :start_date, :end_date, :customer_ids, :interpreter_ids, :current_user
 
   # Groups appointments into Customers -> Sites -> Appointments. Example:
   # { "Customer Name" => {"site-id-1" => [appointment1, appointment2]
@@ -38,15 +38,15 @@ class ProcessBatch < ApplicationRecord
     appointment_hash = {}
     customer_hash = {}
     appointments.each do |appt|
-      if customer_hash[appt.agency_customer_id]
-        customer_hash[appt.agency_customer_id] << appt
+      if customer_hash[appt.customer_id]
+        customer_hash[appt.customer_id] << appt
       else
-        customer_hash[appt.agency_customer_id] = [appt]
+        customer_hash[appt.customer_id] = [appt]
       end
     end
 
     customer_hash.each do |k, v|
-      customer = AgencyCustomer.find(k)
+      customer = Account.where(id: k, customer: true).first
       sites_hash = {}
 
       v.each do |appt|
@@ -56,9 +56,7 @@ class ProcessBatch < ApplicationRecord
           else
             sites_hash["no-site"] = [appt]
           end
-        end
-
-        if sites_hash[appt.site_id]
+        elsif sites_hash[appt.site_id]
           sites_hash[appt.site_id] << appt
         else
           sites_hash[appt.site_id] = [appt]
@@ -95,22 +93,27 @@ class ProcessBatch < ApplicationRecord
     appointments.each do |appt|
       case batch_type
       when "customer"
-        appt.update(status: "exported", processed_by_customer: true)
+        appt.update(processed_by_customer: true)
       when "interpreter"
-        appt.update(status: "exported", processed_by_interpreter: true)
+        appt.update(processed_by_interpreter: true)
+      end
+      if appt.processed_by_customer && appt.processed_by_interpreter
+        # If the appointment has been processed by both customer & interpreter, mark the entire appointment as exported
+        AppointmentStatus.create!(appointment: appt, user: current_user, name: AppointmentStatus.names["exported"])
       end
     end
     update(is_processed: true)
   end
 
-  def revert_batch!
+  def revert_batch!(current_user)
     appointments.each do |appt|
       case batch_type
       when "customer"
-        appt.update(status: "verified", processed_by_customer: false)
+        appt.update(processed_by_customer: false)
       when "interpreter"
-        appt.update(status: "verified", processed_by_interpreter: false)
+        appt.update(processed_by_interpreter: false)
       end
+      AppointmentStatus.create!(appointment: appt, user: current_user, name: AppointmentStatus.names["verified"])
     end
     update(is_processed: false)
   end
@@ -119,7 +122,7 @@ class ProcessBatch < ApplicationRecord
     CSV.generate do |csv|
       csv << ["Customer", "Site", "Appointment ID", "Billing Details", "Amount Billed"]
       appointments.each do |appt|
-        csv << [appt.agency_customer.name, appt&.site&.name || "", appt.refnumber, appt.billing_types, number_with_precision(appt.total_billed, precision: 2)]
+        csv << [appt.customer.name, appt&.site&.name || "", appt.refnumber, appt.billing_types, number_with_precision(appt.total_billed, precision: 2)]
       end
     end
   end
@@ -128,7 +131,7 @@ class ProcessBatch < ApplicationRecord
     CSV.generate do |csv|
       csv << ["Interpreter", "Appointment ID", "Amount Paid"]
       appointments.each do |appt|
-        csv << [appt.interpreter&.last_first_name || "(Interpreter not found)", appt.refnumber, number_with_precision(appt.total_paid, precision: 2)]
+        csv << [appt.interpreter&.name || "(Interpreter not found)", appt.refnumber, number_with_precision(appt.total_paid, precision: 2)]
       end
     end
   end
@@ -157,16 +160,16 @@ class ProcessBatch < ApplicationRecord
       appts = Appointment.where(agency_id: account_id)
         .where("start_time > ?", start_date.beginning_of_day)
         .where("start_time < ?", end_date.end_of_day)
-        .where(status: Appointment.statuses[:verified])
         .where(processed_by_customer: false)
-        .where(agency_customer_id: customer_ids)
+        .where(customer_id: customer_ids)
+      appts = appts.to_a.select { |appt| appt.status = "verified" }
     when "interpreter"
       appts = Appointment.where(agency_id: account_id)
         .where("start_time > ?", start_date.beginning_of_day)
         .where("start_time < ?", end_date.end_of_day)
-        .where(status: Appointment.statuses[:verified])
         .where(processed_by_interpreter: false)
         .where(interpreter_id: interpreter_ids)
+      appts = appts.to_a.select { |appt| appt.status = "verified" }
     end
     create_appointment_associations(appts) if appts.any?
   end

@@ -41,9 +41,11 @@
     <div class="row mt-4 mb-3 hidden" data-process-batches-target="interpreters">
       <div class="col-7 form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:40vh; overflow-y:auto">
         <%  @interpreters.each do |interpreter| %>
+          <div class="ml-4">
             <%= check_box_tag 'process_batch[interpreter_ids][]', interpreter.id, false, class: "form-check-input" %>
-            <%= interpreter.last_first_name %>
-          <br>
+            <%= interpreter.name %>
+            <br>
+          </div>
         <% end %>
       </div>
     </div>

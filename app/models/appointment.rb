@@ -26,11 +26,14 @@
 #  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
+#  total_billed             :decimal(, )
+#  total_paid               :decimal(, )
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
 #  customer_id              :uuid
 #  interpreter_id           :uuid
+#  site_id                  :uuid
 #
 # Indexes
 #
@@ -52,8 +55,24 @@ class Appointment < ApplicationRecord
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account", optional: true
   belongs_to :interpreter, class_name: "User", optional: true
+  belongs_to :site, optional: true
 
   def status
     appointment_statuses.current.name
+  end
+
+  def refnumber
+    # Temporary placeholder until this is implemented
+    "REFNUMBER"
+  end
+
+  def billing_types
+    "NOT - IMPLEMENTED"
+    # billing_line_items.map { |li| li.type_key.titleize }.join(' - ')
+  end
+
+  def payment_types
+    "NOT - IMPLEMENTED"
+    # payment_line_items.map { |li| li.type_key.titleize }.join(' - ')
   end
 end
