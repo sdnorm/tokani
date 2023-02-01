@@ -23,6 +23,7 @@
 #
 #  fk_rails_...  (customer_id => accounts.id)
 #
+
 class Recipient < ApplicationRecord
   belongs_to :customer
 

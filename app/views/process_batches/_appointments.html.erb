@@ -1,0 +1,9 @@
+<h3>Process ID: <%= @process_batch.process_id %></h3>
+
+<% if @appointments.empty? %>
+  <p>No appointments found.</p>
+<% else %>
+
+  <%= render partial: "by_#{@process_batch.batch_type}" %>
+
+<% end %>

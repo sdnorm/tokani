@@ -1,0 +1,40 @@
+<table>
+  <tr>
+    <th width="40%"></th>
+    <th width="15%"></th>
+    <th width="30%"></th>
+    <th width="15%"></th>
+  </tr>
+  <% @appointments.each do |interpreter_id, appts| %>
+    <% interpreter_subtotal = subtotal_paid_appointments(appts) %>
+    <% interpreter = User.find(interpreter_id) %>
+    <tr>
+      <td><%= interpreter.name %></td>
+      <td></td>
+      <td></td>
+      <td>Interpreter Paid <%= number_to_currency(interpreter_subtotal) %></td>
+    </tr>
+    <% appts.each do |appt| %>
+      <tr>
+        <td>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= appt.refnumber %>
+        </td>
+        <td></td>
+        <td><%= number_to_currency(appt.total_paid) %> Paid</td>
+        <td></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>Grand total for All Interpreters in this Process</td>
+    <td></td>
+    <td></td>
+    <td>Total Paid <%= number_to_currency(subtotal_paid_appointments(@process_batch.appointments)) %></td>
+  </tr>
+</table>
