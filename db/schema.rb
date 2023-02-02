@@ -208,6 +208,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_163756) do
     t.uuid "recipient_id"
     t.uuid "requestor_id"
     t.bigint "language_id", null: false
+    t.integer "pay_bill_config_id"
+    t.integer "pay_bill_rate_id"
+    t.datetime "cancelled_at"
+    t.integer "cancel_type"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
