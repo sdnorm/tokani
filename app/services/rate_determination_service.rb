@@ -2,10 +2,11 @@ class RateDeterminationService
   attr_accessor :appointment
 
   def initialize(appointment)
+    @account = appointment.agency
     @appointment = appointment
     @interpreter = appointment.interpreter
-    @rate_criteria = RateCriterium.sorted
-    @customer = appointment.agency_customer
+    @rate_criteria = @account.rate_criteria.sorted
+    @customer = appointment.customer
   end
 
   def determine_rate
@@ -50,12 +51,9 @@ class RateDeterminationService
     default_rate(default_pay_bill_rates)
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def determine_rate_via_criteria(pay_bill_rates)
     # puts "Determining Rate via Criteria - Pay Bill Rates: #{pay_bill_rates.inspect}"
 
-    # rubocop:disable Metrics/BlockLength
     @rate_criteria.each do |criterium|
       # puts "\tDetermining Rate via Criterium: #{criterium.inspect}"
 
@@ -179,12 +177,9 @@ class RateDeterminationService
 
       end
     end
-    # rubocop:enable Metrics/BlockLength
 
     default_rate(pay_bill_rates)
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
   private
 

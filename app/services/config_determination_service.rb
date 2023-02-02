@@ -4,7 +4,7 @@ class ConfigDeterminationService
   def initialize(appointment)
     @appointment = appointment
     @interpreter = appointment.interpreter
-    @customer = appointment.agency_customer
+    @customer = appointment.customer
   end
 
   def determine_config

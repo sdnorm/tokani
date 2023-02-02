@@ -62,6 +62,7 @@ class Account < ApplicationRecord
   has_many :providers, dependent: :destroy, foreign_key: :customer_id
   has_many :recipients, dependent: :destroy, foreign_key: :customer_id
   has_many :process_batches, dependent: :destroy
+  has_many :rate_criteria, dependent: :destroy
 
   accepts_nested_attributes_for :physical_address, :customer_detail
 

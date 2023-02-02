@@ -71,5 +71,13 @@ Account.where(customer: true).each do |customer|
   )
 end
 
+Account.where(customer: false).each do |agency|
+  RateCriterium.create!(account_id: agency.id, type_key: :sites_departments, name: 'Site/Department', sort_order: 0)
+  RateCriterium.create!(account_id: agency.id, type_key: :specialty, name: 'Specialty', sort_order: 1)
+  RateCriterium.create!(account_id: agency.id, type_key: :language, name: 'Language', sort_order: 2)
+  RateCriterium.create!(account_id: agency.id, type_key: :interpreter_type, name: 'Interpreter Type', sort_order: 3)
+end
+
+
 # Super Admin
 User.create!(name: "Super Admin", email: "super@admin.com", password: "password", password_confirmation: "password", admin: true, terms_of_service: true)

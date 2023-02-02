@@ -6,7 +6,9 @@
 #  admin_notes              :text
 #  billing_notes            :text
 #  cancel_reason_code       :integer
+#  cancel_type              :integer
 #  canceled_by              :integer
+#  cancelled_at             :datetime
 #  confirmation_date        :datetime
 #  confirmation_notes       :text
 #  confirmation_phone       :string
@@ -33,6 +35,8 @@
 #  agency_id                :uuid
 #  customer_id              :uuid
 #  interpreter_id           :uuid
+#  pay_bill_config_id       :integer
+#  pay_bill_rate_id         :integer
 #  site_id                  :uuid
 #
 # Indexes

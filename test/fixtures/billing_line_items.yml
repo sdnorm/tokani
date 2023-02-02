@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: billing_line_items
+#
+#  id             :bigint           not null, primary key
+#  amount         :decimal(, )
+#  description    :string
+#  hours          :decimal(, )
+#  rate           :decimal(, )
+#  type_key       :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  appointment_id :integer
+#
+
+one:
+  appointment_id: 1
+  type_key: MyString
+  description: MyString
+  rate: 9.99
+  hours: 9.99
+  amount: 9.99
+
+two:
+  appointment_id: 1
+  type_key: MyString
+  description: MyString
+  rate: 9.99
+  hours: 9.99
+  amount: 9.99

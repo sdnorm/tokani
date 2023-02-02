@@ -15,7 +15,6 @@ class RateCalculationService
   # Returns a snake-case string interpretation of what rate to pay/bill.
   # Ex: 'regular', 'after_hours', 'rush', 'cancel_level_1'
 
-  # rubocop:disable Style/IdenticalConditionalBranches
   def determine_rate_type
     # CHECK FOR CANCELLATION
     case @appointment.cancel_type
@@ -60,7 +59,6 @@ class RateCalculationService
     @rate_type = "regular"
     @rate_type
   end
-  # rubocop:enable Style/IdenticalConditionalBranches
 
   def discount_rate_triggered?
     @appointment.calculated_appointment_duration_in_hours > @pay_bill_config.trigger_for_discount_rate
@@ -122,7 +120,6 @@ class RateCalculationService
       line_items << BillingLineItemStruct.new("discount", "Discount billing rate", rate, billable_hours_discount, @pay_bill_rate.name)
     end
 
-    # rubocop:disable Style/IfUnlessModifier
     # CHECK FOR RUSH
     if rush_rate?
       line_items << BillingLineItemStruct.new("rush", "Rush billing rate", @pay_bill_rate.rush_bill_rate, hours, @pay_bill_rate.name)
@@ -132,7 +129,6 @@ class RateCalculationService
     if after_hours_rate?
       line_items << BillingLineItemStruct.new("after_hours", "After hours billing rate", @pay_bill_rate.after_hours_bill_rate, hours, @pay_bill_rate.name)
     end
-    # rubocop:enable Style/IfUnlessModifier
 
     line_items
   end
@@ -186,7 +182,6 @@ class RateCalculationService
       line_items << PaymentLineItemStruct.new("discount", "Discount payment rate", rate, billable_hours_discount, @pay_bill_rate.name)
     end
 
-    # rubocop:disable Style/IfUnlessModifier
     # CHECK FOR RUSH
     if rush_rate?
       line_items << PaymentLineItemStruct.new("rush", "Rush pay rate", @pay_bill_rate.rush_pay_rate, hours, @pay_bill_rate.name)
@@ -196,7 +191,6 @@ class RateCalculationService
     if after_hours_rate?
       line_items << PaymentLineItemStruct.new("after_hours", "After hours payment rate", @pay_bill_rate.after_hours_pay_rate, hours, @pay_bill_rate.name)
     end
-    # rubocop:enable Style/IfUnlessModifier
 
     line_items
   end
