@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   get "interpreters/public/details", to: "interpreters#public_details"
   get "interpreters/time-off", to: "interpreters#time_off"
 
+	get "dashboard/customer", to: "dashboard#customer"
+
   draw :turbo
 
   # Jumpstart views
