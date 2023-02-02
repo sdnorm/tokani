@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_01_104831) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_02_104009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -207,9 +207,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_104831) do
     t.uuid "site_id"
     t.decimal "total_billed"
     t.decimal "total_paid"
+    t.integer "pay_bill_config_id"
+    t.integer "pay_bill_rate_id"
+    t.datetime "cancelled_at"
+    t.integer "cancel_type"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
+  end
+
+  create_table "billing_line_items", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.string "type_key"
+    t.string "description"
+    t.decimal "rate"
+    t.decimal "hours"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "customer_agencies", force: :cascade do |t|
@@ -540,6 +555,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_104831) do
     t.string "processor"
     t.string "event_type"
     t.jsonb "event"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_line_items", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.string "type_key"
+    t.string "description"
+    t.decimal "rate"
+    t.decimal "hours"
+    t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -28,6 +28,7 @@ class AppointmentStatus < ApplicationRecord
   belongs_to :appointment
 
   before_create :set_current
+  after_create :handle_triggers
 
   # scope :current, -> (appointment) { find_by(appointment_id: appointment, current: true) }
   scope :current, -> { find_by(current: true) }
@@ -53,5 +54,20 @@ class AppointmentStatus < ApplicationRecord
     # by_appointment(self.appointment_id).update_all(current: false)
     AppointmentStatus.where(appointment_id: appointment_id).update_all(current: false)
     self.current = true
+  end
+
+  private
+
+  def handle_triggers
+    puts "\n\nHANDLING TRIGGERS\n\n"
+    case name
+    when "finished"
+      appointment.associate_rate_via_service
+      appointment.associate_config_via_service
+    when "cancelled"
+      appointment.update(cancelled_at: DateTime.now.utc)
+    when "verified"
+      appointment.create_line_items_and_save_totals
+    end
   end
 end

@@ -82,6 +82,12 @@ class User < ApplicationRecord
 
   has_many :appointment_statuses, dependent: :destroy, foreign_key: :user_id
 
+  has_many :pay_bill_rate_interpreters, dependent: :destroy
+  has_many :pay_bill_rates, through: :pay_bill_rate_interpreters
+
+  has_many :pay_bill_config_interpreters, dependent: :destroy
+  has_many :pay_bill_configs, through: :pay_bill_config_interpreters
+
   accepts_nested_attributes_for :interpreter_detail
   accepts_nested_attributes_for :requestor_detail
   accepts_nested_attributes_for :appointment_statuses
