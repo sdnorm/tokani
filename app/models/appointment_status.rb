@@ -61,12 +61,12 @@ class AppointmentStatus < ApplicationRecord
   def handle_triggers
     puts "\n\nHANDLING TRIGGERS\n\n"
     case name
-    when 'finished'
+    when "finished"
       appointment.associate_rate_via_service
       appointment.associate_config_via_service
-    when 'cancelled'
+    when "cancelled"
       appointment.update(cancelled_at: DateTime.now.utc)
-    when 'verified'
+    when "verified"
       appointment.create_line_items_and_save_totals
     end
   end

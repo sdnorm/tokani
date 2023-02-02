@@ -22,16 +22,14 @@ class RateCalculationService
       # Difference between when the appointment was cancelled and the start time
       cancellation_time_diff = TimeDifference.between(@appointment.start_time, @appointment.cancelled_at).in_hours
 
-      if cancellation_time_diff < @pay_bill_config.trigger_for_cancel_level1
-        @rate_type = "cancel_level_1"
-        return @rate_type
+      @rate_type = if cancellation_time_diff < @pay_bill_config.trigger_for_cancel_level1
+        "cancel_level_1"
       elsif cancellation_time_diff < @pay_bill_config.trigger_for_cancel_level2
-        @rate_type = "cancel_level_2"
-        return @rate_type
+        "cancel_level_2"
       else
-        @rate_type = "cancelled_unbillable"
-        return @rate_type
+        "cancelled_unbillable"
       end
+      return @rate_type
     when "agency"
       @rate_type = "cancelled_unbillable"
       return @rate_type

@@ -13,18 +13,16 @@
 #  appointment_id :integer
 #
 class PaymentLineItem < ApplicationRecord
-
   belongs_to :appointment
 
   def self.persist_from_struct(appointment, line_items)
     line_items.each do |li|
       PaymentLineItem.create!(appointment: appointment,
-                              type_key: li.type_key,
-                              description: li.description,
-                              rate: li.rate,
-                              hours: li.hours,
-                              amount: li.total)
+        type_key: li.type_key,
+        description: li.description,
+        rate: li.rate,
+        hours: li.hours,
+        amount: li.total)
     end
   end
-
 end

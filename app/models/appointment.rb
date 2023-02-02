@@ -77,15 +77,15 @@ class Appointment < ApplicationRecord
   end
 
   def start_time_with_zone
-    start_time.in_time_zone(self.time_zone)
+    start_time.in_time_zone(time_zone)
   end
 
   def end_time_with_zone
-    end_time.in_time_zone(self.time_zone)
+    end_time.in_time_zone(time_zone)
   end
 
   def finish_time_with_zone
-    finish_time.in_time_zone(self.time_zone)
+    finish_time.in_time_zone(time_zone)
   end
 
   def associate_rate_via_service
@@ -112,7 +112,7 @@ class Appointment < ApplicationRecord
     PaymentLineItem.persist_from_struct(self, service.payment_line_items)
 
     update_columns(total_billed: service.total_bill,
-                   total_paid: service.total_pay)
+      total_paid: service.total_pay)
   end
 
   def calculated_appointment_duration_in_hours
@@ -129,11 +129,11 @@ class Appointment < ApplicationRecord
   end
 
   def billing_types
-    billing_line_items.map { |li| li.type_key.titleize }.join(' - ')
+    billing_line_items.map { |li| li.type_key.titleize }.join(" - ")
   end
 
   def payment_types
-    payment_line_items.map { |li| li.type_key.titleize }.join(' - ')
+    payment_line_items.map { |li| li.type_key.titleize }.join(" - ")
   end
 
   def duration_in_minutes

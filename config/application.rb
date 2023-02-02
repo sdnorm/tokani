@@ -38,7 +38,7 @@ module JumpstartApp
     config.assets.css_compressor = nil
 
     # Make available other directories to store classes/modules/etc
-    config.autoload_paths << config.root.join('lib')
+    config.autoload_paths << config.root.join("lib")
 
     # Rails 7 defaults to libvips as the variant processor
     # libvips is up to 10x faster and consumes 1/10th the memory of imagemagick
