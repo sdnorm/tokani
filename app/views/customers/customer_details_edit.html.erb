@@ -1,0 +1,75 @@
+<%= render partial: "shared/sidenav" %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+		<div class="md:w-1/2">
+		<h1 class="text-xl text-tokanisecondary-500 m-4">Customer Details Edit</h1>
+			<form class="space-y-8 divide-y divide-gray-200">
+				<div class="mt-5 md:col-span-2 md:mt-0">
+					<div class="overflow-hidden shadow sm:rounded-md">
+						<div class="bg-white px-4 py-5 sm:p-6">            
+							<div class="col-span-6 sm:col-span-3 mt-4">
+								<label for="contact_name" class="block text-sm font-medium text-gray-700">Contact Name</label>
+								<input type="text" name="contact_name" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+							</div>
+
+							<div class="col-span-6 sm:col-span-3 mt-4">
+								<label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+								<input type="email" name="email" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">	 
+							</div>
+
+							<div class="col-span-6 sm:col-span-3 mt-4">
+								<label for="fax" class="block text-sm font-medium text-gray-700">Fax</label>
+								<input type="phone" name="fax" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">	 
+							</div>
+
+							<div class="col-span-6 sm:col-span-3 mt-4">
+								<label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+								<input type="phone" name="phone" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">	 
+							</div>
+
+							<div class="col-span-6 sm:col-span-6 lg:col-span-6 mt-4">
+								<label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
+								<textarea name="notes" rows="3" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm"></textarea> 
+							</div>
+							<fieldset class="space-y-5">
+                <legend class="sr-only">Appointment Modalitites</legend>
+                <div class="relative flex items-start">
+                  <div class="flex h-5 items-center pt-2">
+                    <input name="appointments_in_person" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+										<label for="appointments_in_person" class="block text-sm font-medium text-gray-700"></label>
+                    <p id="in_person_appointments" class="text-gray-500">This customer books in-person appointments.</p>
+                  </div> 
+                </div>
+                <div class="relative flex items-start">
+                  <div class="flex h-5 items-center pt-2">
+										<input name="appointments_video" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+										<label for="appointments_video" class="block text-sm font-medium text-gray-700"></label>
+                    <p id="video_appointment" class="text-gray-500">This customer books video appointments.</p>
+                  </div>
+                </div>
+                <div class="relative flex items-start">
+                    <div class="flex h-5 items-center pt-2">
+											<input name="appointments_phone" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                    </div>
+                    <div class="ml-3 text-sm">
+                      <label for="appointments_phone" class="font-medium text-gray-700"></label> 
+                      <p id="phone_appointment" class="text-gray-500">This customer books phone appointments.</p>
+                    </div>
+                </div>
+              </fieldset>
+							<div class="px-4 py-3 text-right sm:px-6">
+                <button class="inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2">Submit</button>
+            	</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</main>
+</div>
+
+
