@@ -2,7 +2,7 @@
 #
 # Table name: recipients
 #
-#  id            :bigint           not null, primary key
+#  id            :uuid             not null, primary key
 #  allow_email   :boolean
 #  allow_text    :boolean
 #  email         :string

@@ -1,86 +1,75 @@
-<div id="<%= dom_id appointment %>">
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Ref number</p>
-    <%= appointment.ref_number %>
+<div id="<%= dom_id appointment %>" class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900"><%= appointment.id %></h3>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Start time</p>
-    <%= appointment.start_time %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Finish time</p>
-    <%= appointment.finish_time %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Duration</p>
-    <%= appointment.duration %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Modality</p>
-    <%= appointment.modality %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Sub type</p>
-    <%= appointment.sub_type %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Gender req</p>
-    <%= appointment.gender_req %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Admin notes</p>
-    <%= appointment.admin_notes %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Notes</p>
-    <%= appointment.notes %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Details</p>
-    <%= appointment.details %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Status</p>
-    <%= appointment.status %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Interpreter type</p>
-    <%= appointment.interpreter_type %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Billing notes</p>
-    <%= appointment.billing_notes %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Canceled by</p>
-    <%= appointment.canceled_by %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel reason code</p>
-    <%= appointment.cancel_reason_code %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Lock version</p>
-    <%= appointment.lock_version %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Time zone</p>
-    <%= appointment.time_zone %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Confirmation date</p>
-    <%= appointment.confirmation_date %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Confirmation phone</p>
-    <%= appointment.confirmation_phone %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Confirmation notes</p>
-    <%= appointment.confirmation_notes %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Home health appointment</p>
-    <%= appointment.home_health_appointment %>
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Ref Number</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.ref_number %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Start Time</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.start_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Finish Time</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.finish_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Duration</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.duration %> minutes</dd> 
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Modality</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.modality %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Language</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.language&.name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Provider</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.provider&.view_name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Recipient</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.recipient&.view_name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Interpreter</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.interpreter&.name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Requestor</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.requestor&.name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Customer</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.customer&.name %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Site</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.site&.name %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Department</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.department&.name %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Details</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.details %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Notes</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.notes %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Admin Notes</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.admin_notes %></dd>   
+      </div>
+      
+    </dl>
   </div>
 </div>
+

@@ -24,6 +24,7 @@
 class Department < ApplicationRecord
   belongs_to :site
   has_many :providers
+  has_many :requestors
 
   validates :name, uniqueness: {scope: :site_id}
 end

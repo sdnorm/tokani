@@ -31,9 +31,13 @@ class Provider < ApplicationRecord
   belongs_to :site, optional: true
   belongs_to :department, optional: true
   belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
-
+  has_many :appointments
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :providers, partial: "providers/index", locals: {provider: self} }
   after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :providers, target: dom_id(self, :index) }
+
+  def view_name
+    "#{first_name} #{last_name}"
+  end
 end
