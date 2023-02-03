@@ -42,8 +42,8 @@ Rails.application.routes.draw do
   get "interpreters/time-off", to: "interpreters#time_off"
 
   get "dashboard/customer", to: "dashboard#customer"
-	get "customers/customer_details", to: "customers#customer_details"
-	get "customers/customer_details_edit", to: "customers#customer_details_edit"
+  get "customers/customer_details", to: "customers#customer_details"
+  get "customers/customer_details_edit", to: "customers#customer_details_edit"
 
   draw :turbo
 

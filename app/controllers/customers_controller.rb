@@ -65,11 +65,11 @@ class CustomersController < ApplicationController
     end
   end
 
-	def customer_details
-	end
+  def customer_details
+  end
 
-	def customer_details_edit
-	end
+  def customer_details_edit
+  end
 
   # DELETE /customers/1 or /customers/1.json
   def destroy
