@@ -86,6 +86,7 @@ one:
   confirmation_phone: MyString
   confirmation_notes: MyText
   home_health_appointment: false
+  language: one
 
 two:
   ref_number: MyString
@@ -109,3 +110,4 @@ two:
   confirmation_phone: MyString
   confirmation_notes: MyText
   home_health_appointment: false
+  language: two
