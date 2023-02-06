@@ -54,7 +54,7 @@ class Account < ApplicationRecord
 
   has_many :specialties, dependent: :destroy, foreign_key: :account_id
 
-  has_many :languages, dependent: :destroy, foreign_key: :account_id
+  has_many :languages, foreign_key: :account_id
   has_many :account_languages, dependent: :destroy, foreign_key: :account_id, class_name: "Language"
 
   has_many :requestor_details, dependent: :destroy, foreign_key: :customer_id

@@ -30,20 +30,41 @@
 #  time_zone                :string
 #  total_billed             :decimal(, )
 #  total_paid               :decimal(, )
+#  video_link               :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
 #  customer_id              :uuid
+#  department_id            :uuid
 #  interpreter_id           :uuid
+#  language_id              :bigint           not null
 #  pay_bill_config_id       :integer
 #  pay_bill_rate_id         :integer
+#  provider_id              :uuid
+#  recipient_id             :uuid
+#  requestor_id             :uuid
 #  site_id                  :uuid
 #
 # Indexes
 #
 #  index_appointments_on_agency_id       (agency_id)
 #  index_appointments_on_customer_id     (customer_id)
+#  index_appointments_on_department_id   (department_id)
 #  index_appointments_on_interpreter_id  (interpreter_id)
+#  index_appointments_on_language_id     (language_id)
+#  index_appointments_on_provider_id     (provider_id)
+#  index_appointments_on_recipient_id    (recipient_id)
+#  index_appointments_on_requestor_id    (requestor_id)
+#  index_appointments_on_site_id         (site_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (department_id => departments.id)
+#  fk_rails_...  (language_id => languages.id)
+#  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (recipient_id => recipients.id)
+#  fk_rails_...  (requestor_id => users.id)
+#  fk_rails_...  (site_id => sites.id)
 #
 class Appointment < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
@@ -51,21 +72,25 @@ class Appointment < ApplicationRecord
   after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :appointments, target: dom_id(self, :index) }
 
-  has_many :appointment_languages, dependent: :destroy
+  # has_many :appointment_languages, dependent: :destroy
   has_many :appointment_specialties, dependent: :destroy
   has_many :specialties, through: :appointment_specialties
   has_many :appointment_statuses, dependent: :destroy
-  has_many :billing_line_items, dependent: :destroy
-  has_many :payment_line_items, dependent: :destroy
+  belongs_to :language
 
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account", optional: true
   belongs_to :interpreter, class_name: "User", optional: true
   belongs_to :site, optional: true
-  belongs_to :pay_bill_rate, optional: true
-  belongs_to :pay_bill_config, optional: true
+  belongs_to :department, optional: true
+  belongs_to :requestor, class_name: "User", optional: true
+  belongs_to :provider, optional: true
+  belongs_to :recipient, optional: true
 
-  enum cancel_type: {agency: 0, requestor: 1}
+  enum gender_req: {male: 1, female: 2, non_binary: 3}
+  enum modality: {in_person: 1, phone: 2, video: 3}
+
+  # before_create :gen_refnum
 
   def status
     appointment_statuses.current.name

@@ -24,21 +24,45 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
 
-    # Uncomment to authorize with Pundit
-    # authorize @appointment
+    if params[:customer_id].blank?
+      @account_customers = current_account.customers
+      # @agency_customers = AgencyCustomer.all.order('name ASC')
+      return
+    end
 
-    @customers = current_account.customers
-    @customer_id = site_params[:customer_id] if params[:site].present? && site_params[:customer_id].present?
+    @account_customers = current_account.customers
+    @customer = Customer.find(params[:customer_id])
+    @sites = @customer.sites.order("name ASC")
+    @departments = []
+
+    @languages = current_account.account_languages
 
     @interpreters = current_account.interpreters
+    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
+    @requestors = User.where(id: requestor_ids)
+    @providers = @customer.providers
+    @recipients = @customer.recipients
   end
 
   # GET /appointments/1/edit
   def edit
-    @customers = current_account.customers
-    @customer_id = site_params[:customer_id] if params[:site].present? && site_params[:customer_id].present?
+    @account_customers = current_account.customers
+    @customer = @appointment.customer
+    @sites = @customer.sites.order("name ASC")
+    if @appointment.site.present?
+      @departments = @appointment.site.departments
+    end
+
+    @departments ||= []
+
+    @languages = current_account.account_languages
 
     @interpreters = current_account.interpreters
+    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
+    @requestors = User.where(id: requestor_ids)
+
+    @providers = @customer.providers
+    @recipients = @customer.recipients
   end
 
   # POST /appointments or /appointments.json
@@ -49,7 +73,6 @@ class AppointmentsController < ApplicationController
     # authorize @appointment
 
     @appointment.agency_id = @account.id
-
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
@@ -124,7 +147,13 @@ class AppointmentsController < ApplicationController
       :confirmation_date,
       :confirmation_phone,
       :confirmation_notes,
-      :home_health_appointment
+      :home_health_appointment,
+      :site_id,
+      :department_id,
+      :provider_id,
+      :recipient_id,
+      :language_id,
+      :requestor_id
     )
 
     # Uncomment to use Pundit permitted attributes

@@ -37,6 +37,11 @@ two:
   name: "User Two"
   personal: true
 
+three:
+  owner: three
+  name: "User Three"
+  personal: false
+
 company:
   owner: one
   name: "Company"

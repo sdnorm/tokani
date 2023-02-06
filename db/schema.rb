@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_02_104009) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_02_233935) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -147,15 +147,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_104009) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
-  create_table "appointment_languages", force: :cascade do |t|
-    t.bigint "appointment_id", null: false
-    t.bigint "language_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["appointment_id"], name: "index_appointment_languages_on_appointment_id"
-    t.index ["language_id"], name: "index_appointment_languages_on_language_id"
-  end
-
   create_table "appointment_specialties", force: :cascade do |t|
     t.bigint "appointment_id", null: false
     t.bigint "specialty_id", null: false
@@ -211,9 +202,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_104009) do
     t.integer "pay_bill_rate_id"
     t.datetime "cancelled_at"
     t.integer "cancel_type"
+    t.string "video_link"
+    t.uuid "department_id"
+    t.uuid "provider_id"
+    t.uuid "recipient_id"
+    t.uuid "requestor_id"
+    t.bigint "language_id", null: false
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
+    t.index ["department_id"], name: "index_appointments_on_department_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
+    t.index ["language_id"], name: "index_appointments_on_language_id"
+    t.index ["provider_id"], name: "index_appointments_on_provider_id"
+    t.index ["recipient_id"], name: "index_appointments_on_recipient_id"
+    t.index ["requestor_id"], name: "index_appointments_on_requestor_id"
+    t.index ["site_id"], name: "index_appointments_on_site_id"
   end
 
   create_table "billing_line_items", force: :cascade do |t|
@@ -629,7 +632,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_104009) do
     t.index ["account_id"], name: "index_rate_criteria_on_account_id"
   end
 
-  create_table "recipients", force: :cascade do |t|
+  create_table "recipients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "last_name"
     t.string "first_name"
     t.string "email"
@@ -748,11 +751,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_104009) do
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "agency_customers", "customer_categories"
-  add_foreign_key "appointment_languages", "appointments"
-  add_foreign_key "appointment_languages", "languages"
   add_foreign_key "appointment_specialties", "appointments"
   add_foreign_key "appointment_specialties", "specialties"
   add_foreign_key "appointment_statuses", "appointments"
+  add_foreign_key "appointments", "departments"
+  add_foreign_key "appointments", "languages"
+  add_foreign_key "appointments", "providers"
+  add_foreign_key "appointments", "recipients"
+  add_foreign_key "appointments", "sites"
+  add_foreign_key "appointments", "users", column: "requestor_id"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_specialties", "specialties"

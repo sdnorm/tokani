@@ -30,6 +30,7 @@ class Customer < Account
   has_many :sites
   has_many :providers
   has_many :recipients
+  has_many :requestors
 
   private
 

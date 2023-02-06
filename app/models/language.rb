@@ -23,7 +23,7 @@ class Language < ApplicationRecord
   after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :languages, target: dom_id(self, :index) }
 
-  has_many :appointment_languages, dependent: :destroy
+  # has_many :appointment_languages, dependent: :destroy
   has_many :interpreter_languages, dependent: :destroy
   belongs_to :account
 end
