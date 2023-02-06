@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_163756) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_02_233935) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -208,10 +208,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_163756) do
     t.uuid "recipient_id"
     t.uuid "requestor_id"
     t.bigint "language_id", null: false
-    t.integer "pay_bill_config_id"
-    t.integer "pay_bill_rate_id"
-    t.datetime "cancelled_at"
-    t.integer "cancel_type"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -755,8 +751,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_163756) do
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "agency_customers", "customer_categories"
-  add_foreign_key "appointment_languages", "appointments"
-  add_foreign_key "appointment_languages", "languages"
   add_foreign_key "appointment_specialties", "appointments"
   add_foreign_key "appointment_specialties", "specialties"
   add_foreign_key "appointment_statuses", "appointments"
