@@ -1,17 +1,19 @@
 class RecipientUuid < ActiveRecord::Migration[7.0]
-  def change
-    enable_extension "pgcrypto"
+  # This migration got out of order. So commenting our and altering a previsou migration to add the uuid column.
 
-    add_column :recipients, :uuid, :uuid, default: "gen_random_uuid()", null: false
+  # def change
+  #   enable_extension "pgcrypto"
 
-    remove_column :recipients, :id
+  #   add_column :recipients, :uuid, :uuid, default: "gen_random_uuid()", null: false
 
-    rename_column :recipients, :uuid, :id
+  #   remove_column :recipients, :id
 
-    execute "ALTER TABLE recipients ADD PRIMARY KEY (id);"
-  end
+  #   rename_column :recipients, :uuid, :id
 
-  def down
-    raise ActiveRecord::IrreversibleMigration
-  end
+  #   execute "ALTER TABLE recipients ADD PRIMARY KEY (id);"
+  # end
+
+  # def down
+  #   raise ActiveRecord::IrreversibleMigration
+  # end
 end

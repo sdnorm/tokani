@@ -56,7 +56,7 @@ async function buildAndReload() {
   const initialize_es_build = async () => {
     return await esbuild.build({
       ...config,
-      incremental: true,
+      // incremental: true,
       banner: {
         js: ` (() => new EventSource("http://localhost:${port}").onmessage = () => location.reload())();`,
       },
