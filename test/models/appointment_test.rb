@@ -55,7 +55,6 @@
 #  index_appointments_on_provider_id     (provider_id)
 #  index_appointments_on_recipient_id    (recipient_id)
 #  index_appointments_on_requestor_id    (requestor_id)
-#  index_appointments_on_site_id         (site_id)
 #
 # Foreign Keys
 #
@@ -64,7 +63,6 @@
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (recipient_id => recipients.id)
 #  fk_rails_...  (requestor_id => users.id)
-#  fk_rails_...  (site_id => sites.id)
 #
 require "test_helper"
 
