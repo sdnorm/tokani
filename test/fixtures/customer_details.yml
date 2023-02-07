@@ -30,6 +30,7 @@ one:
   appointments_video: false
   appointments_phone: false
   customer: company
+  customer_category: one
 
 two:
   contact_name: MyString
@@ -41,3 +42,4 @@ two:
   appointments_video: false
   appointments_phone: false
   customer: company
+  customer_category: one

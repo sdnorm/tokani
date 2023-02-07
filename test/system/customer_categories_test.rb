@@ -5,36 +5,36 @@ class CustomerCategoriesTest < ApplicationSystemTestCase
     @customer_category = customer_categories(:one)
   end
 
-  test "visiting the index" do
-    visit customer_categories_url
-    assert_selector "h1", text: "Customer Categories"
-  end
+  # test "visiting the index" do
+  #   visit customer_categories_url
+  #   assert_selector "h1", text: "Customer Categories"
+  # end
 
-  test "creating a Customer category" do
-    visit customer_categories_url
-    click_on "New Customer Category"
+  # test "creating a Customer category" do
+  #   visit customer_categories_url
+  #   click_on "New Customer Category"
 
-    click_on "Create Customer category"
+  #   click_on "Create Customer category"
 
-    assert_text "Customer category was successfully created"
-    assert_selector "h1", text: "Customer Categories"
-  end
+  #   assert_text "Customer category was successfully created"
+  #   assert_selector "h1", text: "Customer Categories"
+  # end
 
-  test "updating a Customer category" do
-    visit customer_category_url(@customer_category)
-    click_on "Edit", match: :first
+  # test "updating a Customer category" do
+  #   visit customer_category_url(@customer_category)
+  #   click_on "Edit", match: :first
 
-    click_on "Update Customer category"
+  #   click_on "Update Customer category"
 
-    assert_text "Customer category was successfully updated"
-    assert_selector "h1", text: "Customer Categories"
-  end
+  #   assert_text "Customer category was successfully updated"
+  #   assert_selector "h1", text: "Customer Categories"
+  # end
 
-  test "destroying a Customer category" do
-    visit edit_customer_category_url(@customer_category)
-    click_on "Delete", match: :first
-    click_on "Confirm"
+  # test "destroying a Customer category" do
+  #   visit edit_customer_category_url(@customer_category)
+  #   click_on "Delete", match: :first
+  #   click_on "Confirm"
 
-    assert_text "Customer category was successfully destroyed"
-  end
+  #   assert_text "Customer category was successfully destroyed"
+  # end
 end

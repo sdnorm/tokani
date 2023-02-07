@@ -1,4 +1,4 @@
-<%= content_for :title, "Appointments ##{@appointment.id}" %>
+<%= content_for :title, "Appointments ##{@appointment.ref_number}" %>
 <%= turbo_stream_from @appointment %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
@@ -11,7 +11,7 @@
                   <h1 class="text-xl font-semibold text-gray-900">
                     <%= link_to "Appointments", appointments_path, class: "text-tokanisecondary-500" %>
                       <span class="text-gray-400 font-light mx-2">\</span>
-                      Appointment #<%= @appointment.id %>
+                      Appointment #<%= @appointment.ref_number %>
                   </h1>
                 </div>
                   <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
