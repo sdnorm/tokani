@@ -19,6 +19,9 @@
 #  language_id          :integer
 #  site_id              :uuid
 #
+
+require "csv"
+
 class Report < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :reports, partial: "reports/index", locals: {report: self} }
@@ -81,7 +84,7 @@ class Report < ApplicationRecord
       when "time-of-service"
         fields << appt.start_time.strftime("%l:%M %p")
       when "customer-name"
-        fields << appt.agency_customer&.name
+        fields << appt.customer&.name
       when "site"
         fields << appt.site&.name
       when "department"

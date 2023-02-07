@@ -7,8 +7,10 @@
       </div>
       <div data-dropdown-target="menu" class="mt-2 hidden">
         <div class="bg-white shadow rounded border overflow-hidden">
-          <% @account_customers.each do |cust| %>
-          <%= link_to cust.name, new_appointment_path(customer_id: cust.id),  data: {action: "click->dropdown#toggle"}, class: 'no-underline block pl-8 py-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-nowrap'%>
+          <% if @account_customers.present? %>
+            <% @account_customers.each do |cust| %>
+            <%= link_to cust.name, new_appointment_path(customer_id: cust.id),  data: {action: "click->dropdown#toggle"}, class: 'no-underline block pl-8 py-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-nowrap'%>
+            <% end %>
           <% end %>
         </div>
       </div>

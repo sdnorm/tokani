@@ -76,8 +76,10 @@ class Appointment < ApplicationRecord
   has_many :appointment_specialties, dependent: :destroy
   has_many :specialties, through: :appointment_specialties
   has_many :appointment_statuses, dependent: :destroy
-  belongs_to :language
+  has_many :billing_line_items, dependent: :destroy
+  has_many :payment_line_items, dependent: :destroy
 
+  belongs_to :language
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account", optional: true
   belongs_to :interpreter, class_name: "User", optional: true
@@ -86,6 +88,8 @@ class Appointment < ApplicationRecord
   belongs_to :requestor, class_name: "User", optional: true
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
+  belongs_to :pay_bill_rate, optional: true
+  belongs_to :pay_bill_config, optional: true
 
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
@@ -161,11 +165,11 @@ class Appointment < ApplicationRecord
     payment_line_items.map { |li| li.type_key.titleize }.join(" - ")
   end
 
-  def duration_in_minutes
+  def duration_in_hours
     (duration / 60.0).round(0)
   end
 
   def duration_viewable
-    "#{duration_in_minutes} minutes"
+    "#{duration} minutes"
   end
 end

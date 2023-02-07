@@ -59,7 +59,6 @@ class AppointmentStatus < ApplicationRecord
   private
 
   def handle_triggers
-    puts "\n\nHANDLING TRIGGERS\n\n"
     case name
     when "finished"
       appointment.associate_rate_via_service
