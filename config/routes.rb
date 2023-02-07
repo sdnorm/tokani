@@ -11,9 +11,22 @@ Rails.application.routes.draw do
   resources :sites do
     collection do
       get :dropdown
+      get :dropdown_for_reports
       get :departments_dropdown
+      get :departments_dropdown_for_reports
       get :select_list
       get :department_select_list
+    end
+  end
+
+  resources :reports, only: [:index, :create] do
+    collection do
+      get :financial
+      get :fill_rate
+    end
+    member do
+      get :generate_csv
+      get :generate_pdf
     end
   end
 

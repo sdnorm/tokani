@@ -1,0 +1,32 @@
+<%= content_for :title, "Reports" %>
+
+<div>
+  <%= render partial: "shared/sidenav" %>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto">
+                <h1 class="text-xl font-semibold text-gray-900">Choose Report Type</h1>
+
+                <%= form_with url: "/reports", class: 'form' do |form| %>
+                  <div class="mt-4 mb-3 justify-center content-center">
+                    <div class="col-md-12 mx-3 mb-3">
+                      <div class="input-group input-group-static" data-controller="select-financial-report">
+                        <%= form.select :modality, financial_report_options, {}, { data: {action: 'change->select-financial-report#selected' }, class: 'form-select'}  %>
+
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

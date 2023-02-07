@@ -1,0 +1,15 @@
+<h3><%= @report.report_type&.titleize %> Report</h3>
+
+<% if @report.date_begin.present? && @report.date_end.present? %>
+  <h4>Date of Services: <%= @report.date_begin %> to <%= @report.date_end %></h4>
+<% end %>
+
+<% puts "@appointments: #{@appointments.inspect}\n\n" %>
+
+<% if @appointments.empty? %>
+  <p>No appointments found matching report criteria.</p>
+<% else %>
+
+  <%= render partial: "#{@report.report_type}_report" %>
+
+<% end %>

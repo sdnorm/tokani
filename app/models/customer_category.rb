@@ -31,6 +31,8 @@ class CustomerCategory < ApplicationRecord
   validates :video_prefix, length: {maximum: 10}
   validates :appointment_prefix, length: {maximum: 10}
 
+  scope :active, -> { where(is_active: true) }
+
   def modality_prefix(modality)
     case modality
     when "phone"
