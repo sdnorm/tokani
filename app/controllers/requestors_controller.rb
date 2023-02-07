@@ -40,7 +40,6 @@ class RequestorsController < ApplicationController
   def edit
     @account_customers = current_account.customers
     @sites = current_account.account_sites.order("name ASC")
-
     @departments = if @requestor.requestor_detail.site_id.present?
       Department.where(site_id: @requestor.requestor_detail.site_id).order("name ASC")
     else
@@ -83,7 +82,7 @@ class RequestorsController < ApplicationController
       @account_customers = current_account.customers
       @sites = current_account.account_sites.order("name ASC")
 
-      if @requestor.update(requestor_params)
+      if @requestor.update!(requestor_params)
 
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully updated." }
         format.json { render :show, status: :ok, location: @requestor }
@@ -111,7 +110,6 @@ class RequestorsController < ApplicationController
   def requestor_params
     params.require(:user).permit(
       :email,
-      :password,
       :first_name,
       :last_name,
       :terms_of_service,
@@ -126,7 +124,6 @@ class RequestorsController < ApplicationController
         :requestor_type,
         :primary_phone,
         :work_phone
-
       ]
     )
   end
