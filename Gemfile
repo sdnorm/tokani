@@ -16,7 +16,7 @@ gem "pg"
 gem "puma", "~> 6.0"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", "~> 1.0", ">= 1.0.1"
+gem "turbo-rails", "~> 1.3"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails", "~> 1.2"
@@ -101,7 +101,7 @@ gem "jsbundling-rails", "~> 1.1.1"
 gem "local_time", "~> 2.1"
 gem "name_of_person", "~> 1.0"
 gem "noticed", "~> 1.5"
-gem "oj", "~> 3.13"
+gem "oj", "~> 3.14"
 gem "omniauth", "~> 2.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "pagy", "~> 6.0"

@@ -27,7 +27,8 @@ class RequestorDetail < ApplicationRecord
   after_destroy_commit -> { broadcast_remove_to :requestor_details, target: dom_id(self, :index) }
 
   belongs_to :requestor, class_name: "User", foreign_key: "requestor_id", inverse_of: :requestor_detail
-
+  belongs_to :site
+  belongs_to :department
   belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
 
   enum requestor_type: {site_admin: 1, site_member: 2, client: 3}

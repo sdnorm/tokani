@@ -31,6 +31,8 @@ end
 
 AccountUser.where(account_id: agency_with_things.id, user_id: agency_owner_id).update(roles: {"agency_admin" => true})
 
+Language.create!(name: "English", is_active: true, account_id: agency_with_things.id)
+
 100.times do |appointment|
   Appointment.create!(
     agency_id: agency_with_things.id,
@@ -38,7 +40,8 @@ AccountUser.where(account_id: agency_with_things.id, user_id: agency_owner_id).u
     start_time: start_time,
     finish_time: start_time + 1.hour,
     notes: Faker::Lorem.sentence,
-    ref_number: Faker::Invoice.reference
+    ref_number: Faker::Invoice.reference,
+    language_id: Language.first.id
   )
 end
 
@@ -80,3 +83,5 @@ end
 
 # Super Admin
 User.create!(name: "Super Admin", email: "super@admin.com", password: "password", password_confirmation: "password", admin: true, terms_of_service: true)
+
+AccountUser.create!(account_id: Account.find_by(name: "Super Admin").id, user_id: User.find_by(email: "super@admin.com").id, roles: {"admin" => true})

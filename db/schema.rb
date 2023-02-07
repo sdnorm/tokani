@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_06_083716) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_06_161908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -200,13 +200,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_083716) do
     t.integer "pay_bill_config_id"
     t.integer "pay_bill_rate_id"
     t.datetime "cancelled_at"
+    t.bigint "language_id", null: false
     t.string "video_link"
     t.uuid "department_id"
     t.uuid "site_id"
     t.uuid "provider_id"
     t.uuid "recipient_id"
     t.uuid "requestor_id"
-    t.integer "cancel_type"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -214,7 +214,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_083716) do
     t.index ["provider_id"], name: "index_appointments_on_provider_id"
     t.index ["recipient_id"], name: "index_appointments_on_recipient_id"
     t.index ["requestor_id"], name: "index_appointments_on_requestor_id"
-    t.index ["site_id"], name: "index_appointments_on_site_id"
   end
 
   create_table "billing_line_items", force: :cascade do |t|
@@ -780,7 +779,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_083716) do
   add_foreign_key "appointments", "departments"
   add_foreign_key "appointments", "providers"
   add_foreign_key "appointments", "recipients"
-  add_foreign_key "appointments", "sites"
   add_foreign_key "appointments", "users", column: "requestor_id"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
