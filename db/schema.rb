@@ -211,6 +211,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_161908) do
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
+    t.index ["language_id"], name: "index_appointments_on_language_id"
     t.index ["provider_id"], name: "index_appointments_on_provider_id"
     t.index ["recipient_id"], name: "index_appointments_on_recipient_id"
     t.index ["requestor_id"], name: "index_appointments_on_requestor_id"
