@@ -1,5 +1,4 @@
-
-<%= content_for :title, t("shared.scaffold.new.title", model: "Customer") %>
+<%= content_for :title, t("shared.scaffold.new.title", model: "Customer Category") %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -9,17 +8,17 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Customers", customers_path, class: "text-tokanisecondary-500" %>
-                      <span class="text-gray-400 font-light mx-2">\ New Customer</span>    
+                    <%= link_to "Customer Categories", customer_categories_path, class: "text-tokanisecondary-500" %>
+                      <span class="text-gray-400 font-light mx-2">\ New Customer Category</span>    
                   </h1>
                 </div>      
                 </div>
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render partial: "form", locals: {customer: @customer, customer_categories: @customer_categories } %>
-                  <%# render "form", customer: @customer %>
+                  <%= render partial: "form", locals: { customer_category: @customer_category } %>
                 </div>
             </div>
           </div>
         </div>
   </main>
 </div>
+

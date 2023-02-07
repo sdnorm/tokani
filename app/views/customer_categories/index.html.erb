@@ -1,0 +1,70 @@
+<%= content_for :title, "Customer Categories" %>
+<%= turbo_stream_from :customer_categories %>
+<div>
+  <%= render partial: "shared/sidenav" %>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto">
+                <h1 class="text-xl font-semibold text-gray-900">Customer Categories</h1>
+              </div>
+               
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to t("shared.scaffold.new.title", model: "Customer Category"), new_customer_category_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
+              </div>
+            </div>
+            <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @customer_categories, :display_value, "Name" %></th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">In-Person Prefix</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Telephone Prefix</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Video Prefix</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>  
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                <% @customer_categories.each do |cc| %>
+                  <tr>
+                    <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                      <%= link_to cc.display_value, customer_category_path(cc) %>
+                      <dl class="font-normal lg:hidden">
+                        <dt class="sr-only">In-Person Prefix</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%= cc.appointment_prefix %></dd>
+                        <dt class="sr-only">Telephone Prefix</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%= cc.telephone_prefix %></dd>
+                        <dt class="sr-only">Video Prefix</dt>
+                        <dd class="mt-1 truncate text-gray-500"><%= cc.video_prefix %></dd>
+                      </dl>
+                    </td>
+
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= cc.appointment_prefix %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= cc.telephone_prefix  %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= cc.video_prefix %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(cc.is_active) %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      <a href="<%= edit_customer_category_path(cc) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= cc.id %></span></a>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% if @pagy.pages > 1 %>
+        <div class="my-6 text-center">
+          <%== pagy_nav(@pagy) %>
+        </div>
+      <% end %>
+    </main>
+  </div>
+</div>
+
+

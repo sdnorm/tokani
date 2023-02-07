@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_06_161908) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_06_204605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -264,6 +264,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_161908) do
     t.uuid "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "customer_category_id", null: false
+    t.index ["customer_category_id"], name: "index_customer_details_on_customer_category_id"
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end
 
@@ -758,6 +760,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_161908) do
   add_foreign_key "appointments", "providers"
   add_foreign_key "appointments", "recipients"
   add_foreign_key "appointments", "users", column: "requestor_id"
+  add_foreign_key "customer_details", "customer_categories"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"
   add_foreign_key "interpreter_specialties", "specialties"
