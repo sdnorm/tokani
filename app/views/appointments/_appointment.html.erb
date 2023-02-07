@@ -1,7 +1,4 @@
 <div id="<%= dom_id appointment %>" class="overflow-hidden bg-white shadow sm:rounded-lg">
-  <div class="px-4 py-5 sm:px-6">
-    <h3 class="text-lg font-medium leading-6 text-gray-900"><%= appointment.id %></h3>
-  </div>
   <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
     <dl class="sm:divide-y sm:divide-gray-200">
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -22,7 +19,7 @@
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Modality</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.modality %></dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.modality.titleize %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Language</dt>

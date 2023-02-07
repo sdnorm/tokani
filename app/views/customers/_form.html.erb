@@ -50,6 +50,12 @@
                     <%= customer_detail.label :phone, class: "block text-sm font-medium text-gray-700" %>
                     <%= customer_detail.text_field :phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <div class="form-group">
+                    <%= customer_detail.label "Customer Category", class: "block text-sm font-medium text-gray-700" %>
+                    <%= customer_detail.select :customer_category_id,  options_from_collection_for_select(customer_categories, :id, :display_value, customer.customer_detail.customer_category_id ), {prompt: "Select A Customer Category..."}, {class: 'form-control' } %> 
+                  </div>
+                </div>
                 <div class="col-span-6 sm:col-span-6 lg:col-span-6">
                     <%= customer_detail.label :notes, class: "block text-sm font-medium text-gray-700" %>
                     <%= customer_detail.text_area :notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>

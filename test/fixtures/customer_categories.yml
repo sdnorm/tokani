@@ -26,7 +26,7 @@ one:
   video_prefix: MyString
   backport_id: 
   sort_order: 
-  is_active: false
+  is_active: true
 
 two:
   display_value: MyString

@@ -1,5 +1,5 @@
-<%= content_for :title, "Appointments ##{@appointment.ref_number}" %>
-<%= turbo_stream_from @appointment %>
+<%= content_for :title, "Customer Categories ##{@customer_category.display_value}" %>
+<%= turbo_stream_from @customer_categories %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
@@ -9,24 +9,25 @@
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 
                   <h1 class="text-xl font-semibold text-gray-900">
-                    <%= link_to "Appointments", appointments_path, class: "text-tokanisecondary-500" %>
+                    <%= link_to "Customer Categories", customer_categories_path, class: "text-tokanisecondary-500" %>
                       <span class="text-gray-400 font-light mx-2">\</span>
-                      Appointment #<%= @appointment.ref_number %>
+                      <%= @customer_category.display_value %>
                   </h1>
                 </div>
                   <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <%= link_to t("edit"), edit_appointment_path(@appointment), class: "btn btn-tokani_purple" %>
+                    <%= link_to t("edit"), edit_customer_category_path(@customer_category), class: "btn btn-tokani_purple" %>
                   </div>
                 </div>
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render @appointment %>
-                  <%# render partial: 'customer', locals: { customer: @customer } %>
+                  <%= render partial: 'customer_category', locals: { customer_category: @customer_category} %>
                 </div>
             </div>
           </div>
         </div>
   </main>
 </div>
+
+
 

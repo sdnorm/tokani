@@ -24,6 +24,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new
     @customer.build_customer_detail
     @customer.build_physical_address
+    @customer_categories = CustomerCategory.order("display_value ASC")
 
     # Uncomment to authorize with Pundit
     # authorize @customer
@@ -31,12 +32,13 @@ class CustomersController < ApplicationController
 
   # GET /customers/1/edit
   def edit
+    @customer_categories = CustomerCategory.order("display_value ASC")
   end
 
   # POST /customers or /customers.json
   def create
     @customer = Customer.new(customer_params)
-
+    @customer_categories = CustomerCategory.order("display_value ASC")
     # Uncomment to authorize with Pundit
     # authorize @customer
 
@@ -54,6 +56,7 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1 or /customers/1.json
   def update
+    @customer_categories = CustomerCategory.order("display_value ASC")
     respond_to do |format|
       if @customer.update(customer_params)
         format.html { redirect_to @customer, notice: "Customer was successfully updated." }
@@ -115,7 +118,8 @@ class CustomersController < ApplicationController
         :notes,
         :appointments_in_person,
         :appointments_video,
-        :appointments_phone
+        :appointments_phone,
+        :customer_category_id
       ]
     )
 

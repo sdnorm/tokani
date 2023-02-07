@@ -25,7 +25,8 @@ class CustomerCategory < ApplicationRecord
   after_destroy_commit -> { broadcast_remove_to :customer_categories, target: dom_id(self, :index) }
 
   # has_many :agency_customers
-
+  has_many :customers
+  has_many :customer_details
   validates :telephone_prefix, :video_prefix, :appointment_prefix, presence: true
   validates :telephone_prefix, length: {maximum: 10}
   validates :video_prefix, length: {maximum: 10}

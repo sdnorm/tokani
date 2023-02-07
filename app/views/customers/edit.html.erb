@@ -20,7 +20,8 @@
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render "form", customer: @customer %>
+                  <%= render partial: "form", locals: {customer: @customer, customer_categories: @customer_categories } %>
+                  <%# render "form", customer: @customer %>
                  
                 </div>
             </div>

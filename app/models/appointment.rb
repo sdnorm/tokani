@@ -92,15 +92,21 @@ class Appointment < ApplicationRecord
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
 
-  # before_create :gen_refnum
+  before_create :gen_refnum
+
+  #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
+  def gen_refnum
+    category_code = customer.customer_detail.customer_category.modality_prefix(modality)
+    # here's where our collision occurs.
+    my_year = Time.current.year
+    year_code = (my_year - 2000).to_s
+    appointment_number = Appointment.where("created_at >= :date", date: "#{my_year}-01-01").count
+    final_num = (appointment_number + 1).to_s.rjust(3, "0")
+    self.ref_number = "#{category_code}-#{year_code}-#{final_num}"
+  end
 
   def status
     appointment_statuses.current.name
-  end
-
-  def refnumber
-    # Temporary placeholder until this is implemented
-    "REFNUMBER"
   end
 
   def start_time_with_zone
