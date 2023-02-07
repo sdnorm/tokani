@@ -50,7 +50,8 @@ class AppointmentsController < ApplicationController
     @customer = @appointment.customer
     @sites = @customer.sites.order("name ASC")
     if @appointment.site.present?
-      @departments = @appointment.site.departments
+      # @departments = @appointment.site.departments
+      @departments = Department.where(site_id: @sites.pluck(:id)).order("name ASC")
     end
 
     @departments ||= []

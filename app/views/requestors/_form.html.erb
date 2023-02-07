@@ -2,117 +2,103 @@
 <div>
   <% form_url = requestor.new_record? ? requestors_path : requestor_path(requestor) %>
   <%= form_with(model: requestor, url: form_url) do |form| %>
-  <%# form_with url: form_url do |form| %>
-      <div class="mt-5 md:col-span-2 md:mt-0">
-        <div class="overflow-hidden shadow sm:rounded-md">
-          <div class="bg-white px-4 py-5 sm:p-6">
-            <div class="grid grid-cols-6 gap-6">
+    <div class="mt-5 md:col-span-2 md:mt-0">
+      <div class="overflow-hidden shadow sm:rounded-md">
+        <div class="bg-white px-4 py-5 sm:p-6">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.text_field :first_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= form.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.text_field :last_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <%= form.fields_for :requestor_detail do |requestor_detail| %>
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <%= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
-                  <%= form.text_field :first_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= form.label :last_name, class: "block text-sm font-medium text-gray-700" %>
-                <%= form.text_field :last_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
-                <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
-                <%= form.text_field :password, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-
-              <%= form.fields_for :requestor_detail do |requestor_detail| %>
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <%= requestor_detail.label :primary_phone, class: "block text-sm font-medium text-gray-700" %>
-                  <%= requestor_detail.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                <%= requestor_detail.label :primary_phone, class: "block text-sm font-medium text-gray-700" %>
+                <%= requestor_detail.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                 <%= requestor_detail.label :work_phone, class: "block text-sm font-medium text-gray-700" %>
                 <%= requestor_detail.text_field :work_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-            </div>
-              
+              </div>
               <div class="col-span-6 sm:col-span-3">
                 <div class="form-group">
-                    <%= requestor_detail.label :requestor_type, class: "block text-sm font-medium text-gray-700" %>
-                    <%= requestor_detail.select :requestor_type, options_for_select(requestor_type_options, requestor.requestor_detail.requestor_type), {}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                  <%= requestor_detail.label :requestor_type, class: "block text-sm font-medium text-gray-700" %>
+                  <%= requestor_detail.select :requestor_type, options_for_select(requestor_type_options, requestor.requestor_detail.requestor_type), {}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                </div>
+              </div>
+              <div class="col-span-6 sm:col-span-6" data-controller="select-group">
+                <div class="col-span-3 sm:col-span-3">
+                  <div class="form-group">
+                    <%= requestor_detail.label :customer_id, class: "block text-sm font-medium text-gray-700" %>
+                    <%= requestor_detail.select :customer_id, options_from_collection_for_select(account_customers, :id, :name, requestor.requestor_detail.customer_id ), {prompt: "Select A Customer First..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'user_requestor_detail_attributes_site_id', select_group_select_clear_target_param: 'user_requestor_detail_department_id' }} %> 
+                  </div>
+                </div>
+                <div class="col-span-3 sm:col-span-3">
+                  <div class="form-group">
+                    <%= requestor_detail.label :site_id, class: 'text-blueCoral' %>
+                    <%= requestor_detail.select :site_id, options_from_collection_for_select(sites, :id, :name, requestor.requestor_detail.site_id), {}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'user_requestor_detail_attributes_department_id'}} %>
                   </div>
               </div>
-
-            <div class="col-span-6 sm:col-span-6" data-controller="select-group">
-              <div class="col-span-3 sm:col-span-3">
-                <div class="form-group">
-                  <%= requestor_detail.label :customer_id, class: "block text-sm font-medium text-gray-700" %>
-                  <%= requestor_detail.select :customer_id,  options_from_collection_for_select(account_customers, :id, :name, requestor.requestor_detail.customer_id ), {prompt: "Select A Customer First..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'user_requestor_detail_attributes_site_id', select_group_select_clear_target_param: 'user_requestor_detail_department_id' }} %> 
+                <div class="col-span-3 sm:col-span-3">
+                  <div class="form-group">
+                    <%= requestor_detail.label :department_id, class: 'text-blueCoral' %>
+                    <%= requestor_detail.select :department_id, options_from_collection_for_select(departments, :id, :name, requestor.requestor_detail.department_id), {}, {disabled: @field_disabled, class: 'form-select'} %>
+                  </div>
                 </div>
               </div>
-              <div class="col-span-3 sm:col-span-3">
-                <div class="form-group">
-                  <%= requestor_detail.label :site_id, class: 'text-blueCoral' %>
-                  <%= requestor_detail.select :site_id, options_from_collection_for_select(sites, :id, :name, requestor.requestor_detail.site_id), {}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'user_requestor_detail_attributes_department_id'}} %>
-                </div>
-             </div>
-              <div class="col-span-3 sm:col-span-3">
-                <div class="form-group">
-                  <%= requestor_detail.label :department_id, class: 'text-blueCoral' %>
-                  <%= requestor_detail.select :department_id, options_from_collection_for_select(departments, :id, :name, requestor.requestor_detail.department_id), {}, {disabled: @field_disabled, class: 'form-select'} %>
-                </div>
+              <div class="col-span-6 sm:col-span-6 lg:col-span-4">
+                <fieldset class="space-y-5">
+                  <legend class="sr-only">Requestor Permissions</legend>
+                  <div class="relative flex items-start">
+                    <div class="flex h-5 items-center">
+                      <%= requestor_detail.check_box :allow_offsite, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>  
+                    </div>
+                    <div class="ml-3 text-sm">
+                      <%= requestor_detail.label :allow_offsite, class:"font-medium text-gray-700" %>
+                      <p id="book_offsite" class="text-gray-500">This requestor can book offsite appointments.</p>
+                    </div> 
+                  </div>
+                  <div class="relative flex items-start">
+                    <div class="flex h-5 items-center">
+                      <%= requestor_detail.check_box :allow_view_docs, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+                    </div>
+                    <div class="ml-3 text-sm">
+                      <%= requestor_detail.label :allow_view_docs, class:"font-medium text-gray-700" %>
+                      <p id="view_docs" class="text-gray-500">This requestor can view interpreter documents.</p>
+                    </div>
+                  </div>
+                  <div class="relative flex items-start">
+                    <div class="flex h-5 items-center">
+                      <%= requestor_detail.check_box :allow_view_checklist, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+                    </div>
+                    <div class="ml-3 text-sm">
+                      <%= requestor_detail.label :allow_view_checklist, class:"font-medium text-gray-700" %>
+                      <p id="view_checklist" class="text-gray-500">This requestor can view checklist items.</p>
+                    </div>
+                  </div>
+                </fieldset>
               </div>
             </div>
-
-            <div class="col-span-6 sm:col-span-6 lg:col-span-4">
-            <fieldset class="space-y-5">
-              <legend class="sr-only">Requestor Permissions</legend>
-              <div class="relative flex items-start">
-                <div class="flex h-5 items-center">
-                  <%= requestor_detail.check_box :allow_offsite, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>  
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= requestor_detail.label :allow_offsite, class:"font-medium text-gray-700" %>
-                  <p id="book_offsite" class="text-gray-500">This requestor can book offsite appointments.</p>
-                </div> 
-              </div>
-              <div class="relative flex items-start">
-                <div class="flex h-5 items-center">
-                  <%= requestor_detail.check_box :allow_view_docs, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= requestor_detail.label :allow_view_docs, class:"font-medium text-gray-700" %>
-                  <p id="view_docs" class="text-gray-500">This requestor can view interpreter documents.</p>
-                </div>
-              </div>
-              <div class="relative flex items-start">
-                  <div class="flex h-5 items-center">
-                    <%= requestor_detail.check_box :allow_view_checklist, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
-                  </div>
-                  <div class="ml-3 text-sm">
-                    <%= requestor_detail.label :allow_view_checklist, class:"font-medium text-gray-700" %>
-                    <p id="view_checklist" class="text-gray-500">This requestor can view checklist items.</p>
-                  </div>
-              </div>
-            </fieldset>
-          </div>
-            </div>
-            
-            <% end %>
-            <br>
-            
-           
-          </div>
-          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <%# form.submit "Create Requestor", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <% if form.object.new_record? %>
-                  <%= link_to t("cancel"), requestors_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <% else %>
-                  <%= link_to t("cancel"), requestor_path(@requestor), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <% end %>
-          </div>
-        </div> 
-      </div>
-    
-</div>
+          <% end %>
+          <br>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+          <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% if form.object.new_record? %>
+            <%= link_to t("cancel"), requestors_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% else %>
+            <%= link_to t("cancel"), requestor_path(@requestor), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% end %>
+        </div>
+      </div> 
+    </div>
+  </div>
 <% end %>
 </div>
