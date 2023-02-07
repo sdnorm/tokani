@@ -67,7 +67,19 @@ class SitesController < ApplicationController
     render layout: nil
   end
 
+  def dropdown_for_reports
+    @customer_id = params[:agency_customer_id]
+    @sites = current_account.account_sites.where(customer_id: @customer_id).order("name ASC")
+    render layout: nil
+  end
+
   def departments_dropdown
+    site_ids = (params[:site_ids] || "").split(",")
+    @departments = Department.where(site_id: site_ids).order("name ASC")
+    render layout: nil
+  end
+
+  def departments_dropdown_for_reports
     site_ids = (params[:site_ids] || "").split(",")
     @departments = Department.where(site_id: site_ids).order("name ASC")
     render layout: nil

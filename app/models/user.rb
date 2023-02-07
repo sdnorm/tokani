@@ -107,4 +107,8 @@ class User < ApplicationRecord
   def interpreter_detail_filled_out?
     interpreter_detail.present?
   end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

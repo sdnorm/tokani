@@ -6,6 +6,7 @@ class ReportService
   def fetch_appointments
     scope = Appointment
 
+    scope = filter_by_account(scope)
     scope = filter_by_status(scope)
     scope = filter_by_date(scope)
     scope = filter_by_modality(scope)
@@ -13,11 +14,18 @@ class ReportService
     scope = filter_by_site(scope)
     scope = filter_by_department(scope)
     scope = filter_by_language(scope)
-    filter_by_agency_customer(scope)
+    filter_by_customer(scope)
+  end
+
+  def filter_by_account(scope)
+    scope.where(agency_id: @report.account_id)
   end
 
   def filter_by_status(scope)
-    scope.where(status: Appointment.statuses["exported"])
+    # scope.where(status: Appointment.statuses["exported"])
+
+    scope.joins(:appointment_statuses)
+      .where(appointment_statuses: {current: true, name: AppointmentStatus.names["exported"]})
   end
 
   def filter_by_date(scope)
@@ -58,10 +66,10 @@ class ReportService
     scope.where(language_id: @report.language_id)
   end
 
-  def filter_by_agency_customer(scope)
-    return scope if @report.agency_customers.empty?
+  def filter_by_customer(scope)
+    return scope if @report.customers.empty?
 
-    scope.joins(:agency_customer)
-      .where(agency_customer: {id: @report.agency_customers.collect(&:id)})
+    scope.joins(:customer)
+      .where(customer: {id: @report.customers.collect(&:id)})
   end
 end
