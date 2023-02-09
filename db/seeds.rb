@@ -74,21 +74,21 @@ CustomerCategory.create([
     telephone_prefix: "T",
     video_prefix: "VX",
     is_active: true
-  },  
+  },
   {
     display_value: "Nationwide Childrens",
     appointment_prefix: "M",
     telephone_prefix: "T",
     video_prefix: "VM",
     is_active: true
-  }, 
+  },
   {
     display_value: "OhioHealth",
     appointment_prefix: "M",
     telephone_prefix: "T",
     video_prefix: "VM",
     is_active: true
-  }, 
+  },
   {
     display_value: "JFS",
     appointment_prefix: "S",
@@ -156,7 +156,7 @@ puts "*************** creating Appointments ***************"
     notes: Faker::Lorem.sentence,
     ref_number: Faker::Invoice.reference,
     language_id: Language.first.id,
-    modality: ["in_person", "phone", "video"].sample,
+    modality: ["in_person", "phone", "video"].sample
   )
 end
 
