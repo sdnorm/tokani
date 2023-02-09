@@ -74,33 +74,21 @@ CustomerCategory.create([
     telephone_prefix: "T",
     video_prefix: "VX",
     is_active: true
-<<<<<<< HEAD
   },
-=======
-  },  
->>>>>>> 0c12bc2 (updated seed data with new associations and requirements)
   {
     display_value: "Nationwide Childrens",
     appointment_prefix: "M",
     telephone_prefix: "T",
     video_prefix: "VM",
     is_active: true
-<<<<<<< HEAD
   },
-=======
-  }, 
->>>>>>> 0c12bc2 (updated seed data with new associations and requirements)
   {
     display_value: "OhioHealth",
     appointment_prefix: "M",
     telephone_prefix: "T",
     video_prefix: "VM",
     is_active: true
-<<<<<<< HEAD
   },
-=======
-  }, 
->>>>>>> 0c12bc2 (updated seed data with new associations and requirements)
   {
     display_value: "JFS",
     appointment_prefix: "S",
