@@ -74,7 +74,11 @@ CustomerCategory.create([
     telephone_prefix: "T",
     video_prefix: "VX",
     is_active: true
+<<<<<<< HEAD
   },
+=======
+  },  
+>>>>>>> 0c12bc2 (updated seed data with new associations and requirements)
   {
     display_value: "Nationwide Childrens",
     appointment_prefix: "M",
@@ -88,11 +92,11 @@ CustomerCategory.create([
     telephone_prefix: "T",
     video_prefix: "VM",
     is_active: true
+<<<<<<< HEAD
   },
+=======
+  }, 
   {
-    display_value: "JFS",
-    appointment_prefix: "S",
-    telephone_prefix: "T",
     video_prefix: "VS",
     is_active: true
   },
