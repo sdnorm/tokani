@@ -74,11 +74,11 @@ class FillRateReportService
   end
 
   def filled_total
-    fetch_appointments.select { |a| ((a.cancel_type != 'requestor') && a.interpreter_id.present?) }.count
+    fetch_appointments.count { |a| ((a.cancel_type != "requestor") && a.interpreter_id.present?) }
   end
 
   def not_filled_total
-    fetch_appointments.select { |a| ((a.cancel_type != 'requestor') && a.interpreter_id.blank?) }.count
+    fetch_appointments.count { |a| ((a.cancel_type != "requestor") && a.interpreter_id.blank?) }
   end
 
   def percentage_filled

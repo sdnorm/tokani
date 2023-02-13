@@ -50,9 +50,9 @@ class Report < ApplicationRecord
 
   def fetch_appointments
     case report_type
-    when 'financial'
+    when "financial"
       report_service = ReportService.new(self)
-    when 'fill_rate'
+    when "fill_rate"
       report_service = FillRateReportService.new(self)
     end
     report_service.fetch_appointments
@@ -73,14 +73,13 @@ class Report < ApplicationRecord
       csv << csv_headers
 
       case report_type
-      when 'financial'
+      when "financial"
         fetch_appointments.each do |appt|
           csv << fields_to_add(appt)
         end
-      when 'fill_rate'
+      when "fill_rate"
         csv << fill_rate_report_fields_to_add
       end
-
     end
   end
 
@@ -88,9 +87,9 @@ class Report < ApplicationRecord
     headers = []
 
     case report_type
-    when 'financial'
+    when "financial"
       fields_for_reports = reportable_fields
-    when 'fill_rate'
+    when "fill_rate"
       fields_for_reports = fill_rate_reportable_fields
     end
 
@@ -103,7 +102,7 @@ class Report < ApplicationRecord
 
   def fields_to_add(appt)
     case report_type
-    when 'financial'
+    when "financial"
       financial_report_fields_to_add(appt)
     end
   end

@@ -38,8 +38,7 @@ module ReportsHelper
      "net-requests" => "Net Requests (total appointments - total cancels)",
      "filled-total" => "Filled Total (net requests assigned an interpreter)",
      "not-filled-total" => "Total Not Filled (net requests not assigned an interpreter)",
-     "percentage-filled" => "Percentage Filled"
-   }
+     "percentage-filled" => "Percentage Filled"}
   end
 
   def interperter_type_options
@@ -49,9 +48,8 @@ module ReportsHelper
 
   def fill_rate_report_type_options
     [["Please Select a Type of Fill Rate Report", ""],
-     ['Customer', 'customer'],
-     ['Interpreter', 'interpreter'],
-     ['Language', 'language']]
+      ["Customer", "customer"],
+      ["Interpreter", "interpreter"],
+      ["Language", "language"]]
   end
-
 end
