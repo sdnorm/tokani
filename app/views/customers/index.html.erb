@@ -51,16 +51,16 @@
                           <%= link_to customer.name, customer_path(customer) %>
                           <dl class="font-normal lg:hidden">
                             <dt class="sr-only">Contact Name</dt>
-                            <dd class="mt-1 truncate text-gray-700"><%= customer.customer_detail.contact_name %></dd>
+                            <dd class="mt-1 truncate text-gray-700"><%= customer.customer_detail&.contact_name %></dd>
                             <dt class="sr-only">Contact Phone</dt>
-                            <dd class="mt-1 truncate text-gray-700"><%=  customer.customer_detail.phone %></dd>
+                            <dd class="mt-1 truncate text-gray-700"><%=  customer.customer_detail&.phone %></dd>
                             <dt class="sr-only">Email</dt>
-                            <dd class="mt-1 truncate text-gray-500"><%= customer.customer_detail.email %></dd>
+                            <dd class="mt-1 truncate text-gray-500"><%= customer.customer_detail&.email %></dd>
                           </dl>
                         </td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.contact_name %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.phone %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail.email %></td>
+                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.contact_name %></td>
+                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.phone %></td>
+                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.email %></td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(customer.is_active) %></td>
                       </tr>
                     <% end %>

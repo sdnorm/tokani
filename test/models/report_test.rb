@@ -15,7 +15,9 @@
 #  updated_at           :datetime         not null
 #  account_id           :uuid
 #  customer_category_id :integer
+#  customer_id          :uuid
 #  department_id        :uuid
+#  interpreter_id       :uuid
 #  language_id          :integer
 #  site_id              :uuid
 #
