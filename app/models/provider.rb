@@ -28,9 +28,9 @@
 #  fk_rails_...  (site_id => sites.id)
 #
 class Provider < ApplicationRecord
-  belongs_to :site, optional: true
-  belongs_to :department, optional: true
-  belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
+  belongs_to :site, optional: true#, dependent: :destroy
+  belongs_to :department, optional: true#, dependent: :destroy
+  belongs_to :customer, class_name: "Account", foreign_key: "customer_id", dependent: :destroy
   has_many :appointments
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_prepend_later_to :providers, partial: "providers/index", locals: {provider: self} }
