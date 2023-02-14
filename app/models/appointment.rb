@@ -92,7 +92,7 @@ class Appointment < ApplicationRecord
   enum modality: {in_person: 1, phone: 2, video: 3}
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
-  
+
   attr_accessor :interpreter_req_ids
 
   before_create :gen_refnum
