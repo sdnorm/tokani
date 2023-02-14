@@ -76,7 +76,7 @@ class User < ApplicationRecord
   has_one :requestor_detail, dependent: :destroy, foreign_key: :requestor_id, inverse_of: :requestor, autosave: true
   has_one :interpreter_detail, foreign_key: :interpreter_id, dependent: :destroy, inverse_of: :interpreter, autosave: true
   has_many :appointments, foreign_key: :interpreter_id
-  has_many :requested_interpreters, foreign_key: 'user_id'
+  has_many :requested_interpreters, foreign_key: "user_id"
 
   has_many :interpreter_specialties, dependent: :destroy, foreign_key: :interpreter_id
   has_many :specialties, through: :interpreter_specialties

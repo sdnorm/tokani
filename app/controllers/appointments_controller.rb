@@ -15,21 +15,20 @@ class AppointmentsController < ApplicationController
     # Uncomment to authorize with Pundit
     # authorize @appointments
   end
-   def interpreter_requests
+
+  def interpreter_requests
     @requested_interpreters = @appointment.requested_interpreters
     @language_id = @appointment.language.id
-    @specialties = Specialty.active.order('name ASC')
+    @specialties = Specialty.active.order("name ASC")
 
-   #this is to set the radio button correctly on interpreter_request fields
+    # this is to set the radio button correctly on interpreter_request fields
     @general_int_requested = @appointment.requested_interpreters.empty?
     @specific_int_requested = !@general_int_requested
-
   end
 
   # GET /appointments/1 or /appointments/1.json
   def show
-    #@appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
-   
+    # @appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
   end
 
   # GET /appointments/new
@@ -83,7 +82,6 @@ class AppointmentsController < ApplicationController
     @requested_interpreters = @appointment.offered_interpreters
     @general_int_requested = @appointment.requested_interpreters.empty?
     @specific_int_requested = !@general_int_requested
-    
   end
 
   # POST /appointments or /appointments.json
@@ -109,9 +107,9 @@ class AppointmentsController < ApplicationController
   def update
     int_type_requested = params[:interpreter_reqs]
 
-    if int_type_requested == 'specific'
+    if int_type_requested == "specific"
       @appointment.gender_req = nil
-      @appointment.interpreter_type = 'none'
+      @appointment.interpreter_type = "none"
     end
     respond_to do |format|
       if @appointment.update(appointment_params)
@@ -183,7 +181,6 @@ class AppointmentsController < ApplicationController
       :requestor_id,
       :creator_id,
       interpreter_req_ids: []
-
     )
 
     # Uncomment to use Pundit permitted attributes
