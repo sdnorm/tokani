@@ -1,0 +1,9 @@
+<% if @interpreters.empty? %>
+  <li role="option" aria-disabled="true">No Results Found.  Did you select a language?</li>
+<% else %>
+
+  <% @interpreters.each do |req| %>
+    <li class="list-group-item list-none pl-3" role="option" data-autocomplete-value="<%= req.id %>"><%= req.full_name %> </li>
+  <% end %>
+
+<% end %>

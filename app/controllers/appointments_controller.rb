@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests]
 
   before_action :authenticate_user!
   before_action :set_account
@@ -15,9 +15,21 @@ class AppointmentsController < ApplicationController
     # Uncomment to authorize with Pundit
     # authorize @appointments
   end
+   def interpreter_requests
+    @requested_interpreters = @appointment.requested_interpreters
+    @language_id = @appointment.language.id
+    @specialties = Specialty.active.order('name ASC')
+
+   #this is to set the radio button correctly on interpreter_request fields
+    @general_int_requested = @appointment.requested_interpreters.empty?
+    @specific_int_requested = !@general_int_requested
+
+  end
 
   # GET /appointments/1 or /appointments/1.json
   def show
+    #@appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
+   
   end
 
   # GET /appointments/new
@@ -33,7 +45,8 @@ class AppointmentsController < ApplicationController
     @account_customers = current_account.customers
     @customer = Customer.find(params[:customer_id])
     @sites = @customer.sites.order("name ASC")
-    @departments = []
+    @departments = Department.where(site_id: @sites.pluck(:id)).order("name ASC")
+    @departments || []
 
     @languages = current_account.account_languages
 
@@ -42,6 +55,8 @@ class AppointmentsController < ApplicationController
     @requestors = User.where(id: requestor_ids)
     @providers = @customer.providers
     @recipients = @customer.recipients
+    @general_int_requested = true
+    @specific_int_requested = !@general_int_requested
   end
 
   # GET /appointments/1/edit
@@ -64,6 +79,11 @@ class AppointmentsController < ApplicationController
 
     @providers = @customer.providers
     @recipients = @customer.recipients
+
+    @requested_interpreters = @appointment.offered_interpreters
+    @general_int_requested = @appointment.requested_interpreters.empty?
+    @specific_int_requested = !@general_int_requested
+    
   end
 
   # POST /appointments or /appointments.json
@@ -87,6 +107,12 @@ class AppointmentsController < ApplicationController
 
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
+    int_type_requested = params[:interpreter_reqs]
+
+    if int_type_requested == 'specific'
+      @appointment.gender_req = nil
+      @appointment.interpreter_type = 'none'
+    end
     respond_to do |format|
       if @appointment.update(appointment_params)
         format.html { redirect_to @appointment, notice: "Appointment was successfully updated." }
@@ -154,7 +180,10 @@ class AppointmentsController < ApplicationController
       :provider_id,
       :recipient_id,
       :language_id,
-      :requestor_id
+      :requestor_id,
+      :creator_id,
+      interpreter_req_ids: []
+
     )
 
     # Uncomment to use Pundit permitted attributes

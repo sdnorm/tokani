@@ -15,6 +15,30 @@ class InterpretersController < ApplicationController
     # authorize @interpreters
   end
 
+  def search
+
+    #we need to tie language into this search criteria eventually
+    name_query = params[:q]
+    name_query = "%#{name_query}%"
+
+    language_id = params[:language_id]
+
+    modality = params[:modality]
+
+    # if name_query.blank? || language_id.blank?
+    if name_query.blank? 
+      @interpreters = []
+    else
+      # @interpreters = Interpreter.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
+      @interpreters = current_account.interpreters
+      @interpreters = @interpreters.where('last_name ilike ? or first_name ilike ?', name_query, name_query)
+    end
+
+    respond_to do |format|
+      format.html { render partial: 'search_results' }
+    end
+  end
+
   def new
     @interpreter = User.new
     @interpreter.build_interpreter_detail

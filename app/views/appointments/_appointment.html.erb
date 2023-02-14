@@ -6,12 +6,20 @@
         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.ref_number %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Status</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.status.titleize %></dd>
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Start Time</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.start_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+          <% if appointment.start_time.present? %>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.start_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+          <% end %>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Finish Time</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.finish_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+          <% if appointment.finish_time.present? %>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.finish_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+          <% end %>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Duration</dt>
@@ -64,6 +72,28 @@
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Admin Notes</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.admin_notes %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Gender Request</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.gender_req.titleize unless appointment.gender_req.nil? %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Appointment Viewable To:</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.interpreter_type.titleize unless appointment.interpreter_type.nil? %></dd>   
+      </div>
+      <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+        <dt class="text-sm font-medium text-tokanisecondary-600">Requested Interpreters</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <% if appointment.requested_interpreters.any? %>
+            <% appointment.offered_interpreters.each do |req_int| %>
+              <%= req_int.full_name %>
+              <br>
+            <% end %>
+          <% else %>
+            <p>No interpreters requested.</p>
+          <br>    
+        <% end %>  
+      </dd> 
       </div>
       
     </dl>

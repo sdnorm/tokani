@@ -76,6 +76,8 @@ class Appointment < ApplicationRecord
   has_many :appointment_statuses, dependent: :destroy
   has_many :billing_line_items, dependent: :destroy
   has_many :payment_line_items, dependent: :destroy
+  has_many :requested_interpreters, dependent: :destroy
+  has_many :offered_interpreters, through: :requested_interpreters, foreign_key: 'user_id', source: :interpreter
 
   belongs_to :language
   belongs_to :agency, class_name: "Account"
@@ -91,8 +93,13 @@ class Appointment < ApplicationRecord
 
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
+  enum interpreter_type: { admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5 }, _suffix: 'itype_filter'
+
+  attr_accessor :interpreter_req_ids
 
   before_create :gen_refnum
+  after_create :create_offers
+  after_update :update_offers
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
@@ -103,6 +110,92 @@ class Appointment < ApplicationRecord
     appointment_number = Appointment.where("created_at >= :date", date: "#{my_year}-01-01").count
     final_num = (appointment_number + 1).to_s.rjust(3, "0")
     self.ref_number = "#{category_code}-#{year_code}-#{final_num}"
+  end
+
+  def create_status_for_new_appt
+    status_check =  AppointmentStatus.where(appointment_id: self.id)
+   if status_check.empty?
+    AppointmentStatus.create!(name: "created", user_id: self.creator_id, appointment_id: self.id)
+   end
+   return
+  
+  end
+
+  def create_offers
+    create_status_for_new_appt
+    #shortcircuit for no requesting ids
+    return true if self.interpreter_req_ids.blank? || self.interpreter_req_ids.class != Array
+    return true if self.interpreter_req_ids.compact_blank.empty?
+
+    offered = false
+    self.interpreter_req_ids.uniq.each do |int_req_id|
+      new_int_req = RequestedInterpreter.new(user_id: int_req_id, appointment_id: self.id)
+      
+      begin
+        offered = new_int_req.save! || offered
+      rescue StandardError => e
+        self.errors.add(:base, 'Something went wrong with creating an offer')
+        logger.info "Failed creation of offer to IntID: #{int_req_id} to #{self.id}.  Error: #{e}"
+        throw ActiveRecord::RecordInvalid
+      end
+    end
+
+    if offered
+      new_apt_status = AppointmentStatus.new(user_id: self.creator_id, appointment_id: self.id, name: "offered")
+
+      begin
+        new_apt_status.save! 
+      rescue StandardError => e
+        self.errors.add(:base, 'Something went wrong with creating an offered status')
+        logger.info "Failed creation of appt status: #{self.creator_id} to #{self.id}.  Error: #{e}"
+        throw ActiveRecord::RecordInvalid
+      end
+
+    end
+    
+  end
+
+  def update_offers
+
+    # An empty array causes a delete, but nil, does nothing
+    return true if self.interpreter_req_ids.nil? || self.interpreter_req_ids == '' || self.interpreter_req_ids.class != Array
+
+    current_offer_int_ids = self.requested_interpreters.map(&:user_id)
+    new_offer_int_ids = self.interpreter_req_ids.compact_blank.uniq
+
+    # Nothing to do here....
+    return true if current_offer_int_ids.blank? && new_offer_int_ids.blank?
+
+    offers_to_add_by_int = new_offer_int_ids - current_offer_int_ids
+    offers_to_remove_by_int_id = current_offer_int_ids - new_offer_int_ids
+
+    removed_offers = RequestedInterpreter.where(user_id: offers_to_remove_by_int_id)
+    RequestedInterpreter.destroy(removed_offers.map(&:id))
+
+    offers_to_add_by_int.each do |int_req_id|
+      new_int_req = RequestedInterpreter.new(user_id: int_req_id, appointment_id: self.id)
+      begin
+        offered ||= new_int_req.save!
+      rescue StandardError => e
+        self.errors.add(:base, 'Something went wrong with creating an offer')
+        logger.info "Failed creation of offer to IntID: #{int_req_id} to #{self.id}.  Error: #{e}"
+        throw ActiveRecord::RecordInvalid
+      end
+    end
+
+    if offers_to_add_by_int.empty? && !offers_to_remove_by_int_id.empty? && ((current_offer_int_ids - offers_to_remove_by_int_id == []))
+      #changing appointment status back to created - check to make sure no other state would be more appropriate (NW)
+      new_apt_status = AppointmentStatus.new(user_id: self.creator_id, appointment_id: self.id, name: "created")
+    else
+      new_apt_status = AppointmentStatus.new(user_id: self.creator_id, appointment_id: self.id, name: "offered")
+    end
+    begin
+      new_apt_status.save! 
+    rescue StandardError => e
+      self.errors.add(:base, 'Something went wrong with creating an offered status')
+      logger.info "Failed creation of appt status: #{self.creator_id} to #{self.id}.  Error: #{e}"
+      throw ActiveRecord::RecordInvalid
+    end
   end
 
   def status

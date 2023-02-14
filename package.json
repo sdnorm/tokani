@@ -29,6 +29,7 @@
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "slim-select": "2.3.3",
+    "stimulus-autocomplete": "^3.0.2",
     "stimulus-flatpickr": "^3.0.0-0",
     "stimulus-password-visibility": "^2.1.1",
     "tailwindcss": "^3.2.4",
