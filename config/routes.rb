@@ -206,9 +206,17 @@ Rails.application.routes.draw do
     # Alternate route to use if logged in users should still see public root
     # get "/dashboard", to: "dashboard#show", as: :user_root
     # resources :accounts do
-    resources :appointments
+    resources :appointments do
+      member do
+        get :interpreter_requests
+      end
+    end
     resources :customers
-    resources :interpreters
+    resources :interpreters do
+      collection do
+        get :search
+      end
+    end
     resources :requestors
     # end
   end

@@ -6,4 +6,16 @@ module AppointmentsHelper
   def appt_modality_options
     Appointment.modalities.to_a.map { |entry| [entry[0].titleize, entry[0]] }
   end
+
+  def interpreter_filter_options
+    [
+      %w[Everyone all],
+      ["Only Admin Staff", "admin"],
+      ["Only Agency Interpreters", "agency"],
+      ["Only Staff Interpreters", "staff"],
+      ["Only Volunteer Interpreters", "volunteer"],
+      ["Only Independent Contractors", "independent_contractor"],
+      %w[None none]
+    ]
+  end
 end

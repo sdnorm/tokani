@@ -21,8 +21,8 @@
           
 
                 <div class="p-8 bg-white rounded shadow">
-                  <%= render @appointment %>
-                  <%# render partial: 'customer', locals: { customer: @customer } %>
+                  <%# render @appointment,locals: { appt_status: @appt_status } %>
+                  <%= render partial: 'appointment', locals: { appointment: @appointment, appt_status: @appt_status } %>
                 </div>
             </div>
           </div>
