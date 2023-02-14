@@ -15,7 +15,9 @@
 #  updated_at           :datetime         not null
 #  account_id           :uuid
 #  customer_category_id :integer
+#  customer_id          :uuid
 #  department_id        :uuid
+#  interpreter_id       :uuid
 #  language_id          :integer
 #  site_id              :uuid
 #
@@ -33,15 +35,26 @@ class Report < ApplicationRecord
 
   serialize :fields_to_show, Array
 
+  # Financial Report Fields
   has_many :report_customers, dependent: :destroy
   has_many :customers, through: :report_customers, validate: false, class_name: "Account", foreign_key: :account_id
+
+  # Fill Rate Report Fields
+  belongs_to :customer, optional: true, class_name: "Account"
+  belongs_to :interpreter, optional: true, class_name: "User"
+  belongs_to :language, optional: true
 
   enum report_type: {financial: 0, fill_rate: 1}
 
   attr_accessor :show_fields
 
   def fetch_appointments
-    report_service = ReportService.new(self)
+    case report_type
+    when "financial"
+      report_service = ReportService.new(self)
+    when "fill_rate"
+      report_service = FillRateReportService.new(self)
+    end
     report_service.fetch_appointments
   end
 
@@ -58,22 +71,45 @@ class Report < ApplicationRecord
   def to_csv
     CSV.generate do |csv|
       csv << csv_headers
-      fetch_appointments.each do |appt|
-        csv << fields_to_add(appt)
+
+      case report_type
+      when "financial"
+        fetch_appointments.each do |appt|
+          csv << fields_to_add(appt)
+        end
+      when "fill_rate"
+        csv << fill_rate_report_fields_to_add
       end
     end
   end
 
   def csv_headers
     headers = []
+
+    case report_type
+    when "financial"
+      fields_for_reports = reportable_fields
+    when "fill_rate"
+      fields_for_reports = fill_rate_reportable_fields
+    end
+
     fields_to_show.each do |appt_field|
-      headers << reportable_fields[appt_field] if reportable_fields[appt_field]
+      headers << fields_for_reports[appt_field] if fields_for_reports[appt_field]
     end
 
     headers
   end
 
   def fields_to_add(appt)
+    case report_type
+    when "financial"
+      financial_report_fields_to_add(appt)
+    end
+  end
+
+  private
+
+  def financial_report_fields_to_add(appt)
     fields = []
     fields_to_show.each do |appt_field|
       case appt_field
@@ -119,6 +155,35 @@ class Report < ApplicationRecord
         fields << "TODO"
       when "profit-margin"
         fields << "TODO"
+      end
+    end
+
+    fields
+  end
+
+  def fill_rate_report_fields_to_add
+    service = FillRateReportService.new(self)
+    fields = []
+    fields_to_show.each do |appt_field|
+      case appt_field
+      when "customer-name"
+        fields << customer&.name
+      when "language"
+        fields << language&.name
+      when "interpreter-name"
+        fields << interpreter&.name
+      when "appointments-total"
+        fields << service.total
+      when "cancels-total"
+        fields << service.cancels_total
+      when "net-requests"
+        fields << service.net_requests
+      when "filled-total"
+        fields << service.filled_total
+      when "not-filled-total"
+        fields << service.not_filled_total
+      when "percentage-filled"
+        fields << "#{service.percentage_filled}%"
       end
     end
 

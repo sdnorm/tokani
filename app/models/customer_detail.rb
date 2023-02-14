@@ -13,11 +13,17 @@
 #  phone                  :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  customer_category_id   :bigint
 #  customer_id            :uuid             not null
 #
 # Indexes
 #
-#  index_customer_details_on_customer_id  (customer_id)
+#  index_customer_details_on_customer_category_id  (customer_category_id)
+#  index_customer_details_on_customer_id           (customer_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (customer_category_id => customer_categories.id)
 #
 class CustomerDetail < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
@@ -28,4 +34,17 @@ class CustomerDetail < ApplicationRecord
   validates :contact_name, :email, presence: true
   belongs_to :customer_category
   belongs_to :customer, class_name: "Account", foreign_key: "customer_id", inverse_of: :customer_detail
+
+  # move to job so it retries
+  def create_user_and_owner
+    User.create(
+      name: contact_name,
+      email: email,
+      password: Secure.random.hex(10),
+      password_confirmation: "password",
+      account: customer,
+      owner: true,
+      terms_of_service: true
+    )
+  end
 end

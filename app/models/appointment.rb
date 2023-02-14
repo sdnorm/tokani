@@ -6,7 +6,6 @@
 #  admin_notes              :text
 #  billing_notes            :text
 #  cancel_reason_code       :integer
-#  cancel_type              :integer
 #  canceled_by              :integer
 #  cancelled_at             :datetime
 #  confirmation_date        :datetime
@@ -51,7 +50,6 @@
 #  index_appointments_on_customer_id     (customer_id)
 #  index_appointments_on_department_id   (department_id)
 #  index_appointments_on_interpreter_id  (interpreter_id)
-#  index_appointments_on_language_id     (language_id)
 #  index_appointments_on_provider_id     (provider_id)
 #  index_appointments_on_recipient_id    (recipient_id)
 #  index_appointments_on_requestor_id    (requestor_id)
@@ -59,7 +57,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (department_id => departments.id)
-#  fk_rails_...  (language_id => languages.id)
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (recipient_id => recipients.id)
 #  fk_rails_...  (requestor_id => users.id)
@@ -94,7 +91,8 @@ class Appointment < ApplicationRecord
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
-
+  enum cancel_type: {agency: 0, requestor: 1}
+  
   attr_accessor :interpreter_req_ids
 
   before_create :gen_refnum
