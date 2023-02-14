@@ -38,7 +38,7 @@ class Site < ApplicationRecord
   validates :account_id, presence: true
   validates :customer_id, presence: true
 
-  belongs_to :account
+  belongs_to :account, dependent: :destroy
   belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
   has_many :departments
   has_many :providers

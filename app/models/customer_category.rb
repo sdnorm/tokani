@@ -44,6 +44,6 @@ class CustomerCategory < ApplicationRecord
       return video_prefix
     end
 
-    raise StandardError("unknown modality")
+    raise StandardError, "unknown modality"
   end
 end

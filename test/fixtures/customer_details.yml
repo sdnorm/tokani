@@ -13,11 +13,17 @@
 #  phone                  :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  customer_category_id   :bigint
 #  customer_id            :uuid             not null
 #
 # Indexes
 #
-#  index_customer_details_on_customer_id  (customer_id)
+#  index_customer_details_on_customer_category_id  (customer_category_id)
+#  index_customer_details_on_customer_id           (customer_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (customer_category_id => customer_categories.id)
 #
 
 one:
