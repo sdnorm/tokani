@@ -22,3 +22,6 @@ application.register('flatpickr', Flatpickr)
 
 import PasswordVisibility from 'stimulus-password-visibility'
 application.register('password-visibility', PasswordVisibility)
+
+// import Autocomplete from 'stimulus-autocomplete'
+// application.register('autocomplete', Autocomplete)

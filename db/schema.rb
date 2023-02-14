@@ -208,6 +208,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
     t.uuid "provider_id"
     t.uuid "recipient_id"
     t.uuid "requestor_id"
+    t.uuid "creator_id"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -675,6 +676,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
     t.uuid "interpreter_id"
   end
 
+  create_table "requested_interpreters", force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.bigint "appointment_id", null: false
+    t.boolean "rejected", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_requested_interpreters_on_appointment_id"
+    t.index ["user_id"], name: "index_requested_interpreters_on_user_id"
+  end
+
   create_table "requestor_details", force: :cascade do |t|
     t.boolean "allow_offsite"
     t.boolean "allow_view_docs"
@@ -799,6 +810,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
   add_foreign_key "providers", "departments"
   add_foreign_key "providers", "sites"
   add_foreign_key "recipients", "accounts", column: "customer_id"
+  add_foreign_key "requested_interpreters", "appointments"
+  add_foreign_key "requested_interpreters", "users"
   add_foreign_key "sites", "accounts"
   add_foreign_key "specialties", "accounts"
 end
