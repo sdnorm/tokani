@@ -1,1 +1,109 @@
-<h1>Fill Rate Report</h1>
+<%= content_for :title, "Fill Rate Report" %>
+
+<div>
+  <%= render partial: "shared/sidenav" %>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto" data-controller="fill-rate-reports">
+                <h1 class="text-xl font-semibold text-gray-900">Fill Rate Report</h1>
+
+                <%= form_with model: @report, url: "/reports", class: 'form', data: { turbo: false } do |form| %>
+                  <%= form.hidden_field :report_type %>
+
+                  <div class="grid grid-cols-2 gap-4 mt-4 mb-3 align-items-center justify-content-center">
+                    <div class="mx-3 mb-3">
+                      <div class="input-group input-group-static">
+                        Start date:
+                        <%= form.text_field :date_begin, class: "form-control", data: {controller: "flatpickr", flatpickr_enable_time: false, flatpickr_date_format: "F j, Y"} %>
+                      </div>
+                    </div>
+                    <div class="mx-3">
+                      <div class="input-group input-group-static">
+                        End date:
+                        <%= form.text_field :date_end, class: "form-control", data: {controller: "flatpickr", flatpickr_enable_time: false, flatpickr_date_format: "F j, Y"} %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="mx-3">
+                      Select Type of Fill Rate Report:
+                    </div>
+
+                    <div class="row mt-4 mb-3 justify-content-center">
+                      <%= select_tag "fill_rate_report_type", options_for_select(fill_rate_report_type_options), { data: {action: 'change->fill-rate-reports#selected' }, class: 'form-control'} %>
+                    </div>
+
+                    <div data-fill-rate-reports-target="customers" class="hidden">
+                      <div class="mx-3">
+                        Select Agency Customer:
+                      </div>
+
+                      <div class="row mt-4 mb-3 justify-content-center">
+                        <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @report.customer_id), {prompt: "Select an Agency Customer"}, {class: 'form-control'} %>
+                      </div>
+                    </div>
+
+                    <div data-fill-rate-reports-target="interpreters" class="hidden">
+                      <div class="mx-3">
+                        Select Interpreter:
+                      </div>
+
+                      <div class="row mt-4 mb-3 justify-content-center">
+                        <%= form.select :interpreter_id, options_from_collection_for_select(@interpreters, :id, :name, @report.interpreter_id), {prompt: "Select an Interpreter"}, {class: 'form-control'} %>
+                      </div>
+                    </div>
+
+                    <div data-fill-rate-reports-target="languages" class="hidden">
+                      <div class="mx-3">
+                        Select Language:
+                      </div>
+
+                      <div class="row mt-4 mb-3 justify-content-center">
+                        <%= form.select :language_id, options_from_collection_for_select(@languages, 'id', 'name'), {prompt: 'Select a Language'}, {class: 'form-select'} %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mx-3">
+                    Select fields to show on report:
+                  </div>
+                  <div class="row mt-4 mb-3 justify-content-center">
+                    <div class="col-7 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:80vh; overflow-y:auto">
+                      <% fill_rate_reportable_fields.each do |key, value| %>
+                        <div class="ml-4">
+                          <%= check_box_tag 'report[fields_to_show][]', key, false, class: "form-check-input" %>
+                          <%= value %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div data-fill-rate-reports-target="generate" class="hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                      <div class="mx-auto">
+                        <%= form.submit "Generate PDF", class: 'btn btn-secondary' %>
+                      </div>
+                      <div class="mx-auto">
+                        <%= form.submit "Generate CSV", class: 'btn btn-secondary' %>
+                      </div>
+                    </div>
+                  </div>
+
+
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<br>

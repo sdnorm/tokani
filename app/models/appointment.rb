@@ -88,6 +88,7 @@ class Appointment < ApplicationRecord
 
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
+  enum cancel_type: {agency: 0, requestor: 1}
 
   before_create :gen_refnum
 
