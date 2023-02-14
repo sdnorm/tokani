@@ -1,3 +1,4 @@
+# Financial Report Service for fetching Financial Report appointments
 class ReportService
   def initialize(report)
     @report = report
@@ -22,8 +23,6 @@ class ReportService
   end
 
   def filter_by_status(scope)
-    # scope.where(status: Appointment.statuses["exported"])
-
     scope.joins(:appointment_statuses)
       .where(appointment_statuses: {current: true, name: AppointmentStatus.names["exported"]})
   end
