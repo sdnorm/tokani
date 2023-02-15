@@ -90,6 +90,9 @@ CustomerCategory.create([
     is_active: true
   },
   {
+    display_value: "JFS",
+    appointment_prefix: "S",
+    telephone_prefix: "T",
     video_prefix: "VS",
     is_active: true
   },
