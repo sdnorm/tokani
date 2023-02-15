@@ -52,6 +52,15 @@ class InterpretersController < ApplicationController
     end
   end
 
+  def dashboard
+    @service = InterpreterDashboardService.new(current_user)
+    @in_person_stats = @service.appointment_stats_by_modality("in_person")
+    @phone_stats = @service.appointment_stats_by_modality("phone")
+    @video_stats = @service.appointment_stats_by_modality("video")
+    @appointment_status_data = @service.appointment_status_chart_data
+    @upcoming_appointments = @service.upcoming_appointments
+  end
+
   def my_scheduled
   end
 
