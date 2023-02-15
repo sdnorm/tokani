@@ -209,6 +209,10 @@ class Appointment < ApplicationRecord
     finish_time.in_time_zone(time_zone)
   end
 
+  def start_time_in_zone(zone)
+    start_time.in_time_zone(zone)
+  end
+
   def associate_rate_via_service
     service = RateDeterminationService.new(self)
     rate = service.determine_rate
