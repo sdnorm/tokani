@@ -4,9 +4,9 @@
       <div class="flex-1">
         <h3 class="text-xl font-semibold text-gray-900 text-center">In Person Appointments</h3>
         <ul role="list" class="mt-6 space-y-6">
-          <li class="text-center">per day</li>
-					<li class="text-center">per week</li>
-					<li class="text-center">per month</li>
+          <li class="text-center"><%= @in_person_stats[:today] %> today</li>
+					<li class="text-center"><%= @in_person_stats[:week] %> next seven days</li>
+					<li class="text-center"><%= @in_person_stats[:month] %> next thirty days</li>
         </ul>
       </div>
     </div>
@@ -14,9 +14,9 @@
       <div class="flex-1">
         <h3 class="text-xl font-semibold text-gray-900 text-center">Telephone Appointments</h3>
         <ul role="list" class="mt-6 space-y-6">
-          <li class="text-center">per day</li>
-					<li class="text-center">per week</li>
-					<li class="text-center">per month</li>
+          <li class="text-center"><%= @phone_stats[:today] %> today</li>
+          <li class="text-center"><%= @phone_stats[:week] %> next seven days</li>
+          <li class="text-center"><%= @phone_stats[:month] %> next thirty days</li>
         </ul>
       </div>
     </div>
@@ -24,14 +24,36 @@
       <div class="flex-1">
         <h3 class="text-xl font-semibold text-gray-900 text-center">Video Appointments</h3>
         <ul role="list" class="mt-6 space-y-6">
-          <li class="text-center">per day</li>
-					<li class="text-center">per week</li>
-					<li class="text-center">per month</li>
+          <li class="text-center"><%= @video_stats[:today] %> today</li>
+          <li class="text-center"><%= @video_stats[:week] %> next seven days</li>
+          <li class="text-center"><%= @video_stats[:month] %> next thirty days</li>
         </ul>
       </div>
     </div>
   </div>
-	<div class="mt-5">
-		<%= pie_chart [["Assigned", 55], ["Accepted", 45]] %>
-	</div>
+  <% if @appointment_status_data.any? %>
+  	<div class="mt-5">
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+      		<%= pie_chart @appointment_status_data %>
+          <br>
+          <center><small><i>Appointment status breakdown for your appointments in the month of <%= @service.current_month %>.</i></small></center>
+        </div>
+        <div>
+          <h4 class="mb-5">Upcoming Appointments <small>(next 7 days)</small></h4>
+
+          <% if @upcoming_appointments.present? %>
+            <ul>
+              <% @upcoming_appointments.each do |appt| %>
+                <li><%= link_to appointment_readable_link_title(appt, current_user), appointment_path(appt) %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p><i>No upcoming appointments in the next 7 days.</i></p>
+          <% end %>
+
+        </div>
+  	</div>
+  <% end %>
 </div>
