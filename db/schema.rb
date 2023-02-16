@@ -195,16 +195,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
     t.uuid "customer_id"
     t.boolean "processed_by_customer", default: false
     t.boolean "processed_by_interpreter", default: false
-    t.uuid "site_id"
     t.decimal "total_billed"
     t.decimal "total_paid"
     t.integer "pay_bill_config_id"
     t.integer "pay_bill_rate_id"
     t.datetime "cancelled_at"
-    t.integer "cancel_type"
     t.bigint "language_id", null: false
     t.string "video_link"
     t.uuid "department_id"
+    t.uuid "site_id"
     t.uuid "provider_id"
     t.uuid "recipient_id"
     t.uuid "requestor_id"
@@ -213,7 +212,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
-    t.index ["language_id"], name: "index_appointments_on_language_id"
     t.index ["provider_id"], name: "index_appointments_on_provider_id"
     t.index ["recipient_id"], name: "index_appointments_on_recipient_id"
     t.index ["requestor_id"], name: "index_appointments_on_requestor_id"
@@ -794,7 +792,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
   add_foreign_key "appointment_specialties", "specialties"
   add_foreign_key "appointment_statuses", "appointments"
   add_foreign_key "appointments", "departments"
-  add_foreign_key "appointments", "languages"
   add_foreign_key "appointments", "providers"
   add_foreign_key "appointments", "recipients"
   add_foreign_key "appointments", "users", column: "requestor_id"
