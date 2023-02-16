@@ -215,6 +215,7 @@ Rails.application.routes.draw do
     resources :interpreters do
       collection do
         get :search
+        get :fetch_appointments
       end
     end
     resources :requestors

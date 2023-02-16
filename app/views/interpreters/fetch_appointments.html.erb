@@ -1,0 +1,34 @@
+<table class="min-w-full divide-y divide-gray-300 border">
+  <thead class="bg-gray-50">
+    <tr>
+      <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Appointment Number</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Time</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Language</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+    </tr>
+  </thead>
+
+  <% if @appointments.present? %>
+    <% @appointments.each do |appointment| %>
+      <tbody class="<%= cycle('bg-gray-50', 'bg-white') %>">
+        <tr>
+          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to appointment.ref_number, appointment_path(appointment) %></td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= date_displayable(appointment.start_time) %></td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scheduled_time_range(appointment, current_user) %></td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= appointment&.language&.name %></td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= appointment.status.titleize %></td>
+        </tr>
+      </tbody>
+    <% end %>
+  <% else %>
+    <tbody class="bg-white">
+      <tr>
+        <td colspan="5" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 sm:pl-6">
+          <center><i>No appointments were found matching the criteria selected.</i></center>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+
+</table>
