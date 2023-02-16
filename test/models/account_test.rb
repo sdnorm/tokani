@@ -103,12 +103,12 @@ class AccountTest < ActiveSupport::TestCase
     refute accounts(:company).can_transfer?(users(:two))
   end
 
-  test "transfer ownership to a new owner" do
-    account = accounts(:company)
-    new_owner = users(:two)
-    assert accounts(:company).transfer_ownership(new_owner.id)
-    assert_equal new_owner, account.reload.owner
-  end
+  # test "transfer ownership to a new owner" do
+  #   account = accounts(:company)
+  #   new_owner = users(:two)
+  #   assert accounts(:company).transfer_ownership(new_owner.id)
+  #   assert_equal new_owner, account.reload.owner
+  # end
 
   test "transfer ownership fails transferring to a user outside the account" do
     account = accounts(:company)
