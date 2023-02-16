@@ -72,7 +72,6 @@ class AgenciesController < ApplicationController
   end
 
   def tokani_create
-    puts "HERE"
     @agency = Agency.new(agency_params) # .merge(agency: true)
     @user = User.new(user_params)
     @user.password = SecureRandom.alphanumeric

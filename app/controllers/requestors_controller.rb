@@ -51,6 +51,9 @@ class RequestorsController < ApplicationController
     @account_customers = current_account.customers
     @requestor = User.new(requestor_params)
     @requestor.terms_of_service = true
+    @requestor.password = SecureRandom.alphanumeric
+    @requestor.accepted_terms_at = Time.current
+    
     req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
 
     if req_type == "site_admin"
@@ -65,8 +68,9 @@ class RequestorsController < ApplicationController
     @requestor.skip_default_account = true
 
     respond_to do |format|
-      if @requestor.save
+      if @requestor.save!
         AccountUser.create!(account_id: current_account.id, user_id: @requestor.id, roles: req_type)
+        AgencyAdminRequestorCreationMailer.welcome(@requestor).deliver_later
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully created." }
         format.json { render :show, status: :created, location: @requestor }
       else
