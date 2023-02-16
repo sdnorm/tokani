@@ -41,10 +41,19 @@ class CustomersController < ApplicationController
     @customer_categories = CustomerCategory.order("display_value ASC")
     # Uncomment to authorize with Pundit
     # authorize @customer
-
+    @user = User.new(
+      name: params[:customer][:customer_detail_attributes][:contact_name],
+      email: params[:customer][:customer_detail_attributes][:email],
+      password: SecureRandom.alphanumeric,
+      terms_of_service: true,
+      accepted_terms_at: Time.current
+    )
+    @customer.account_users.new(user: @user)
+    # @user.save!
     respond_to do |format|
-      if @customer.save
+      if @customer.save && @user.save
         AgencyCustomer.create!(agency: current_account, customer: @customer)
+        TokaniAgencyCreationMailer.welcome(@user).deliver_later
         format.html { redirect_to @customer, notice: "Customer was successfully created." }
         format.json { render :show, status: :created, location: @customer }
       else
