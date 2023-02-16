@@ -33,6 +33,7 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
+#  creator_id               :uuid
 #  customer_id              :uuid
 #  department_id            :uuid
 #  interpreter_id           :uuid
