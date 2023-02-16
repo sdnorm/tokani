@@ -122,7 +122,7 @@ module ApplicationHelper
     end
   end
 
-	def accounting_highlight?
+  def accounting_highlight?
     if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients"
       highlighted
     else

@@ -96,11 +96,11 @@ class AgenciesController < ApplicationController
     end
   end
 
-	def account_invoices
-	end
+  def account_invoices
+  end
 
-	def account_process_invoices
-	end
+  def account_process_invoices
+  end
 
   private
 
