@@ -53,7 +53,7 @@ class RequestorsController < ApplicationController
     @requestor.terms_of_service = true
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
-    
+
     req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
 
     if req_type == "site_admin"
