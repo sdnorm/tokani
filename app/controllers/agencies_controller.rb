@@ -96,6 +96,12 @@ class AgenciesController < ApplicationController
     end
   end
 
+	def account_invoices
+	end
+
+	def account_process_invoices
+	end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

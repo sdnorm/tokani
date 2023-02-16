@@ -221,6 +221,9 @@ Rails.application.routes.draw do
     # end
   end
 
+	get "agencies/accounting/process_invoices", to: "agencies#account_process_invoices"
+	get "agencies/accounting/invoices", to: "agencies#account_invoices"
+
   # Public marketing homepage
   root to: "static#index"
 end

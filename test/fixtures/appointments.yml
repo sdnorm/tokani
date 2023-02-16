@@ -6,6 +6,7 @@
 #  admin_notes              :text
 #  billing_notes            :text
 #  cancel_reason_code       :integer
+#  cancel_type              :integer
 #  canceled_by              :integer
 #  cancelled_at             :datetime
 #  confirmation_date        :datetime
@@ -33,6 +34,7 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
+#  creator_id               :uuid
 #  customer_id              :uuid
 #  department_id            :uuid
 #  interpreter_id           :uuid
@@ -50,6 +52,7 @@
 #  index_appointments_on_customer_id     (customer_id)
 #  index_appointments_on_department_id   (department_id)
 #  index_appointments_on_interpreter_id  (interpreter_id)
+#  index_appointments_on_language_id     (language_id)
 #  index_appointments_on_provider_id     (provider_id)
 #  index_appointments_on_recipient_id    (recipient_id)
 #  index_appointments_on_requestor_id    (requestor_id)
@@ -57,6 +60,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (department_id => departments.id)
+#  fk_rails_...  (language_id => languages.id)
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (recipient_id => recipients.id)
 #  fk_rails_...  (requestor_id => users.id)
