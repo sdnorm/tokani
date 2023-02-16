@@ -122,6 +122,22 @@ module ApplicationHelper
     end
   end
 
+	def accounting_highlight?
+    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients"
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def accounting_highlight_icon?
+    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients" || controller_name == "agencies"
+      highlighted_icon
+    else
+      unhighlighted_icon
+    end
+  end
+
   def highlighted
     "bg-gray-100 text-gray-900"
   end
