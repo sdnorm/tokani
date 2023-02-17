@@ -1,6 +1,26 @@
 <%= content_for :title, "Agencies" %>
 <%= turbo_stream_from :agencies %>
 
+
+<div class="flex flex-1 flex-col md:pl-64">
+	<main class="flex-1">
+	  <div class="py-6">
+  
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+		  <div class="px-4 sm:px-6 lg:px-6">
+			<div class="sm:flex sm:items-center pb-6">
+				<div class="sm:flex-auto"> 
+				  <h1 class="text-xl font-semibold text-gray-900">
+				   <span class="text-tokanisecondary-500">
+					<%= current_user.full_name %>
+					</span>
+					<span class="text-tokaniprimary-600 font-light mx-2">/ Dashboard</span>    
+				  </h1>
+				</div>      
+			  </div>
+		  <div class="p-8 bg-white rounded shadow">
+		  <div class="px-4 sm:px-6 lg:px-8 container">
+
 <div class="container px-4 mx-auto my-8">
   <div class="flex items-center justify-between mb-4">
     <div>
@@ -30,4 +50,11 @@
       <%== pagy_nav(@pagy) %>
     </div>
   <% end %>
+</div>
+      </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  </main>
 </div>
