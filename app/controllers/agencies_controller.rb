@@ -72,7 +72,6 @@ class AgenciesController < ApplicationController
   end
 
   def tokani_create
-    puts "HERE"
     @agency = Agency.new(agency_params) # .merge(agency: true)
     @user = User.new(user_params)
     @user.password = SecureRandom.alphanumeric
@@ -94,6 +93,12 @@ class AgenciesController < ApplicationController
         format.json { render json: @agency.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def account_invoices
+  end
+
+  def account_process_invoices
   end
 
   private

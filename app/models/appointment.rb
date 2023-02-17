@@ -33,6 +33,7 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
+#  creator_id               :uuid
 #  customer_id              :uuid
 #  department_id            :uuid
 #  interpreter_id           :uuid
@@ -197,6 +198,15 @@ class Appointment < ApplicationRecord
     appointment_statuses.current.name
   end
 
+  # User this method before the appointment is marked as completed with an actual finish_time
+  def end_time
+    if duration.present?
+      start_time + duration.minutes
+    else
+      raise "Appointment#end_time called on an appointment without a duration"
+    end
+  end
+
   def start_time_with_zone
     start_time.in_time_zone(time_zone)
   end
@@ -207,6 +217,10 @@ class Appointment < ApplicationRecord
 
   def finish_time_with_zone
     finish_time.in_time_zone(time_zone)
+  end
+
+  def start_time_in_zone(zone)
+    start_time.in_time_zone(zone)
   end
 
   def associate_rate_via_service

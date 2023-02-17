@@ -74,13 +74,34 @@ class InterpretersController < ApplicationController
     end
   end
 
+  def dashboard
+    @service = InterpreterDashboardService.new(current_user)
+    @in_person_stats = @service.appointment_stats_by_modality("in_person")
+    @phone_stats = @service.appointment_stats_by_modality("phone")
+    @video_stats = @service.appointment_stats_by_modality("video")
+    @appointment_status_data = @service.appointment_status_chart_data
+    @upcoming_appointments = @service.upcoming_appointments
+  end
+
   def my_scheduled
+    @status = "scheduled"
+    @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
+    @appointments = @service.fetch_appointments
   end
 
   def my_scheduled_details
   end
 
   def my_assigned
+    @status = "offered"
+    @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
+    @appointments = @service.fetch_appointments
+  end
+
+  def fetch_appointments
+    @service = InterpreterAppointmentsService.new(current_user, appointment_params)
+    @appointments = @service.fetch_appointments
+    render layout: nil
   end
 
   def my_assigned_details
@@ -135,5 +156,9 @@ class InterpretersController < ApplicationController
         :zip
       ]
     )
+  end
+
+  def appointment_params
+    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video)
   end
 end
