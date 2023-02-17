@@ -1,11 +1,10 @@
 <%= content_for :title, t("shared.scaffold.edit.title", model: "Customer") %>
 <%= content_for :title, "Customers ##{@customer.id}" %>
 <%= turbo_stream_from @customer %>
-<%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
     <div class="py-6">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
           <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center pb-6">
                 <div class="sm:flex-auto"> 

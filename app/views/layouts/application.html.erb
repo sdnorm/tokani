@@ -34,8 +34,24 @@
         <%= render partial: "shared/navbar" %>
       <% end %>
 
-      <div class="px-3 lg:px-0 h-full">
+      <% if current_user.blank? %>      
         <%= yield %>
+      <% else %>
+      <% if current_account_user.interpreter? %>
+        <%= render partial: 'shared/interpreter_sidenav' %>
+      <% end %>
+      <% if !current_account_user.interpreter? %>
+        <%= render partial: 'shared/sidenav' %>
+      <% end %>
+      <% end %>
+      
+      <div class="px-3 lg:px-0 h-full">
+        <!-- <div class="p-8 bg-white rounded shadow"> -->
+          <div class="flex flex-1 flex-col">
+            <main class="flex-1">
+        <%= yield %>
+        </main>
+          </div>
       </div>
     </div>
 
