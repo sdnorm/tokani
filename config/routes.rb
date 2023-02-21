@@ -84,7 +84,7 @@ Rails.application.routes.draw do
       end
       resources :accounts
       resources :account_users
-      resources :agency_details
+      # resources :agency_details
       resources :customer_details
       resources :plans
       namespace :pay do
