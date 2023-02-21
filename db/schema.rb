@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_21_005119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -125,6 +125,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
     t.index ["customer_id"], name: "index_agency_customers_on_customer_id"
   end
 
+  create_table "agency_details", force: :cascade do |t|
+    t.string "url"
+    t.string "phone_number"
+    t.string "primary_contact_first_name"
+    t.string "primary_contact_last_name"
+    t.string "primary_contact_title"
+    t.string "primary_contact_email"
+    t.string "primary_contact_phone_number"
+    t.string "secondary_contact_first_name"
+    t.string "secondary_contact_last_name"
+    t.string "secondary_contact_title"
+    t.string "secondary_contact_email"
+    t.string "secondary_contact_phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "agency_id"
+    t.index ["agency_id"], name: "index_agency_details_on_agency_id"
+  end
+
   create_table "announcements", force: :cascade do |t|
     t.string "kind"
     t.string "title"
@@ -145,6 +164,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
     t.uuid "user_id"
     t.index ["token"], name: "index_api_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
+  create_table "appointment_languages", force: :cascade do |t|
+    t.bigint "appointment_id", null: false
+    t.bigint "language_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_languages_on_appointment_id"
+    t.index ["language_id"], name: "index_appointment_languages_on_language_id"
   end
 
   create_table "appointment_specialties", force: :cascade do |t|
@@ -788,6 +816,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_112330) do
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "agency_customers", "customer_categories"
+  add_foreign_key "agency_details", "accounts", column: "agency_id"
   add_foreign_key "appointment_specialties", "appointments"
   add_foreign_key "appointment_specialties", "specialties"
   add_foreign_key "appointment_statuses", "appointments"

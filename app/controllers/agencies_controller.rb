@@ -22,6 +22,7 @@ class AgenciesController < ApplicationController
   def new
     @agency = Agency.new
     @agency.build_physical_address
+    @agency.build_agency_detail
     @user = User.new
     # Uncomment to authorize with Pundit
     # authorize @agency

@@ -13,11 +13,6 @@
 #  index_appointment_languages_on_appointment_id  (appointment_id)
 #  index_appointment_languages_on_language_id     (language_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (appointment_id => appointments.id)
-#  fk_rails_...  (language_id => languages.id)
-#
 class AppointmentLanguage < ApplicationRecord
   belongs_to :appointment
   belongs_to :language
