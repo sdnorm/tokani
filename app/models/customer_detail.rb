@@ -31,9 +31,10 @@ class CustomerDetail < ApplicationRecord
   # after_update_commit  -> { broadcast_replace_later_to self }
   # after_destroy_commit -> { broadcast_remove_to :customer_details, target: dom_id(self, :index) }
 
-  validates :contact_name, :email, presence: true
   belongs_to :customer_category
-  belongs_to :customer, class_name: "Account", foreign_key: "customer_id", inverse_of: :customer_detail
+  belongs_to :customer, inverse_of: :customer_detail, optional: true
+
+  validates_presence_of :contact_name, :email, :customer_category
 
   # move to job so it retries
   def create_user_and_owner
