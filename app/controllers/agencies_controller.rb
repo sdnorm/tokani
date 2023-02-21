@@ -76,6 +76,7 @@ class AgenciesController < ApplicationController
     @agency = Agency.new(agency_params) # .merge(agency: true)
     respond_to do |format|
       if @agency.save
+        CreateAgencyOwnerUserAccountJob.perform_later(@agency.id)
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
       else

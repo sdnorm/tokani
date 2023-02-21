@@ -32,7 +32,7 @@ class CustomerDetail < ApplicationRecord
   # after_destroy_commit -> { broadcast_remove_to :customer_details, target: dom_id(self, :index) }
 
   belongs_to :customer_category
-  belongs_to :customer, inverse_of: :customer_detail
+  belongs_to :customer, inverse_of: :customer_detail, optional: true
 
   validates_presence_of :contact_name, :email, :customer_category
 
