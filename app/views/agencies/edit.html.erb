@@ -1,16 +1,26 @@
 <%= content_for :title, t("shared.scaffold.edit.title", model: "Agency") %>
-
-<div class="container mx-auto px-4 my-8">
-  <div class="flex items-center justify-between mb-4">
-    <h1 class="h3">
-      <%= link_to "Agencies", agencies_path, class: "text-black" %>
-      <span class="text-gray-400 font-light mx-2">\</span>
-      <%= t("shared.scaffold.edit.title", model: "Agency") %>
-    </h1>
-    <%= button_to t("delete"), @agency, method: :delete, class: "btn btn-white", form: { data: { turbo_confirm: t("are_you_sure") } } %>
-  </div>
-
-  <div class="p-8 bg-white rounded shadow">
-    <%= render "form", agency: @agency %>
-  </div>
+<%= content_for :title, "Agencies ##{@agency.id}" %>
+<%= turbo_stream_from @agency %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+        <div class="px-4 sm:px-6 lg:px-8">
+          <div class="sm:flex sm:items-center pb-6">
+            <div class="sm:flex-auto"> 
+              <h1 class="text-xl font-semibold text-gray-900">
+                <%= link_to "Agencies", agencies_path, class: "text-tokanisecondary-500" %>
+                <span class="text-gray-400 font-light mx-2">\</span>
+                <%= @agency.name %>
+              </h1>
+            </div>
+          </div>
+          <div class="p-8 bg-white rounded shadow">
+            <%= render "tokani_form", agency: @agency %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
+

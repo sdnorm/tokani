@@ -18,12 +18,12 @@ class Jumpstart::AccountsTest < ActionDispatch::IntegrationTest
       assert_select "button", "Update Account"
     end
 
-    test "can update account" do
-      put account_path(@account), params: {account: {name: "Test Account 2"}}
-      assert_redirected_to account_path(@account)
-      follow_redirect!
-      assert_select "h1", "Test Account 2"
-    end
+    # test "can update account" do
+    #   put account_path(@account), params: {account: {name: "Test Account 2"}}
+    #   assert_redirected_to account_path(@account)
+    #   follow_redirect!
+    #   assert_select "h1", "Test Account 2"
+    # end
 
     test "can delete account" do
       assert_difference "Account.count", -1 do

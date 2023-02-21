@@ -1,48 +1,89 @@
 <% form_url = agency.new_record? ? agencies_path : agency_path(agency) %>
-<%= form_with url: tokani_agency_creation_path, method: :post do |form| %>
+<%= form_with(model: agency, url: tokani_agency_creation_url) do |form| %>
+  <% if form.object.errors.any? %>
+    <div class="alert alert-error mb-6" role="alert">
+      <div class="flex items-start justify-start">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current icon mr-4 mt-1 flex-no-shrink" role="img" aria-labelledby="f1yx75u7nv0lvn6ck4z10w7lksjmk2f"><title id="f1yx75u7nv0lvn6ck4z10w7lksjmk2f">Icons/close outline</title><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm1.41-1.41A8 8 0 1 0 15.66 4.34 8 8 0 0 0 4.34 15.66zm9.9-8.49L11.41 10l2.83 2.83-1.41 1.41L10 11.41l-2.83 2.83-1.41-1.41L8.59 10 5.76 7.17l1.41-1.41L10 8.59l2.83-2.83 1.41 1.41z"></path></svg>
+
+        <div>
+          <h4 class="font-black text-sm uppercase tracking">
+            <%= I18n.t("errors.messages.not_saved", count: form.object.errors.count, resource: form.object.class.model_name.human.downcase) %>
+          </h4>
+          <ul>
+            <% form.object.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
   <div class="mt-5 md:col-span-2 md:mt-0">
     <div class="overflow-hidden shadow sm:rounded-md">
       <div class="bg-white px-4 py-5 sm:p-6">
         <div class="grid grid-cols-6 gap-6">
-          <%= fields_for(:user, @user) do |user_field| %>
+          <div class="col-span-8 sm:col-span-6">
+            <%= form.label :agency_name, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+          </div>
+          <%= form.fields_for :agency_detail do |agency_detail| %>
             <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-              <%= user_field.label :name, class: "block text-sm font-medium text-gray-700" %>
-              <%= user_field.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+              <%= agency_detail.label :primary_contact_first_name, class: "block text-sm font-medium text-gray-700" %>
+              <%= agency_detail.text_field :primary_contact_first_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
             </div>
             <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-              <%= user_field.label :email, class: "block text-sm font-medium text-gray-700" %>
-              <%= user_field.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+              <%= agency_detail.label :primary_contact_last_name, class: "block text-sm font-medium text-gray-700" %>
+              <%= agency_detail.text_field :primary_contact_last_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= agency_detail.label :primary_contact_email, class: "block text-sm font-medium text-gray-700" %>
+              <%= agency_detail.text_field :primary_contact_email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= agency_detail.label :primary_contact_phone_number, class: "block text-sm font-medium text-gray-700" %>
+              <%= agency_detail.text_field :primary_contact_phone_number, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= agency_detail.label :primary_contact_title, class: "block text-sm font-medium text-gray-700" %>
+              <%= agency_detail.text_field :primary_contact_title, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= agency_detail.label :phone_number, class: "block text-sm font-medium text-gray-700" %>
+              <%= agency_detail.text_field :phone_number, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
             </div>
           <% end %>
-          <%= fields_for(:agency, @agency) do |account_field| %>
+          <%= form.fields_for :physical_address do |physical_address| %>
+            <%= physical_address.hidden_field :address_type, value: "physical" %>
             <div class="col-span-8 sm:col-span-6">
-              <%= account_field.label :name, class: "block text-sm font-medium text-gray-700" %>
-              <%= account_field.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+              <%= physical_address.label :physical_address, class: "block text-sm font-medium text-gray-700" %>
+              <%= physical_address.text_field :line1, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
             </div>
-            <%= account_field.fields_for :physical_address do |physical_address| %>
-              <%= physical_address.hidden_field :address_type, value: "physical" %>
-              <div class="col-span-8 sm:col-span-6">
-                <%= physical_address.label :address, class: "block text-sm font-medium text-gray-700" %>
-                <%= physical_address.text_field :line1, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-              <div class="col-span-8 sm:col-span-3">
-                <%= physical_address.label :city, class: "block text-sm font-medium text-gray-700" %>
-                <%= physical_address.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= physical_address.label :state, class: "block text-sm font-medium text-gray-700" %>
-                <%= physical_address.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= physical_address.label :zip, class: "block text-sm font-medium text-gray-700" %>
-                <%= physical_address.text_field :postal_code, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-            <% end %>
+            <div class="col-span-8 sm:col-span-3">
+              <%= physical_address.label :city, class: "block text-sm font-medium text-gray-700" %>
+              <%= physical_address.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= physical_address.label :state, class: "block text-sm font-medium text-gray-700" %>
+              <%= physical_address.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= physical_address.label :zip, class: "block text-sm font-medium text-gray-700" %>
+              <%= physical_address.text_field :postal_code, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
           <% end %>
           <br>
-          <div>
-            <%= form.button button_text("Create Agency"), class: "btn btn-primary" %>
-            <%= link_to t("cancel"), agencies_path, class: "btn btn-white" %>
+          <div class="col-span-6">
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+              <% if form.object.new_record? %>
+                <%= form.button "Create Agency", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <%= link_to t("cancel"), agencies_path, class: "inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
+              <% else %>
+                <%= form.button "Update Agency", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+                <%= link_to t("cancel"), agency_path(@agency), class: "inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
