@@ -163,4 +163,15 @@ module ApplicationHelper
     return "00" if number.nil?
     format("%02d", number)
   end
+
+  def date_displayable(date)
+    date.to_date.strftime("%b. %-d %Y")
+  end
+
+  def scheduled_time_range(appointment, user)
+    start_time = appointment.start_time.in_time_zone(user.time_zone)
+    end_time = appointment.end_time.in_time_zone(user.time_zone)
+
+    [start_time.strftime("%l:%M%p"), end_time.strftime("%l:%M%p")].join(" - ")
+  end
 end

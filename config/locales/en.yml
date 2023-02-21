@@ -508,6 +508,8 @@ en:
             subdomain:
               reserved: "%{value} is reserved."
               format: "must be at least 2 characters and alphanumeric"
+            name:
+              blank: "can't be blank"
         account_invitation:
           attributes:
             email:

@@ -50,7 +50,7 @@ class Account < ApplicationRecord
   has_many :pay_bill_rates
   has_many :pay_bill_configs
 
-  has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
+  # has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
   has_many :specialties, dependent: :destroy, foreign_key: :account_id
 
@@ -65,7 +65,12 @@ class Account < ApplicationRecord
   has_many :rate_criteria, dependent: :destroy
   has_many :reports, dependent: :destroy
 
-  accepts_nested_attributes_for :physical_address, :customer_detail
+  # accepts_nested_attributes_for :physical_address, :customer_detail
+
+  # has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
+  # validates_presence_of :agency_detail
+  # accepts_nested_attributes_for :agency_detail
+  # , if: :agency?
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

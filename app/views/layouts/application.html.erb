@@ -33,9 +33,23 @@
       <% unless content_for?(:sidenav) %>
         <%= render partial: "shared/navbar" %>
       <% end %>
-
       <div class="px-3 lg:px-0 h-full">
-        <%= yield %>
+        <% if current_user.blank? %>
+        <% else %>
+          <% if current_account_user.interpreter? %>
+            <%= render partial: 'shared/interpreter_sidenav' %>
+          <% elsif !current_account_user.interpreter? %>
+            <%= render partial: 'shared/sidenav' %>
+          <% elsif current_user.admin? %>
+            <%= render partial: 'shared/sidenav' %>
+          <% end %>
+        <% end %>
+        <!-- <div class="p-8 bg-white rounded shadow"> -->
+          <div class="flex flex-1 flex-col">
+            <main class="flex-1">
+              <%= yield %>
+            </main>
+          </div>
       </div>
     </div>
 

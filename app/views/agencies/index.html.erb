@@ -1,33 +1,51 @@
 <%= content_for :title, "Agencies" %>
 <%= turbo_stream_from :agencies %>
-
-<div class="container px-4 mx-auto my-8">
-  <div class="flex items-center justify-between mb-4">
-    <div>
-      <h1 class="h3">Agencies</h1>
-      <div class="text-sm font-medium">
-        <span class="text-gray-500">Sort by:</span>
+<div class="flex flex-1 flex-col md:pl-64">
+	<main class="flex-1">
+	  <div class="py-6">
+		  <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+		    <div class="px-4 sm:px-6 lg:px-6">
+			    <div class="sm:flex sm:items-center pb-6">
+				    <div class="sm:flex-auto"> 
+				    <h1 class="text-xl font-semibold text-gray-900">
+				      <span class="text-tokanisecondary-500">
+					      <%= current_user.full_name %>
+					    </span>
+					    <span class="text-tokaniprimary-600 font-light mx-2">/ Dashboard</span>    
+				    </h1>
+				  </div>      
+			  </div>
+		    <div class="p-8 bg-white rounded shadow">
+		      <div class="px-4 sm:px-6 lg:px-8 container">
+            <div class="container px-4 mx-auto my-8">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h1 class="h3">Agencies</h1>
+                  <div class="text-sm font-medium">
+                    <span class="text-gray-500">Sort by:</span>
+                  </div>
+                </div>
+                <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
+              </div>
+              <%= tag.div id: ("agencies" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
+                <%= render partial: "agencies/index", collection: @agencies, as: :agency, cached: true %>
+                <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
+                  <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+                  <div class="flex-1 text-center">
+                    <p class="mb-4 h3">Create your first Agency</p>
+                    <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn btn-primary" %>
+                  </div>
+                </div>
+              <% end %>
+              <% if @pagy.pages > 1 %>
+                <div class="my-6 text-center">
+                  <%== pagy_nav(@pagy) %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
-  </div>
-
-  <%= tag.div id: ("agencies" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
-    <%= render partial: "agencies/index", collection: @agencies, as: :agency, cached: true %>
-
-    <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
-      <div class="flex-1 text-center">
-        <p class="mb-4 h3">Create your first Agency</p>
-        <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn btn-primary" %>
-      </div>
-    </div>
-  <% end %>
-
-  <% if @pagy.pages > 1 %>
-    <div class="my-6 text-center">
-      <%== pagy_nav(@pagy) %>
-    </div>
-  <% end %>
+  </main>
 </div>

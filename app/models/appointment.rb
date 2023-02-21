@@ -200,6 +200,15 @@ class Appointment < ApplicationRecord
     appointment_statuses.current.name
   end
 
+  # User this method before the appointment is marked as completed with an actual finish_time
+  def end_time
+    if duration.present?
+      start_time + duration.minutes
+    else
+      raise "Appointment#end_time called on an appointment without a duration"
+    end
+  end
+
   def start_time_with_zone
     start_time.in_time_zone(time_zone)
   end

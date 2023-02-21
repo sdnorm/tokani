@@ -1,7 +1,10 @@
 class DashboardController < ApplicationController
   def show
-    if current_account_user.interpreter? # && current_user.interpreter_profile.nil?
-      redirect_to new_interpreter_detail_path
+    if current_account_user.nil?
+      render template: "dashboard/general"
+    elsif current_account_user.interpreter? # && current_user.interpreter_profile.nil?
+      # redirect_to new_interpreter_detail_path
+      render template: "dashboard/interpreter"
     elsif current_account_user.agency_admin?
       render template: "dashboard/agency_admin"
     elsif current_account_user.admin?

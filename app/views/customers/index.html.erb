@@ -17,62 +17,60 @@
       </div>
  -->
     
-    <div>
-      <%= render partial: "shared/sidenav" %>
-      <div class="flex flex-1 flex-col md:pl-64">
-        <main class="flex-1">
-          <div class="py-6">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-              <div class="px-4 sm:px-6 lg:px-8">
-                <div class="sm:flex sm:items-center">
-                  <div class="sm:flex-auto">
-                    <h1 class="text-xl font-semibold text-gray-900">Customers</h1>
-                    <p class="mt-2 text-sm text-gray-700">A list of all the customers in your account.</p>
-                  </div>
-                  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <%= link_to t("shared.scaffold.new.title", model: "Customer"), new_customer_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
-                  </div>
-                </div>
-                <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
-                  <table class="min-w-full divide-y divide-gray-300">
-                    <thead class="bg-gray-50">
-                      <tr>
-                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @customers, :name, "Name" %></th>
-                        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Name</th>
-                        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Phone</th>
-                        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Email</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                    <% @customers.each do |customer| %>
-                      <tr>
-                        <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-tokanisecondary-900 sm:w-auto sm:max-w-none sm:pl-6">
-                          <%= link_to customer.name, customer_path(customer) %>
-                          <dl class="font-normal lg:hidden">
-                            <dt class="sr-only">Contact Name</dt>
-                            <dd class="mt-1 truncate text-gray-700"><%= customer.customer_detail&.contact_name %></dd>
-                            <dt class="sr-only">Contact Phone</dt>
-                            <dd class="mt-1 truncate text-gray-700"><%=  customer.customer_detail&.phone %></dd>
-                            <dt class="sr-only">Email</dt>
-                            <dd class="mt-1 truncate text-gray-500"><%= customer.customer_detail&.email %></dd>
-                          </dl>
-                        </td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.contact_name %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.phone %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.email %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(customer.is_active) %></td>
-                      </tr>
-                    <% end %>
-                    </tbody>
-                  </table>
-                </div>
-  
+<div>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto">
+                <h1 class="text-xl font-semibold text-gray-900">Customers</h1>
+                <p class="mt-2 text-sm text-gray-700">A list of all the customers in your account.</p>
+              </div>
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to t("shared.scaffold.new.title", model: "Customer"), new_customer_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
               </div>
             </div>
+            <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @customers, :name, "Name" %></th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Name</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Contact Phone</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Email</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                <% @customers.each do |customer| %>
+                  <tr>
+                    <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-tokanisecondary-900 sm:w-auto sm:max-w-none sm:pl-6">
+                      <%= link_to customer.name, customer_path(customer) %>
+                      <dl class="font-normal lg:hidden">
+                        <dt class="sr-only">Contact Name</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%= customer.customer_detail&.contact_name %></dd>
+                        <dt class="sr-only">Contact Phone</dt>
+                        <dd class="mt-1 truncate text-gray-700"><%=  customer.customer_detail&.phone %></dd>
+                        <dt class="sr-only">Email</dt>
+                        <dd class="mt-1 truncate text-gray-500"><%= customer.customer_detail&.email %></dd>
+                      </dl>
+                    </td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.contact_name %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.phone %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= customer.customer_detail&.email %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(customer.is_active) %></td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
           </div>
-          </main>
+        </div>
       </div>
+    </main>
+  </div>
 
   <% if @pagy.pages > 1 %>
     <div class="my-6 text-center">

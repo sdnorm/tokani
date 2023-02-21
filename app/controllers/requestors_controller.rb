@@ -9,9 +9,9 @@ class RequestorsController < ApplicationController
 
   # GET /interpreters
   def index
-    @requestor_accounts = AccountUser.client.pluck(:user_id)
-    @requestor_accounts << AccountUser.site_member.pluck(:user_id)
-    @requestor_accounts << AccountUser.site_admin.pluck(:user_id)
+    @requestor_accounts = current_account.account_users.client.pluck(:user_id)
+    @requestor_accounts << current_account.account_users.site_member.pluck(:user_id)
+    @requestor_accounts << current_account.account_users.site_admin.pluck(:user_id)
 
     @pagy, @requestors = pagy(User.where(id: @requestor_accounts.flatten).sort_by_params(params[:sort], sort_direction))
   end

@@ -84,6 +84,8 @@ Rails.application.routes.draw do
       end
       resources :accounts
       resources :account_users
+      resources :agency_details
+      resources :customer_details
       resources :plans
       namespace :pay do
         resources :customers
@@ -215,6 +217,7 @@ Rails.application.routes.draw do
     resources :interpreters do
       collection do
         get :search
+        get :fetch_appointments
       end
       member do
         get :appointment_details

@@ -87,6 +87,9 @@ class InterpretersController < ApplicationController
   end
 
   def my_scheduled
+    @status = "scheduled"
+    @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
+    @appointments = @service.fetch_appointments
   end
 
   def my_scheduled_details
@@ -94,6 +97,15 @@ class InterpretersController < ApplicationController
   end
 
   def my_assigned
+    @status = "offered"
+    @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
+    @appointments = @service.fetch_appointments
+  end
+
+  def fetch_appointments
+    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
+    @appointments = @service.fetch_appointments
+    render layout: nil
   end
 
   def my_assigned_details
@@ -233,5 +245,9 @@ class InterpretersController < ApplicationController
       :billing_notes,
       documents: []
     )
+  end
+
+  def appointment_query_params
+    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video)
   end
 end

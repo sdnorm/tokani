@@ -22,7 +22,8 @@ class AgenciesController < ApplicationController
   def new
     @agency = Agency.new
     @agency.build_physical_address
-    @user = User.new
+    @agency.build_agency_detail
+    # @user = User.new
     # Uncomment to authorize with Pundit
     # authorize @agency
   end
@@ -73,19 +74,9 @@ class AgenciesController < ApplicationController
 
   def tokani_create
     @agency = Agency.new(agency_params) # .merge(agency: true)
-    @user = User.new(user_params)
-    @user.password = SecureRandom.alphanumeric
-    @user.terms_of_service = true
-    @user.accepted_terms_at = Time.current
-    @agency.account_users.new(user: @user)
-
     respond_to do |format|
-      if @agency.save! && @user.save!
-        @agency.account_users.update!(agency_admin: true)
-        # @agency.account_users.new(user: @user)
-        # AccountUser.create!(account: @agency, user: @user)
-        @agency.update(owner: @user)
-        TokaniAgencyCreationMailer.welcome(@user).deliver_later
+      if @agency.save
+        CreateAgencyOwnerUserAccountJob.perform_later(@agency.id)
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
       else
@@ -130,6 +121,15 @@ class AgenciesController < ApplicationController
         :state,
         :postal_code,
         :address_type
+      ],
+      agency_detail_attributes: [
+        :id,
+        :primary_contact_first_name,
+        :primary_contact_last_name,
+        :primary_contact_email,
+        :primary_contact_phone_number,
+        :primary_contact_title,
+        :phone_number
       ]
     )
 
