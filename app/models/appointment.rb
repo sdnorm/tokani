@@ -89,12 +89,14 @@ class Appointment < ApplicationRecord
   belongs_to :pay_bill_rate, optional: true
   belongs_to :pay_bill_config, optional: true
 
+  has_many_attached :documents
+
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
 
-  attr_accessor :interpreter_req_ids
+  attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
   before_create :gen_refnum
   after_create :create_offers
@@ -268,5 +270,17 @@ class Appointment < ApplicationRecord
 
   def duration_viewable
     "#{duration} minutes"
+  end
+
+  def less_than_24_hours_left_until_appointment?
+    TimeDifference.between(DateTime.now.utc, start_time).in_hours < 24
+  end
+
+  def combine_finish_date_and_time(date_portion, time_portion, user)
+    Time.zone = user.time_zone
+    time = Time.zone.parse(time_portion)
+    date = Time.zone.parse(date_portion).to_date
+    parsed_datetime_in_zone = Time.zone.parse("#{date.strftime("%F")} #{time.strftime("%T")}")
+    self.finish_time = parsed_datetime_in_zone.utc
   end
 end

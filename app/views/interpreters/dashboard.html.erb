@@ -46,7 +46,7 @@
           <% if @upcoming_appointments.present? %>
             <ul>
               <% @upcoming_appointments.each do |appt| %>
-                <li><%= link_to appointment_readable_link_title(appt, current_user), appointment_path(appt) %></li>
+                <li><%= link_to appointment_readable_link_title(appt, current_user), appointment_details_interpreter_path(appt) %></li>
               <% end %>
             </ul>
           <% else %>

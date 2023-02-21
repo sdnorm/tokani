@@ -216,6 +216,15 @@ Rails.application.routes.draw do
       collection do
         get :search
       end
+      member do
+        get :appointment_details
+        get :my_assigned_details
+        get :my_scheduled_details
+        post :decline_offered
+        post :accept_offered
+        post :cancel_coverage
+        post :time_finish
+      end
     end
     resources :requestors
     # end

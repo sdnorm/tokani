@@ -1,0 +1,19 @@
+<div class="grid grid-cols-2 gap-4 mt-5">
+  <div>
+    <ul class="list-none list-outside">
+      <li><i class="fa fa-calendar mr-4"></i> <%= appointment_start_date_and_time_in_user_time_zone(@appointment, current_user) %></li>
+      <li><i class="fa fa-male mr-4"></i> <%= @appointment.modality.titleize %></li>
+      <li><i class="fa fa-language mr-2"></i> <%= @appointment.language.name %></li>
+      <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
+    </ul>
+  </div><!-- ... -->
+  <div>
+    <ul class="list-none">
+      <li>Site: <%= @appointment.site.present? ? @appointment.site.name : "N/A" %></li>
+      <li>Department: <%= @appointment.department.present? ? @appointment.department.name : "N/A" %></li>
+      <li>Duration: <%= @appointment.duration_viewable %></li>
+      <li>Provider: <%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></li>
+      <li>Requester: <%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></li>
+    </ul>
+  </div>
+</div>
