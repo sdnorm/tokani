@@ -154,6 +154,11 @@ module ApplicationHelper
     "text-gray-100 group-hover:text-gray-500"
   end
 
+  def appointment_start_date_and_time_in_user_time_zone(appointment, user)
+    starts_at = appointment.start_time_in_zone(user.time_zone)
+    starts_at.strftime("%B %-d at %l:%M %p")
+  end
+
   def lpad_number(number)
     return "00" if number.nil?
     format("%02d", number)

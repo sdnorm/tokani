@@ -3,6 +3,9 @@ class InterpretersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
+  before_action :set_appointment, only: [:my_scheduled_details, :my_assigned_details, :decline_offered, :accept_offered,
+    :cancel_coverage, :time_finish, :appointment_details]
+
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -90,6 +93,7 @@ class InterpretersController < ApplicationController
   end
 
   def my_scheduled_details
+    setup_form_vars
   end
 
   def my_assigned
@@ -99,12 +103,58 @@ class InterpretersController < ApplicationController
   end
 
   def fetch_appointments
-    @service = InterpreterAppointmentsService.new(current_user, appointment_params)
+    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
     @appointments = @service.fetch_appointments
     render layout: nil
   end
 
   def my_assigned_details
+  end
+
+  def decline_offered
+    @requested_interpreter = @appointment.requested_interpreters.where(user_id: current_user.id)
+    @requested_interpreter.update(rejected: true, status: RequestedInterpreter.statuses["rejected"])
+    @unrejected_requests = @appointment.requested_interpreters.where(rejected: false)
+    if @unrejected_requests.blank?
+      # There are no unrejected interpreter requests left; we need to clear them out & reset the appointment
+      @appointment.requested_interpreters.destroy_all
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["created"], user: current_user)
+    end
+
+    redirect_to(interpreters_dashboard_path, alert: "Assignment successfully declined.")
+  end
+
+  def accept_offered
+    @appointment.update(interpreter_id: current_user.id)
+    @appointment.requested_interpreters.destroy_all
+    AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
+    redirect_to(interpreters_dashboard_path, alert: "Assignment successfully accepted.")
+  end
+
+  def cancel_coverage
+    @appointment.update(interpreter_id: nil)
+    AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["created"], user: current_user)
+    redirect_to(interpreters_dashboard_path, alert: "You have been unassigned from the appointment.")
+  end
+
+  def time_finish
+    @appointment.combine_finish_date_and_time(appointment_params[:submitted_finish_date], appointment_params[:submitted_finish_time], current_user)
+
+    if @appointment.finish_time < @appointment.start_time
+      setup_form_vars
+      flash[:alert] = "There was a problem time finishing the appointment: Finish time must be later than the start time."
+      return render :my_scheduled_details
+    end
+
+    if @appointment.update(appointment_params)
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["finished"], user: current_user)
+      redirect_to(interpreters_dashboard_path, notice: "Appointment time finished.")
+    else
+      setup_form_vars
+      errors = @appointment.errors.full_messages.join("; ")
+      flash[:alert] = "There was a problem time finishing the appointment: #{errors}"
+      render :my_scheduled_details
+    end
   end
 
   def profile
@@ -119,6 +169,24 @@ class InterpretersController < ApplicationController
   def profile_security_edit
   end
 
+  # Action that views can link to that will redirect appointment to appropriate details page
+  def appointment_details
+    if @appointment.status == "offered"
+      request = @appointment.requested_interpreters.where(rejected: false).where(user_id: current_user.id).first
+      if request.present?
+        # Appointment is in the Offered status and there is an active request for the interpreter
+        redirect_to(my_assigned_details_interpreter_path(@appointment))
+      else
+        # Perhaps they have already rejected this offer?
+        redirect_to(interpreters_dashboard_path, alert: "It appears you have already declined this appointment.")
+      end
+    elsif (@appointment.status == "scheduled") && (@appointment.interpreter_id == current_user.id)
+      redirect_to(my_scheduled_details_interpreter_path(@appointment))
+    else
+      redirect_to(interpreters_dashboard_path, alert: "Could not find appointment in an offered or scheduled status.")
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -128,6 +196,18 @@ class InterpretersController < ApplicationController
     @interpreter = User.find_by(id: int_id)
   rescue ActiveRecord::RecordNotFound
     redirect_to interpreters_path
+  end
+
+  def set_appointment
+    @appointment = current_account.appointments.find_by(id: params[:id])
+    if @appointment.nil?
+      redirect_to(interpreters_dashboard_path, alert: "Appointment not found.")
+    end
+  end
+
+  def setup_form_vars
+    @docs_list = @appointment.documents.map { |doc| {name: doc.filename.to_s, size: doc.byte_size, url: url_for(doc), signed_id: doc.signed_id} }
+    @docs_list_json = @docs_list.to_json
   end
 
   # Only allow a list of trusted parameters through.
@@ -159,6 +239,15 @@ class InterpretersController < ApplicationController
   end
 
   def appointment_params
+    params.require(:appointment).permit(
+      :submitted_finish_date,
+      :submitted_finish_time,
+      :billing_notes,
+      documents: []
+    )
+  end
+
+  def appointment_query_params
     params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video)
   end
 end

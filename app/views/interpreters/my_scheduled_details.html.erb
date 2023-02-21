@@ -3,86 +3,74 @@
       <%= link_to "< Back", interpreters_my_scheduled_path, class: "text-blue-600 underline" %>
     </div>
     <div class="border border-gray-300 bg-white px-4 py-5 sm:px-6 mt-5">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">M21-156 Details</h3>
-      <div class="grid grid-cols-2 gap-4 mt-5">
-        <div>
-          <ul class="list-none list-outside">
-            <li><i class="fa fa-calendar mr-4"></i>Start date and Time</li>
-            <li><i class="fa fa-male mr-4"></i> In-Person</li>
-            <li><i class="fa fa-language mr-2"></i> Language</li>
-            <li><i class="fa fa-book mr-3"></i> Subject</li>
-          </ul>
-        </div><!-- ... -->
-        <div>
-          <ul class="list-none">
-            <li>Site</li>
-            <li>Department</li>
-            <li>Duration</li>
-            <li>Provider</li>
-            <li>Requester</li>
-          </ul>
-        </div>
-      </div>
+      <h3 class="text-lg font-medium leading-6 text-gray-900"><%= @appointment.ref_number %> Details</h3>
+      <%= render partial: "appointment_details" %>
     </div>
 		<div class="mt-10">
-			<form class="space-y-6" action="#" method="POST">
-				<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
-					<div class="md:grid md:grid-cols-3 md:gap-6">
-						<div class="md:col-span-1">
-							<h3 class="text-lg font-medium leading-6 text-gray-900">M21-156</h3>
-							<p class="mt-1 text-sm text-gray-500">Time Finish</p>
-							<button type="button" class="rounded-md border border-gray-300 bg-red-500 py-2 px-4 mt-4 text-sm font-medium text-white shadow-sm hover:bg-gray-50 hover:text-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel Appointment</button>
-						</div>
-						<div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
-							<div class="grid grid-cols-3 gap-6">
-								<div class="col-span-3 sm:col-span-2">
-									<label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
-									<div class="mt-1 flex rounded-md shadow-sm w-1/2">
-										<span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><i class="fa fa-calendar"></i></span>
-										<input type="date" name="end-date" id="end-date" class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-									</div>
-								</div>
-								<div class="col-span-3 sm:col-span-2">
-									<label for="end-time" class="block text-sm font-medium text-gray-700">End Time</label>
-									<div class="mt-1 flex rounded-md shadow-sm w-1/2">
-										<span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><i class="fa fa-clock"></i></span>
-										<input type="time" name="end-time" id="end-time" class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-									</div>
-								</div>
-							</div>
+  			<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  				<div class="md:grid md:grid-cols-3 md:gap-6">
+  					<div class="md:col-span-1">
+  						<h3 class="text-lg font-medium leading-6 text-gray-900"><%= @appointment.ref_number %></h3>
+  						<p class="mt-1 text-sm text-gray-500">Time Finish</p>
 
-							<div>
-								<label for="about" class="block text-sm font-medium text-gray-700">Billing Notes</label>
-								<div class="mt-1">
-									<textarea id="about" name="about" rows="8" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder=""></textarea>
-								</div>
-								
-							</div>
+              <% unless false && @appointment.less_than_24_hours_left_until_appointment? %>
+                <%= button_to "I Can No Longer Attend", cancel_coverage_interpreter_path(@appointment), type: :button, data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "rounded-md border border-gray-300 bg-red-500 py-2 px-4 mt-4 text-sm font-medium text-white shadow-sm hover:bg-gray-50 hover:text-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+              <% end %>
 
-							
+  					</div>
 
-							<div>
-								<label class="block text-sm font-medium text-gray-700">Documents</label>
-								<div class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-									<div class="space-y-1 text-center">
-										<i class="fa fa-xl fa-file-lines"></i>
-										<div class="flex text-sm text-gray-600">
-											<label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
-												<span>Upload a file</span>
-												<input id="file-upload" name="file-upload" type="file" class="sr-only">
-											</label>
-											<p class="pl-1">or drag and drop</p>
-										</div>	
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="flex justify-end mt-5">
-						<button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit Time Finish</button>
-					</div>
-				</div>
-			</form>
+  					<div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+
+              <%= form_with model: @appointment, url: time_finish_interpreter_path(@appointment), multipart: true, method: :post, data: {turbo: false} do |form| %>
+
+    						<div class="grid grid-cols-3 gap-6">
+    							<div class="col-span-3 sm:col-span-2">
+    								<label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
+    								<div class="mt-1 flex rounded-md shadow-sm w-1/2">
+    									<span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><i class="fa fa-calendar"></i></span>
+                      <%= form.date_field :submitted_finish_date, class: "block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", required: true %>
+    								</div>
+    							</div>
+    							<div class="col-span-3 sm:col-span-2">
+    								<label for="end-time" class="block text-sm font-medium text-gray-700">End Time</label>
+    								<div class="mt-1 flex rounded-md shadow-sm w-1/2">
+    									<span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><i class="fa fa-clock"></i></span>
+                      <%= form.time_field :submitted_finish_time, class: "block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", required: true %>
+    								</div>
+    							</div>
+    						</div>
+
+    						<div>
+    							<label for="about" class="block text-sm font-medium text-gray-700">Billing Notes</label>
+    							<div class="mt-1">
+                    <%= form.text_area :billing_notes, rows: "8", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    							</div>
+    						</div>
+
+                <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone" data-dropzone-max-file-size-value="2" data-dropzone-max-files-value="5" data-dropzone-images-value='<%= @docs_list_json %>'>
+                   <%= form.file_field :documents, direct_upload: true, multiple: true, data: { dropzone_target: 'input' } %>
+
+                   <%# This is here so deletion of all images actually works. %>
+                   <%= hidden_field_tag 'appointment[documents][]', '' %>
+
+                   <%# Existing hidden fields go here %>
+                   <% @docs_list.each do |doc| %>
+                     <%= hidden_field_tag 'appointment[documents][]', doc[:signed_id], data: {dropzone_target: "existingImageInput"} %>
+                   <% end %>
+
+                   <div class="dropzone-msg dz-message needsclick" data-dropzone-target="dropHere">
+                     <h3 class="dropzone-msg-title">Drop Here</h3>
+                     <span class="dropzone-msg-desc">Drag files here (or click here) to upload documents</span>
+                   </div>
+                </div>
+  					</div>
+  				</div>
+
+  				<div class="flex justify-end mt-5">
+            <%= submit_tag "Submit Time Finish", type: "submit", :class=> "ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+  				</div>
+  			</div>
 		</div>
 
   </div>
+<% end %>
