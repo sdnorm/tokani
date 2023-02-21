@@ -39,7 +39,7 @@ class Agency < Account
       terms_of_service: true,
       accepted_terms_at: Time.current
     )
-    self.update(owner_id: user.id)
+    update(owner_id: user.id)
     account_users.create(user: user)
     TokaniAgencyCreationMailer.welcome(user).deliver_later
   end
