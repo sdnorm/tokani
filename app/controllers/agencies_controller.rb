@@ -74,14 +74,8 @@ class AgenciesController < ApplicationController
 
   def tokani_create
     @agency = Agency.new(agency_params) # .merge(agency: true)
-    # @user = User.new(user_params)
-    # @user.password = SecureRandom.alphanumeric
-    # @user.terms_of_service = true
-    # @user.accepted_terms_at = Time.current
-    # @agency.account_users.new(user: @user)
     respond_to do |format|
       if @agency.save
-        # TokaniAgencyCreationMailer.welcome(@user).deliver_later
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
       else

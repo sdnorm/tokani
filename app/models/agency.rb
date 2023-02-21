@@ -28,6 +28,23 @@ class Agency < Account
 
   before_create :set_agency_flag
 
+  after_create :create_owner_account_from_primary_contact
+
+  def create_owner_account_from_primary_contact
+    user = User.create(
+      email: agency_detail.primary_contact_email,
+      password: SecureRandom.alphanumeric,
+      account: self,
+      role: :owner,
+      first_name: agency_detail.primary_contact_first_name,
+      last_name: agency_detail.primary_contact_last_name,
+      terms_of_service: true,
+      accepted_terms_at: Time.current
+    )
+    account_users.create(user: user, role: :owner)
+    TokaniAgencyCreationMailer.welcome(user).deliver_later
+  end
+
   has_one :agency_detail, dependent: :destroy, inverse_of: :agency
   validates_presence_of :agency_detail
   accepts_nested_attributes_for :agency_detail
