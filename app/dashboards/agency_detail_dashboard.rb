@@ -23,7 +23,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_title: Field::String,
     url: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
