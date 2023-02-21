@@ -28,6 +28,14 @@ class Agency < Account
 
   before_create :set_agency_flag
 
+  has_one :agency_detail, dependent: :destroy, inverse_of: :agency
+  validates_presence_of :agency_detail
+  accepts_nested_attributes_for :agency_detail
+
+  has_one :physical_address, -> { where(address_type: :physical) }, class_name: "Address", as: :addressable
+  validates_presence_of :physical_address
+  accepts_nested_attributes_for :physical_address
+
   private
 
   def set_agency_flag

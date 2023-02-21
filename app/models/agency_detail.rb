@@ -33,12 +33,8 @@ class AgencyDetail < ApplicationRecord
   after_update_commit  -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :agency_details, target: dom_id(self, :index) }
 
-  validates_presence_of :primary_contact_first_name, 
-                        :primary_contact_last_name, 
-                        :primary_contact_email, 
-                        :primary_contact_phone_number, 
-                        :primary_contact_title,
-                        :phone_number,
-                        :agency_id
+  belongs_to :agency, inverse_of: :agency_detail
+
+  validates_presence_of :primary_contact_first_name, :primary_contact_last_name, :primary_contact_email, :primary_contact_phone_number, :primary_contact_title
                         
 end
