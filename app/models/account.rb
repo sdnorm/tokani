@@ -70,8 +70,8 @@ class Account < ApplicationRecord
   has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
   validates_presence_of :agency_detail
   accepts_nested_attributes_for :agency_detail
-  
-  #, if: :agency?
+
+  # , if: :agency?
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }
