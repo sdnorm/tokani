@@ -30,6 +30,8 @@ class AgenciesController < ApplicationController
 
   # GET /agencies/1/edit
   def edit
+    @agency.build_physical_address
+    @agency.build_agency_detail
   end
 
   # POST /agencies or /agencies.json
