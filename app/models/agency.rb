@@ -28,7 +28,6 @@ class Agency < Account
 
   before_create :set_agency_flag
 
-
   def create_owner_account_from_primary_contact
     user = User.create(
       email: agency_detail.primary_contact_email,
