@@ -167,15 +167,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
-  create_table "appointment_languages", force: :cascade do |t|
-    t.bigint "appointment_id", null: false
-    t.bigint "language_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["appointment_id"], name: "index_appointment_languages_on_appointment_id"
-    t.index ["language_id"], name: "index_appointment_languages_on_language_id"
-  end
-
   create_table "appointment_specialties", force: :cascade do |t|
     t.bigint "appointment_id", null: false
     t.bigint "specialty_id", null: false
@@ -224,15 +215,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
     t.uuid "customer_id"
     t.boolean "processed_by_customer", default: false
     t.boolean "processed_by_interpreter", default: false
+    t.uuid "site_id"
     t.decimal "total_billed"
     t.decimal "total_paid"
     t.integer "pay_bill_config_id"
     t.integer "pay_bill_rate_id"
     t.datetime "cancelled_at"
+    t.integer "cancel_type"
     t.bigint "language_id", null: false
     t.string "video_link"
     t.uuid "department_id"
-    t.uuid "site_id"
     t.uuid "provider_id"
     t.uuid "recipient_id"
     t.uuid "requestor_id"
@@ -241,6 +233,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
     t.index ["interpreter_id"], name: "index_appointments_on_interpreter_id"
+    t.index ["language_id"], name: "index_appointments_on_language_id"
     t.index ["provider_id"], name: "index_appointments_on_provider_id"
     t.index ["recipient_id"], name: "index_appointments_on_recipient_id"
     t.index ["requestor_id"], name: "index_appointments_on_requestor_id"
@@ -292,7 +285,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
     t.uuid "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "customer_category_id", null: false
+    t.bigint "customer_category_id"
     t.index ["customer_category_id"], name: "index_customer_details_on_customer_category_id"
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end
@@ -822,6 +815,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
   add_foreign_key "appointment_specialties", "specialties"
   add_foreign_key "appointment_statuses", "appointments"
   add_foreign_key "appointments", "departments"
+  add_foreign_key "appointments", "languages"
   add_foreign_key "appointments", "providers"
   add_foreign_key "appointments", "recipients"
   add_foreign_key "appointments", "users", column: "requestor_id"
