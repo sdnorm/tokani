@@ -28,7 +28,6 @@ class Agency < Account
 
   before_create :set_agency_flag
 
-  # after_create :create_owner_account_from_primary_contact
 
   def create_owner_account_from_primary_contact
     user = User.create(
@@ -40,7 +39,7 @@ class Agency < Account
       accepted_terms_at: Time.current
     )
     update(owner_id: user.id)
-    account_users.create(user: user)
+    account_users.create(user: user, role: :agency_admin)
     TokaniAgencyCreationMailer.welcome(user).deliver_later
   end
 

@@ -21,9 +21,10 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_last_name: Field::String,
     secondary_contact_phone_number: Field::String,
     secondary_contact_title: Field::String,
+    time_zones: Field::String,
     url: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -54,6 +55,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_last_name
     secondary_contact_phone_number
     secondary_contact_title
+    time_zones
     url
     created_at
     updated_at
@@ -75,6 +77,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_last_name
     secondary_contact_phone_number
     secondary_contact_title
+    time_zones
     url
   ].freeze
 

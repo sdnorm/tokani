@@ -181,6 +181,8 @@ GEM
       devise (>= 4.8.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    email_validator (2.2.4)
+      activemodel
     erb_lint (0.3.1)
       activesupport
       better_html (>= 2.0.1)
@@ -506,6 +508,7 @@ DEPENDENCIES
   debug (>= 1.0.0)
   devise (~> 4.9)
   devise-i18n (~> 1.10)
+  email_validator
   erb_lint
   faker
   honeybadger

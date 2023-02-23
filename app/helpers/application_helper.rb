@@ -75,7 +75,7 @@ module ApplicationHelper
   end
 
   def dashboard_highlight?
-    if current_page?(root_path)
+    if current_page?(root_path) || current_page?(agencies_path)
       highlighted
     else
       unhighlighted
@@ -83,7 +83,7 @@ module ApplicationHelper
   end
 
   def dashboard_highlight_icon?
-    if current_page?(root_path)
+    if current_page?(root_path) || controller_name == "agencies"
       highlighted_icon
     else
       unhighlighted_icon
@@ -123,7 +123,9 @@ module ApplicationHelper
   end
 
   def accounting_highlight?
-    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients"
+    if controller_name == "agencies" && action_name == "account_invoices"
+      highlighted
+    elsif controller_name == "agencies" && action_name == "account_process_invoices"
       highlighted
     else
       unhighlighted
@@ -131,7 +133,9 @@ module ApplicationHelper
   end
 
   def accounting_highlight_icon?
-    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients" || controller_name == "agencies"
+    if controller_name == "agencies" && action_name == "account_invoices"
+      highlighted_icon
+    elsif controller_name == "agencies" && action_name == "account_process_invoices"
       highlighted_icon
     else
       unhighlighted_icon
@@ -168,5 +172,81 @@ module ApplicationHelper
     end_time = appointment.end_time.in_time_zone(user.time_zone)
 
     [start_time.strftime("%l:%M%p"), end_time.strftime("%l:%M%p")].join(" - ")
+  end
+
+  def time_zone_select_options
+    [
+      {"value": "(GMT-10:00) Hawaii", "text": "(GMT-10:00) Hawaii"},
+      {"value": "(GMT-09:00) Alaska", "text": "(GMT-09:00) Alaska"},
+      {"value": "(GMT-08:00) Pacific Time (US & Canada)", "text": "(GMT-08:00) Pacific Time (US & Canada)"},
+      {"value": "(GMT-07:00) Mountain Time (US & Canada)", "text": "(GMT-07:00) Mountain Time (US & Canada)"},
+      {"value": "(GMT-06:00) Central Time (US & Canada)", "text": "(GMT-06:00) Central Time (US & Canada)"},
+      {"value": "(GMT-05:00) Eastern Time (US & Canada)", "text": "(GMT-05:00) Eastern Time (US & Canada)"}
+    ].to_json
+  end
+
+  def selected_time_zones(new_agency, time_zones)
+    if new_agency
+      ""
+    else
+      "data-multiselect-selected-value='#{time_zones.to_json}'"
+    end
+  end
+
+  def state_select_options
+    [ 	
+      ['Select a State', 'None'],
+      ['Alabama', 'AL'], 
+      ['Alaska', 'AK'],
+      ['Arizona', 'AZ'],
+      ['Arkansas', 'AR'], 
+      ['California', 'CA'], 
+      ['Colorado', 'CO'], 
+      ['Connecticut', 'CT'], 
+      ['Delaware', 'DE'], 
+      ['District Of Columbia', 'DC'], 
+      ['Florida', 'FL'],
+      ['Georgia', 'GA'],
+      ['Hawaii', 'HI'], 
+      ['Idaho', 'ID'], 
+      ['Illinois', 'IL'], 
+      ['Indiana', 'IN'], 
+      ['Iowa', 'IA'], 
+      ['Kansas', 'KS'], 
+      ['Kentucky', 'KY'], 
+      ['Louisiana', 'LA'], 
+      ['Maine', 'ME'], 
+      ['Maryland', 'MD'], 
+      ['Massachusetts', 'MA'], 
+      ['Michigan', 'MI'], 
+      ['Minnesota', 'MN'],
+      ['Mississippi', 'MS'], 
+      ['Missouri', 'MO'], 
+      ['Montana', 'MT'], 
+      ['Nebraska', 'NE'], 
+      ['Nevada', 'NV'], 
+      ['New Hampshire', 'NH'], 
+      ['New Jersey', 'NJ'], 
+      ['New Mexico', 'NM'], 
+      ['New York', 'NY'], 
+      ['North Carolina', 'NC'], 
+      ['North Dakota', 'ND'], 
+      ['Ohio', 'OH'], 
+      ['Oklahoma', 'OK'], 
+      ['Oregon', 'OR'], 
+      ['Pennsylvania', 'PA'], 
+      ['Rhode Island', 'RI'], 
+      ['South Carolina', 'SC'], 
+      ['South Dakota', 'SD'], 
+      ['Tennessee', 'TN'], 
+      ['Texas', 'TX'], 
+      ['Utah', 'UT'], 
+      ['Vermont', 'VT'], 
+      ['Virginia', 'VA'], 
+      ['Washington', 'WA'], 
+      ['West Virginia', 'WV'], 
+      ['Wisconsin', 'WI'], 
+      ['Wyoming', 'WY']
+    ]
   end
 end

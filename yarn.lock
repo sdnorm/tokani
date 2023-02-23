@@ -251,6 +251,11 @@
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.2.tgz#fc25ad9943bcac11cceb8168db4f275e0e72e756"
   integrity sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
 
+"@wizardhealth/stimulus-multiselect@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wizardhealth/stimulus-multiselect/-/stimulus-multiselect-1.0.0.tgz#88991537588cdcc2212a2c3995ac141bd4bae05f"
+  integrity sha512-lHN9tJNkOTpZdeToTRucdvxKBUkyGoVKiZ5P7SjQgSRn+1WW4Ych5BW+OcZv7Obbik2nfGuelv4BtJFe6ONjsA==
+
 acorn-node@^1.8.2:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/acorn-node/-/acorn-node-1.8.2.tgz#114c95d64539e53dede23de8b9d96df7c7ae2af8"

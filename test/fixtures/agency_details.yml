@@ -14,6 +14,7 @@
 #  secondary_contact_last_name    :string
 #  secondary_contact_phone_number :string
 #  secondary_contact_title        :string
+#  time_zones                     :string           is an Array
 #  url                            :string
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null

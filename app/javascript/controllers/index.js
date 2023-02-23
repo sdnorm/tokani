@@ -25,3 +25,6 @@ application.register('password-visibility', PasswordVisibility)
 
 // import Autocomplete from 'stimulus-autocomplete'
 // application.register('autocomplete', Autocomplete)
+
+import { Multiselect } from '@wizardhealth/stimulus-multiselect'
+application.register('multiselect', Multiselect)

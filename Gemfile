@@ -131,3 +131,4 @@ end
 
 gem "faker"
 gem 'phonelib'
+gem 'email_validator'
