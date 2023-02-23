@@ -38,7 +38,7 @@ class Agency < Account
       accepted_terms_at: Time.current
     )
     update(owner_id: user.id)
-    account_users.create(user: user, role: :agency_admin)
+    account_users.create(user: user, roles: {"agency_admin" => true})
     TokaniAgencyCreationMailer.welcome(user).deliver_later
   end
 

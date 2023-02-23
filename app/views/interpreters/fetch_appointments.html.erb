@@ -13,7 +13,7 @@
     <% @appointments.each do |appointment| %>
       <tbody class="<%= cycle('bg-gray-50', 'bg-white') %>">
         <tr>
-          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to appointment.ref_number, appointment_path(appointment) %></td>
+          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-900 underline sm:pl-6"><%= link_to appointment.ref_number, appointment_details_interpreter_path(appointment) %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= date_displayable(appointment.start_time) %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scheduled_time_range(appointment, current_user) %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= appointment&.language&.name %></td>

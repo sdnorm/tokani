@@ -252,3 +252,4 @@
 .multiselect__dropdown--open {
   display: block;
 }
+@import "dropzone/dist/dropzone.css";
