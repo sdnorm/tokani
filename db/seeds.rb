@@ -96,7 +96,11 @@ load "db/seed_data/super_admin.rb"
 #   RateCriterium.create!(account_id: agency.id, type_key: :language, name: "Language", sort_order: 2)
 #   RateCriterium.create!(account_id: agency.id, type_key: :interpreter_type, name: "Interpreter Type", sort_order: 3)
 <<<<<<< HEAD
+<<<<<<< HEAD
 # end
+=======
+# end
+>>>>>>> 015017d (seed data work)
 =======
 # end
 >>>>>>> 015017d (seed data work)
