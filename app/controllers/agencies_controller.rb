@@ -30,6 +30,9 @@ class AgenciesController < ApplicationController
 
   # GET /agencies/1/edit
   def edit
+    @selected_time_zones = @agency.agency_detail.time_zones.map do |time_zone|
+      {value: time_zone.to_s, text: time_zone.to_s}
+    end
   end
 
   # POST /agencies or /agencies.json
@@ -129,7 +132,14 @@ class AgenciesController < ApplicationController
         :primary_contact_email,
         :primary_contact_phone_number,
         :primary_contact_title,
-        :phone_number
+        :secondary_contact_first_name,
+        :secondary_contact_last_name,
+        :secondary_contact_email,
+        :secondary_contact_phone_number,
+        :secondary_contact_title,
+        :phone_number,
+        :url,
+        time_zones: []
       ]
     )
 
