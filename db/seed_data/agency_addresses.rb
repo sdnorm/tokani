@@ -5,6 +5,6 @@ Account.all.each do |agency|
     state: Faker::Address.state,
     postal_code: Faker::Address.zip_code,
     address_type: "physical",
-    addressable_id: agency.id,
+    addressable_id: agency.id
   )
 end

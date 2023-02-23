@@ -1,17 +1,17 @@
 puts "*************** creating Agencies / with primary contacts as owners ***************"
 
-load 'db/seed_data/agencies.rb'
-load 'db/seed_data/agency_details.rb'
+load "db/seed_data/agencies.rb"
+load "db/seed_data/agency_details.rb"
 
 Agency.where(agency: true).each do |agency|
   agency.create_owner_account_from_primary_contact
 end
 
-load 'db/seed_data/agency_addresses.rb'
+load "db/seed_data/agency_addresses.rb"
 
 puts "*************** created Agencies with agency details and agency adresses ***************"
 
-load 'db/seed_data/super_admin.rb'
+load "db/seed_data/super_admin.rb"
 
 # puts "*************** creating Customer Categories ***************"
 

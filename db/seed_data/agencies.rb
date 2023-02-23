@@ -1,5 +1,5 @@
 4.times do
-  agency = Account.create(
+  Account.create(
     name: Faker::Company.name,
     agency: true
   )
