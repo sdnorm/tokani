@@ -1,6 +1,6 @@
 <%= content_for :title, "Agencies" %>
 <%= turbo_stream_from :agencies %>
-<div class="flex flex-1 flex-col md:pl-64">
+<div class="flex flex-1 flex-col">
 	<main class="flex-1">
 	  <div class="py-6">
 		  <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
@@ -15,28 +15,49 @@
 				    </h1>
 				  </div>      
 			  </div>
-		    <div class="p-8 bg-white rounded shadow">
+		    <div class="p-8">
 		      <div class="px-4 sm:px-6 lg:px-8 container">
             <div class="container px-4 mx-auto my-8">
               <div class="flex items-center justify-between mb-4">
                 <div>
                   <h1 class="h3">Agencies</h1>
-                  <div class="text-sm font-medium">
-                    <span class="text-gray-500">Sort by:</span>
-                  </div>
                 </div>
                 <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
               </div>
-              <%= tag.div id: ("agencies" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
-                <%= render partial: "agencies/index", collection: @agencies, as: :agency, cached: true %>
-                <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
-                  <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
-                  <div class="flex-1 text-center">
-                    <p class="mb-4 h3">Create your first Agency</p>
-                    <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn btn-primary" %>
+              <div class="px-4 sm:px-6 lg:px-8">
+                <div class="mt-8 flow-root">
+                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-4">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"><%= sortable @sites, :name, "Name" %></th>
+                              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sortable @sites, :primary_contact_email, "Primary Contact" %></th>
+                              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                <span class="sr-only">View</span>
+                              </th>
+                              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                <span class="sr-only">Edit</span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 bg-white">
+                            <%= render partial: "agencies/agency_list", collection: @agencies, as: :agency, cached: true %>
+                            <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
+                              <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+                              <div class="flex-1 text-center">
+                                <p class="mb-4 h3">Create your first Agency</p>
+                                <%= link_to t("shared.scaffold.new.title", model: "Agency"), new_agency_path, class: "btn btn-primary" %>
+                              </div>
+                            </div>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              <% end %>
+              </div>
               <% if @pagy.pages > 1 %>
                 <div class="my-6 text-center">
                   <%== pagy_nav(@pagy) %>

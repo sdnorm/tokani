@@ -130,3 +130,5 @@ end
 # gem "strong_migrations", "~> 0.7.6"
 
 gem "faker"
+gem "phonelib"
+gem "email_validator"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_22_182045) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -141,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_182045) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "agency_id"
+    t.string "time_zones", array: true
     t.index ["agency_id"], name: "index_agency_details_on_agency_id"
   end
 
@@ -303,7 +304,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_182045) do
     t.uuid "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "customer_category_id", null: false
+    t.bigint "customer_category_id"
     t.index ["customer_category_id"], name: "index_customer_details_on_customer_category_id"
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end

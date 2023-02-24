@@ -1,0 +1,17 @@
+<tr>
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= agency.name %></td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <%= agency.agency_detail.primary_contact_email %>
+  </td>
+  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+    <%= link_to agency_path(agency), class: "text-indigo-600 hover:text-indigo-900" do %>
+      View<span class="sr-only">
+    <% end %>
+    <a href="#" class="text-indigo-600 hover:text-indigo-900"></a>
+  </td>
+  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+    <%= link_to edit_agency_path(agency), class: "text-indigo-600 hover:text-indigo-900" do %>
+      Edit<span class="sr-only">
+    <% end %>
+  </td>
+</tr>

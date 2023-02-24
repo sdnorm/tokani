@@ -9,6 +9,14 @@
           <dt class="text-sm font-medium text-tokanisecondary-600">Agency name</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= agency.name %></dd>
         </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600">Primary Contact</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= agency.agency_detail.primary_contact_first_name %> <%= agency.agency_detail.primary_contact_last_name %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600">Primary Contact Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= agency.agency_detail.primary_contact_email %></dd>
+        </div>
       </dl>
     </div>
   </div>
