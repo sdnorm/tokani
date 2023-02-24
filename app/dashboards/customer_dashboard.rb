@@ -54,7 +54,7 @@ class CustomerDashboard < Administrate::BaseDashboard
     subscriptions: Field::HasMany,
     users: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

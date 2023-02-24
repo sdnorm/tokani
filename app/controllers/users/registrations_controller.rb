@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       account = resource.owned_accounts.first
       account ||= resource.owned_accounts.new
       # account.account_users.new(user: resource, admin: true)
-      account.account_users.new(user: resource, roles: {"agency_admin": true, "admin": true})
+      account.account_users.new(user: resource, roles: {agency_admin: true, admin: true})
     end
   end
 
