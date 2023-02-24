@@ -99,6 +99,8 @@ class Appointment < ApplicationRecord
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
 
+  scope :by_status, ->(status) { where(status: status) }
+
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
   before_create :gen_refnum

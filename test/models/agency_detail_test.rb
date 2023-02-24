@@ -3,6 +3,7 @@
 # Table name: agency_details
 #
 #  id                             :bigint           not null, primary key
+#  company_website                :string
 #  phone_number                   :string
 #  primary_contact_email          :string
 #  primary_contact_first_name     :string
