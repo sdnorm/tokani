@@ -1,21 +1,5 @@
 <%= content_for :title, "Customers" %>
 <%= turbo_stream_from :customers %>
-
-<!--       <div class="text-sm font-medium">
-        <span class="text-gray-500">Sort by:</span>
-        <%= sortable @customers, :name, "Name", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :contact_name, "Contact name", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :email, "Email", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :address, "Address", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :city, "City", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :state, "State", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :zip, "Zip", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :is_active, "Is active", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :notes, "Notes", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :fax, "Fax", class: "text-gray-700 mr-1" %>
-        <%= sortable @customers, :phone, "Phone", class: "text-gray-700 mr-1" %>
-      </div>
- -->
 <%= render partial: 'shared/sidenav' %>
 <div>
   <div class="flex flex-1 flex-col md:pl-64">

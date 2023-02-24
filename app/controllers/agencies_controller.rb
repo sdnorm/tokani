@@ -1,5 +1,5 @@
 class AgenciesController < ApplicationController
-  before_action :set_agency, only: [:show, :edit, :update, :destroy]
+  before_action :set_agency, only: [:show, :edit, :update, :destroy, :agency_detail_form, :agency_detail_update]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -90,6 +90,25 @@ class AgenciesController < ApplicationController
     end
   end
 
+  def agency_detail_form
+    @agency.build_physical_address
+    @agency.build_agency_detail
+    @selected_time_zones = []
+  end
+
+  # PATCH/PUT /agencies/1 or /agencies/1.json
+  def agency_detail_update
+    respond_to do |format|
+      if @agency.update(agency_params)
+        format.html { redirect_to agency_dashboard_path, notice: "Agency was successfully updated." }
+        format.json { render :show, status: :ok, location: @agency }
+      else
+        format.html { render :agency_detail_form, status: :unprocessable_entity }
+        format.json { render json: @agency.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def account_invoices
   end
 
@@ -100,7 +119,8 @@ class AgenciesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_agency
-    @agency = Agency.find(params[:id])
+    # @agency = Agency.find(params[:id])
+    @agency = current_account
     @agency = @agency.becomes(Agency)
     # Uncomment to authorize with Pundit
     # authorize @agency
