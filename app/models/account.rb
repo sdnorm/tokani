@@ -82,6 +82,11 @@ class Account < ApplicationRecord
   validates :domain, exclusion: {in: RESERVED_DOMAINS, message: :reserved}, uniqueness: {allow_blank: true}
   validates :subdomain, exclusion: {in: RESERVED_SUBDOMAINS, message: :reserved}, format: {with: /\A[a-zA-Z0-9]+[a-zA-Z0-9\-_]*[a-zA-Z0-9]+\Z/, message: :format, allow_blank: true}, uniqueness: {allow_blank: true}
 
+  def self.available_timezones
+    list = ["Alaska", "Hawaii", "Arizona", "Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"]
+    ActiveSupport::TimeZone.us_zones.filter { |tz| list.include?(tz.name) }
+  end
+
   def account_interpreters
     interpreter_account_ids = AccountUser.where(roles: {interpreter: true}).where(account_id: id).pluck(:user_id)
     User.includes(:interpreter_detail).where(id: interpreter_account_ids)

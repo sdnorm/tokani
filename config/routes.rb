@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :interpreter_details
-  get "interpreters/availability", to: "interpreters#availability"
+  get "interpreters/availability"
   get "interpreters/dashboard", to: "interpreters#dashboard"
   get "interpreter/index"
   get "interpreters/my_scheduled"
@@ -209,12 +209,13 @@ Rails.application.routes.draw do
         post :accept_offered
         post :cancel_coverage
         post :time_finish
+        patch :update_timezone
+        get :availabilities
       end
     end
     resources :requestors
-
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
-    # end
+    resources :availabilities, only: [:create, :destroy]
   end
 
   resources :customer_categories
