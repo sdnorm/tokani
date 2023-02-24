@@ -4,3 +4,4 @@ js: bundle exec yarn build --reload
 worker: bundle exec sidekiq
 
 # docker: docker-compose up
+stripe: stripe listen --forward-to localhost:3000/webhooks/stripe

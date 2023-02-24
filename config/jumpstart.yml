@@ -14,8 +14,10 @@ solargraph: false
 register_with_account: true
 apns: false
 fcm: false
-collect_billing_address: false
+collect_billing_address: true
 integrations:
 - honeybadger
 multitenancy:
 - path
+payment_processors:
+- stripe

@@ -34,8 +34,7 @@ class Accounts::AccountInvitationsController < Accounts::BaseController
 
   def tokani_agency_invitation
   end
-  
-  end
+
   def resend
     @account_invitation.send_invite
     redirect_to @account, status: :see_other, notice: t(".sent", email: @account_invitation.email)

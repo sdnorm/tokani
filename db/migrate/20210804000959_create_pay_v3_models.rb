@@ -5,7 +5,7 @@ class CreatePayV3Models < ActiveRecord::Migration[6.0]
     add_column :plans, :description, :string
 
     create_table :pay_customers do |t|
-      t.belongs_to :owner, polymorphic: true, index: false
+      t.belongs_to :owner, polymorphic: true, index: false, type: :uuid
       t.string :processor
       t.string :processor_id
       t.boolean :default
@@ -21,7 +21,7 @@ class CreatePayV3Models < ActiveRecord::Migration[6.0]
     add_index :pay_customers, [:processor, :processor_id]
 
     create_table :pay_merchants do |t|
-      t.belongs_to :owner, polymorphic: true, index: false
+      t.belongs_to :owner, polymorphic: true, index: false, type: :uuid
       t.string :processor
       t.string :processor_id
       t.boolean :default

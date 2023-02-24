@@ -2,18 +2,20 @@
 #
 # Table name: accounts
 #
-#  id                 :uuid             not null, primary key
-#  agency             :boolean
-#  customer           :boolean          default(FALSE)
-#  domain             :string
-#  extra_billing_info :text
-#  is_active          :boolean          default(TRUE)
-#  name               :string           not null
-#  personal           :boolean          default(FALSE)
-#  subdomain          :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  owner_id           :uuid
+#  id                  :uuid             not null, primary key
+#  account_users_count :integer          default(0)
+#  agency              :boolean
+#  billing_email       :string
+#  customer            :boolean          default(FALSE)
+#  domain              :string
+#  extra_billing_info  :text
+#  is_active           :boolean          default(TRUE)
+#  name                :string           not null
+#  personal            :boolean          default(FALSE)
+#  subdomain           :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  owner_id            :uuid
 #
 # Indexes
 #
@@ -64,13 +66,6 @@ class Account < ApplicationRecord
   has_many :process_batches, dependent: :destroy
   has_many :rate_criteria, dependent: :destroy
   has_many :reports, dependent: :destroy
-
-  # accepts_nested_attributes_for :physical_address, :customer_detail
-
-  # has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
-  # validates_presence_of :agency_detail
-  # accepts_nested_attributes_for :agency_detail
-  # , if: :agency?
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

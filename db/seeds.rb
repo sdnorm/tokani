@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 puts "*************** creating Agencies / with primary contacts as owners ***************"
 
 load "db/seed_data/agencies.rb"

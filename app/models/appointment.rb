@@ -107,7 +107,7 @@ class Appointment < ApplicationRecord
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
-    category_code = customer.customer_detail.customer_category.modality_prefix(modality)
+    category_code = customer.customer_category.modality_prefix(modality)
     # here's where our collision occurs.
     my_year = Time.current.year
     year_code = (my_year - 2000).to_s

@@ -2,18 +2,20 @@
 #
 # Table name: accounts
 #
-#  id                 :uuid             not null, primary key
-#  agency             :boolean
-#  customer           :boolean          default(FALSE)
-#  domain             :string
-#  extra_billing_info :text
-#  is_active          :boolean          default(TRUE)
-#  name               :string           not null
-#  personal           :boolean          default(FALSE)
-#  subdomain          :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  owner_id           :uuid
+#  id                  :uuid             not null, primary key
+#  account_users_count :integer          default(0)
+#  agency              :boolean
+#  billing_email       :string
+#  customer            :boolean          default(FALSE)
+#  domain              :string
+#  extra_billing_info  :text
+#  is_active           :boolean          default(TRUE)
+#  name                :string           not null
+#  personal            :boolean          default(FALSE)
+#  subdomain           :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  owner_id            :uuid
 #
 # Indexes
 #
