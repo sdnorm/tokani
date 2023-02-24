@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
-=======
-ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
->>>>>>> jumpstart/main
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -55,6 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
     t.boolean "customer", default: false
     t.boolean "is_active", default: true
     t.boolean "agency"
+    t.string "billing_email"
+    t.integer "account_users_count", default: 0
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
@@ -252,6 +250,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "connected_accounts", force: :cascade do |t|
+    t.string "provider"
+    t.string "uid"
+    t.string "refresh_token"
+    t.datetime "expires_at", precision: nil
+    t.text "auth"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "access_token"
+    t.string "access_token_secret"
+    t.uuid "owner_id"
+    t.string "owner_type"
+    t.index ["owner_id", "owner_type"], name: "index_connected_accounts_on_owner_id_and_owner_type"
   end
 
   create_table "customer_agencies", force: :cascade do |t|
@@ -611,7 +624,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
     t.string "currency"
     t.integer "interval_count", default: 1
     t.string "description"
-    t.string "unit"
+    t.string "unit_label"
+    t.boolean "charge_per_unit"
   end
 
   create_table "process_batch_appointments", force: :cascade do |t|
@@ -757,20 +771,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
     t.index ["account_id"], name: "index_specialties_on_account_id"
   end
 
-  create_table "user_connected_accounts", force: :cascade do |t|
-    t.string "provider"
-    t.string "uid"
-    t.string "refresh_token"
-    t.datetime "expires_at", precision: nil
-    t.text "auth"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "access_token"
-    t.string "access_token_secret"
-    t.uuid "user_id"
-    t.index ["user_id"], name: "index_user_connected_accounts_on_user_id"
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -831,7 +831,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
-<<<<<<< HEAD
   add_foreign_key "providers", "accounts", column: "customer_id"
   add_foreign_key "providers", "departments"
   add_foreign_key "providers", "sites"
@@ -840,6 +839,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
   add_foreign_key "requested_interpreters", "users"
   add_foreign_key "sites", "accounts"
   add_foreign_key "specialties", "accounts"
-=======
->>>>>>> jumpstart/main
 end

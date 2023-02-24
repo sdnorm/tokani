@@ -497,7 +497,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  acts_as_tenant (~> 0.6.1)
+  acts_as_tenant (~> 0.6)
   administrate!
   administrate-field-active_storage (~> 0.4.2)
   annotate!
@@ -508,7 +508,7 @@ DEPENDENCIES
   country_select (~> 8.0)
   cssbundling-rails (~> 1.1.2)
   debug (>= 1.0.0)
-  devise (~> 4.9)
+  devise (~> 4.9.0)
   devise-i18n (~> 1.10)
   email_validator
   erb_lint
@@ -518,7 +518,7 @@ DEPENDENCIES
   inline_svg (~> 1.6)
   invisible_captcha (~> 2.0)
   jbuilder!
-  jsbundling-rails (~> 1.1.1)
+  jsbundling-rails (~> 1.1.0)
   jumpstart!
   letter_opener_web (~> 2.0)
   local_time (~> 2.1)
@@ -542,7 +542,7 @@ DEPENDENCIES
   rails (~> 7.0.4)
   receipts (~> 2.2.0)
   redis (~> 5.0)
-  responders!
+  responders
   rotp (~> 6.2)
   rqrcode (~> 2.1)
   ruby-oembed (~> 0.16.0)
