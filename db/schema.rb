@@ -243,6 +243,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
     t.index ["requestor_id"], name: "index_appointments_on_requestor_id"
   end
 
+  create_table "availabilities", force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "time_zone"
+    t.integer "wday"
+    t.integer "start_seconds"
+    t.integer "end_seconds"
+    t.boolean "in_person"
+    t.boolean "phone"
+    t.boolean "video"
+    t.integer "backport_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "start_seconds", "end_seconds"], name: "user_start_secs_end_secs_ix"
+    t.index ["user_id"], name: "index_availabilities_on_user_id"
+    t.check_constraint "end_seconds >= 0 AND end_seconds < 86400", name: "check_end_seconds"
+    t.check_constraint "start_seconds < end_seconds", name: "check_valid_time_range"
+    t.check_constraint "start_seconds >= 0 AND start_seconds < 86400", name: "check_start_seconds"
+  end
+
   create_table "billing_line_items", force: :cascade do |t|
     t.integer "appointment_id"
     t.string "type_key"
@@ -823,6 +842,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
   add_foreign_key "appointments", "providers"
   add_foreign_key "appointments", "recipients"
   add_foreign_key "appointments", "users", column: "requestor_id"
+  add_foreign_key "availabilities", "users"
   add_foreign_key "customer_details", "customer_categories"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"

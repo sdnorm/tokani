@@ -16,37 +16,15 @@
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">In-Person</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Phone</th>
 								<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Video Call</th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span class="sr-only">Update</span>
-                </th>
 								<th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                   <span class="sr-only">Delete</span>
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              <tr>
-                <td class="whitespace-nowrap py-4 pl-4 text-sm text-gray-500">12:00 PM</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">2:00 PM</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><i class="fa-solid fa-square-check"></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> - </td>
-								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><i class="fa-solid fa-square-check"></td>
-                <td class="whitespace-nowrap text-center py-4 pr-4">
-                  <button class="rounded-none border border-transparent bg-green-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Update</button>
-                </td>
-								<td class="whitespace-nowrap px-3 py-4"><i class="fa fa-xl fa-trash"></td>
-              </tr>
-							<tr>
-                <td class="whitespace-nowrap py-4 pl-4 text-sm text-gray-500">3:00 PM</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">6:00 PM</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> - </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><i class="fa-solid fa-square-check"></td>
-								<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> - </td>
-                <td class="whitespace-nowrap text-center py-4 pr-4">
-                  <button class="rounded-none border border-transparent bg-green-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Update</button>
-                </td>
-								<td class="whitespace-nowrap px-3 py-4"><i class="fa fa-xl fa-trash"></td>
-              </tr>
+            <tbody class="divide-y divide-gray-200 bg-white" id="interpreter_availabilities_table_<%= index %>">
+              <% @availabilities[index].try(:each) do |avail| %>
+                <%= render partial: 'availabilities/availability_row', locals: {availability: avail} %>
+              <% end %>
             </tbody>
           </table>
         </div>
