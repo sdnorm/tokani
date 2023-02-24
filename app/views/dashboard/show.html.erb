@@ -2,8 +2,6 @@
 
 <% if current_account_user.roles["interpreter"] %>
   <%= render partial: "interpreter" %>
-<% elsif current_account_user.roles["agency_admin"] %>
-  <%= render partial: "agency_admin" %>
 <% elsif current_account_user.agency_admin? %>
   <%= render partial: "agency_admin" %>
 <% elsif current_account_user.admin? %>

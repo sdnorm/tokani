@@ -6,16 +6,9 @@ class DashboardController < ApplicationController
       # redirect_to new_interpreter_detail_path
       render template: "dashboard/interpreter"
     elsif current_account_user.agency_admin? || current_account_user.agency_member?
-      if current_account.agency_detail.nil?
-        agency_detail_form_path
-      else
-        appointments = current_account.appointments
-        @pagy, @appointments = pagy(appointments)
-        redirect_to agency_dashboard_path
-      end
+      redirect_to agency_dashboard_path
     elsif current_user.admin?
       redirect_to agencies_path
-      # render template: "agencies/index"
     else
       render template: "dashboard/requestor_details"
     end
@@ -23,7 +16,11 @@ class DashboardController < ApplicationController
 
   def agency
     @agency = current_account
-    appointments = current_account.appointments
-    @pagy, @appointments = pagy(appointments)
+    if @agency.agency_detail.nil?
+      redirect_to agency_detail_form_path
+    else
+      appointments = @agency.appointments
+      @pagy, @appointments = pagy(appointments)
+    end
   end
 end
