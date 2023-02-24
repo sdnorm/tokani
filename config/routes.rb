@@ -216,6 +216,7 @@ Rails.application.routes.draw do
     resources :requestors
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
     resources :availabilities, only: [:create, :destroy]
+    get "agency-details", to: "agencies#agency_detail_form", as: :agency_detail_form
   end
 
   resources :customer_categories

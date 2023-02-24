@@ -1,5 +1,6 @@
 <%= content_for :title, "Customers" %>
 <%= turbo_stream_from :customers %>
+<%= render partial: 'shared/sidenav' %>
 <div>
   <div class="flex flex-1 flex-col md:pl-64">
     <main class="flex-1">
