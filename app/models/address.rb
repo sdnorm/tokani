@@ -19,7 +19,7 @@ class Address < ApplicationRecord
   belongs_to :addressable, polymorphic: true
 
   # validates :address_type, :line1, :city, :postal_code, :country, presence: true
-  validates :address_type, :line1, :city, :postal_code, presence: true
+  validates :address_type, :state, :line1, :city, :postal_code, presence: true
 
   enum address_type: [:billing, :shipping, :physical]
 
