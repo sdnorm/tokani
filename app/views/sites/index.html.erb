@@ -1,8 +1,7 @@
 <%= content_for :title, "Sites" %>
 <%= turbo_stream_from :sites %>
-
+<%= render partial: 'shared/sidenav' %>
 <div>
-  
   <div class="flex flex-1 flex-col md:pl-64">
     <main class="flex-1">
       <div class="py-6">

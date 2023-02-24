@@ -52,7 +52,7 @@ class Account < ApplicationRecord
   has_many :pay_bill_rates
   has_many :pay_bill_configs
 
-  # has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
+  has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
   has_many :specialties, dependent: :destroy, foreign_key: :account_id
 
