@@ -9,7 +9,7 @@ class DashboardController < ApplicationController
       appointments = current_account.appointments
       @pagy, @appointments = pagy(appointments)   
       redirect_to agency_dashboard_path
-    elsif current_account_user.admin?
+    elsif current_user.admin?
       redirect_to agencies_path
       # render template: "agencies/index"
     else
@@ -19,6 +19,6 @@ class DashboardController < ApplicationController
 
   def agency
     appointments = current_account.appointments
-    @pagy, @appointments = pagy(appointments)    
+    @pagy, @appointments = pagy(appointments)   
   end
 end

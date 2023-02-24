@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 puts "*************** creating Agencies / with primary contacts as owners ***************"
 
 load "db/seed_data/agencies.rb"
@@ -12,7 +11,7 @@ load "db/seed_data/agency_addresses.rb"
 
 puts "*************** created Agencies with agency details and agency adresses ***************"
 
-# load "db/seed_data/super_admin.rb"
+load "db/seed_data/super_admin.rb"
 
 # puts "*************** creating Customer Categories ***************"
 
