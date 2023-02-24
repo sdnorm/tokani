@@ -5,6 +5,15 @@ Pay.setup do |config|
   config.support_email = Jumpstart.config.support_email
 
   config.routes_path = "/"
+
+  config.mail_to = -> {
+    pay_customer = params[:pay_customer]
+    account = pay_customer.owner
+
+    recipients = [ActionMailer::Base.email_address_with_name(pay_customer.email, pay_customer.customer_name)]
+    recipients << account.billing_email if account.billing_email?
+    recipients
+  }
 end
 
 module SubscriptionExtensions
@@ -47,7 +56,7 @@ Rails.configuration.to_prepare do
   # Use Inter font for full UTF-8 support in PDFs
   # https://github.com/rsms/inter
   Receipts.default_font = {
-    bold: Rails.root.join("app/assets/fonts/Inter-Bold.otf"),
-    normal: Rails.root.join("app/assets/fonts/Inter-Regular.otf")
+    bold: Rails.root.join("app/assets/fonts/Inter-Bold.ttf"),
+    normal: Rails.root.join("app/assets/fonts/Inter-Regular.ttf")
   }
 end

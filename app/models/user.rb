@@ -67,7 +67,7 @@ class User < ApplicationRecord
 
   # Associations
   has_many :api_tokens, dependent: :destroy
-  has_many :connected_accounts, dependent: :destroy
+  has_many :connected_accounts, as: :owner, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :notification_tokens, dependent: :destroy
 
@@ -95,6 +95,9 @@ class User < ApplicationRecord
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
+
+  # Protect admin flag from editing
+  attr_readonly :admin
 
   # Validations
   validates :name, presence: true

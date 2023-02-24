@@ -1,12 +1,13 @@
 # == Schema Information
 #
-# Table name: user_connected_accounts
+# Table name: connected_accounts
 #
 #  id                  :bigint           not null, primary key
 #  access_token        :string
 #  access_token_secret :string
 #  auth                :text
 #  expires_at          :datetime
+#  owner_type          :string
 #  provider            :string
 #  refresh_token       :string
 #  uid                 :string
@@ -22,16 +23,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
-  provider: test
+  owner: one (User)
+  provider: developer
   access_token: abcd1234
   refresh_token: ABCDEFG
   expires_at: <%= 1.year.from_now.to_formatted_s(:db) %>
   uid: one
 
 two:
-  user: one
-  provider: test
+  owner: one (User)
+  provider: developer
   access_token: abcd1234
   refresh_token: ABCDEFG
   expires_at: <%= 1.year.from_now.to_formatted_s(:db) %>

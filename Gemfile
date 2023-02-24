@@ -82,22 +82,23 @@ group :test do
   gem "capybara", ">= 3.26"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "webmock"
 end
 
 # Jumpstart dependencies
 gem "jumpstart", path: "lib/jumpstart", group: :omit
 
-gem "acts_as_tenant", "~> 0.6.1"
+gem "acts_as_tenant", "~> 0.6"
 gem "administrate", github: "excid3/administrate", branch: "jumpstart" # '~> 0.10.0'
 gem "administrate-field-active_storage", "~> 0.4.2"
 gem "chartkick", "~> 5.0", ">= 5.0.1"
 gem "cssbundling-rails", "~> 1.1.2"
 gem "country_select", "~> 8.0"
-gem "devise", "~> 4.9"
+gem "devise", "~> 4.9.0"
 gem "devise-i18n", "~> 1.10"
 gem "inline_svg", "~> 1.6"
 gem "invisible_captcha", "~> 2.0"
-gem "jsbundling-rails", "~> 1.1.1"
+gem "jsbundling-rails", "~> 1.1.0"
 gem "local_time", "~> 2.1"
 gem "name_of_person", "~> 1.0"
 gem "noticed", "~> 1.5"
@@ -105,7 +106,7 @@ gem "oj", "~> 3.14"
 gem "omniauth", "~> 2.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "pagy", "~> 6.0"
-gem "pay", "~> 6.3.1"
+gem "pay", "~> 6.2"
 gem "pg_search", "~> 2.3"
 gem "prawn", github: "prawnpdf/prawn"
 gem "prefixed_ids", "~> 1.2"

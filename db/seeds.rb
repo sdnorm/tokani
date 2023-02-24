@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 puts "*************** creating Agencies / with primary contacts as owners ***************"
 
 load "db/seed_data/agencies.rb"
@@ -95,8 +96,18 @@ load "db/seed_data/super_admin.rb"
 #   RateCriterium.create!(account_id: agency.id, type_key: :specialty, name: "Specialty", sort_order: 1)
 #   RateCriterium.create!(account_id: agency.id, type_key: :language, name: "Language", sort_order: 2)
 #   RateCriterium.create!(account_id: agency.id, type_key: :interpreter_type, name: "Interpreter Type", sort_order: 3)
-<<<<<<< HEAD
 # end
-=======
-# end
->>>>>>> 015017d (seed data work)
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+#
+# Examples:
+#
+# Uncomment the following to create an Admin user for Production in Jumpstart Pro
+# user = User.create(
+#   name: "Admin User",
+#   email: "email@example.org",
+#   password: "password",
+#   password_confirmation: "password",
+#   terms_of_service: true
+# )
+# Jumpstart.grant_system_admin!(user)

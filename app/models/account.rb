@@ -80,10 +80,12 @@ class Account < ApplicationRecord
   has_one_attached :avatar
   pay_customer stripe_attributes: :stripe_attributes
 
-  validates :name, presence: true
-  validates :domain, exclusion: {in: RESERVED_DOMAINS, message: :reserved}
-  validates :subdomain, exclusion: {in: RESERVED_SUBDOMAINS, message: :reserved}, format: {with: /\A[a-zA-Z0-9]+[a-zA-Z0-9\-_]*[a-zA-Z0-9]+\Z/, message: :format, allow_blank: true}
   validates :avatar, resizable_image: true
+  validates :name, presence: true
+
+  # To require a domain or subdomain, add the presence validation
+  validates :domain, exclusion: {in: RESERVED_DOMAINS, message: :reserved}, uniqueness: {allow_blank: true}
+  validates :subdomain, exclusion: {in: RESERVED_SUBDOMAINS, message: :reserved}, format: {with: /\A[a-zA-Z0-9]+[a-zA-Z0-9\-_]*[a-zA-Z0-9]+\Z/, message: :format, allow_blank: true}, uniqueness: {allow_blank: true}
 
   def account_interpreters
     interpreter_account_ids = AccountUser.where(roles: {interpreter: true}).where(account_id: id).pluck(:user_id)
@@ -94,9 +96,11 @@ class Account < ApplicationRecord
     billing_address || build_billing_address
   end
 
-  # def email
-  #   account_users.includes(:user).order(created_at: :asc).first.user.email
-  # end
+  # Email address used for Pay customers and receipts
+  # Defaults to billing_email if defined, otherwise uses the account owner's email
+  def email
+    billing_email? ? billing_email : owner.email
+  end
 
   def impersonal?
     !personal?
@@ -143,24 +147,11 @@ class Account < ApplicationRecord
     false
   end
 
-  # Uncomment this to add generic trials (without a card or plan)
-  #
-  # after_create :start_trial
-  #
-  # def start_trial(length: 14.days)
-  #   trial_ends_at = length.from_now
-  #   set_payment_processor :fake_processor, allow_fake: true
-  #   payment_processor.subscribe(plan: Plan.free.fake_processor_id, trial_ends_at: trial_ends_at, ends_at: trial_ends_at)
-  # end
-
-  # If you need to create some associated records when an Account is created,
-  # use a `with_tenant` block to change the current tenant temporarily
-  #
-  # after_create do
-  #   ActsAsTenant.with_tenant(self) do
-  #     association.create(name: "example")
-  #   end
-  # end
+  # Used for per-unit subscriptions on create and update
+  # Returns the quantity that should be on the subscription
+  def per_unit_quantity
+    account_users_count
+  end
 
   private
 

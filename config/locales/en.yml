@@ -75,6 +75,7 @@ en:
       current: "Current Account"
     show:
       invite: "Invite A User"
+      resend_invite: "Resend Invite"
       edit: "Edit"
       edit_account: "Edit Account"
       copy_link: "Copy link"
@@ -95,6 +96,7 @@ en:
     users: "Users"
     roles: "Roles"
     account_invitations:
+      sent: "Invitation was sent to %{email}."
       updated: "Invitation was successfully updated."
       destroyed: "Invitation was successfully removed."
       new:
@@ -188,7 +190,7 @@ en:
       confirm_button: "Confirm Payment"
 
   static:
-    no_plans: "There are no pricing plans configured."
+    no_plans_html: "There are no pricing plans configured. %{link}."
     pricing:
       heading: "Pricing Plans"
       subhead: "Simple, straightforward pricing to get your online business up and running"
@@ -229,14 +231,15 @@ en:
       log_in: "Log In"
       sign_up: "Sign Up"
     oauth:
-      apple: "Apple"
+      apple: "Sign in with Apple"
       developer: "Developer"
-      facebook: "Facebook"
-      github: "GitHub"
-      gitlab: "GitLab"
-      google_oauth2: "Google"
-      stripe: "Stripe"
-      twitter: "Twitter"
+      facebook: "Sign in with Facebook"
+      github: "Sign in with GitHub"
+      gitlab: "Sign in with GitLab"
+      google_oauth2: "Sign in with Google"
+      microsoft_graph: "Sign in with Microsoft"
+      stripe: "Sign in with Stripe"
+      twitter: "Sign in with Twitter"
     right_nav:
       pricing: "Pricing"
       announcements: "What's New"
@@ -251,7 +254,7 @@ en:
   subscriptions:
     created: "Thanks for subscribing!"
     resumed: "Your subscription has been resumed."
-    info_updated: "Extra billing info saved sucessfully."
+    billing_settings_updated: "Billing settings have been updated sucessfully."
 
     plan:
       change_plan: "Change Plan"
@@ -305,7 +308,6 @@ en:
       free_trial: "Free Trial"
       free_trial_ends: "Your trial ends on %{date}."
       trial: "After your trial ends on %{date}, this plan will continue automatically."
-      quantity: "Quantity: %{quantity} at %{price} each"
       resume: "Resume plan"
       change_plan: "Change plan"
       pause: "Pause plan"
@@ -316,7 +318,9 @@ en:
       paused_at: "Your plan will be paused on %{date}."
       paused: "Your plan is paused."
       view_usage: "View usage"
+      view_upcoming_invoice: "View upcoming invoice"
       past_due: "Past due"
+      unpaid: "Unpaid"
       update_payment_method: "Update payment method"
       failed_payment: "Your latest payment has failed. Update your payment method to continue this plan."
 
@@ -333,6 +337,7 @@ en:
       updated: "Your billing address was updated successfully."
       no_billing_address: "You have no billing address on file."
       destroyed: "Your billing address has been removed successfully."
+      edit: "Edit"
 
     billing_addresses:
       show:
@@ -344,6 +349,12 @@ en:
       save_info: "Save information"
       saving: "Saving..."
       add_info: "Add information"
+
+    billing_email:
+      billing_email: "Billing Email"
+      description: "Send receipts to a specific email address along with the account owner."
+      save: "Save"
+      saving: "Saving..."
 
     charges:
       title: "Billing History"
@@ -370,13 +381,17 @@ en:
       show:
         title: "Resume your plan"
         resume: "This plan will no longer be canceled and will automatically renew."
-        quantity: "Quantity: %{quantity} at %{price} each"
         back: "Back to Billing"
         button: "Resume plan"
         processing: "Resuming..."
 
       update:
         resumed: "Your subscription has been resumed."
+
+    summary:
+      quantity: "Quantity: %{quantity} at %{price} %{unit}"
+      per_unit: "per %{unit}"
+      each: "each"
 
     cancels:
       show:
@@ -385,7 +400,6 @@ en:
         help_html: "Need to talk to someone? %{link} -- we'd love to help."
         contact_us: "Contact us"
         subject: "Question about %{product}"
-        quantity: "Quantity: %{quantity} at %{price} each"
         active_until: "Your plan will be canceled, but is still available until the end of your billing period."
         resume: "If you change your mind, you can resume your subscription."
         button: "Cancel plan"
@@ -404,6 +418,7 @@ en:
           quantity: "Quantity"
           unit_price: "Unit Price"
           total: "Total"
+        quantity: "Quantity"
         back: "Back to Billing"
 
     forms:
@@ -443,6 +458,7 @@ en:
         none: "You don't have any connected accounts."
     omniauth_callbacks:
       account_exists: "We already have an account with this email. Login with your previous account before connecting this one."
+      connected_to_another_account: "This account is already connected to another user."
     sessions:
       create:
         incorrect_verification_code: "Incorrect verification code"
@@ -542,6 +558,7 @@ en:
         subdomain: "example"
         name_on_card: "Full Name"
         extra_billing_info: "VAT ID, Business name, address, etc..."
+        billing_email: "account@example.com"
       api_token:
         name: "Token Name"
       user:

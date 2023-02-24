@@ -8,13 +8,14 @@ class SubscriptionsController < ApplicationController
   before_action :set_plan, only: [:new, :payment, :create, :update]
   before_action :set_subscription, only: [:show, :edit, :update, :destroy]
   before_action :redirect_to_billing_address, only: [:new]
+  before_action :handle_past_due_or_unpaid, only: [:new]
 
   layout "checkout", only: [:new, :payment, :create]
 
   def index
     @billing_address = current_account.billing_address
     @payment_processor = current_account.payment_processor
-    @subscriptions = current_account.subscriptions.active.or(current_account.subscriptions.past_due).order(created_at: :asc).includes([:customer])
+    @subscriptions = current_account.subscriptions.active.or(current_account.subscriptions.past_due).or(current_account.subscriptions.unpaid).order(created_at: :asc).includes([:customer])
   end
 
   def show
@@ -30,7 +31,7 @@ class SubscriptionsController < ApplicationController
         @client_secret = payment_processor.create_setup_intent.client_secret
 
       else
-        @pay_subscription = payment_processor.subscribe(
+        args = {
           plan: @plan.id_for_processor(:stripe),
           trial_period_days: @plan.trial_period_days,
           payment_behavior: :default_incomplete,
@@ -38,7 +39,9 @@ class SubscriptionsController < ApplicationController
             enabled: @plan.taxed?
           },
           promotion_code: params[:promo_code]
-        )
+        }
+        args[:quantity] = current_account.per_unit_quantity if @plan.charge_per_unit?
+        @pay_subscription = payment_processor.subscribe(**args)
         @stripe_invoice = @pay_subscription.subscription.latest_invoice
         @client_secret = @pay_subscription.client_secret
       end
@@ -52,10 +55,12 @@ class SubscriptionsController < ApplicationController
   def create
     payment_processor = params[:processor] ? current_account.set_payment_processor(params[:processor]) : current_account.payment_processor
     payment_processor.payment_method_token = params[:payment_method_token]
-    payment_processor.subscribe(
+    args = {
       plan: @plan.id_for_processor(payment_processor.processor),
       trial_period_days: @plan.trial_period_days
-    )
+    }
+    args[:quantity] = current_account.per_unit_quantity if @plan.charge_per_unit?
+    payment_processor.subscribe(**args)
     redirect_to root_path, notice: t(".created")
   rescue Pay::ActionRequired => e
     redirect_to pay.payment_path(e.payment.id)
@@ -84,15 +89,15 @@ class SubscriptionsController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
-  def info
-    current_account.update(info_params)
-    redirect_to subscriptions_path, notice: t(".info_updated")
+  def billing_settings
+    current_account.update(billing_params)
+    redirect_to subscriptions_path, notice: t(".billing_settings_updated")
   end
 
   private
 
-  def info_params
-    params.require(:account).permit(:extra_billing_info)
+  def billing_params
+    params.require(:account).permit(:extra_billing_info, :billing_email)
   end
 
   def require_payments_enabled
@@ -115,6 +120,12 @@ class SubscriptionsController < ApplicationController
   def redirect_to_billing_address
     if Jumpstart.config.collect_billing_address? && current_account.billing_address.nil?
       redirect_to subscriptions_billing_address_path(plan: params[:plan], promo_code: params[:promo_code])
+    end
+  end
+
+  def handle_past_due_or_unpaid
+    if (subscription = current_account.payment_processor&.subscription) && (subscription.past_due? || subscription.unpaid?)
+      redirect_to new_payment_method_path
     end
   end
 end

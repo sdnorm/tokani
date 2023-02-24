@@ -5,7 +5,13 @@ module Jumpstart
         define_method provider do
           redirect_to root_path, alert: t("something_went_wrong") if auth.nil?
 
-          if connected_account.present?
+          if (signed_id = omniauth_params["record"])
+            # Handle authentication to another model
+            record = GlobalID::Locator.locate_signed(signed_id, for: :oauth)
+            ConnectedAccount.where(owner: record).first_or_initialize.update(connected_account_params)
+            run_connected_callback(connected_account)
+            redirect_to(omniauth_params.fetch("redirect_to", record) || root_path)
+          elsif connected_account.present?
             # Account has already been connected before
             handle_previously_connected(connected_account)
 
@@ -34,15 +40,17 @@ module Jumpstart
       def handle_previously_connected(connected_account)
         # Update connected account attributes
         connected_account.update(connected_account_params)
-        run_connected_callback(connected_account)
-        success_message!(kind: auth.provider)
 
-        if user_signed_in?
-          # Already connected account, we can just update the data
+        if user_signed_in? && connected_account.owner != current_user
+          redirect_to root_path, alert: t(".connected_to_another_account")
+        elsif user_signed_in?
+          run_connected_callback(connected_account)
+          success_message!(kind: auth.provider)
           redirect_to after_connect_redirect_path
         else
-          # Account was already connected, so we can sign in the user
-          sign_in_and_redirect connected_account.user, event: :authentication
+          run_connected_callback(connected_account)
+          success_message!(kind: auth.provider)
+          sign_in_and_redirect connected_account.owner, event: :authentication
         end
       end
 
@@ -95,7 +103,7 @@ module Jumpstart
       end
 
       def connected_account
-        @connected_account ||= User::ConnectedAccount.for_auth(auth)
+        @connected_account ||= ConnectedAccount.for_auth(auth)
       end
 
       def after_connect_redirect_path

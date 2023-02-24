@@ -4,6 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  amount            :integer          default(0), not null
+#  charge_per_unit   :boolean
 #  currency          :string
 #  description       :string
 #  details           :jsonb            not null
@@ -12,7 +13,7 @@
 #  interval_count    :integer          default(1)
 #  name              :string           not null
 #  trial_period_days :integer          default(0)
-#  unit              :string
+#  unit_label        :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -29,6 +30,7 @@ class Plan < ApplicationRecord
   validates :currency, presence: true, format: {with: /\A[a-zA-Z]{3}\z/, message: "must be a 3-letter ISO currency code"}
   validates :interval, inclusion: %w[month year]
   validates :trial_period_days, numericality: {only_integer: true}
+  validates :unit_label, presence: {if: :charge_per_unit?}
 
   scope :hidden, -> { unscope(where: :hidden).where(hidden: true) }
   scope :monthly, -> { without_free.where(interval: :month) }

@@ -53,3 +53,9 @@ invited:
   owner: invited
   name: "Invited User"
   personal: true
+
+fake_processor:
+  owner: fake_processor
+  name: "Per Seat Account"
+  personal: false
+  account_users_count: 1

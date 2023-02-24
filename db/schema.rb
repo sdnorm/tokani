@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
+=======
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_162609) do
+>>>>>>> jumpstart/main
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -827,6 +831,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+<<<<<<< HEAD
   add_foreign_key "providers", "accounts", column: "customer_id"
   add_foreign_key "providers", "departments"
   add_foreign_key "providers", "sites"
@@ -835,4 +840,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_205801) do
   add_foreign_key "requested_interpreters", "users"
   add_foreign_key "sites", "accounts"
   add_foreign_key "specialties", "accounts"
+=======
+>>>>>>> jumpstart/main
 end

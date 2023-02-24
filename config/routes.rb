@@ -79,9 +79,7 @@ Rails.application.routes.draw do
       resources :users do
         resource :impersonate, module: :user
       end
-      namespace :user do
-        resources :connected_accounts
-      end
+      resources :connected_accounts
       resources :accounts
       resources :account_users
       resources :agency_details
@@ -131,7 +129,11 @@ Rails.application.routes.draw do
 
     resource :transfer, module: :accounts
     resources :account_users, path: :members
-    resources :account_invitations, path: :invitations, module: :accounts
+    resources :account_invitations, path: :invitations, module: :accounts do
+      member do
+        post :resend
+      end
+    end
   end
   resources :account_invitations
 
@@ -154,7 +156,7 @@ Rails.application.routes.draw do
     resource :upcoming, module: :subscriptions
 
     collection do
-      patch :info
+      patch :billing_settings
     end
 
     scope module: :subscriptions do
