@@ -2,7 +2,7 @@ class InterpretersController < ApplicationController
   include CurrentHelper
 
   before_action :authenticate_user!
-  before_action :set_interpreter, only: [:show, :edit, :update, :destroy]
+  before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_scheduled_details, :my_assigned_details, :decline_offered, :accept_offered,
     :cancel_coverage, :time_finish, :appointment_details]
 
@@ -185,6 +185,34 @@ class InterpretersController < ApplicationController
     else
       redirect_to(interpreters_dashboard_path, alert: "Could not find appointment in an offered or scheduled status.")
     end
+  end
+
+  def availability
+    @interpreter = current_user
+    @availabilities = @interpreter.availabilities.group_by(&:wday)
+    @days = Date::DAYNAMES
+  end
+
+  # This method accepts as part of the URL params an interpreter ID, suitable
+  # for someone other than the interpreter (i.e. Requestor) to update the availability.
+  def availabilities
+    @availabilities = @interpreter.availabilities.group_by(&:wday)
+    @days = Date::DAYNAMES
+    render :availability
+  end
+
+  def update_timezone
+    timezone = params[:timezone]
+    @interpreter.time_zone = timezone if timezone.present?
+
+    if @interpreter.save
+      @interpreter.availabilities.destroy_all
+      flash[:timezone_notice] = "You successfully updated your timezone to #{timezone}."
+    else
+      flash[:timezone_notice] = "Something went wrong updating your timezone: #{@interpreter.errors.full_messages.join("; ")}"
+    end
+
+    redirect_to("/interpreters/availability")
   end
 
   private

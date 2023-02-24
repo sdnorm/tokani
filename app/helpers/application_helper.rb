@@ -174,4 +174,22 @@ module ApplicationHelper
 
     [start_time.strftime("%l:%M%p"), end_time.strftime("%l:%M%p")].join(" - ")
   end
+
+  def accordion_item(container_id:, id:, heading:, extra_class: "", expanded: false, &block)
+    item_class = "accordion-item mb-3"
+    item_class += extra_class if extra_class.present?
+
+    tag.div(class: item_class, id: id) do
+      tag.h5(class: "accordion-header") do
+        tag.button(class: "accordion-button border-bottom font-weight-bold #{"collapsed" unless expanded}", type: "button", aria: {expanded: expanded.to_s}, data: {bs_toggle: "collapse", bs_target: "##{id}-collapse"}) do
+          tag.i(class: "collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3") +
+            tag.i(class: "collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3") +
+            heading
+        end
+      end +
+        tag.div(id: "#{id}-collapse", class: "accordion-collapse collapse #{"show" if expanded}") do
+          tag.div(class: "accordion-body text-md", &block)
+        end
+    end
+  end
 end

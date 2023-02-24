@@ -89,6 +89,8 @@ class User < ApplicationRecord
   has_many :pay_bill_config_interpreters, dependent: :destroy
   has_many :pay_bill_configs, through: :pay_bill_config_interpreters
 
+  has_many :availabilities
+
   accepts_nested_attributes_for :interpreter_detail
   accepts_nested_attributes_for :requestor_detail
   accepts_nested_attributes_for :appointment_statuses
