@@ -1,25 +1,5 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-  resources :customer_categories
-  resources :recipients
-  resources :providers
-  resources :requestor_details
-  resources :pay_bill_configs
-  resources :pay_bill_rates
-  resources :languages
-  resources :specialties
-  # get "requestor/index"
-  resources :sites do
-    collection do
-      get :dropdown
-      get :dropdown_for_reports
-      get :departments_dropdown
-      get :departments_dropdown_for_reports
-      get :select_list
-      get :department_select_list
-    end
-  end
-
   resources :reports, only: [:index, :create] do
     collection do
       get :financial
@@ -232,7 +212,29 @@ Rails.application.routes.draw do
       end
     end
     resources :requestors
+
+    get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
     # end
+  end
+
+  resources :customer_categories
+  resources :recipients
+  resources :providers
+  resources :requestor_details
+  resources :pay_bill_configs
+  resources :pay_bill_rates
+  resources :languages
+  resources :specialties
+  # get "requestor/index"
+  resources :sites do
+    collection do
+      get :dropdown
+      get :dropdown_for_reports
+      get :departments_dropdown
+      get :departments_dropdown_for_reports
+      get :select_list
+      get :department_select_list
+    end
   end
 
   get "agencies/accounting/process_invoices", to: "agencies#account_process_invoices"

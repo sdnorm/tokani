@@ -12,7 +12,7 @@ load "db/seed_data/agency_addresses.rb"
 
 puts "*************** created Agencies with agency details and agency adresses ***************"
 
-load "db/seed_data/super_admin.rb"
+# load "db/seed_data/super_admin.rb"
 
 # puts "*************** creating Customer Categories ***************"
 

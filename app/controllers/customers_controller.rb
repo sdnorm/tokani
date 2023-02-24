@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
 
   # GET /customers
   def index
-    @pagy, @customers = pagy(current_account.customers.sort_by_params(params[:sort], sort_direction))
+    @pagy, @customers = pagy(current_account.customers.includes(:customer_detail).sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @customers
