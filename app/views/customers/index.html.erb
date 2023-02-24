@@ -16,7 +16,7 @@
         <%= sortable @customers, :phone, "Phone", class: "text-gray-700 mr-1" %>
       </div>
  -->
-    
+<%= render partial: 'shared/sidenav' %>
 <div>
   <div class="flex flex-1 flex-col md:pl-64">
     <main class="flex-1">
@@ -25,6 +25,7 @@
           <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center">
               <div class="sm:flex-auto">
+                <%= current_account_user.agency_admin? %>
                 <h1 class="text-xl font-semibold text-gray-900">Customers</h1>
                 <p class="mt-2 text-sm text-gray-700">A list of all the customers in your account.</p>
               </div>
