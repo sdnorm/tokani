@@ -54,6 +54,10 @@ class Account < ApplicationRecord
 
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
+  has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
+  validates_presence_of :agency_detail
+  accepts_nested_attributes_for :agency_detail
+
   has_many :specialties, dependent: :destroy, foreign_key: :account_id
 
   has_many :languages, foreign_key: :account_id

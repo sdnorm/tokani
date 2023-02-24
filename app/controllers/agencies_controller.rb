@@ -90,6 +90,13 @@ class AgenciesController < ApplicationController
     end
   end
 
+  def agency_detail_form
+    @agency = current_account
+    @agency.build_physical_address
+    @agency.build_agency_detail
+    @selected_time_zones = []
+  end
+
   def account_invoices
   end
 
