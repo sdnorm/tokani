@@ -254,4 +254,22 @@ module ApplicationHelper
       ["Wyoming", "WY"]
     ]
   end
+
+  def toggle_is_active_on_or_off(is_active)
+    is_active ? "off" : "on"
+  end
+
+  def toggle_is_active_button_for resource, path
+    button_to(
+      resource.is_active ?
+        fa_icon("toggle-on", weight: "fa-solid", class: "text-3xl text-tokanisecondary-600")
+      : fa_icon("toggle-off", weight: "fa-solid", class: "text-3xl text-tokanisecondary-600"),
+      path,
+      method: :patch,
+      data: {
+        confirm: "Are you sure you want to turn this #{toggle_is_active_on_or_off(resource.is_active)}?",
+        turbo: true
+      }
+    )
+  end
 end

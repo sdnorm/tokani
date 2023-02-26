@@ -35,7 +35,9 @@
                         </td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= language.created_at %></td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= language.updated_at %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(language.is_active) %></td>
+                        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                          <%= toggle_is_active_button_for(language, toggle_active_language_path(language)) %>
+                        </td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
                           <a href="<%= edit_language_path(language) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= language.id %></span></a>
                         </td>
@@ -44,7 +46,7 @@
                     </tbody>
                   </table>
                 </div>
-  
+
               </div>
             </div>
           </div>
