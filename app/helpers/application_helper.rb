@@ -267,7 +267,7 @@ module ApplicationHelper
       path,
       method: :patch,
       data: {
-        confirm: "Are you sure you want to turn this #{toggle_is_active_on_or_off(resource.is_active)}?",
+        turbo_confirm: "Are you sure you want to turn #{resource.try(:name) || "this"} #{toggle_is_active_on_or_off(resource.is_active)}?",
         turbo: true
       }
     )
