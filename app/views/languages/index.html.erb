@@ -21,10 +21,10 @@
                     <thead class="bg-gray-50">
                       <tr>
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @languages, :name, "Name" %></th>
-                        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Create Date</th>
-                        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Update Date</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
+                        <th scope="col" class="px-3 py-3.5 text-right text-sm uppercase font-semibold text-gray-900">
+                          <span class="mr-4">Active</span>
+                          <span>EDIT</span>
+                        </th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -33,18 +33,23 @@
                         <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-tokanisecondary-900 sm:w-auto sm:max-w-none sm:pl-6">
                           <%= link_to language.name, language_path(language) %>
                         </td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= language.created_at %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= language.updated_at %></td>
-                        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(language.is_active) %></td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                          <a href="<%= edit_language_path(language) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= language.id %></span></a>
+                          <div class="flex mx-3 justify-end">
+                            <div class="mr-6">
+                              <%= toggle_is_active_button_for(language, toggle_active_language_path(language)) %>
+                            </div>
+                            <div>
+                              <a href="<%= edit_language_path(language) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= language.id %></span></a>
+                            </div>
+                          </div>
+                        </td>
                         </td>
                       </tr>
                     <% end %>
                     </tbody>
                   </table>
                 </div>
-  
+
               </div>
             </div>
           </div>
