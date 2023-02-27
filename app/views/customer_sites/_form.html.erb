@@ -134,9 +134,9 @@
             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                 <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
                 <% if form.object.new_record? %>
-                    <%= link_to t("cancel"), sites_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2" %>
+                    <%= link_to t("cancel"), customer_sites_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2" %>
                 <% else %>
-                    <%= link_to t("cancel"), sites_path(@site), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2" %>
+                    <%= link_to t("cancel"), customer_sites_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2" %>
                 <% end %>
             </div>
           </div> 
