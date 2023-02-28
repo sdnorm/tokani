@@ -20,7 +20,7 @@ class AvailabilityDashboard < Administrate::BaseDashboard
     video: Field::Boolean,
     wday: Field::Number,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
