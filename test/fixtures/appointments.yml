@@ -76,7 +76,7 @@ one:
   admin_notes: MyText
   notes: MyText
   details: MyText
-  status: false
+  # status: false
   interpreter_type: 1
   billing_notes: MyText
   canceled_by: 1
@@ -100,7 +100,7 @@ two:
   admin_notes: MyText
   notes: MyText
   details: MyText
-  status: false
+  # status: false
   interpreter_type: 1
   billing_notes: MyText
   canceled_by: 1
