@@ -25,7 +25,6 @@
 #  processed_by_interpreter :boolean          default(FALSE)
 #  ref_number               :string
 #  start_time               :datetime
-#  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
 #  total_billed             :decimal(, )
@@ -77,7 +76,7 @@ one:
   admin_notes: MyText
   notes: MyText
   details: MyText
-  status: false
+  # status: false
   interpreter_type: 1
   billing_notes: MyText
   canceled_by: 1
@@ -101,7 +100,7 @@ two:
   admin_notes: MyText
   notes: MyText
   details: MyText
-  status: false
+  # status: false
   interpreter_type: 1
   billing_notes: MyText
   canceled_by: 1

@@ -1,6 +1,6 @@
 class LanguagesController < ApplicationController
   include CurrentHelper
-  before_action :set_language, only: [:show, :edit, :update, :destroy]
+  before_action :set_language, except: %i[index new create]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -69,6 +69,17 @@ class LanguagesController < ApplicationController
       format.html { redirect_to languages_url, status: :see_other, notice: "Language was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_active
+    @language.toggle_active!
+
+    respond_to do |format|
+      format.html { redirect_to languages_url }
+      format.json { render :show, status: :ok, location: @language }
+    end
+  rescue
+    redirect_to languages_url, notice: "There was an error in updating the active state."
   end
 
   private

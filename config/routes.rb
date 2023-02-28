@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       resources :account_users
       resources :agency_details
       resources :customer_details
+      resources :availabilities
       resources :plans
       namespace :pay do
         resources :customers
@@ -227,7 +228,11 @@ Rails.application.routes.draw do
   resources :requestor_details
   resources :pay_bill_configs
   resources :pay_bill_rates
-  resources :languages
+  resources :languages do
+    member do
+      patch :toggle_active
+    end
+  end
   resources :specialties
   # get "requestor/index"
   resources :sites do
