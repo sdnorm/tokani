@@ -79,7 +79,7 @@ class AgenciesController < ApplicationController
     @agency = Agency.new(agency_params) # .merge(agency: true)
     respond_to do |format|
       if @agency.save
-        agency.update(agency: true)
+        @agency.update(agency: true)
         CreateAgencyOwnerUserAccountJob.perform_later(@agency.id)
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
@@ -148,6 +148,7 @@ class AgenciesController < ApplicationController
       ],
       agency_detail_attributes: [
         :id,
+        :company_website,
         :primary_contact_first_name,
         :primary_contact_last_name,
         :primary_contact_email,
@@ -160,7 +161,8 @@ class AgenciesController < ApplicationController
         :secondary_contact_title,
         :phone_number,
         :url,
-        time_zones: []
+        time_zones: [],
+        
       ]
     )
 
