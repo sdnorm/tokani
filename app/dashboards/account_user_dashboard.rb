@@ -8,12 +8,10 @@ class AccountUserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    account: Field::BelongsTo,
-    user: Field::BelongsTo,
     id: Field::Number,
-    admin: Field::Boolean,
-    agency_admin: Field::Boolean,
-    site_member: Field::Boolean,
+    account: Field::BelongsTo,
+    roles: Field::String.with_options(searchable: false),
+    user: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -23,40 +21,46 @@ class AccountUserDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :id,
-    :account,
-    :user,
-    :admin,
-    :agency_admin,
-    :site_member
+  COLLECTION_ATTRIBUTES = %i[
+    id
+    account
+    roles
+    user
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :account,
-    :user,
-    :id,
-    :admin,
-    :created_at,
-    :updated_at,
-    :agency_admin,
-    :site_member
+  SHOW_PAGE_ATTRIBUTES = %i[
+    id
+    account
+    roles
+    user
+    created_at
+    updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :account,
-    :user,
-    :admin,
-    :agency_admin,
-    :site_member
+  FORM_ATTRIBUTES = %i[
+    account
+    roles
+    user
   ].freeze
 
-  # Overwrite this method to customize how account members are displayed
+  # COLLECTION_FILTERS
+  # a hash that defines filters that can be used while searching via the search
+  # field of the dashboard.
+  #
+  # For example to add an option to search for open resources by typing "open:"
+  # in the search field:
+  #
+  #   COLLECTION_FILTERS = {
+  #     open: ->(resources) { resources.where(open: true) }
+  #   }.freeze
+  COLLECTION_FILTERS = {}.freeze
+
+  # Overwrite this method to customize how account users are displayed
   # across all pages of the admin dashboard.
   #
   # def display_resource(account_user)

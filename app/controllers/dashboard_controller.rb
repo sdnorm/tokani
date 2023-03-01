@@ -5,6 +5,8 @@ class DashboardController < ApplicationController
     elsif current_account_user.interpreter? # && current_user.interpreter_profile.nil?
       # redirect_to new_interpreter_detail_path
       render template: "dashboard/interpreter"
+    elsif current_account_user.customer_admin?
+      render template: "dashboard/customer"
     elsif current_account_user.agency_admin? || current_account_user.agency_member?
       redirect_to agency_dashboard_path
     elsif current_user.admin?
