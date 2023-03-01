@@ -259,17 +259,38 @@ module ApplicationHelper
     is_active ? "off" : "on"
   end
 
+  def resource_classes
+    {
+      active: {
+        btn: "bg-indigo-800 border-double border-4",
+        content: "right-1",
+        icon: fa_icon("circle-check", class: "text-indigo-800 h-5 flex m-auto")
+      },
+      inactive: {
+        btn: "bg-slate-200",
+        content: "left-1",
+        icon: fa_icon("circle-xmark", class: "text-slate-400 h-5 flex m-auto")
+      }
+    }
+  end
+
   def toggle_is_active_button_for resource, path
+    btn_class = resource.is_active ? resource_classes[:active][:btn] : resource_classes[:inactive][:btn]
+    content_class = resource.is_active ? resource_classes[:active][:content] : resource_classes[:inactive][:content]
+    icon_class = resource.is_active ? resource_classes[:active][:icon] : resource_classes[:inactive][:icon]
+
     button_to(
-      resource.is_active ?
-        fa_icon("toggle-on", weight: "fa-solid", class: "text-3xl text-tokanisecondary-600")
-      : fa_icon("toggle-off", weight: "fa-solid", class: "text-3xl text-tokanisecondary-600"),
       path,
       method: :patch,
       data: {
         turbo_confirm: "Are you sure you want to turn #{resource.try(:name) || "this"} #{toggle_is_active_on_or_off(resource.is_active)}?",
         turbo: true
-      }
-    )
+      },
+      class: "#{btn_class} block w-14 h-8 rounded-full"
+    ) do
+      content_tag(:div, class: " absolute #{content_class} top-1 bg-white w-6 h-6 rounded-full transition flex") do
+        icon_class
+      end
+    end
   end
 end
