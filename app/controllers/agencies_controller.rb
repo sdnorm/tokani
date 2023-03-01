@@ -161,8 +161,8 @@ class AgenciesController < ApplicationController
         :secondary_contact_title,
         :phone_number,
         :url,
-        time_zones: [],
-        
+        time_zones: []
+
       ]
     )
 
