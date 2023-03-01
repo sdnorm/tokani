@@ -4,6 +4,7 @@
       <%= image_tag "logo.png", class: "h-8 w-auto fill-current text-gray-700 hover:text-gray-800" %>
       <span class="sr-only"><%= Jumpstart.config.application_name %></span>
     <% end %>
+    <%= current_account_user.agency_admin? %>
   </div>
 
   <div class="block lg:hidden">
