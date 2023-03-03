@@ -25,7 +25,6 @@
 #  processed_by_interpreter :boolean          default(FALSE)
 #  ref_number               :string
 #  start_time               :datetime
-#  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
 #  total_billed             :decimal(, )
@@ -98,6 +97,8 @@ class Appointment < ApplicationRecord
   enum modality: {in_person: 1, phone: 2, video: 3}
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
+
+  scope :by_status, ->(status) { where(status: status) }
 
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 

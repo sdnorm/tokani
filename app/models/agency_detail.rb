@@ -3,6 +3,7 @@
 # Table name: agency_details
 #
 #  id                             :bigint           not null, primary key
+#  company_website                :string
 #  phone_number                   :string
 #  primary_contact_email          :string
 #  primary_contact_first_name     :string
@@ -36,8 +37,10 @@ class AgencyDetail < ApplicationRecord
 
   belongs_to :agency, inverse_of: :agency_detail, optional: true
 
-  validates_presence_of :primary_contact_first_name, :primary_contact_email, :primary_contact_title, :phone_number
+  validates_presence_of :primary_contact_first_name, :primary_contact_email, :primary_contact_title, :phone_number, :company_website, :url
   validates :phone_number, phone: {possible: true, allow_blank: true, message: "Phone number is invalid, please use 222-222-2222"}
   validates :primary_contact_email, email: true
   validates :secondary_contact_email, email: true, allow_blank: true
+  validates :company_website, url: {allow_blank: true}
+  validates_uniqueness_of :url, case_sensitive: false
 end

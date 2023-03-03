@@ -133,3 +133,4 @@ end
 gem "faker"
 gem "phonelib"
 gem "email_validator"
+gem "validate_url"

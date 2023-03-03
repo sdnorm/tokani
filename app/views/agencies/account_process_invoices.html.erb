@@ -3,29 +3,31 @@
 <%= render partial: 'shared/sidenav' %>
 <div>
   <div class="flex flex-1 flex-col md:pl-64">
-    <main class="flex-1">
-      <div class="py-6">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+		<div class="px-40">
+			<div class="space-y-8 divide-y divide-gray-200">
+				<div class="pt-8">
 					<div class="sm:flex-auto">
 						<h1 class="text-xl font-semibold text-gray-900">Process Invoices</h1>
 						<p class="mt-2 text-sm text-gray-700"></p>
 					</div>
-					<form class="space-y-8">
-						<div>
-							<label for="start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
-							<div class="mt-1">
-								<input type="date" name="start-date" id="start-date" class="block w-1/2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+					<form>
+						<div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+							<div class="sm:col-span-3">
+								<label for="start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
+								<div class="mt-1">
+									<input type="date" name="start-date" id="start-date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+								</div>
+							</div>
+							<div class="sm:col-span-3">
+								<label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
+									<div class="mt-1">
+										<input type="date" name="end-date" id="end-date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+									</div>
 							</div>
 						</div>
 						<div>
-							<label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
-							<div class="mt-1">
-								<input type="date" name="end-date" id="end-date" class="block w-1/2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-							</div>
-						</div>	
-						<div>
-							<fieldset class="mt-4">
-								<div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+							<fieldset class="mt-10">
+								<div class="space-y-4 flex items-center sm:space-y-0 sm:space-x-10">
 									<div class="flex items-center">
 										<input id="email" name="notification-method" type="radio" checked class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
 										<label for="email" class="ml-3 block text-sm font-medium text-gray-700">Process by Customer</label>
@@ -38,11 +40,11 @@
 							</fieldset>
 						</div>
 						<div class="flex mt-5">
-							<button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">PROCESS</button>
+							<button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-md font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 btn btn-large">PROCESS</button>
 						</div>
 					</form>
 				</div>
 			</div>
-		</main>
+		</div>
 	</div>
 </div>

@@ -27,7 +27,7 @@ import "chartkick/chart.js"
 
 Turbo.setConfirmMethod((message) => {
   let dialog = document.getElementById("turbo-confirm")
-  dialog.querySelector("p").textContent = message
+  dialog.querySelector("h4").textContent = message
   dialog.showModal()
 
   return new Promise((resolve) => {

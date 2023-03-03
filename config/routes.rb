@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       resources :account_users
       resources :agency_details
       resources :customer_details
+      resources :availabilities
       resources :plans
       namespace :pay do
         resources :customers

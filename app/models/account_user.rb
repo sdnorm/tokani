@@ -27,7 +27,9 @@ class AccountUser < ApplicationRecord
     :site_admin,
     :agency_member,
     :site_member,
-    :tokani_admin
+    :tokani_admin,
+    :customer_admin,
+    :requestor
   ]
 
   TOKANI_ROLES = [

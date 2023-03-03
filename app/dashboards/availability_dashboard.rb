@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class AccountUserDashboard < Administrate::BaseDashboard
+class AvailabilityDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,9 +9,16 @@ class AccountUserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    account: Field::BelongsTo,
-    roles: Field::String.with_options(searchable: false),
-    user: Field::BelongsTo,
+    backport_id: Field::Number,
+    end_seconds: Field::Number,
+    in_person: Field::Boolean,
+    interpreter: Field::BelongsTo,
+    phone: Field::Boolean,
+    start_seconds: Field::Number,
+    time_zone: Field::String,
+    user_id: Field::String,
+    video: Field::Boolean,
+    wday: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -23,18 +30,25 @@ class AccountUserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    account
-    roles
-    user
+    backport_id
+    end_seconds
+    in_person
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    account
-    roles
-    user
+    backport_id
+    end_seconds
+    in_person
+    interpreter
+    phone
+    start_seconds
+    time_zone
+    user_id
+    video
+    wday
     created_at
     updated_at
   ].freeze
@@ -43,9 +57,16 @@ class AccountUserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    account
-    roles
-    user
+    backport_id
+    end_seconds
+    in_person
+    interpreter
+    phone
+    start_seconds
+    time_zone
+    user_id
+    video
+    wday
   ].freeze
 
   # COLLECTION_FILTERS
@@ -60,10 +81,10 @@ class AccountUserDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how account users are displayed
+  # Overwrite this method to customize how availabilities are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(account_user)
-  #   "AccountUser ##{account_user.id}"
+  # def display_resource(availability)
+  #   "Availability ##{availability.id}"
   # end
 end
