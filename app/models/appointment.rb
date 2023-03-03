@@ -163,6 +163,9 @@ class Appointment < ApplicationRecord
   def update_offers
     # An empty array causes a delete, but nil, does nothing
     if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+      if status != "opened"
+        AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
+      end
       return true
     end
 
