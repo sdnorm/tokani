@@ -41,4 +41,5 @@ class InterpreterDetail < ApplicationRecord
   validates :interpreter_type, presence: true
   validates :gender, presence: true
   validates :primary_phone, presence: true
+  validates :interpreter_id, uniqueness: true
 end

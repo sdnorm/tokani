@@ -248,6 +248,7 @@ class InterpretersController < ApplicationController
       :terms_of_service,
       interpreter_detail_attributes: [
         :id,
+        :interpreter_id,
         :gender,
         :interpreter_type,
         :primary_phone,
