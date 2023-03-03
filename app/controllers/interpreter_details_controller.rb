@@ -1,4 +1,6 @@
 class InterpreterDetailsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authenticate_interpreter_user!
   before_action :set_interpreter_detail, only: [:show, :edit, :update, :destroy]
 
   # Uncomment to enforce Pundit authorization
@@ -88,5 +90,9 @@ class InterpreterDetailsController < ApplicationController
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:interpreter_detail).permit(policy(@interpreter_detail).permitted_attributes)
+  end
+
+  def authenticate_interpreter_user!
+    redirect_to "/", alert: "Unauthorized access for non-interpreter users." unless current_account_user.interpreter?
   end
 end
