@@ -59,7 +59,7 @@ module ApplicationHelper
   end
 
   def int_appointment_hightlight?
-    if current_page?('/interpreters/public') || current_page?('/interpreters/my_assigned') || current_page?('/interpreters/my_scheduled')
+    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled")
       highlighted
     else
       unhighlighted
