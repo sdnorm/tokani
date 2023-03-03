@@ -120,33 +120,31 @@
       </div>
       <div class="mt-5 flex flex-grow flex-col">
         <nav class="flex-1 space-y-1 px-2 pb-4">
-          <%= link_to '/interpreters/dashboard', class: "#{dashboard_highlight?} group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
-            <i class="fa-regular fa-gauge fa-xl <%= dashboard_highlight_icon? %> mr-3 flex-shrink-0"></i>
+          <%= link_to root_path, class: "#{int_dashboard_highlight?} group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
+            <i class="fa-regular fa-gauge fa-xl <%= int_dashboard_highlight_icon? %> mr-3 flex-shrink-0"></i>
             Dashboard
           <% end %>
-  
-              
-              <div data-controller='toggle'>
-                <a href="/interpreters/public" class="<%= sidenav_highlight?('interpreters') %> group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="<%= sidenav_highlight_icon?('interpreters') %> mr-3 flex-shrink-0 h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
-                      </svg> 
-                 Appointments
-                </a>
+          <div data-controller='toggle'>
+            <a href="/interpreters/public" class="<%= int_appointment_hightlight? %> group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="<%= sidenav_highlight_icon?('interpreters') %> mr-3 flex-shrink-0 h-6 w-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+              </svg> 
+              Appointments
+            </a>
 <!--                 <div data-toggle-target='toggleable' class="hidden pl-4 py-2 space-y-2">
-                  <ul class="list-none">
-                    <li class="pl-4">
-                      <%= link_to '/interpreters/public',  class: "text-gray-100 hover:bg-gray-50 hover:opacity-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
-                      
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" stroke-width="1" stroke="currentColor" class="text-gray-100 group-hover:text-gray-500 mr-3 flex-shrink-0 h-4 w-4">
-                        <path d="M0 96C0 60.7 28.7 32 64 32h96c88.4 0 160 71.6 160 160s-71.6 160-160 160H64v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V320 96zM64 288h96c53 0 96-43 96-96s-43-96-96-96H64V288z"/>  
-                        </svg>
-                       Public
-                      <% end %>
-                    </li>
-                  </ul>
-                </div> -->
-              </div>
+              <ul class="list-none">
+                <li class="pl-4">
+                  <%= link_to '/interpreters/public',  class: "text-gray-100 hover:bg-gray-50 hover:opacity-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
+                  
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" stroke-width="1" stroke="currentColor" class="text-gray-100 group-hover:text-gray-500 mr-3 flex-shrink-0 h-4 w-4">
+                    <path d="M0 96C0 60.7 28.7 32 64 32h96c88.4 0 160 71.6 160 160s-71.6 160-160 160H64v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V320 96zM64 288h96c53 0 96-43 96-96s-43-96-96-96H64V288z"/>  
+                    </svg>
+                    Public
+                  <% end %>
+                </li>
+              </ul>
+            </div> -->
+          </div>
              
   
         <a href="/interpreters/availability" class="text-gray-100 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
