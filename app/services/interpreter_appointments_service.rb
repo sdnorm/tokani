@@ -21,8 +21,10 @@ class InterpreterAppointmentsService
 
     # We need to scope by custom queries depending on the status
     case @params[:status]
+    when "opened"
+      scope.joins(:appointment_statuses)
+        .where(appointment_statuses: {current: true, name: AppointmentStatus.names[@params[:status]]})
     when "offered"
-      puts "\n\ngot here\n\n"
       scope.joins(:requested_interpreters)
         .where(requested_interpreters: {rejected: false, user_id: @user.id})
         .joins(:appointment_statuses)

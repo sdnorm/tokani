@@ -1,2 +1,36 @@
-<!-- Shares a view with My Scheduled -->
-<%= render template: "interpreters/my_scheduled" %>
+
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+        <div class="px-4 sm:px-6 lg:px-6">
+          <div class="sm:flex sm:items-center pb-6">
+            <div class="sm:flex-auto">
+              <h1 class="text-xl font-semibold text-gray-900">
+               <span class="text-tokanisecondary-500">
+                <%= current_user.full_name %>
+                </span>
+                <span class="text-tokaniprimary-600 font-light mx-2">/ <%= @title %></span>
+              </h1>
+            </div>
+          </div>
+
+          <ul class="list-none flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+            <li class="mr-2">
+              <a href="/interpreters/public" aria-current="page" class="<%= inactive_tab %>">Public</a>
+            </li>
+            <li class="mr-2">
+              <a href="#" class="<%= active_tab %>">My Offered</a>
+            </li>
+            <li class="mr-2">
+              <a href="/interpreters/my_scheduled" class="<%= inactive_tab  %>">My Scheduled</a>
+            </li>
+          </ul>
+
+          <%= render partial: "fetch_appointments_form" %>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

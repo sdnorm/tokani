@@ -118,9 +118,14 @@ class Appointment < ApplicationRecord
 
   def create_status_for_new_appt
     status_check = AppointmentStatus.where(appointment_id: id)
-    if status_check.empty?
-      AppointmentStatus.create!(name: "created", user_id: creator_id, appointment_id: id)
+    return unless status_check.blank?
+
+    if (interpreter_req_ids.blank? || interpreter_req_ids.class != Array) || interpreter_req_ids.compact_blank.empty?
+      AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
+    else
+      AppointmentStatus.create!(name: "offered", user_id: creator_id, appointment_id: id)
     end
+
     nil
   end
 
@@ -143,23 +148,16 @@ class Appointment < ApplicationRecord
       end
     end
 
-    if offered
-      new_apt_status = AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "offered")
-
-      begin
-        new_apt_status.save!
-      rescue => e
-        errors.add(:base, "Something went wrong with creating an offered status")
-        logger.info "Failed creation of appt status: #{creator_id} to #{id}.  Error: #{e}"
-        throw ActiveRecord::RecordInvalid
-      end
-
-    end
   end
 
   def update_offers
     # An empty array causes a delete, but nil, does nothing
-    return true if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+    if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+      if status != "opened"
+        AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
+      end
+      return true
+    end
 
     current_offer_int_ids = requested_interpreters.map(&:user_id)
     new_offer_int_ids = interpreter_req_ids.compact_blank.uniq
@@ -185,15 +183,16 @@ class Appointment < ApplicationRecord
     end
 
     new_apt_status = if offers_to_add_by_int.empty? && !offers_to_remove_by_int_id.empty? && ((current_offer_int_ids - offers_to_remove_by_int_id == []))
-      # changing appointment status back to created - check to make sure no other state would be more appropriate (NW)
-      AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "created")
+      # Changing appointment status back to opened
+      AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "opened")
     else
       AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "offered")
     end
+
     begin
       new_apt_status.save!
     rescue => e
-      errors.add(:base, "Something went wrong with creating an offered status")
+      errors.add(:base, "Something went wrong with creating a new appointment status")
       logger.info "Failed creation of appt status: #{creator_id} to #{id}.  Error: #{e}"
       throw ActiveRecord::RecordInvalid
     end
