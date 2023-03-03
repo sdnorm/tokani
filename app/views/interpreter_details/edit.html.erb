@@ -8,11 +8,10 @@
   <div class="lg:w-3/4 w-full p-4">
     <div class="lg:p-10 p-4 bg-white rounded-lg border border-gray-200 mb-3 sm:flex items-center justify-between">
       <h1 class="h3">
-        <%= link_to "Interpreter Details", interpreter_details_path, class: "text-black" %>
+        <%= link_to "Interpreter Details", interpreter_detail_path(@interpreter_detail), class: "text-black" %>
         <span class="text-gray-400 font-light mx-2">\</span>
         <%= t("shared.scaffold.edit.title", model: "Interpreter Detail") %>
       </h1>
-      <%= button_to t("delete"), @interpreter_detail, method: :delete, class: "btn btn-white", form: { data: { turbo_confirm: t("are_you_sure") } } %>
     </div>
 
     <div class="p-8 bg-gray-100 rounded shadow">

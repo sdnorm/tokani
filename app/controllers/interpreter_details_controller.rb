@@ -17,6 +17,10 @@ class InterpreterDetailsController < ApplicationController
 
   # GET /interpreter_details/1 or /interpreter_details/1.json
   def show
+    @interpreter_detail_fields = %w[
+      interpreter_type address city dob drivers_license emergency_contact_name
+      emergency_contact_phone gender interpreter_type primary_phone ssn start_date state zip
+    ]
   end
 
   # GET /interpreter_details/new
