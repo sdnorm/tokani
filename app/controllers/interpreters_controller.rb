@@ -4,7 +4,7 @@ class InterpretersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
-                                         :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
+    :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized

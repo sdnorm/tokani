@@ -147,7 +147,6 @@ class Appointment < ApplicationRecord
         throw ActiveRecord::RecordInvalid
       end
     end
-
   end
 
   def update_offers
