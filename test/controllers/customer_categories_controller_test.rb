@@ -3,6 +3,8 @@ require "test_helper"
 class CustomerCategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @customer_category = customer_categories(:one)
+    @user = users(:one)
+    sign_in @user
   end
 
   test "should get index" do

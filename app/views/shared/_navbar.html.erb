@@ -66,9 +66,7 @@
                 <%= link_to t(".profile"), edit_user_registration_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' %>
                 <%= link_to t(".password"), account_password_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' %>
                 <%= link_to t(".connected_accounts"), user_connected_accounts_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' if Devise.omniauth_configs.any? %>
-                <% unless current_account_user.interpreter? %>
-                  <%= link_to t(".billing"), subscriptions_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' if Jumpstart.config.payments_enabled? %>
-                <% end %>
+                <%= link_to t(".billing"), subscriptions_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' if Jumpstart.config.payments_enabled? && policy(:application).show_billing? %>
                 <%= link_to t(".accounts"), accounts_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' %>
                 <%#= link_to t(".api_tokens"), api_tokens_path, class: 'no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap' if Jumpstart.config.payments_enabled? %>
                 <!--
