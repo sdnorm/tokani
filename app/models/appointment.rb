@@ -25,11 +25,13 @@
 #  processed_by_interpreter :boolean          default(FALSE)
 #  ref_number               :string
 #  start_time               :datetime
+#  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
 #  total_billed             :decimal(, )
 #  total_paid               :decimal(, )
 #  video_link               :string
+#  visibility_status        :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
@@ -97,6 +99,7 @@ class Appointment < ApplicationRecord
   enum modality: {in_person: 1, phone: 2, video: 3}
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
+  enum visibility_status: {offered: 0, opened: 1}
 
   scope :by_status, ->(status) { where(status: status) }
 
@@ -121,16 +124,23 @@ class Appointment < ApplicationRecord
     status_check = AppointmentStatus.where(appointment_id: id)
     return unless status_check.blank?
 
-    if (interpreter_req_ids.blank? || interpreter_req_ids.class != Array) || interpreter_req_ids.compact_blank.empty?
-      AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
-    else
-      AppointmentStatus.create!(name: "offered", user_id: creator_id, appointment_id: id)
-    end
+    new_status = (visibility_status == "opened") ? "opened" : "offered"
+    AppointmentStatus.create!(name: new_status, user_id: creator_id, appointment_id: id)
 
     nil
   end
 
+  def set_visibility_status
+    vis_status = if (interpreter_req_ids.blank? || interpreter_req_ids.class != Array) || interpreter_req_ids.compact_blank.empty?
+      "opened"
+    else
+      "offered"
+    end
+    update_columns(visibility_status: vis_status)
+  end
+
   def create_offers
+    set_visibility_status
     create_status_for_new_appt
     # shortcircuit for no requesting ids
     return true if interpreter_req_ids.blank? || interpreter_req_ids.class != Array
@@ -153,9 +163,6 @@ class Appointment < ApplicationRecord
   def update_offers
     # An empty array causes a delete, but nil, does nothing
     if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
-      if status != "opened"
-        AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
-      end
       return true
     end
 
@@ -184,8 +191,10 @@ class Appointment < ApplicationRecord
 
     new_apt_status = if offers_to_add_by_int.empty? && !offers_to_remove_by_int_id.empty? && ((current_offer_int_ids - offers_to_remove_by_int_id == []))
       # Changing appointment status back to opened
+      update_columns(visibility_status: "opened") unless visibility_status == "opened"
       AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "opened")
     else
+      update_columns(visibility_status: "offered") unless visibility_status == "offered"
       AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "offered")
     end
 

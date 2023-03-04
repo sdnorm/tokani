@@ -159,11 +159,11 @@ module ApplicationHelper
   end
 
   def active_tab
-    "inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
+    "inline-block p-4 text-tokaniprimary-600 bg-gray-100 rounded-t-lg active dark:bg-gray-300"
   end
 
   def inactive_tab
-    "inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+    "inline-block p-4 rounded-t-lg hover:text-tokaniprimary-600 hover:bg-gray-300"
   end
 
   def appointment_start_date_and_time_in_user_time_zone(appointment, user)

@@ -125,7 +125,6 @@ class InterpretersController < ApplicationController
 
   def claim_public
     @appointment.update(interpreter_id: current_user.id)
-    @appointment.requested_interpreters.destroy_all
     AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
     redirect_to(interpreters_dashboard_path, alert: "Assignment successfully accepted.")
   end
@@ -145,14 +144,20 @@ class InterpretersController < ApplicationController
 
   def accept_offered
     @appointment.update(interpreter_id: current_user.id)
-    @appointment.requested_interpreters.destroy_all
     AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
     redirect_to(interpreters_dashboard_path, alert: "Assignment successfully accepted.")
   end
 
   def cancel_coverage
     @appointment.update(interpreter_id: nil)
-    AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["opened"], user: current_user)
+    # Make sure we kick the Appointment back into the correct status, depending on visibility status
+    if @appointment.visibility_status == "opened"
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["opened"], user: current_user)
+    elsif @appointment.visibility_status == "offered"
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["offered"], user: current_user)
+    else
+      raise "Invalid visibility_status for Appointment #{@appointment.id}: #{@appointment.visibility_status}"
+    end
     redirect_to(interpreters_dashboard_path, alert: "You have been unassigned from the appointment.")
   end
 
