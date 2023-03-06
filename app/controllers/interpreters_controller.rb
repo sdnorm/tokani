@@ -51,7 +51,9 @@ class InterpretersController < ApplicationController
   def create
     @interpreter = User.new(interpreter_params)
     @interpreter.terms_of_service = true
+    @interpreter.password = SecureRandom.alphanumeric
     @interpreter.skip_default_account = true
+
     respond_to do |format|
       if @interpreter.save
         AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles: {"interpreter" => true})

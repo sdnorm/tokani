@@ -40,5 +40,8 @@ class InterpreterDetail < ApplicationRecord
 
   validates :interpreter_type, presence: true
   validates :gender, presence: true
-  validates :primary_phone, presence: true
+  validates :address, :city, :zip, presence: { message: 'is required' }
+  validates :state, presence: { message: 'is required'}, allow_blank: false
+
+  validates :primary_phone, phone: {possible: true, allow_blank: false, message: "Phone number is invalid, please use format 222-222-2222"}
 end

@@ -200,7 +200,7 @@ module ApplicationHelper
 
   def state_select_options
     [
-      ["Select a State", "None"],
+      ["Select a State", ""],
       ["Alabama", "AL"],
       ["Alaska", "AK"],
       ["Arizona", "AZ"],
@@ -262,9 +262,9 @@ module ApplicationHelper
   def resource_classes
     {
       active: {
-        btn: "bg-indigo-800 border-double border-4",
+        btn: "bg-tokanisecondary-600 border-double border-4",
         content: "right-1",
-        icon: fa_icon("circle-check", class: "text-indigo-800 h-5 flex m-auto")
+        icon: fa_icon("circle-check", class: "text-tokanisecondary-600 h-5 flex m-auto")
       },
       inactive: {
         btn: "bg-slate-200",
