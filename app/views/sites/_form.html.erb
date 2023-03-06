@@ -8,31 +8,33 @@
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-8 sm:col-span-6">
                     <% if @site.new_record? %>
-                        <div class="form-group">
+                        <% unless customer_logged_in? %>
+                          <div class="form-group">
                             <%= form.label :customer_id, "Agency Customer*" %>
                             <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: 'form-select' } %>
-                        </div>
-                        <% else %>
+                          </div>
+                        <% end %>
+                    <% else %>
 
-                        <template data-form-target="template">
-                            <tr>
-                            <%= form.fields_for :departments, Department.new do |new_dept| %>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= new_dept.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                                <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :location, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                                <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :accounting_unit_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                            <% end %>
-                            </tr>
-                        </template>
+                      <template data-form-target="template">
+                          <tr>
+                          <%= form.fields_for :departments, Department.new do |new_dept| %>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= new_dept.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                              <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :location, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                              <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :accounting_unit_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                          <% end %>
+                          </tr>
+                      </template>
 
-                        <template data-form-target="templateHeader">
-                            <tr id="headerRow">
-                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">Department Name</th>
-                            <th cope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Location</th>
-                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Accounting Unit Code</th>
-                        </tr>
-                        </template>
+                      <template data-form-target="templateHeader">
+                          <tr id="headerRow">
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">Department Name</th>
+                          <th cope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Location</th>
+                          <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Accounting Unit Code</th>
+                      </tr>
+                      </template>
 
-                        <div class="form-group block text-md font-medium text-gray-700">Customer: <%= @site.customer&.name %></div>
+                      <div class="form-group block text-md font-medium text-gray-700">Customer: <%= @site.customer&.name %></div>
                     <% end %>
                    
                 </div>
