@@ -46,5 +46,4 @@ class InterpreterDetail < ApplicationRecord
 
   validates :primary_phone, phone: {possible: true, allow_blank: false, message: "Phone number is invalid, please use format 222-222-2222"}
   validates :interpreter_id, uniqueness: true
-
 end
