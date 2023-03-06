@@ -66,11 +66,28 @@ module ApplicationHelper
     end
   end
 
-  def sidenav_highlight?(controller_name)
-    if controller_name == controller.controller_name
-      highlighted
+  def highlighted_classes_lookup
+    {
+      highlighted: {
+        link: highlighted,
+        icon: highlighted_icon
+      },
+      unhighlighted: {
+        link: unhighlighted,
+        icon: unhighlighted_icon
+      }
+    }.with_indifferent_access
+  end
+
+  def sidenav_highlight? controller_name, action_names = nil, options = {}
+    nav_type = options[:type]
+    action_names = "index" if action_names.blank?
+    current_controller_action = Array.wrap(action_names).include?(controller.action_name) unless action_names.blank?
+
+    if controller_name == controller.controller_name && current_controller_action
+      highlighted_classes_lookup[:highlighted][nav_type]
     else
-      unhighlighted
+      highlighted_classes_lookup[:unhighlighted][nav_type]
     end
   end
 
@@ -83,7 +100,7 @@ module ApplicationHelper
   end
 
   def dashboard_highlight?
-    if current_page?(root_path) || current_page?(agencies_path)
+    if current_page?(root_path) || current_page?(agencies_path) || current_page?(agency_detail_form_path) || current_page?(interpreters_dashboard_path)
       highlighted
     else
       unhighlighted
@@ -99,7 +116,7 @@ module ApplicationHelper
   end
 
   def dashboard_highlight_icon?
-    if current_page?(root_path) || controller_name == "agencies"
+    if current_page?(root_path) || controller_name == "agencies" || current_page?(interpreters_dashboard_path)
       highlighted_icon
     else
       unhighlighted_icon
@@ -115,7 +132,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs" || controller_name == "customer_categories"
       highlighted
     else
       unhighlighted
@@ -123,7 +140,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight_icon?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs" || controller_name == "customer_categories"
       highlighted_icon
     else
       unhighlighted_icon
