@@ -43,7 +43,8 @@ class AppointmentStatus < ApplicationRecord
     finished: 6,
     verified: 7,
     exported: 8,
-    expired: 9
+    expired: 9,
+    opened: 10
   }
 
   def changed_by

@@ -7,6 +7,11 @@
   </div>
 <% end %>
 
+<%
+notice ||= flash[:notice]
+alert ||= flash[:alert]
+%>
+
 <div id="flash">
   <% if notice %>
     <div class="notice notice-info" role="alert">

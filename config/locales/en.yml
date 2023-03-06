@@ -216,6 +216,7 @@ en:
       billing: "Billing"
       accounts: "Accounts"
       api_tokens: "API"
+      interpreter_details: "Interpreter Details"
     flash:
       confirm_payment: "Confirm your latest payment"
     navbar:
@@ -489,6 +490,13 @@ en:
         verify_description: "After scanning the barcode image, the app will display a code that you can enter below."
         cancel: "Cancel"
         verify: "Verify"
+
+  interpreter_details:
+    index:
+      title: "Interpreter Details"
+      create: "New Interpreter Details"
+    show:
+      edit: "Edit Interpreter Details"
 
   layouts:
     mailer:
