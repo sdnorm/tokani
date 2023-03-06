@@ -13,7 +13,7 @@
 #  phone                  :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  customer_category_id   :bigint           not null
+#  customer_category_id   :bigint
 #  customer_id            :uuid             not null
 #
 # Indexes

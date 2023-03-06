@@ -2,86 +2,82 @@
 
   <%= form_with url: "/interpreters/fetch_appointments", class: 'form', remote: true, method: :get, data: { remote: true, action: "ajax:success->interpreter-appointments#handleResults", target: "interpreter-appointments.form", interpreter_appointments_target: "form" } do |form| %>
     <%= form.hidden_field :status, value: @status %>
-
     <div>
-      <fieldset class="mt-4">
-        <div class="space-y-4">
-          <div class="flex items-center">
-            <input id="today" name="display_range" type="radio" checked class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed" value="today">
-            <label for="today" class="ml-3 block text-sm font-bold text-gray-700">Today's Appointments</label>
-          </div>
-
-          <div class="flex items-center">
-            <input id="tomorrow" name="display_range" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed" value="tomorrow">
-            <label for="tomorrow" class="ml-3 block text-sm font-medium text-gray-700">Tomorrow's Appointments</label>
-          </div>
-
-          <div class="flex items-center">
-            <input id="date_range" name="display_range" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed" value="date_range">
-            <label for="date-range" class="ml-3 block text-sm font-medium text-gray-700">Date Range</label>
-          </div>
-        </div>
+      <fieldset class="mt-10">
+        <ul class="list-none items-center w-full text-sm text-gray-500 bg-white sm:flex">
+          <li class="w-full text-center">
+            <div class="flex items-center border justify-center">
+              <label class="relative flex cursor-pointer p-4 focus:outline-none">
+                <input id="today" name="display_range" type="radio" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-tokanisecondary-600 border-gray-300 focus:ring-tokanisecondary-500" data-action="change->interpreter-appointments#changed" value="today">
+                <span class="ml-3 flex flex-col">
+                  <!-- Checked: "text-sky-900", Not Checked: "text-gray-900" -->
+                  <span id="privacy-setting-0-label" class="inline text-sm font-medium">Today's Appointments</span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li class="w-full text-center">
+            <div class="flex items-center border border-l-0 justify-center">
+              <label class="relative flex cursor-pointer p-4 focus:outline-none">
+                <input id="today" name="display_range" type="radio" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-tokanisecondary-600 border-gray-300 focus:ring-tokanisecondary-500" data-action="change->interpreter-appointments#changed" value="tomorrow">
+                <span class="ml-3 flex flex-col">
+                  <!-- Checked: "text-sky-900", Not Checked: "text-gray-900" -->
+                  <span id="privacy-setting-0-label" class="inline text-sm font-medium">Tomorrow's Appointments</span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li class="w-full text-center">
+            <div class="flex items-center border border-l-0 justify-center">
+              <label class="relative flex cursor-pointer p-4 focus:outline-none">
+                <input id="today" name="display_range" type="radio" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-tokanisecondary-600 border-gray-300 focus:ring-tokanisecondary-500" data-action="change->interpreter-appointments#changed" value="date_range">
+                <span class="ml-3 flex flex-col">
+                  <!-- Checked: "text-sky-900", Not Checked: "text-gray-900" -->
+                  <span id="privacy-setting-0-label" class="inline text-sm font-medium">Date Range</span>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
       </fieldset>
     </div>
-
-    <div class="ml-12">
-      <label for="start-date" class="block font-medium text-gray-700 mt-2">Start Date</label>
-      <div class="relative rounded-md">
-        <input type="date" name="start_date" id="start-date" class="inline-block w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed">
-        <i class="fa fa-2xl fa-calendar ml-1"></i>
-      </div>
-      <label for="end-date" class="block font-medium text-gray-700 mt-2">End Date</label>
-      <div class="relative rounded-md">
-        <input type="date" name="end_date" id="end-date" class="inline-block w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed">
-        <i class="fa fa-2xl fa-calendar ml-1"></i>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-4">
+      <div class="flex h-16 justify-between items-center">
+        <div class="flex">
+          <div class="flex flex-shrink-0 items-end">
+            <input name="modality_in_person" class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox1" value="in_person" data-action="change->interpreter-appointments#changed">
+            <label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox1">In Person</label>
+          </div>
+          <div class="flex flex-shrink-0 items-center">
+            <input name="modality_phone" class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox2" value="phone" data-action="change->interpreter-appointments#changed">
+            <label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox2">Phone</label>
+          </div>
+          <div class="flex flex-shrink-0 items-center">
+            <input name="modality_video" class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox3" value="video" data-action="change->interpreter-appointments#changed">
+            <label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox3">Video</label>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <div class="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
+            <div class="inline-form mr-4">
+              <label for="start-date" class="block font-medium text-gray-700 mt-2">Start Date</label>
+              <input type="date" name="start_date" id="start-date" class="inline-block w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed">
+            </div>
+            <div class="inline-form">
+              <label for="end-date" class="block font-medium text-gray-700 mt-2">End Date</label>
+              <input type="date" name="end_date" id="end-date" class="inline-block w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" data-action="change->interpreter-appointments#changed">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="mb-10 flex justify-end">
-
-<!--   <div>
-    <label for="search-appointment" class="block text-sm font-medium text-gray-700"></label>
-    <div class="relative mt-1 rounded-md shadow-sm">
-      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <i class="fa fa-search"></i>
-      </div>
-      <input type="search" name="search-appointment" id="search-appointment" class="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search Appointment">
-    </div>
-  </div> -->
-
-    </div>
-
-    <div class="flex justify-end">
-      <div class="form-check form-check-inline justify-left">
-        <input name="modality_in_person" class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox1" value="in_person" data-action="change->interpreter-appointments#changed">
-        <label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox1">In Person</label>
-      </div>
-      <div class="form-check form-check-inline justify-left">
-        <input name="modality_phone" class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox2" value="phone" data-action="change->interpreter-appointments#changed">
-        <label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox2">Phone</label>
-      </div>
-      <div class="form-check form-check-inline justify-left">
-        <input name="modality_video" class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer" type="checkbox" id="inlineCheckbox3" value="video" data-action="change->interpreter-appointments#changed">
-        <label class="form-check-label inline-block text-gray-800 mr-3" for="inlineCheckbox3">Video</label>
-      </div>
-
-  <!--
-      <div class="mr-2">
-        <i class="far fa-download mr-1"></i><span class="inline-block text-gray-800 text-sm"> Download</span>
-      </div>
-  -->
-
-    </div>
-
     <div class="mt-8 flex flex-col">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
           <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-
             <div data-interpreter-appointments-target="appointments">
               <%= render template: 'interpreters/fetch_appointments' %>
             </div>
-
           </div>
         </div>
       </div>

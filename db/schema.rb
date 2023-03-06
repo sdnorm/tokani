@@ -49,9 +49,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_214612) do
     t.string "subdomain"
     t.uuid "owner_id"
     t.boolean "customer", default: false
+    t.string "billing_email"
     t.boolean "is_active", default: true
     t.boolean "agency"
-    t.string "billing_email"
     t.integer "account_users_count", default: 0
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
@@ -200,7 +200,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_214612) do
     t.text "admin_notes"
     t.text "notes"
     t.text "details"
-    t.boolean "status"
     t.integer "interpreter_type"
     t.text "billing_notes"
     t.integer "canceled_by"
@@ -323,7 +322,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_214612) do
     t.uuid "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "customer_category_id", null: false
+    t.bigint "customer_category_id"
     t.index ["customer_category_id"], name: "index_customer_details_on_customer_category_id"
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end
@@ -554,7 +553,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_214612) do
 
   create_table "pay_customers", force: :cascade do |t|
     t.string "owner_type"
-    t.bigint "owner_id"
+    t.uuid "owner_id"
     t.string "processor"
     t.string "processor_id"
     t.boolean "default"
@@ -568,7 +567,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_214612) do
 
   create_table "pay_merchants", force: :cascade do |t|
     t.string "owner_type"
-    t.bigint "owner_id"
+    t.uuid "owner_id"
     t.string "processor"
     t.string "processor_id"
     t.boolean "default"

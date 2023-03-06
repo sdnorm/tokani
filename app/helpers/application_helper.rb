@@ -182,12 +182,13 @@ module ApplicationHelper
     "text-gray-100 group-hover:text-gray-500"
   end
 
+  # <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
   def active_tab
-    "inline-block p-4 text-tokaniprimary-600 bg-gray-100 rounded-t-lg active dark:bg-gray-300"
+    "border-tokanisecondary-500 text-tokanisecondary-600"
   end
 
   def inactive_tab
-    "inline-block p-4 rounded-t-lg hover:text-tokaniprimary-600 hover:bg-gray-300"
+    "border-transparent text-gray-500 hover:border-tokanisecondary-300 hover:text-tokanisecondary-700"
   end
 
   def appointment_start_date_and_time_in_user_time_zone(appointment, user)
