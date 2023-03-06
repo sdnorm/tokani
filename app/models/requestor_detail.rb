@@ -34,7 +34,6 @@ class RequestorDetail < ApplicationRecord
 
   enum requestor_type: {site_admin: 1, site_member: 2, client: 3}
   validates :primary_phone, phone: {possible: true, allow_blank: false, message: "is invalid, please use format 222-222-2222"}
-  validates :requestor_type,  presence: { message: 'is required' }
-  validates :customer_id,  presence: { message: 'is required' }
-  
+  validates :requestor_type, presence: {message: "is required"}
+  validates :customer_id, presence: {message: "is required"}
 end

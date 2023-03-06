@@ -56,7 +56,7 @@ class RequestorsController < ApplicationController
     else
       []
     end
-    
+
     @requestor.terms_of_service = true
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
@@ -81,7 +81,7 @@ class RequestorsController < ApplicationController
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully created." }
         format.json { render :show, status: :created, location: @requestor }
       else
-        
+
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @requestor.errors, status: :unprocessable_entity }
       end

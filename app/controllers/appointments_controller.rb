@@ -45,8 +45,8 @@ class AppointmentsController < ApplicationController
     @customer = Customer.find(params[:customer_id])
     @sites = @customer.sites.order("name ASC")
 
-    department_list = Department.where(site_id: @sites).order('name ASC')
-    @departments = [['None', '']]
+    department_list = Department.where(site_id: @sites).order("name ASC")
+    @departments = [["None", ""]]
     @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
 
     @languages = current_account.account_languages
@@ -90,13 +90,13 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
 
-    #NW - have to include all these variables for form to re-render correctly if errors are thrown on create
+    # NW - have to include all these variables for form to re-render correctly if errors are thrown on create
     @account_customers = current_account.customers
     @customer = Customer.find(appointment_params[:customer_id])
     @sites = @customer.sites.order("name ASC")
 
-    department_list = Department.where(site_id: @sites).order('name ASC')
-    @departments = [['None', '']]
+    department_list = Department.where(site_id: @sites).order("name ASC")
+    @departments = [["None", ""]]
     @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
     @languages = current_account.account_languages
 
@@ -116,7 +116,7 @@ class AppointmentsController < ApplicationController
         format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
         format.json { render :show, status: :created, location: @appointment }
       else
-        format.html { render :new, status: :unprocessable_entity}
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end
