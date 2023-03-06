@@ -36,14 +36,14 @@
               </div>
               <div class="col-span-6 sm:col-span-6" data-controller="select-group">
                 <% unless customer_logged_in? %>
-                  <div class="lg:col-span-3 sm:col-span-6">
+                  <div class="col-span-3 sm:col-span-3">
                     <div class="form-group">
-                      <%= requestor_detail.label "Customer*", class: "block text-sm font-medium text-gray-700" %>
+                      <%= requestor_detail.label :customer_id, class: "block text-sm font-medium text-gray-700" %>
                       <%= requestor_detail.select :customer_id, options_from_collection_for_select(account_customers, :id, :name, requestor.requestor_detail.customer_id ), {prompt: "Select A Customer First..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'user_requestor_detail_attributes_site_id', select_group_select_clear_target_param: 'user_requestor_detail_department_id' }} %> 
                     </div>
                   </div>
                 <% end %>
-                <div class="lg:col-span-3 sm:col-span-6">
+                <div class="col-span-3 sm:col-span-3">
                   <div class="form-group">
                     <%= requestor_detail.label :site_id, class: 'text-blueCoral' %>
                     <%= requestor_detail.select :site_id, options_from_collection_for_select(sites, :id, :name, requestor.requestor_detail.site_id), {}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'user_requestor_detail_attributes_department_id'}} %>
