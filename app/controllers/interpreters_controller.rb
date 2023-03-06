@@ -158,7 +158,7 @@ class InterpretersController < ApplicationController
     else
       raise "Invalid visibility_status for Appointment #{@appointment.id}: #{@appointment.visibility_status}"
     end
-    redirect_to(interpreters_dashboard_path, alert: "You have been unassigned from the appointment.")
+    redirect_to(interpreter_dashboard_path, alert: "You have been unassigned from the appointment.")
   end
 
   def time_finish
