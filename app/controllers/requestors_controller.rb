@@ -19,7 +19,7 @@ class RequestorsController < ApplicationController
   def new
     @requestor = User.new
     @requestor.build_requestor_detail
-    @account_customers = current_account.customers
+    @account_customers = current_account.customers unless customer_logged_in?
 
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
@@ -53,6 +53,8 @@ class RequestorsController < ApplicationController
     @requestor.terms_of_service = true
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
+
+    @requestor.requestor_detail.customer_id = current_account.id if customer_logged_in?
 
     req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
 
