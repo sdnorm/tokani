@@ -58,6 +58,14 @@ module ApplicationHelper
     a_boolean ? "yes" : "no"
   end
 
+  def int_appointment_hightlight?
+    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled")
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
   def sidenav_highlight?(controller_name)
     if controller_name == controller.controller_name
       highlighted
@@ -82,8 +90,24 @@ module ApplicationHelper
     end
   end
 
+  def int_dashboard_highlight?
+    if current_page?(root_path) || current_page?(interpreter_dashboard_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
   def dashboard_highlight_icon?
     if current_page?(root_path) || controller_name == "agencies"
+      highlighted_icon
+    else
+      unhighlighted_icon
+    end
+  end
+
+  def int_dashboard_highlight_icon?
+    if current_page?(root_path) || current_page?(interpreter_dashboard_path)
       highlighted_icon
     else
       unhighlighted_icon
@@ -156,6 +180,15 @@ module ApplicationHelper
 
   def unhighlighted_icon
     "text-gray-100 group-hover:text-gray-500"
+  end
+
+  # <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+  def active_tab
+    "border-tokanisecondary-500 text-tokanisecondary-600"
+  end
+
+  def inactive_tab
+    "border-transparent text-gray-500 hover:border-tokanisecondary-300 hover:text-tokanisecondary-700"
   end
 
   def appointment_start_date_and_time_in_user_time_zone(appointment, user)

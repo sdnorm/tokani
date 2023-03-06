@@ -4,6 +4,9 @@ class PerSeatSubscriptionTest < ActiveSupport::TestCase
   setup do
     @account = accounts(:fake_processor)
     assert_equal 1, @account.account_users_count
+    # puts @account.payment_processor.inspect
+    # @account.set_payment_processor :fake_processor, allow_fake: true
+    # puts @account.payment_processor.inspect
     @account.payment_processor.subscribe(plan: "per_seat", quantity: @account.account_users_count)
   end
 

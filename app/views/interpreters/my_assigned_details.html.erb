@@ -1,17 +1,35 @@
-<div class="mx-auto max-w-6xl sm:px-6 lg:px-8">
-	<div class="mt-4">
-		<%= link_to "< Back", interpreters_my_assigned_path, class: "text-blue-600 underline" %>
-	</div>
-	<div class="border border-gray-300 bg-white px-4 py-5 sm:px-6 mt-5">
-		<h3 class="text-lg font-medium leading-6 text-gray-900"><%= @appointment.ref_number %> Details</h3>
-    <%= render partial: "appointment_details" %>
-<!-- 		<div class="mt-10 mb-5">
-			<p>Appt. Docs:</p>
-		</div> -->
-	</div>
-	<div class="mt-10 gap-8 columns-2 flex justify-center">
-    <%= button_to "Decline Assignment", decline_offered_interpreter_path(@appointment), data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+        <div class="px-4 sm:px-6 lg:px-6">
+          <div class="sm:flex sm:items-center pb-6">
+            <div class="sm:flex-auto">
+              <h1 class="text-xl font-semibold text-gray-900">
+               <span class="text-tokanisecondary-500">
+                <%= current_user.full_name %>
+                </span>
+                <span class="text-tokaniprimary-600 font-light mx-2">/ <%= @appointment.ref_number %> Details</span>
+              </h1>
+            </div>
+          </div>
 
-    <%= button_to "Accept Assignment", accept_offered_interpreter_path(@appointment), data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
-	</div>
+          <div class="mx-auto max-w-6xl sm:px-6 lg:px-8">
+          	<div class="mt-4">
+          		<%= link_to "< Back", interpreters_my_assigned_path, class: "text-blue-600 underline" %>
+          	</div>
+          	<div class="border border-gray-300 bg-white px-4 py-5 sm:px-6 mt-5">
+              <%= render partial: "appointment_details" %>
+          	</div>
+          	<div class="mt-10 gap-8 columns-2 flex justify-center">
+              <%= button_to "Decline Assignment", decline_offered_interpreter_path(@appointment), data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+
+              <%= button_to "Accept Assignment", accept_offered_interpreter_path(@appointment), data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+          	</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
 </div>

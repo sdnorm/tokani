@@ -30,6 +30,7 @@
 #  total_billed             :decimal(, )
 #  total_paid               :decimal(, )
 #  video_link               :string
+#  visibility_status        :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid

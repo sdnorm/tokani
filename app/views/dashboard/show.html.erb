@@ -1,7 +1,7 @@
 <% if current_account_user.roles["interpreter"] %>
-  <%= render partial: "interpreter" %>
+  <%= render template: "interpreters/index" %>
 <% elsif current_account_user.agency_admin? %>
-  <%= render partial: "agency_admin" %>
+  <%= render template: "agency_admin" %>
 <% elsif current_account_user.customer_admin? %>
   <%= render template: "customer" %>
 <% elsif current_account_user.admin? %>
