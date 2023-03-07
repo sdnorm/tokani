@@ -48,8 +48,15 @@ class RequestorsController < ApplicationController
   end
 
   def create
-    @account_customers = current_account.customers
     @requestor = User.new(requestor_params)
+    @account_customers = current_account.customers
+    @sites = current_account.account_sites.order("name ASC")
+    @departments = if @requestor.requestor_detail.site_id.present?
+      Department.where(site_id: @requestor.requestor_detail.site_id).order("name ASC")
+    else
+      []
+    end
+
     @requestor.terms_of_service = true
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
@@ -68,14 +75,15 @@ class RequestorsController < ApplicationController
     @requestor.skip_default_account = true
 
     respond_to do |format|
-      if @requestor.save!
+      if @requestor.save
         AccountUser.create!(account_id: current_account.id, user_id: @requestor.id, roles: req_type)
         AgencyAdminRequestorCreationMailer.welcome(@requestor).deliver_later
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully created." }
         format.json { render :show, status: :created, location: @requestor }
       else
+
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @interpreter.errors, status: :unprocessable_entity }
+        format.json { render json: @requestor.errors, status: :unprocessable_entity }
       end
     end
   end

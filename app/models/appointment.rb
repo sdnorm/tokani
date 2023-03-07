@@ -82,11 +82,11 @@ class Appointment < ApplicationRecord
 
   belongs_to :language
   belongs_to :agency, class_name: "Account"
-  belongs_to :customer, class_name: "Account", optional: true
+  belongs_to :customer, class_name: "Account"
   belongs_to :interpreter, class_name: "User", optional: true
-  belongs_to :site, optional: true
+  belongs_to :site
   belongs_to :department, optional: true
-  belongs_to :requestor, class_name: "User", optional: true
+  belongs_to :requestor, class_name: "User"
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
   belongs_to :pay_bill_rate, optional: true
@@ -104,6 +104,7 @@ class Appointment < ApplicationRecord
 
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
+  validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
   before_create :gen_refnum
   after_create :create_offers
   after_update :update_offers

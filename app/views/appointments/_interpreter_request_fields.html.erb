@@ -12,11 +12,11 @@
             <div class="input-group input-group-static mb-3">
               <%= form.label :interpreter %>
               <%= text_field_tag 'interpreter_automplete', '', data: {interpreter_autocomplete_target: 'input'}, class: "form-control" %>
-              <ul class="list-group mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4" data-interpreter-autocomplete-target="results"></ul>
+              <ul class="list-group mt-3" data-interpreter-autocomplete-target="results"></ul>
             </div>
   
             <template data-interpreter-autocomplete-target='chipTemplate'>
-              <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700 " data-controller="element" data-element-target="remove">
+              <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700 " data-controller="element" data-element-target="remove">
                 <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"></span>
                 <input type="hidden" name="appointment[interpreter_req_ids][]" value="">
                     <div class="flex flex-auto flex-row-reverse">
@@ -62,6 +62,7 @@
            
             <%= form.label :gender_request, class: 'text-blueCoral'  %>
             <%= form.select :gender_req, options_for_select(gender_req_options, @appointment.gender_req), {include_blank: 'None'}, class: "form-select mb-3" %>
+        </br>
             <%= form.label :appointment_is_viewable_to, class: 'text-blueCoral'  %>
             <%= form.select :interpreter_type, options_for_select(interpreter_filter_options, @appointment.interpreter_type), {}, class: "form-select mb-3" %>
             <% end %>

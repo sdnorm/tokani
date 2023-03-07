@@ -1,20 +1,21 @@
 <div>
   <% form_url = recipient.new_record? ? recipients_path : recipient_path(recipient) %>
   <%= form_with(model: recipient, url: form_url) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
       <div class="mt-5 md:col-span-2 md:mt-0">
         <div class="overflow-hidden shadow sm:rounded-md">
           <div class="bg-white px-4 py-5 sm:p-6">
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <%= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.label "First Name*", class: "block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :first_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= form.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+                <%= form.label "Last Name*", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.text_field :last_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3">
-                <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+                <%= form.label "Email*", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3">
@@ -22,7 +23,7 @@
                 <%= form.text_field :srn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3">
-                <%= form.label :primary_phone, class: "block text-sm font-medium text-gray-700" %>
+                <%= form.label "Primary Phone*", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3">
@@ -56,7 +57,7 @@
 
               <div class="col-span-3 sm:col-span-6">
                 <div class="form-group">
-                  <%= form.label "Customer", class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.label "Customer*", class: "block text-sm font-medium text-gray-700" %>
                   <%= form.select :customer_id,  options_from_collection_for_select(account_customers, :id, :name, recipient.customer_id ), {prompt: "Select A Customer..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'provider_site_id', select_group_select_clear_target_param: 'provider_department_id' }} %> 
                 </div>
               </div>
