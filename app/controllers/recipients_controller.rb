@@ -96,7 +96,7 @@ class RecipientsController < ApplicationController
     unless customer_logged_in?
       @account_customers = current_account.customers 
     else
-      @recipient.customer_id = current_account.id if action_name == "create"
+      @recipient.customer_id = current_account.id if action_name == 'create'
     end
   end
 end
