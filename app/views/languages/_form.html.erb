@@ -7,7 +7,7 @@
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-8 sm:col-span-6">
                 <%= form.hidden_field :account_id, value: current_account.id %>
-                <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+                <%= form.label "Name*", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <br>

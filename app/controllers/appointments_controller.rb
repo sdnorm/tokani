@@ -44,8 +44,10 @@ class AppointmentsController < ApplicationController
     @account_customers = current_account.customers
     @customer = Customer.find(params[:customer_id])
     @sites = @customer.sites.order("name ASC")
-    @departments = Department.where(site_id: @sites.pluck(:id)).order("name ASC")
-    @departments || []
+
+    department_list = Department.where(site_id: @sites).order("name ASC")
+    @departments = [["None", ""]]
+    @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
 
     @languages = current_account.account_languages
 
@@ -88,6 +90,23 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
 
+    # NW - have to include all these variables for form to re-render correctly if errors are thrown on create
+    @account_customers = current_account.customers
+    @customer = Customer.find(appointment_params[:customer_id])
+    @sites = @customer.sites.order("name ASC")
+
+    department_list = Department.where(site_id: @sites).order("name ASC")
+    @departments = [["None", ""]]
+    @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
+    @languages = current_account.account_languages
+
+    @interpreters = current_account.interpreters
+    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
+    @requestors = User.where(id: requestor_ids)
+    @providers = @customer.providers
+    @recipients = @customer.recipients
+    @general_int_requested = true
+    @specific_int_requested = !@general_int_requested
     # Uncomment to authorize with Pundit
     # authorize @appointment
 

@@ -49,7 +49,7 @@ class Site < ApplicationRecord
   validates :name, presence: true
   validates :contact_name, presence: true
   validates :email, presence: true
-  validates :contact_phone, presence: true
+  validates :contact_phone, phone: {possible: true, allow_blank: true, message: "Phone number is invalid, please use format 222-222-2222"}
   validates :address, presence: true
   validates :city, presence: true
   validates :state, presence: true

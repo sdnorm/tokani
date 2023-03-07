@@ -32,6 +32,12 @@ class Recipient < ApplicationRecord
   after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :recipients, target: dom_id(self, :index) }
 
+  validates :primary_phone, phone: {possible: true, allow_blank: false, message: "Phone number is invalid, please use format 222-222-2222"}
+  validates :email, email: true
+  validates :first_name, presence: {message: "field is required"}
+  validates :last_name, presence: {message: "field is required"}
+  validates :customer_id, presence: {message: "field is required"}
+
   def view_name
     "#{first_name} #{last_name}"
   end
