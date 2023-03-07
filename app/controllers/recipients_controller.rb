@@ -21,20 +21,21 @@ class RecipientsController < ApplicationController
   # GET /recipients/new
   def new
     @recipient = Recipient.new
-    @account_customers = current_account.customers
+    grab_account_customers_when_needed
     # Uncomment to authorize with Pundit
     # authorize @recipient
   end
 
   # GET /recipients/1/edit
   def edit
-    @account_customers = current_account.customers
+    grab_account_customers_when_needed
   end
 
   # POST /recipients or /recipients.json
   def create
     @recipient = Recipient.new(recipient_params)
-    @account_customers = current_account.customers
+    grab_account_customers_when_needed
+
     # Uncomment to authorize with Pundit
     # authorize @recipient
 
@@ -89,5 +90,13 @@ class RecipientsController < ApplicationController
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:recipient).permit(policy(@recipient).permitted_attributes)
+  end
+
+  def grab_account_customers_when_needed
+    unless customer_logged_in?
+      @account_customers = current_account.customers 
+    else
+      @recipient.customer_id = current_account.id if action_name == "create"
+    end
   end
 end
