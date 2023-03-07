@@ -28,7 +28,7 @@ class RequestorsController < ApplicationController
       @departments = Department.where(site_id: @site_id).order("name ASC")
 
     end
-    @sites ||= []
+    @sites ||= customer_logged_in? ? current_account.sites : []
     @departments ||= []
     @remote = params[:remote] == "true"
   end
@@ -38,8 +38,8 @@ class RequestorsController < ApplicationController
   end
 
   def edit
-    @account_customers = current_account.customers
-    @sites = current_account.account_sites.order("name ASC")
+    @account_customers = current_account.customers unless customer_logged_in?
+    @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
     @departments = if @requestor.requestor_detail.site_id.present?
       Department.where(site_id: @requestor.requestor_detail.site_id).order("name ASC")
     else
