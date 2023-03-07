@@ -33,11 +33,11 @@ class AvailabilitiesController < ApplicationController
 
   def check_interpreter_and_requestor_access
     unless @interpreter.accounts.include?(current_account)
-      return redirect_to(interpreters_dashboard_path, alert: "Access denied.")
+      return redirect_to(interpreter_dashboard_path, alert: "Access denied.")
     end
 
     unless @interpreter == current_user || current_user.is_a?(Requestor)
-      redirect_to(interpreters_dashboard_path, alert: "Access denied.")
+      redirect_to(interpreter_dashboard_path, alert: "Access denied.")
     end
   end
 
