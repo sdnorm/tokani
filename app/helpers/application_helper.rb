@@ -100,7 +100,7 @@ module ApplicationHelper
   end
 
   def dashboard_highlight?
-    if current_page?(root_path) || current_page?(agencies_path) || current_page?(agency_detail_form_path) || current_page?(interpreters_dashboard_path)
+    if current_page?("/dashboard") || current_page?(root_path) || current_page?(agencies_path) || current_page?(agency_detail_form_path) || current_page?(interpreter_dashboard_path)
       highlighted
     else
       unhighlighted
@@ -116,7 +116,7 @@ module ApplicationHelper
   end
 
   def dashboard_highlight_icon?
-    if current_page?(root_path) || controller_name == "agencies" || current_page?(interpreters_dashboard_path)
+    if current_page?("/dashboard") || current_page?(root_path) || controller_name == "agencies" || current_page?(interpreter_dashboard_path)
       highlighted_icon
     else
       unhighlighted_icon
