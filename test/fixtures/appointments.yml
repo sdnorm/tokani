@@ -12,6 +12,7 @@
 #  confirmation_date        :datetime
 #  confirmation_notes       :text
 #  confirmation_phone       :string
+#  current_status           :string
 #  details                  :text
 #  duration                 :integer
 #  finish_time              :datetime
