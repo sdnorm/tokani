@@ -120,8 +120,12 @@ class AgenciesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_agency
     # @agency = Agency.find(params[:id])
-    @agency = current_account
-    @agency = @agency.becomes(Agency)
+    if current_account_user.tokani_admin?
+      @agency = Agency.find(params[:id])
+    else
+      @agency = current_account
+      @agency = @agency.becomes(Agency)
+    end
     # Uncomment to authorize with Pundit
     # authorize @agency
   rescue ActiveRecord::RecordNotFound
