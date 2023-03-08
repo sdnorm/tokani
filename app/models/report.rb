@@ -26,9 +26,9 @@ require "csv"
 
 class Report < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :reports, partial: "reports/index", locals: {report: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :reports, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :reports, partial: "reports/index", locals: {report: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :reports, target: dom_id(self, :index) }
 
   include ActionView::Helpers::NumberHelper
   include ReportsHelper
