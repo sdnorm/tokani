@@ -7,7 +7,6 @@ class AgenciesController < ApplicationController
 
   # GET /agencies
   def index
-    
     # @pagy, @agencies = pagy(Account.where(agency: true).sort_by_params(params[:sort], sort_direction))
     @pagy, @agencies = pagy(Agency.where(agency: true).sort_by_params(params[:sort], sort_direction))
 
@@ -17,7 +16,6 @@ class AgenciesController < ApplicationController
 
   # GET /agencies/1 or /agencies/1.json
   def show
-
   end
 
   # GET /agencies/new
@@ -124,7 +122,7 @@ class AgenciesController < ApplicationController
     # @agency = Agency.find(params[:id])
     if current_account_user.tokani_admin?
       @agency = Agency.find(params[:id])
-    else 
+    else
       @agency = current_account
       @agency = @agency.becomes(Agency)
     end
