@@ -5,7 +5,7 @@
     last_name: Faker::Name.last_name,
     password: "password",
     terms_of_service: true,
-    accepted_terms_at: Time.now,
+    accepted_terms_at: Time.now
   )
   InterpreterDetail.create!(
     interpreter_id: user.id,

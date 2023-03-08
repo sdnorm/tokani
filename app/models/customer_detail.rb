@@ -37,5 +37,4 @@ class CustomerDetail < ApplicationRecord
   validates_presence_of :contact_name, :email, :customer_category, :phone
   validates :email, email: {possible: true, allow_blank: true, message: "Email is invalid"}
   validates :phone, phone: {possible: true, allow_blank: true, message: "Phone number is invalid, please use 222-222-2222"}
-
 end

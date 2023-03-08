@@ -32,7 +32,7 @@ Agency.where(agency: true).each do |agency|
     primary_contact_last_name: Faker::Name.last_name,
     primary_contact_phone_number: "222-222-2222",
     primary_contact_title: Faker::Job.title,
-    url: agency.name.parameterize,
+    url: agency.name.parameterize
   )
   user = User.create!(
     email: agency.agency_detail.primary_contact_email,
