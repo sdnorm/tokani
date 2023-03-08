@@ -200,6 +200,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_214612) do
     t.text "admin_notes"
     t.text "notes"
     t.text "details"
+    t.boolean "status"
     t.integer "interpreter_type"
     t.text "billing_notes"
     t.integer "canceled_by"

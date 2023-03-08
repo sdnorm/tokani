@@ -20,9 +20,9 @@
 #
 class CustomerCategory < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :customer_categories, partial: "customer_categories/index", locals: {customer_category: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :customer_categories, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :customer_categories, partial: "customer_categories/index", locals: {customer_category: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :customer_categories, target: dom_id(self, :index) }
 
   # has_many :agency_customers
   has_many :customers

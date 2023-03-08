@@ -30,6 +30,10 @@ class Agency < Account
 
   before_create :set_agency_flag
 
+  has_one :physical_address, -> { where(address_type: :physical) }, class_name: "Address", as: :addressable
+  validates_presence_of :physical_address
+  accepts_nested_attributes_for :physical_address
+
   def create_owner_account_from_primary_contact
     user = User.create(
       email: agency_detail.primary_contact_email,
@@ -43,10 +47,6 @@ class Agency < Account
     account_users.create(user: user, roles: {"agency_admin" => true})
     TokaniAgencyCreationMailer.welcome(user).deliver_later
   end
-
-  has_one :physical_address, -> { where(address_type: :physical) }, class_name: "Address", as: :addressable
-  validates_presence_of :physical_address
-  accepts_nested_attributes_for :physical_address
 
   private
 

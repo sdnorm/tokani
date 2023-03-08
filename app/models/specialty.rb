@@ -20,9 +20,9 @@
 #
 class Specialty < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :specialties, partial: "specialties/index", locals: {specialty: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :specialties, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :specialties, partial: "specialties/index", locals: {specialty: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :specialties, target: dom_id(self, :index) }
 
   has_many :interpreter_specialties, dependent: :destroy
   has_many :interpreters, through: :interpreter_specialties, foreign_key: :interpreter_id

@@ -31,9 +31,9 @@
 #
 class Site < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :sites, partial: "sites/index", locals: {site: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :sites, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :sites, partial: "sites/index", locals: {site: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :sites, target: dom_id(self, :index) }
 
   validates :account_id, presence: true
   validates :customer_id, presence: true

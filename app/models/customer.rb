@@ -43,6 +43,20 @@ class Customer < Account
   validates_presence_of :physical_address
   accepts_nested_attributes_for :physical_address
 
+  # move to job so it retries
+  def create_user_and_owner
+    User.create(
+      name: customer_detail.contact_name,
+      email: customer_detail.email,
+      password: SecureRandom.alphanumeric,
+      terms_of_service: true,
+      accepted_terms_at: Time.current
+    )
+    update(owner_id: user.id)
+    account_users.create(user: user, roles: {"customer_admin" => true})
+    # TokaniAgencyCreationMailer.welcome(user).deliver_later
+  end
+
   private
 
   def set_customer_flag

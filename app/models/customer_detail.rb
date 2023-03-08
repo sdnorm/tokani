@@ -37,17 +37,4 @@ class CustomerDetail < ApplicationRecord
   validates_presence_of :contact_name, :email, :customer_category, :phone
   validates :email, email: {possible: true, allow_blank: true, message: "Email is invalid"}
   validates :phone, phone: {possible: true, allow_blank: true, message: "Phone number is invalid, please use 222-222-2222"}
-
-  # move to job so it retries
-  def create_user_and_owner
-    User.create(
-      name: contact_name,
-      email: email,
-      password: Secure.random.hex(10),
-      password_confirmation: "password",
-      account: customer,
-      owner: true,
-      terms_of_service: true
-    )
-  end
 end
