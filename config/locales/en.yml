@@ -52,6 +52,12 @@ en:
       accept_or_decline: "accept or decline"
       view_invitation: "View invitation"
 
+  interpreter_actions_mailer:
+    interpreter_canceled:
+      subject: "Interpreter %{interpreter} can no longer cover appointment %{ref_number}"
+      header_html: "Interpreter %{interpreter} can no longer cover appointment %{ref_number}"
+      view_appointment: "View Appointment"
+
   account_invitations:
     invite_user: "Invite User"
     authenticate: "Please login or create an account to accept this invitation"
@@ -512,6 +518,7 @@ en:
       empty_placeholder: "Nothing to see here — yet."
     invite_accepted: "%{user} accepted your invitation."
     account_transferred: "%{previous_owner} made you owner of the %{account} account."
+    interpreter_canceled: "Interpreter %{interpreter} canceled their coverage of appointment %{ref_number}. It has been moved back to status %{status}."
     empty: "Nothing to see here — yet."
     empty_description: "We'll let you know when you have new notifications."
 
