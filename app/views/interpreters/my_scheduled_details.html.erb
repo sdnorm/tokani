@@ -28,7 +28,7 @@
           						<h3 class="text-lg font-medium leading-6 text-gray-900"><%= @appointment.ref_number %></h3>
           						<p class="mt-1 text-sm text-gray-500">Time Finish</p>
 
-                      <% unless false && @appointment.less_than_24_hours_left_until_appointment? %>
+                      <% unless @appointment.less_than_24_hours_left_until_appointment? %>
                         <%= button_to "I Can No Longer Attend", cancel_coverage_interpreter_path(@appointment), type: :button, data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "rounded-md border border-gray-300 bg-red-500 py-2 px-4 mt-4 text-sm font-medium text-white shadow-sm hover:bg-gray-50 hover:text-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
                       <% end %>
 

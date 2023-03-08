@@ -81,6 +81,7 @@ class Appointment < ApplicationRecord
   has_many :offered_interpreters, through: :requested_interpreters, foreign_key: "user_id", source: :interpreter
 
   belongs_to :language
+  belongs_to :creator, class_name: "User", optional: true
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account"
   belongs_to :interpreter, class_name: "User", optional: true

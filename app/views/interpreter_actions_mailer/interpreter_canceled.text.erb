@@ -1,0 +1,3 @@
+<%= strip_tags t(".header_html", interpreter: @interpreter&.full_name, ref_number: @appointment&.ref_number) %>
+
+<%= t(".view_appointment") %>: <%= appointment_url(@appointment) %>
