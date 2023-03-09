@@ -7,7 +7,11 @@
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Status</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.status.titleize %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> 
+          <%= appointment.status.titleize %>
+          <a href="#" class="btn btn-primary btn-small mx-2">Mark as Completed</a>
+          <a href="#" class="btn btn-danger btn-small">Mark as Cancelled</a>
+          </dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Start Time</dt>
