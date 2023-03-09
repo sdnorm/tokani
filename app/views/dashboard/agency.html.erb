@@ -23,7 +23,7 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Created Appointments</dt>
                         <dd>
-                          <div class="text-lg font-medium text-gray-900"><%= @appointments.count %></div>
+                          <div class="text-lg font-medium text-gray-900"><%= @appointments.where(current_status: "offered").or(@appointments.where(current_status: "opened")).count %></div>
                         </dd>
                       </dl>
                     </div>
@@ -75,7 +75,7 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Appointments Completed</dt>
                         <dd>
-                          <div class="text-lg font-medium text-gray-900"><%= @appointments.where(current_status: "completed").count %></div>
+                          <div class="text-lg font-medium text-gray-900"><%= @appointments.where(current_status: "finished").count %></div>
                         </dd>
                       </dl>
                     </div>
