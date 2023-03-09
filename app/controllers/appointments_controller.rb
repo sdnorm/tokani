@@ -3,6 +3,7 @@ class AppointmentsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_account
+  before_action :appointments_per_logged_in_account, only: [:index]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -10,8 +11,13 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @pagy, @appointments = pagy(@account.appointments.sort_by_params(params[:sort], sort_direction))
+    @pagy, @appointments = pagy(appointments_per_logged_in_account.sort_by_params(params[:sort], sort_direction))
 
+    if customer_logged_in?
+      @scheduled_appts_count = Appointment.by_appointment_specific_status('scheduled').count
+      @finished_appts_count = Appointment.by_appointment_specific_status('finished').count
+    end
+    
     # Uncomment to authorize with Pundit
     # authorize @appointments
   end
@@ -35,27 +41,11 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
 
-    if params[:customer_id].blank?
+    if params[:customer_id].blank? && !customer_logged_in?
       @account_customers = current_account.customers
-      # @agency_customers = AgencyCustomer.all.order('name ASC')
-      return
+    else
+      setup_appointment_vars
     end
-
-    @account_customers = current_account.customers
-    @customer = Customer.find(params[:customer_id])
-    @sites = @customer.sites.order("name ASC")
-    @departments = Department.where(site_id: @sites.pluck(:id)).order("name ASC")
-    @departments || []
-
-    @languages = current_account.account_languages
-
-    @interpreters = current_account.interpreters
-    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
-    @requestors = User.where(id: requestor_ids)
-    @providers = @customer.providers
-    @recipients = @customer.recipients
-    @general_int_requested = true
-    @specific_int_requested = !@general_int_requested
   end
 
   # GET /appointments/1/edit
@@ -87,6 +77,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
+    @appointment.customer = current_account if customer_logged_in?
 
     # Uncomment to authorize with Pundit
     # authorize @appointment
@@ -97,6 +88,7 @@ class AppointmentsController < ApplicationController
         format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
         format.json { render :show, status: :created, location: @appointment }
       else
+        setup_appointment_vars
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
@@ -145,6 +137,30 @@ class AppointmentsController < ApplicationController
 
   def set_account
     @account = current_account
+  end
+
+  def appointments_per_logged_in_account
+    customer_logged_in? ?
+      Appointment.where(customer_id: current_account.id) :
+      @account.appointments
+  end
+
+  def setup_appointment_vars
+    @account_customers = current_account.customers
+    @customer = customer_logged_in? ? current_account : Customer.find(params[:customer_id])
+    @sites = @customer.sites.order("name ASC")
+    @departments = Department.where(site_id: @sites.pluck(:id)).order("name ASC")
+    @departments || []
+
+    @languages = current_account.account_languages
+
+    @interpreters = current_account.interpreters
+    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
+    @requestors = User.where(id: requestor_ids)
+    @providers = @customer.providers
+    @recipients = @customer.recipients
+    @general_int_requested = true
+    @specific_int_requested = !@general_int_requested   
   end
 
   # Only allow a list of trusted parameters through.

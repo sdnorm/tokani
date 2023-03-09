@@ -25,6 +25,7 @@
 #  processed_by_interpreter :boolean          default(FALSE)
 #  ref_number               :string
 #  start_time               :datetime
+#  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
 #  total_billed             :decimal(, )
@@ -99,6 +100,7 @@ class Appointment < ApplicationRecord
   enum cancel_type: {agency: 0, requestor: 1}
 
   scope :by_status, ->(status) { where(status: status) }
+  scope :by_appointment_specific_status, ->(name) { joins(:appointment_statuses).where(appointment_statuses: { name: name }) }
 
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
@@ -108,13 +110,14 @@ class Appointment < ApplicationRecord
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
-    category_code = customer.customer_detail.customer_category.modality_prefix(modality)
+    category_code = customer&.customer_detail&.customer_category&.modality_prefix(modality)
     # here's where our collision occurs.
     my_year = Time.current.year
     year_code = (my_year - 2000).to_s
     appointment_number = Appointment.where("created_at >= :date", date: "#{my_year}-01-01").count
     final_num = (appointment_number + 1).to_s.rjust(3, "0")
-    self.ref_number = "#{category_code}-#{year_code}-#{final_num}"
+    # Added a temporary category code sample to bypass the bug here
+    self.ref_number = "#{category_code || [100, 101, 102].sample}-#{year_code}-#{final_num}"
   end
 
   def create_status_for_new_appt

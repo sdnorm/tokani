@@ -9,6 +9,13 @@
           <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center">
               <div class="sm:flex-auto">
+                <% if customer_logged_in? %>
+                  <div id="widgets">
+                    <p>Appointments Created: <%= @appointments.count %></p>
+                    <p>Appointments Scheduled: <%= @scheduled_appts_count %></p>
+                    <p>Appointments Completed: <%= @finished_appts_count %></p>
+                  </div>
+                <% end %>
                 <h1 class="text-xl font-semibold text-gray-900">Appointments</h1>
                 <!--
                 <div class="text-sm font-medium mt-2 text-gray-700">
@@ -69,7 +76,7 @@
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.modality.titleize %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.language&.name %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.duration %> minutes</td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.start_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       <a href="<%= edit_appointment_path(appointment) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= appointment.id %></span></a>
                     </td>
