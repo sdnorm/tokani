@@ -162,7 +162,7 @@ class Appointment < ApplicationRecord
       end
     end
   end
-  
+
   def unless_no_offers
     requested_interpreters.nil?
   end
