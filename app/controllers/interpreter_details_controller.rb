@@ -33,6 +33,7 @@ class InterpreterDetailsController < ApplicationController
 
   # GET /interpreter_details/1/edit
   def edit
+    @notification_setting = current_user&.notification_setting || NotificationSetting.new
   end
 
   # POST /interpreter_details or /interpreter_details.json
