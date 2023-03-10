@@ -34,9 +34,9 @@ class NotificationSettingsController < ApplicationController
 
   def after_save_url
     if current_account_user.interpreter?
-      return edit_interpreter_detail_path(current_user&.interpreter_detail)
+      edit_interpreter_detail_path(current_user&.interpreter_detail)
     else
-      return '/'
+      "/"
     end
   end
 
@@ -44,7 +44,7 @@ class NotificationSettingsController < ApplicationController
   def set_notification_setting
     @notification_setting = current_user&.notification_setting
     if @notification_setting.nil?
-      return redirect_to interpreter_details_path
+      redirect_to interpreter_details_path
     end
   end
 
