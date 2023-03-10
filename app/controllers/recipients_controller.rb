@@ -95,8 +95,8 @@ class RecipientsController < ApplicationController
   def grab_account_customers_when_needed
     if customer_logged_in?
       @recipient.customer_id = current_account.id if action_name == "create"
-    else
-      @recipient.customer_id = current_account.id if action_name == "create"
+    elsif action_name == "create"
+      @recipient.customer_id = current_account.id
     end
   end
 end
