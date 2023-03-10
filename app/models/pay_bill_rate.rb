@@ -55,7 +55,7 @@ class PayBillRate < ApplicationRecord
 
   has_many :pay_bill_rate_interpreter_types, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, :effective_date, :bill_rate, :pay_rate, presence: true
   validate :must_select_at_least_one_modality
 
   scope :active, -> { where(is_active: true) }

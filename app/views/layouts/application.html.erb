@@ -33,7 +33,7 @@
       <% unless content_for?(:sidenav) %>
         <%= render partial: "shared/navbar" %>
       <% end %>
-      <div class="px-3 lg:px-0 h-full">
+      <div class="lg:px-0 h-full">
         <% unless current_user.blank? %>
           <%= render partial: 'shared/sidenav' %>
           <%= render partial: 'shared/interpreter_sidenav' %>
