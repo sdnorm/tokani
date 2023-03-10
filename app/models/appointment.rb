@@ -12,6 +12,7 @@
 #  confirmation_date        :datetime
 #  confirmation_notes       :text
 #  confirmation_phone       :string
+#  current_status           :string
 #  details                  :text
 #  duration                 :integer
 #  finish_time              :datetime
@@ -31,6 +32,7 @@
 #  total_billed             :decimal(, )
 #  total_paid               :decimal(, )
 #  video_link               :string
+#  visibility_status        :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
@@ -81,12 +83,13 @@ class Appointment < ApplicationRecord
   has_many :offered_interpreters, through: :requested_interpreters, foreign_key: "user_id", source: :interpreter
 
   belongs_to :language
+  belongs_to :creator, class_name: "User", optional: true
   belongs_to :agency, class_name: "Account"
-  belongs_to :customer, class_name: "Account", optional: true
+  belongs_to :customer, class_name: "Account"
   belongs_to :interpreter, class_name: "User", optional: true
-  belongs_to :site, optional: true
+  belongs_to :site
   belongs_to :department, optional: true
-  belongs_to :requestor, class_name: "User", optional: true
+  belongs_to :requestor, class_name: "User"
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
   belongs_to :pay_bill_rate, optional: true
@@ -98,15 +101,17 @@ class Appointment < ApplicationRecord
   enum modality: {in_person: 1, phone: 2, video: 3}
   enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
+  enum visibility_status: {offered: 0, opened: 1}
 
   scope :by_status, ->(status) { where(status: status) }
   scope :by_appointment_specific_status, ->(name) { joins(:appointment_statuses).where(appointment_statuses: { name: name }) }
 
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
+  validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
   before_create :gen_refnum
   after_create :create_offers
-  after_update :update_offers
+  after_update :update_offers, if: :unless_no_offers
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
@@ -122,13 +127,25 @@ class Appointment < ApplicationRecord
 
   def create_status_for_new_appt
     status_check = AppointmentStatus.where(appointment_id: id)
-    if status_check.empty?
-      AppointmentStatus.create!(name: "created", user_id: creator_id, appointment_id: id)
-    end
+    return unless status_check.blank?
+
+    new_status = (visibility_status == "opened") ? "opened" : "offered"
+    AppointmentStatus.create!(name: new_status, user_id: creator_id, appointment_id: id)
+
     nil
   end
 
+  def set_visibility_status
+    vis_status = if (interpreter_req_ids.blank? || interpreter_req_ids.class != Array) || interpreter_req_ids.compact_blank.empty?
+      "opened"
+    else
+      "offered"
+    end
+    update_columns(visibility_status: vis_status)
+  end
+
   def create_offers
+    set_visibility_status
     create_status_for_new_appt
     # shortcircuit for no requesting ids
     return true if interpreter_req_ids.blank? || interpreter_req_ids.class != Array
@@ -146,24 +163,21 @@ class Appointment < ApplicationRecord
         throw ActiveRecord::RecordInvalid
       end
     end
+  end
 
-    if offered
-      new_apt_status = AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "offered")
-
-      begin
-        new_apt_status.save!
-      rescue => e
-        errors.add(:base, "Something went wrong with creating an offered status")
-        logger.info "Failed creation of appt status: #{creator_id} to #{id}.  Error: #{e}"
-        throw ActiveRecord::RecordInvalid
-      end
-
-    end
+  def unless_no_offers
+    requested_interpreters.nil?
   end
 
   def update_offers
+    # return if current_status == "offered" || current_status == "scheduled" || current_status == "completed" || current_status == "cancelled"
     # An empty array causes a delete, but nil, does nothing
-    return true if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+    # if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+    #   if status != "opened"
+    #     AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
+    #   end
+    #   return true
+    # end
 
     current_offer_int_ids = requested_interpreters.map(&:user_id)
     new_offer_int_ids = interpreter_req_ids.compact_blank.uniq
@@ -189,15 +203,18 @@ class Appointment < ApplicationRecord
     end
 
     new_apt_status = if offers_to_add_by_int.empty? && !offers_to_remove_by_int_id.empty? && ((current_offer_int_ids - offers_to_remove_by_int_id == []))
-      # changing appointment status back to created - check to make sure no other state would be more appropriate (NW)
-      AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "created")
+      # Changing appointment status back to opened
+      update_columns(visibility_status: "opened") unless visibility_status == "opened"
+      AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "opened")
     else
+      update_columns(visibility_status: "offered") unless visibility_status == "offered"
       AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "offered")
     end
+
     begin
       new_apt_status.save!
     rescue => e
-      errors.add(:base, "Something went wrong with creating an offered status")
+      errors.add(:base, "Something went wrong with creating a new appointment status")
       logger.info "Failed creation of appt status: #{creator_id} to #{id}.  Error: #{e}"
       throw ActiveRecord::RecordInvalid
     end

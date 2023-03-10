@@ -46,9 +46,9 @@ class PayBillConfig < ApplicationRecord
   has_many :interpreters, through: :pay_bill_config_interpreters, class_name: "User", foreign_key: :user_id
 
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :pay_bill_configs, partial: "pay_bill_configs/index", locals: {pay_bill_config: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :pay_bill_configs, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :pay_bill_configs, partial: "pay_bill_configs/index", locals: {pay_bill_config: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :pay_bill_configs, target: dom_id(self, :index) }
 
   def active_timezone
     # Need to implement Agency time zones still

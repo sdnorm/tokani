@@ -21,8 +21,7 @@ Rails.application.routes.draw do
 
   resources :interpreter_details
   get "interpreters/availability"
-  get "interpreters/dashboard", to: "interpreters#dashboard"
-  get "interpreter/index"
+  get "interpreters/dashboard", to: "interpreters#dashboard", as: "interpreter_dashboard"
   get "interpreters/my_scheduled"
   get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
   get "interpreters/my_assigned"
@@ -31,7 +30,6 @@ Rails.application.routes.draw do
   get "interpreters/profile/personal_edit", to: "interpreters#profile_personal_edit"
   get "interpreters/profile/notifications_edit", to: "interpreters#profile_notifications_edit"
   get "interpreters/profile/security_edit", to: "interpreters#profile_security_edit"
-  get "interpreters/public", to: "interpreters#public_folder"
   get "interpreters/public/details", to: "interpreters#public_details"
   get "interpreters/time-off", to: "interpreters#time_off"
 
@@ -202,13 +200,17 @@ Rails.application.routes.draw do
       collection do
         get :search
         get :fetch_appointments
+        get :public
       end
       member do
         get :appointment_details
+        get :my_public_details
         get :my_assigned_details
         get :my_scheduled_details
+        get :public_details
         post :decline_offered
         post :accept_offered
+        post :claim_public
         post :cancel_coverage
         post :time_finish
         patch :update_timezone

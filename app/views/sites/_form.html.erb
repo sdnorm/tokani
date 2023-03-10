@@ -6,12 +6,13 @@
           <div class="overflow-hidden shadow sm:rounded-md">
             <div class="bg-white px-4 py-5 sm:p-6">
               <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-8 sm:col-span-6">
                     <% if @site.new_record? %>
                         <% unless customer_logged_in? %>
-                          <div class="form-group">
+                          <div class="lg:col-span-3 sm:col-span-6">
+                            <!-- <div class="form-group"> -->
                             <%= form.label :customer_id, "Agency Customer*" %>
-                            <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: 'form-select' } %>
+                            <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm"} %>
+                            <!-- </div> -->
                           </div>
                         <% end %>
                     <% else %>
@@ -34,44 +35,44 @@
                       </tr>
                       </template>
 
-                      <div class="form-group block text-md font-medium text-gray-700">Customer: <%= @site.customer&.name %></div>
+                        <div class="lg:col-span-6 sm:col-span-6 text-md font-medium text-gray-900">Customer: <%= @site.customer&.name %></div>
+                      
                     <% end %>
-                   
+               
+                <div class="lg:col-span-3 sm:col-span-6">
+                    <%= form.label "Name*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. Main Clinic" %>
                 </div>
-                
-                <div class="col-span-8 sm:col-span-6">
-                    <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                </div>
-                <div class="col-span-8 sm:col-span-3">
-                    <%= form.label :contact_name, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                <div class="lg:col-span-3 sm:col-span-6">
+                    <%= form.label "Contact Name*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. Joe Smith" %>
                 </div>
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                    <%= form.label "Email*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. name@email.com" %>
                 </div>
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label :contact_phone, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                    <%= form.label "Contact Phone*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 111-111-1111" %>
                 </div>
                
-                <div class="col-span-6 sm:col-span-3">
-                    <%= form.label :address, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                <div class="lg:col-span-3 sm:col-span-6">
+                    <%= form.label "Address*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 1 Hospital Way" %>
                 </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                    <%= form.label :city, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                <div class="lg:col-span-3 sm:col-span-3">
+                    <%= form.label "City*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. San Francisco" %>
                 </div>
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label :state, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                <div class="lg:col-span-3 sm:col-span-3">
+                    <%= form.label "State*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.select :state, options_for_select(state_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+                
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label :zip_code, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :zip_code, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                    <%= form.label "Zip Code*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :zip_code, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 70707" %>
                 </div>
                 <div class="col-span-6 sm:col-span-6 lg:col-span-6">
                     <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
@@ -94,7 +95,7 @@
             <% unless @site.new_record? %>
 <hr>
 <br>
-            <div class="px-4 sm:px-6 lg:px-8">
+            <div class="">
                 <div class="sm:flex sm:items-center">
                   <div class="sm:flex-auto">
                     <h1 class="text-xl font-semibold text-gray-700">Departments</h1>

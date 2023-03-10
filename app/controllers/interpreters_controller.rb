@@ -3,8 +3,8 @@ class InterpretersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
-  before_action :set_appointment, only: [:my_scheduled_details, :my_assigned_details, :decline_offered, :accept_offered,
-    :cancel_coverage, :time_finish, :appointment_details]
+  before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
+    :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -51,7 +51,9 @@ class InterpretersController < ApplicationController
   def create
     @interpreter = User.new(interpreter_params)
     @interpreter.terms_of_service = true
+    @interpreter.password = SecureRandom.alphanumeric
     @interpreter.skip_default_account = true
+
     respond_to do |format|
       if @interpreter.save
         AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles: {"interpreter" => true})
@@ -86,7 +88,18 @@ class InterpretersController < ApplicationController
     @upcoming_appointments = @service.upcoming_appointments
   end
 
+  def public
+    @title = "Public"
+    @status = "opened"
+    @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
+    @appointments = @service.fetch_appointments
+  end
+
+  def my_public_details
+  end
+
   def my_scheduled
+    @title = "My Scheduled"
     @status = "scheduled"
     @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
     @appointments = @service.fetch_appointments
@@ -97,9 +110,13 @@ class InterpretersController < ApplicationController
   end
 
   def my_assigned
+    @title = "My Offered"
     @status = "offered"
     @service = InterpreterAppointmentsService.new(current_user, {status: @status, display_range: "today"})
     @appointments = @service.fetch_appointments
+  end
+
+  def my_assigned_details
   end
 
   def fetch_appointments
@@ -108,7 +125,10 @@ class InterpretersController < ApplicationController
     render layout: nil
   end
 
-  def my_assigned_details
+  def claim_public
+    @appointment.update(interpreter_id: current_user.id)
+    AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
+    redirect_to(interpreter_dashboard_path, alert: "Assignment successfully accepted.")
   end
 
   def decline_offered
@@ -121,20 +141,27 @@ class InterpretersController < ApplicationController
       AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["created"], user: current_user)
     end
 
-    redirect_to(interpreters_dashboard_path, alert: "Assignment successfully declined.")
+    redirect_to(interpreter_dashboard_path, alert: "Assignment successfully declined.")
   end
 
   def accept_offered
     @appointment.update(interpreter_id: current_user.id)
-    @appointment.requested_interpreters.destroy_all
     AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
-    redirect_to(interpreters_dashboard_path, alert: "Assignment successfully accepted.")
+    redirect_to(interpreter_dashboard_path, alert: "Assignment successfully accepted.")
   end
 
   def cancel_coverage
     @appointment.update(interpreter_id: nil)
-    AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["created"], user: current_user)
-    redirect_to(interpreters_dashboard_path, alert: "You have been unassigned from the appointment.")
+    # Make sure we kick the Appointment back into the correct status, depending on visibility status
+    if @appointment.visibility_status == "opened"
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["opened"], user: current_user)
+      NotificationsService.deliver_interpreter_canceled_notification(account: current_account, interpreter: current_user, appointment: @appointment)
+    elsif @appointment.visibility_status == "offered"
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["offered"], user: current_user)
+    else
+      raise "Invalid visibility_status for Appointment #{@appointment.id}: #{@appointment.visibility_status}"
+    end
+    redirect_to(interpreter_dashboard_path, alert: "You have been unassigned from the appointment.")
   end
 
   def time_finish
@@ -148,7 +175,7 @@ class InterpretersController < ApplicationController
 
     if @appointment.update(appointment_params)
       AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["finished"], user: current_user)
-      redirect_to(interpreters_dashboard_path, notice: "Appointment time finished.")
+      redirect_to(interpreter_dashboard_path, notice: "Appointment time finished.")
     else
       setup_form_vars
       errors = @appointment.errors.full_messages.join("; ")
@@ -178,12 +205,14 @@ class InterpretersController < ApplicationController
         redirect_to(my_assigned_details_interpreter_path(@appointment))
       else
         # Perhaps they have already rejected this offer?
-        redirect_to(interpreters_dashboard_path, alert: "It appears you have already declined this appointment.")
+        redirect_to(interpreter_dashboard_path, alert: "It appears you have already declined this appointment.")
       end
     elsif (@appointment.status == "scheduled") && (@appointment.interpreter_id == current_user.id)
       redirect_to(my_scheduled_details_interpreter_path(@appointment))
+    elsif @appointment.status == "opened"
+      redirect_to(my_public_details_interpreter_path(@appointment))
     else
-      redirect_to(interpreters_dashboard_path, alert: "Could not find appointment in an offered or scheduled status.")
+      redirect_to(interpreter_dashboard_path, alert: "Could not find appointment in an offered or scheduled status.")
     end
   end
 
@@ -229,7 +258,7 @@ class InterpretersController < ApplicationController
   def set_appointment
     @appointment = current_account.appointments.find_by(id: params[:id])
     if @appointment.nil?
-      redirect_to(interpreters_dashboard_path, alert: "Appointment not found.")
+      redirect_to(interpreter_dashboard_path, alert: "Appointment not found.")
     end
   end
 
@@ -248,6 +277,7 @@ class InterpretersController < ApplicationController
       :terms_of_service,
       interpreter_detail_attributes: [
         :id,
+        :interpreter_id,
         :gender,
         :interpreter_type,
         :primary_phone,

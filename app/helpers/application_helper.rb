@@ -58,11 +58,36 @@ module ApplicationHelper
     a_boolean ? "yes" : "no"
   end
 
-  def sidenav_highlight?(controller_name)
-    if controller_name == controller.controller_name
+  def int_appointment_hightlight?
+    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled")
       highlighted
     else
       unhighlighted
+    end
+  end
+
+  def highlighted_classes_lookup
+    {
+      highlighted: {
+        link: highlighted,
+        icon: highlighted_icon
+      },
+      unhighlighted: {
+        link: unhighlighted,
+        icon: unhighlighted_icon
+      }
+    }.with_indifferent_access
+  end
+
+  def sidenav_highlight? controller_name, action_names = nil, options = {}
+    nav_type = options[:type]
+    action_names = "index" if action_names.blank?
+    current_controller_action = Array.wrap(action_names).include?(controller.action_name) unless action_names.blank?
+
+    if controller_name == controller.controller_name && current_controller_action
+      highlighted_classes_lookup[:highlighted][nav_type]
+    else
+      highlighted_classes_lookup[:unhighlighted][nav_type]
     end
   end
 
@@ -75,7 +100,15 @@ module ApplicationHelper
   end
 
   def dashboard_highlight?
-    if current_page?(root_path) || current_page?(agencies_path)
+    if current_page?("/dashboard") || current_page?(root_path) || current_page?(agencies_path) || current_page?(agency_detail_form_path) || current_page?(interpreter_dashboard_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def int_dashboard_highlight?
+    if current_page?(root_path) || current_page?(interpreter_dashboard_path)
       highlighted
     else
       unhighlighted
@@ -83,7 +116,15 @@ module ApplicationHelper
   end
 
   def dashboard_highlight_icon?
-    if current_page?(root_path) || controller_name == "agencies"
+    if current_page?("/dashboard") || current_page?(root_path) || controller_name == "agencies" || current_page?(interpreter_dashboard_path)
+      highlighted_icon
+    else
+      unhighlighted_icon
+    end
+  end
+
+  def int_dashboard_highlight_icon?
+    if current_page?(root_path) || current_page?(interpreter_dashboard_path)
       highlighted_icon
     else
       unhighlighted_icon
@@ -91,7 +132,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs" || controller_name == "customer_categories"
       highlighted
     else
       unhighlighted
@@ -99,7 +140,7 @@ module ApplicationHelper
   end
 
   def system_admin_highlight_icon?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "pay_bill_rates" || controller_name == "pay_bill_configs" || controller_name == "customer_categories"
       highlighted_icon
     else
       unhighlighted_icon
@@ -158,6 +199,15 @@ module ApplicationHelper
     "text-gray-100 group-hover:text-gray-500"
   end
 
+  # <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+  def active_tab
+    "border-tokanisecondary-500 text-tokanisecondary-600"
+  end
+
+  def inactive_tab
+    "border-transparent text-gray-500 hover:border-tokanisecondary-300 hover:text-tokanisecondary-700"
+  end
+
   def appointment_start_date_and_time_in_user_time_zone(appointment, user)
     starts_at = appointment.start_time_in_zone(user.time_zone)
     starts_at.strftime("%B %-d at %l:%M %p")
@@ -200,7 +250,7 @@ module ApplicationHelper
 
   def state_select_options
     [
-      ["Select a State", "None"],
+      ["Select a State", ""],
       ["Alabama", "AL"],
       ["Alaska", "AK"],
       ["Arizona", "AZ"],
@@ -262,9 +312,9 @@ module ApplicationHelper
   def resource_classes
     {
       active: {
-        btn: "bg-indigo-800 border-double border-4",
+        btn: "bg-tokanisecondary-600 border-double border-4",
         content: "right-1",
-        icon: fa_icon("circle-check", class: "text-indigo-800 h-5 flex m-auto")
+        icon: fa_icon("circle-check", class: "text-tokanisecondary-600 h-5 flex m-auto")
       },
       inactive: {
         btn: "bg-slate-200",

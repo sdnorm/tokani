@@ -28,7 +28,7 @@ class AppointmentStatus < ApplicationRecord
   belongs_to :appointment
 
   before_create :set_current
-  after_create :handle_triggers
+  after_create :handle_triggers, :set_current_status_on_appointment
 
   # scope :current, -> (appointment) { find_by(appointment_id: appointment, current: true) }
   scope :current, -> { find_by(current: true) }
@@ -43,7 +43,8 @@ class AppointmentStatus < ApplicationRecord
     finished: 6,
     verified: 7,
     exported: 8,
-    expired: 9
+    expired: 9,
+    opened: 10
   }
 
   def changed_by
@@ -54,6 +55,10 @@ class AppointmentStatus < ApplicationRecord
     # by_appointment(self.appointment_id).update_all(current: false)
     AppointmentStatus.where(appointment_id: appointment_id).update_all(current: false)
     self.current = true
+  end
+
+  def set_current_status_on_appointment
+    appointment.update!(current_status: name)
   end
 
   private

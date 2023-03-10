@@ -37,7 +37,7 @@
                 <% @requestors.each do |requestor| %>
                   <tr>
                     <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                      <%= link_to "#{requestor.last_name}, #{requestor.first_name}", requestor_path(requestor) %> 
+                      <%= link_to "#{requestor.first_name} #{requestor.last_name}", requestor_path(requestor) %> 
                         
                       <dl class="font-normal lg:hidden">
                         <dt class="sr-only">Email</dt>

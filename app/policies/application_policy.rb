@@ -46,6 +46,10 @@ class ApplicationPolicy
     account_user.admin?
   end
 
+  def show_billing?
+    account_user.admin?
+  end
+
   class Scope
     def initialize(account_user, scope)
       # Comment out to allow guest users

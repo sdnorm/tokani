@@ -16,7 +16,7 @@ gem "pg"
 gem "puma", "~> 6.1"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", "~> 1.3"
+gem "turbo-rails", "~> 1.4"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails", "~> 1.2"
@@ -109,7 +109,7 @@ gem "pagy", "~> 6.0"
 gem "pay", "~> 6.2"
 gem "pg_search", "~> 2.3"
 gem "prawn", github: "prawnpdf/prawn"
-gem "prefixed_ids", "~> 1.2"
+gem "prefixed_ids", "~> 1.4"
 gem "pretender", "~> 0.4.0"
 gem "pundit", "~> 2.3"
 gem "receipts", "~> 2.2.0"

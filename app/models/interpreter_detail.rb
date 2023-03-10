@@ -28,9 +28,9 @@ class InterpreterDetail < ApplicationRecord
   encrypts :ssn
 
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :interpreter_details, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :interpreter_details, target: dom_id(self, :index) }
 
   # belongs_to :interprerter, class_name: "User", foreign_key: "user_id"
   belongs_to :interpreter, class_name: "User", foreign_key: "interpreter_id", inverse_of: :interpreter_detail
@@ -40,5 +40,10 @@ class InterpreterDetail < ApplicationRecord
 
   validates :interpreter_type, presence: true
   validates :gender, presence: true
-  validates :primary_phone, presence: true
+
+  validates :address, :city, :zip, presence: {message: "is required"}
+  validates :state, presence: {message: "is required"}, allow_blank: false
+
+  validates :primary_phone, phone: {possible: true, allow_blank: false, message: "Phone number is invalid, please use format 222-222-2222"}
+  validates :interpreter_id, uniqueness: true
 end
