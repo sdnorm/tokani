@@ -218,6 +218,8 @@ Rails.application.routes.draw do
       end
     end
     resources :requestors
+    resources :notification_settings, only: [:create, :update]
+
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
     resources :availabilities, only: [:create, :destroy]
     get "agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
