@@ -104,7 +104,7 @@ class Appointment < ApplicationRecord
   enum visibility_status: {offered: 0, opened: 1}
 
   scope :by_status, ->(status) { where(status: status) }
-  scope :by_appointment_specific_status, ->(name) { joins(:appointment_statuses).where(appointment_statuses: { name: name }) }
+  scope :by_appointment_specific_status, ->(name) { joins(:appointment_statuses).where(appointment_statuses: {name: name}) }
 
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 

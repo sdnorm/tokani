@@ -15,10 +15,10 @@ class AppointmentsController < ApplicationController
     @pagy, @appointments = pagy(appointments_per_status.sort_by_params(params[:sort], sort_direction))
 
     if customer_logged_in?
-      @scheduled_appts_count = Appointment.by_appointment_specific_status('scheduled').count
-      @finished_appts_count = Appointment.by_appointment_specific_status('finished').count
+      @scheduled_appts_count = Appointment.by_appointment_specific_status("scheduled").count
+      @finished_appts_count = Appointment.by_appointment_specific_status("finished").count
     end
-    
+
     # Uncomment to authorize with Pundit
     # authorize @appointments
   end
@@ -149,8 +149,8 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       @appt_status.save ?
-        format.json { render json: { status: @appointment.status } } :
-        format.json { render json: { error: "Something went wrong while updating appointment's status!" } }
+        format.json { render json: {status: @appointment.status} } :
+        format.json { render json: {error: "Something went wrong while updating appointment's status!"} }
     end
   end
 
@@ -177,7 +177,7 @@ class AppointmentsController < ApplicationController
   end
 
   def appointments_per_status
-    params[:status].present? ? @customer_appts.by_appointment_specific_status(params[:status]) : @customer_appts    
+    params[:status].present? ? @customer_appts.by_appointment_specific_status(params[:status]) : @customer_appts
   end
 
   def setup_appointment_vars
