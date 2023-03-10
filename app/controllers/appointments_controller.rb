@@ -11,7 +11,8 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @pagy, @appointments = pagy(appointments_per_logged_in_account.sort_by_params(params[:sort], sort_direction))
+    @customer_appts = appointments_per_logged_in_account
+    @pagy, @appointments = pagy(appointments_per_status.sort_by_params(params[:sort], sort_direction))
 
     if customer_logged_in?
       @scheduled_appts_count = Appointment.by_appointment_specific_status('scheduled').count
@@ -141,8 +142,12 @@ class AppointmentsController < ApplicationController
 
   def appointments_per_logged_in_account
     customer_logged_in? ?
-      Appointment.where(customer_id: current_account.id) :
+      Appointment.where(customer_id: @account.id) :
       @account.appointments
+  end
+
+  def appointments_per_status
+    params[:status].present? ? @customer_appts.by_appointment_specific_status(params[:status]) : @customer_appts    
   end
 
   def setup_appointment_vars
