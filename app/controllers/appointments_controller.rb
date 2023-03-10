@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status]
 
   before_action :authenticate_user!
   before_action :set_account
@@ -121,6 +121,19 @@ class AppointmentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to appointments_url, status: :see_other, notice: "Appointment was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def update_status
+    @appt_status = @appointment.appointment_statuses.new(
+      name: params.dig(:appointment, :status),
+      user_id: current_account.owner_id
+    )
+
+    respond_to do |format|
+      @appt_status.save ?
+        format.json { render json: { status: @appointment.status } } :
+        format.json { render json: { error: "Something went wrong while updating appointment's status!" } }
     end
   end
 
