@@ -8,21 +8,21 @@
           <div class="bg-white px-4 py-5 sm:p-6">
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.label "Name*", class: "block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                 <div class="form-group">
-                  <%= form.label :effective_date, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.label "Effective Date*", class:" block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :effective_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
                 </div>
               </div>
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <%= form.label :bill_rate, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.label "Bill Rate*", class: "block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :bill_rate, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                  <%= form.label :pay_rate, class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.label "Pay Rate*", class: "block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :pay_rate, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
@@ -78,6 +78,7 @@
             <div class="col-span-6 sm:col-span-6 lg:col-span-3">
               <fieldset class="space-y-5">
                 <legend class="sr-only">Pay/Bill Rate Modalitites</legend>
+                <span class="font-medium text-gray-700">Modalitites</span>
                 <div class="relative flex items-start">
                   <div class="flex h-5 items-center">
                     <%= form.check_box :in_person, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
