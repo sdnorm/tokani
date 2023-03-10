@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_07_193650) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_09_215400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -49,9 +49,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_193650) do
     t.string "subdomain"
     t.uuid "owner_id"
     t.boolean "customer", default: false
-    t.string "billing_email"
     t.boolean "is_active", default: true
     t.boolean "agency"
+    t.string "billing_email"
     t.integer "account_users_count", default: 0
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
@@ -324,7 +324,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_193650) do
     t.uuid "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "customer_category_id"
+    t.bigint "customer_category_id", null: false
     t.index ["customer_category_id"], name: "index_customer_details_on_customer_category_id"
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end
@@ -387,6 +387,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_193650) do
     t.uuid "account_id", null: false
     t.boolean "is_active"
     t.index ["account_id"], name: "index_languages_on_account_id"
+  end
+
+  create_table "notification_settings", force: :cascade do |t|
+    t.uuid "user_id"
+    t.integer "sms", default: 2
+    t.boolean "appointment_offered", default: true
+    t.boolean "appointment_scheduled", default: true
+    t.boolean "appointment_cancelled", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notification_tokens", force: :cascade do |t|
@@ -555,7 +565,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_193650) do
 
   create_table "pay_customers", force: :cascade do |t|
     t.string "owner_type"
-    t.uuid "owner_id"
+    t.bigint "owner_id"
     t.string "processor"
     t.string "processor_id"
     t.boolean "default"
@@ -569,7 +579,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_193650) do
 
   create_table "pay_merchants", force: :cascade do |t|
     t.string "owner_type"
-    t.uuid "owner_id"
+    t.bigint "owner_id"
     t.string "processor"
     t.string "processor_id"
     t.boolean "default"
