@@ -12,6 +12,7 @@
 #  confirmation_date        :datetime
 #  confirmation_notes       :text
 #  confirmation_phone       :string
+#  current_status           :string
 #  details                  :text
 #  duration                 :integer
 #  finish_time              :datetime
@@ -25,6 +26,7 @@
 #  processed_by_interpreter :boolean          default(FALSE)
 #  ref_number               :string
 #  start_time               :datetime
+#  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
 #  total_billed             :decimal(, )

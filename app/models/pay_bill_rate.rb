@@ -31,9 +31,9 @@
 #
 class PayBillRate < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :pay_bill_rates, partial: "pay_bill_rates/index", locals: {pay_bill_rate: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :pay_bill_rates, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :pay_bill_rates, partial: "pay_bill_rates/index", locals: {pay_bill_rate: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :pay_bill_rates, target: dom_id(self, :index) }
 
   has_many :pay_bill_rate_languages, dependent: :destroy
   has_many :languages, through: :pay_bill_rate_languages

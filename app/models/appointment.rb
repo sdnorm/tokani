@@ -12,6 +12,7 @@
 #  confirmation_date        :datetime
 #  confirmation_notes       :text
 #  confirmation_phone       :string
+#  current_status           :string
 #  details                  :text
 #  duration                 :integer
 #  finish_time              :datetime
@@ -25,6 +26,7 @@
 #  processed_by_interpreter :boolean          default(FALSE)
 #  ref_number               :string
 #  start_time               :datetime
+#  status                   :boolean
 #  sub_type                 :integer
 #  time_zone                :string
 #  total_billed             :decimal(, )
@@ -81,6 +83,7 @@ class Appointment < ApplicationRecord
   has_many :offered_interpreters, through: :requested_interpreters, foreign_key: "user_id", source: :interpreter
 
   belongs_to :language
+  belongs_to :creator, class_name: "User", optional: true
   belongs_to :agency, class_name: "Account"
   belongs_to :customer, class_name: "Account"
   belongs_to :interpreter, class_name: "User", optional: true
@@ -107,7 +110,7 @@ class Appointment < ApplicationRecord
   validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
   before_create :gen_refnum
   after_create :create_offers
-  after_update :update_offers
+  after_update :update_offers, if: :unless_no_offers
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
@@ -160,14 +163,19 @@ class Appointment < ApplicationRecord
     end
   end
 
+  def unless_no_offers
+    requested_interpreters.nil?
+  end
+
   def update_offers
+    # return if current_status == "offered" || current_status == "scheduled" || current_status == "completed" || current_status == "cancelled"
     # An empty array causes a delete, but nil, does nothing
-    if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
-      if status != "opened"
-        AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
-      end
-      return true
-    end
+    # if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+    #   if status != "opened"
+    #     AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
+    #   end
+    #   return true
+    # end
 
     current_offer_int_ids = requested_interpreters.map(&:user_id)
     new_offer_int_ids = interpreter_req_ids.compact_blank.uniq

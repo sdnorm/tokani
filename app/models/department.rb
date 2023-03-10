@@ -22,7 +22,7 @@
 #  fk_rails_...  (site_id => sites.id)
 #
 class Department < ApplicationRecord
-  belongs_to :site, dependent: :destroy
+  belongs_to :site
   has_many :providers
   has_many :requestors
 

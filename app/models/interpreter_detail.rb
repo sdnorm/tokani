@@ -28,9 +28,9 @@ class InterpreterDetail < ApplicationRecord
   encrypts :ssn
 
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :interpreter_details, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :interpreter_details, partial: "interpreter_details/index", locals: {interpreter_detail: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :interpreter_details, target: dom_id(self, :index) }
 
   # belongs_to :interprerter, class_name: "User", foreign_key: "user_id"
   belongs_to :interpreter, class_name: "User", foreign_key: "interpreter_id", inverse_of: :interpreter_detail
