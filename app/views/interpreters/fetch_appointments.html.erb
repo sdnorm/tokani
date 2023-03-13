@@ -17,7 +17,10 @@
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= date_displayable(appointment.start_time) %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= scheduled_time_range(appointment, current_user) %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= appointment&.language&.name %></td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= appointment.status.titleize %></td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex items-center">
+            <div class="h-2.5 w-2.5 rounded-full <%= appointment.status == "opened" ? "bg-green-500" : "bg-orange-500" %> mr-2"></div>
+            <%= appointment.status.titleize %>
+          </td>
         </tr>
       </tbody>
     <% end %>
