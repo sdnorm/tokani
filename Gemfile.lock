@@ -214,8 +214,8 @@ GEM
     inline_svg (1.8.0)
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
-    invisible_captcha (2.0.0)
-      rails (>= 5.0)
+    invisible_captcha (2.1.0)
+      rails (>= 5.2)
     io-console (0.6.0)
     irb (1.6.2)
       reline (>= 0.3.0)
@@ -330,7 +330,7 @@ GEM
     pundit (2.3.0)
       activesupport (>= 3.0.0)
     racc (1.6.2)
-    rack (2.2.6.3)
+    rack (2.2.6.4)
     rack-protection (3.0.5)
       rack
     rack-test (2.0.2)
@@ -520,7 +520,7 @@ DEPENDENCIES
   honeybadger
   image_processing (~> 1.12)
   inline_svg (~> 1.6)
-  invisible_captcha (~> 2.0)
+  invisible_captcha (~> 2.1)
   jbuilder!
   jsbundling-rails (~> 1.1.0)
   jumpstart!
