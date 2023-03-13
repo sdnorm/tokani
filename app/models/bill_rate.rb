@@ -37,5 +37,4 @@ class BillRate < ApplicationRecord
 
   has_many :bill_rate_customers, dependent: :destroy
   has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
-
 end

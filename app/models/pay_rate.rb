@@ -19,10 +19,9 @@
 #  account_id           :uuid
 #
 class PayRate < ApplicationRecord
-
   # Broadcast changes in realtime with Hotwire
-  after_create_commit  -> { broadcast_prepend_later_to :pay_rates, partial: "pay_rates/index", locals: { pay_rate: self } }
-  after_update_commit  -> { broadcast_replace_later_to self }
+  after_create_commit -> { broadcast_prepend_later_to :pay_rates, partial: "pay_rates/index", locals: {pay_rate: self} }
+  after_update_commit -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :pay_rates, target: dom_id(self, :index) }
 
   belongs_to :account
@@ -32,5 +31,4 @@ class PayRate < ApplicationRecord
 
   has_many :pay_rate_customers, dependent: :destroy
   has_many :accounts, through: :pay_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
-
 end
