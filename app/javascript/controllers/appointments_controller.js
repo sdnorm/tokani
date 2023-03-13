@@ -1,54 +1,47 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  connect() {
-    // console.log("Its connected to DOM!")
-  }
+  connect() {}
 
   handleStatusEditableBehaviour() {
     const statusElement = document.getElementById("appointmentStatus")
-    this.options = { "Created": 1, "Cancelled": 5, "Finished": 6 }
-
-    const dropdown = createDropdownWithOptions(this.options, statusElement)
-
-    dropdown.addEventListener('change', () => {
-      updateStatusOnServer(this.options, dropdown)
-    })    
+    const statusDropdown = document.getElementById("appointmentStatusDropdown")
+    toggleSpanAndDropdownView(statusElement, statusDropdown)
+    
+    statusDropdown.addEventListener('change', () => {
+      updateStatusOnServer(statusElement, statusDropdown)
+    })
   }
 }
 
 // Helper methods
-let createDropdownWithOptions = (options, statusElement) => {
-  const dropdown = document.createElement("select")
-
-  for (const option of Object.keys(options)) {
-    const optionElement = document.createElement("option")
-    optionElement.value = option
-    optionElement.text = option
-    dropdown.appendChild(optionElement)
+let toggleSpanAndDropdownView = (statusElement, statusDropdown, hideStatusAndShowDropdown = true) => {
+  if (hideStatusAndShowDropdown) {
+    statusElement.style.display = "none"
+    statusDropdown.style.display = "block"
+  } else {
+    statusElement.style.display = "block"
+    statusDropdown.style.display = "none"
   }
-
-  dropdown.value = statusElement.textContent
-  statusElement.replaceWith(dropdown)
-  return dropdown
 }
 
-let updateStatusOnServer = (options, dropdown) => {
-  let status = dropdown.value
+let capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+let updateStatusOnServer = (statusElement, dropdown) => {
+  let status = dropdown.selectedOptions[0].textContent
 
   if (status === "Created") {
-    const spanElement = createSpanElement()
-    spanElement.textContent = "Created"
-    dropdown.replaceWith(spanElement)
+    toggleSpanAndDropdownView(statusElement, dropdown, false)
     return
-  }
-    
+  }    
 
   const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
   const appointmentId = document.querySelector(".mainAppointmentContainer").id.split("_")[1]
-  const selectedOptionValue = options[status]
-  
+  const selectedOptionValue = parseInt(dropdown.selectedOptions[0].value)
+
   fetch(`/appointments/${appointmentId}/status`, {
     method: "PATCH",
     headers: { 
@@ -58,21 +51,8 @@ let updateStatusOnServer = (options, dropdown) => {
     body: JSON.stringify({ appointment: { status: selectedOptionValue } })
   }).then((response) => response.json())
     .then((data) => {
-      const spanElement = createSpanElement()
       let formattedStatus = capitalize(data.status)
-
-      spanElement.textContent = formattedStatus
-      dropdown.replaceWith(spanElement)
+      statusElement.textContent = formattedStatus
+      toggleSpanAndDropdownView(statusElement, dropdown)
     }).catch((error) => alert(error))
-}
-
-let createSpanElement = () => {
-  const spanElement = document.createElement("span")
-  spanElement.setAttribute('id', 'appointmentStatus')
-  spanElement.setAttribute('data-action', 'click->appointments#handleStatusEditableBehaviour')
-  return spanElement
-}
-
-let capitalize = (str) => {
-  return str.charAt(0).toUpperCase() + str.slice(1)
 }
