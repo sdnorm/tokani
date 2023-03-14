@@ -52,12 +52,15 @@
                   </div> 
                 </div>
               </div>
-              <div class="col-span-3 sm:col-span-6">
-                <div class="form-group">
-                  <%= form.label "Customer*", class: "block text-sm font-medium text-gray-700" %>
-                  <%= form.select :customer_id,  options_from_collection_for_select(account_customers, :id, :name, recipient.customer_id ), {prompt: "Select A Customer..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'provider_site_id', select_group_select_clear_target_param: 'provider_department_id' }} %> 
+
+              <% unless customer_logged_in? %>
+                <div class="col-span-3 sm:col-span-6">
+                  <div class="form-group">
+                    <%= form.label "Customer*", class: "block text-sm font-medium text-gray-700" %>
+                    <%= form.select :customer_id,  options_from_collection_for_select(account_customers, :id, :name, recipient.customer_id ), {prompt: "Select A Customer..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'provider_site_id', select_group_select_clear_target_param: 'provider_department_id' }} %> 
+                  </div>
                 </div>
-              </div>
+              <% end %>
             </div>
           </div>
           <br>

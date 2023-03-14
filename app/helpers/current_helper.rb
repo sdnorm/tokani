@@ -12,6 +12,10 @@ module CurrentHelper
     current_account_user&.active_roles || []
   end
 
+  def customer_logged_in?
+    current_account.customer
+  end
+
   def current_account_admin?
     !!current_account_user&.admin?
   end

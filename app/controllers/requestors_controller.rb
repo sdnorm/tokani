@@ -19,7 +19,7 @@ class RequestorsController < ApplicationController
   def new
     @requestor = User.new
     @requestor.build_requestor_detail
-    @account_customers = current_account.customers
+    @account_customers = current_account.customers unless customer_logged_in?
 
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
@@ -28,7 +28,7 @@ class RequestorsController < ApplicationController
       @departments = Department.where(site_id: @site_id).order("name ASC")
 
     end
-    @sites ||= []
+    @sites ||= customer_logged_in? ? current_account.sites : []
     @departments ||= []
     @remote = params[:remote] == "true"
   end
@@ -38,8 +38,8 @@ class RequestorsController < ApplicationController
   end
 
   def edit
-    @account_customers = current_account.customers
-    @sites = current_account.account_sites.order("name ASC")
+    @account_customers = current_account.customers unless customer_logged_in?
+    @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
     @departments = if @requestor.requestor_detail.site_id.present?
       Department.where(site_id: @requestor.requestor_detail.site_id).order("name ASC")
     else
@@ -60,6 +60,8 @@ class RequestorsController < ApplicationController
     @requestor.terms_of_service = true
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
+
+    @requestor.requestor_detail.customer_id = current_account.id if customer_logged_in?
 
     req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
 

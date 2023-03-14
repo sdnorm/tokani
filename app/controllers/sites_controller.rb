@@ -89,6 +89,7 @@ class SitesController < ApplicationController
   def create
     @site = Site.new(site_params)
     @site.account_id = current_account.id
+    @site.customer_id = current_account.id if customer_logged_in?
 
     # Uncomment to authorize with Pundit
     # authorize @site
