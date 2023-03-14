@@ -1,29 +1,91 @@
 <%= content_for :title, "Agencies ##{@agency.name}" %>
 <%= turbo_stream_from @agency %>
-<div class="flex flex-1 flex-col md:pl-64">
-  <main class="flex-1">
-    <div class="py-6">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
-        <div class="px-4 sm:px-6 lg:px-8">
-          <div class="sm:flex sm:items-center pb-6">
+<div class="flex flex-1 flex-col mt-6 px-28">
+  <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+          <div>
+            <div class="sm:flex sm:items-center">
               <div class="sm:flex-auto"> 
                 <h1 class="text-xl font-semibold text-gray-900">
                   <%= link_to "Agencies", agencies_path, class: "text-tokanisecondary-500" %>
-                    <span class="text-gray-400 font-light mx-2">\</span>
-                    <%= @agency.name %>
+                  <span class="text-gray-400 font-light mx-2">\</span>
+                  <%= @agency.name %>
                 </h1>
               </div>
-                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                  <%= link_to t("edit"), edit_agency_path(@agency), class: "btn btn-tokani_purple" %>
-                </div>
-              </div>
-              <div class="p-8 bg-white rounded shadow">
-                <%= render @agency %>
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to t("edit"), edit_agency_path(@agency), class: "btn btn-tokani_purple" %>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </main>
+    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+      <dl class="sm:divide-y sm:divide-gray-200">
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Agency Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.name %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Company Website</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.company_website %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Street address</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.line1 %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">City</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.city %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">State</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.state %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">ZIP / Postal code</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.postal_code %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.phone_number %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Time Zone</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.time_zones.first %></dd>
+        </div>
+
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Primary Contact First Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.primary_contact_first_name %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Primary Contact Title</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.primary_contact_title %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Primary Contact Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.primary_contact_email %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Secondary Contact First Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.secondary_contact_first_name %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Secondary Contact Title</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.secondary_contact_title %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Secondary Contact Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.secondary_contact_email %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Agency URL Address</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.url %></dd>
+        </div>
+      </dl>
     </div>
-  </main>
+  </div>
 </div>
