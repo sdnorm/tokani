@@ -53,6 +53,6 @@ let updateStatusOnServer = (statusElement, dropdown) => {
     .then((data) => {
       let formattedStatus = capitalize(data.status)
       statusElement.textContent = formattedStatus
-      toggleSpanAndDropdownView(statusElement, dropdown)
+      toggleSpanAndDropdownView(statusElement, dropdown, false)
     }).catch((error) => alert(error))
 }
