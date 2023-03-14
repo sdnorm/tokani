@@ -9,7 +9,7 @@
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Company Name</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Company name</label>
             <div class="mt-1">
               <%= form.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. Westside Hospital" %>
             </div>
@@ -25,14 +25,14 @@
           <%= form.fields_for :physical_address do |physical_address| %>
           <%= physical_address.hidden_field :address_type, value: "physical" %>
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Street Address 1</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Street address 1</label>
             <div class="mt-1">
               <%= physical_address.text_field :line1, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. 1 Hospital Way" %>
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Street Address 2</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Street address 2</label>
             <div class="mt-1">
               <%= physical_address.text_field :line2, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
             </div>
@@ -53,7 +53,7 @@
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Postal Code</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Postal code</label>
             <div class="mt-1">
               <%= physical_address.text_field :postal_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. 70707" %>
             </div>
