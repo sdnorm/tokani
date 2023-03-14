@@ -1,0 +1,73 @@
+<%= form_with(model: pay_rate) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :account_id %>
+    <%= form.text_field :account_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :hourly_pay_rate %>
+    <%= form.text_field :hourly_pay_rate, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :is_active %>
+    <%= form.check_box :is_active, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :minimum_time_charged %>
+    <%= form.number_field :minimum_time_charged, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :after_hours_overage %>
+    <%= form.text_field :after_hours_overage, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :rush_overage %>
+    <%= form.text_field :rush_overage, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :cancel_rate %>
+    <%= form.text_field :cancel_rate, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :default_rate %>
+    <%= form.check_box :default_rate, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :in_person %>
+    <%= form.check_box :in_person, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :phone %>
+    <%= form.check_box :phone, class: "form-checkbox" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :video %>
+    <%= form.check_box :video, class: "form-checkbox" %>
+  </div>
+
+  <div>
+    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), pay_rates_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), pay_rate_path(@pay_rate), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>

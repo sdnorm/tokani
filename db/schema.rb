@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_09_215400) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_13_225013) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -261,6 +261,43 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_09_215400) do
     t.check_constraint "end_seconds >= 0 AND end_seconds < 86400", name: "check_end_seconds"
     t.check_constraint "start_seconds < end_seconds", name: "check_valid_time_range"
     t.check_constraint "start_seconds >= 0 AND start_seconds < 86400", name: "check_start_seconds"
+  end
+
+  create_table "bill_rate_customers", force: :cascade do |t|
+    t.integer "bill_rate_id"
+    t.uuid "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bill_rate_languages", force: :cascade do |t|
+    t.integer "bill_rate_id"
+    t.integer "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bill_rates", force: :cascade do |t|
+    t.uuid "account_id"
+    t.string "name"
+    t.decimal "hourly_bill_rate", precision: 8, scale: 2
+    t.boolean "is_active", default: true
+    t.integer "minimum_time_charged"
+    t.integer "round_time"
+    t.integer "round_increment"
+    t.decimal "after_hours_overage", precision: 8, scale: 2
+    t.integer "after_hours_start_seconds"
+    t.integer "after_hours_end_seconds"
+    t.decimal "rush_overage", precision: 8, scale: 2
+    t.integer "rush_overage_trigger"
+    t.decimal "cancel_rate", precision: 8, scale: 2
+    t.integer "cancel_rate_trigger"
+    t.boolean "default_rate", default: false
+    t.boolean "in_person", default: false
+    t.boolean "phone", default: false
+    t.boolean "video", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "billing_line_items", force: :cascade do |t|
@@ -598,6 +635,37 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_09_215400) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id", "processor_id"], name: "index_pay_payment_methods_on_customer_id_and_processor_id", unique: true
+  end
+
+  create_table "pay_rate_interpreters", force: :cascade do |t|
+    t.integer "pay_rate_id"
+    t.uuid "interpreter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_rate_languages", force: :cascade do |t|
+    t.integer "pay_rate_id"
+    t.integer "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pay_rates", force: :cascade do |t|
+    t.uuid "account_id"
+    t.string "name"
+    t.decimal "hourly_pay_rate", precision: 8, scale: 2
+    t.boolean "is_active", default: true
+    t.integer "minimum_time_charged"
+    t.decimal "after_hours_overage", precision: 8, scale: 2
+    t.decimal "rush_overage", precision: 8, scale: 2
+    t.decimal "cancel_rate", precision: 8, scale: 2
+    t.boolean "default_rate", default: false
+    t.boolean "in_person", default: false
+    t.boolean "phone", default: false
+    t.boolean "video", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pay_subscriptions", id: :serial, force: :cascade do |t|

@@ -1,0 +1,2 @@
+json.extract! bill_rate, :id, :account_id, :name, :hourly_bill_rate, :is_active, :minimum_time_charged, :round_time, :round_increment, :after_hours_overage, :after_hours_start_seconds, :after_hours_end_seconds, :rush_overage, :rush_overage_trigger, :cancel_rate, :cancel_rate_trigger, :default_rate, :in_person, :phone, :video, :created_at, :updated_at
+json.url bill_rate_url(bill_rate, format: :json)

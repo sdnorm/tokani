@@ -1,0 +1,6 @@
+<div id="<%= dom_id(bill_rate, :index) %>">
+  <%= turbo_stream_from bill_rate %>
+  <%= render bill_rate %>
+  <%= link_to "View", bill_rate, class: "btn btn-white" %>
+</div>
+
