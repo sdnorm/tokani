@@ -1,151 +1,130 @@
 <div data-controller="form">
-    <%= form_with(model: site) do |form| %>
+  <%= form_with(model: site) do |form| %>
     <%= render "shared/error_messages", resource: form.object %>
-      
-        <div class="mt-5 md:col-span-2 md:mt-0">
-          <div class="overflow-hidden shadow sm:rounded-md">
-            <div class="bg-white px-4 py-5 sm:p-6">
-              <div class="grid grid-cols-6 gap-6">
-                    <% if @site.new_record? %>
-                    <div class="lg:col-span-3 sm:col-span-6">
-                        <!-- <div class="form-group"> -->
-                            <%= form.label :customer_id, "Agency Customer*" %>
-                            <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm"} %>
-                        <!-- </div> -->
-                      </div>
-                        <% else %>
-
-                        <template data-form-target="template">
-                            <tr>
-                            <%= form.fields_for :departments, Department.new do |new_dept| %>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= new_dept.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                                <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :location, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                                <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :accounting_unit_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                            <% end %>
-                            </tr>
-                        </template>
-
-                        <template data-form-target="templateHeader">
-                            <tr id="headerRow">
-                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">Department Name</th>
-                            <th cope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Location</th>
-                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Accounting Unit Code</th>
-                        </tr>
-                        </template>
-
-                        <div class="lg:col-span-6 sm:col-span-6 text-md font-medium text-gray-900">Customer: <%= @site.customer&.name %></div>
-                      
-                    <% end %>
-               
-                <div class="lg:col-span-3 sm:col-span-6">
-                    <%= form.label "Name*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. Main Clinic" %>
-                </div>
-                <div class="lg:col-span-3 sm:col-span-6">
-                    <%= form.label "Contact Name*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. Joe Smith" %>
-                </div>
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label "Email*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. name@email.com" %>
-                </div>
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label "Contact Phone*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 111-111-1111" %>
-                </div>
-               
-                <div class="lg:col-span-3 sm:col-span-6">
-                    <%= form.label "Address*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 1 Hospital Way" %>
-                </div>
-
-                <div class="lg:col-span-3 sm:col-span-3">
-                    <%= form.label "City*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. San Francisco" %>
-                </div>
-                <div class="lg:col-span-3 sm:col-span-3">
-                    <%= form.label "State*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.select :state, options_for_select(state_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                </div>
-                
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <%= form.label "Zip Code*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :zip_code, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 70707" %>
-                </div>
-                <div class="col-span-6 sm:col-span-6 lg:col-span-6">
-                    <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.text_area :notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                </div>    
-            </div>
-             <br>
-              <div class="relative flex items-start">
-                <div class="flex h-5 items-center">
-                  <%= form.check_box :active, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :is_active, class:"font-medium text-gray-700" %>
-                  <p id="active" class="text-gray-500">This site is active.</p>
-                </div>
-            
-            </div>
-            <br>
-
-            <% unless @site.new_record? %>
-<hr>
-<br>
-            <div class="">
-                <div class="sm:flex sm:items-center">
-                  <div class="sm:flex-auto">
-                    <h1 class="text-xl font-semibold text-gray-700">Departments</h1>
-                    <p class="mt-2 text-sm text-gray-500">The departments associated with this site.</p>
-                  </div>
-                  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <%= button_tag '+ Add Department'.html_safe, type:'button', data: {action: 'click->form#addFields'}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokaniprimary-600 px-4 py-2 text-xs font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2 sm:w-auto" %>
-                  </div>
-                </div>
-                <div class="mt-8 flex flex-col">
-                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                      <table class="min-w-full divide-y divide-gray-300">
-                        <thead data-form-target="addHeader">
-                          <tr id="headerRow">
-                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-700 sm:pl-6 md:pl-0"> Department Name</th>
-                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-700">Location</th>
-                            <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-700">Accounting Unit Code</th>  
-                          </tr>
-                        </thead>
-                        <tbody data-form-target="addDst" class="divide-y divide-gray-200">
-                            <%= form.fields_for :departments do |dept_form| %>
-                            <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= dept_form.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                            <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= dept_form.text_field :location, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                            <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= dept_form.text_field :accounting_unit_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
-                          </tr>
-                          <% end %>
-                        </tbody>
-                      </table>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-
-              
-             
-           
-            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-                <% if form.object.new_record? %>
-                    <%= link_to t("cancel"), sites_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2" %>
-                <% else %>
-                    <%= link_to t("cancel"), sites_path(@site), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2" %>
+    <div class="mt-5 md:col-span-2 md:mt-0">
+      <div class="overflow-hidden shadow sm:rounded-md">
+        <div class="bg-white px-4 py-5 sm:p-6">
+          <div class="grid grid-cols-6 gap-6">
+            <% if @site.new_record? %>
+              <div class="lg:col-span-3 sm:col-span-6">
+                <%= form.label :customer_id, "Agency Customer*" %>
+                <%= form.select :customer_id, options_from_collection_for_select(@customers, :id, :name, @customer_id), {prompt: "Please select A Customer"}, {class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm"} %>
+              </div>
+          <% else %>
+            <template data-form-target="template">
+              <tr>
+                <%= form.fields_for :departments, Department.new do |new_dept| %>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= new_dept.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :location, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= new_dept.text_field :accounting_unit_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
                 <% end %>
-            </div>
-          </div> 
+              </tr>
+            </template>
+            <template data-form-target="templateHeader">
+              <tr id="headerRow">
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">Department Name</th>
+                <th cope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Location</th>
+                <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Accounting Unit Code</th>
+              </tr>
+            </template>
+            <div class="lg:col-span-6 sm:col-span-6 text-md font-medium text-gray-900">Customer: <%= @site.customer&.name %></div>
+          <% end %>
+          <div class="lg:col-span-3 sm:col-span-6">
+            <%= form.label "Name*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. Main Clinic" %>
+          </div>
+          <div class="lg:col-span-3 sm:col-span-6">
+            <%= form.label "Contact Name*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. Joe Smith" %>
+          </div>
+          <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+            <%= form.label "Email*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. name@email.com" %>
+          </div>
+          <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+            <%= form.label "Contact Phone*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 111-111-1111" %>
+          </div>
+          <div class="lg:col-span-3 sm:col-span-6">
+            <%= form.label "Address*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 1 Hospital Way" %>
+          </div>
+          <div class="lg:col-span-3 sm:col-span-3">
+            <%= form.label "City*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. San Francisco" %>
+          </div>
+          <div class="lg:col-span-3 sm:col-span-3">
+            <%= form.label "State*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.select :state, options_for_select(state_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+          </div>
+          <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+            <%= form.label "Zip Code*", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :zip_code, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", placeholder: "ex. 70707" %>
+          </div>
+          <div class="col-span-6 sm:col-span-6 lg:col-span-6">
+            <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_area :notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+          </div>    
         </div>
+        <br>
+        <div class="relative flex items-start">
+          <div class="flex h-5 items-center">
+            <%= form.check_box :active, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+          </div>
+          <div class="ml-3 text-sm">
+            <%= form.label :is_active, class:"font-medium text-gray-700" %>
+            <p id="active" class="text-gray-500">This site is active.</p>
+          </div>
+        </div>
+        <br>
+        <% unless @site.new_record? %>
+        <hr>
+        <br>
+        <div class="">
+          <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+              <h1 class="text-xl font-semibold text-gray-700">Departments</h1>
+              <p class="mt-2 text-sm text-gray-500">The departments associated with this site.</p>
+            </div>
+            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <%= button_tag '+ Add Department'.html_safe, type:'button', data: {action: 'click->form#addFields'}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokaniprimary-600 px-4 py-2 text-xs font-medium text-white shadow-sm hover:bg-tokaniprimary-700 focus:outline-none focus:ring-2 focus:ring-tokaniprimary-500 focus:ring-offset-2 sm:w-auto" %>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-col">
+            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <table class="min-w-full divide-y divide-gray-300">
+                  <thead data-form-target="addHeader">
+                    <tr id="headerRow">
+                      <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-700 sm:pl-6 md:pl-0"> Department Name</th>
+                      <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-700">Location</th>
+                      <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-700">Accounting Unit Code</th>  
+                    </tr>
+                  </thead>
+                  <tbody data-form-target="addDst" class="divide-y divide-gray-200">
+                    <%= form.fields_for :departments do |dept_form| %>
+                      <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><%= dept_form.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                        <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= dept_form.text_field :location, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                        <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%= dept_form.text_field :accounting_unit_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <% end %>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <% if form.object.new_record? %>
+              <%= link_to t("cancel"), sites_path, class:"inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+            <% else %>
+              <%= link_to t("cancel"), sites_path(@site), class:"inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+            <% end %>
+            <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          </div>
+        </div> 
       </div>
     </div>
-  </div>
-</main>
-</div>
-<% end %>
+  <% end %>
 </div>

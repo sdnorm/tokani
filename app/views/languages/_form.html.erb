@@ -23,8 +23,8 @@
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <%= link_to t("cancel"), languages_path, class:"inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
             <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-            <%= link_to t("cancel"), languages_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
           </div>
         </div>
       </div>
