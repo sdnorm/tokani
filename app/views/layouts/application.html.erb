@@ -36,6 +36,7 @@
       <div class="lg:px-0 h-full">
         <% unless current_user.blank? %>
           <%= render partial: 'shared/sidenav' %>
+          <%= render partial: 'shared/customer_sidenav' %>
           <%= render partial: 'shared/interpreter_sidenav' %>
         <% end %>
         <!-- <div class="p-8 bg-white rounded shadow"> -->
