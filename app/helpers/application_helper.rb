@@ -244,7 +244,7 @@ module ApplicationHelper
       "(GMT-06:00) Central Time (US & Canada)",
       "(GMT-05:00) Eastern Time (US & Canada)",
       "(GMT-10:00) Hawaii",
-      "(GMT-09:00) Alaska",
+      "(GMT-09:00) Alaska"
     ]
   end
 
