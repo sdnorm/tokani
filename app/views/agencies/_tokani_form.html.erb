@@ -152,12 +152,12 @@
   <% end %>
   <div class="pt-5">
     <div class="flex justify-end">
-      <% if form.object.new_record? %>
+      <% if form.object.new_record? %> 
+        <%= link_to t("cancel"), agencies_path, class: "mr-3 inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
         <%= form.button "Create Agency", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-        <%= link_to t("cancel"), agencies_path, class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
       <% else %>
+        <%= link_to t("cancel"), agency_path(@agency), class: "mr-3 inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
         <%= form.button "Update Agency", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-        <%= link_to t("cancel"), agency_path(@agency), class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
       <% end %>
     </div>
   </div>
