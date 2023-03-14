@@ -8,7 +8,7 @@
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Status</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <%= select_tag("appointmentStatusDropdown", options_for_select(@appt_statuses.map{ |k, v| [k.capitalize, v] }, selected: appointment.status.titleize), { style: "display: none;" }) %>
+            <%= select_tag("appointmentStatusDropdown", options_for_select(@appt_statuses.map{ |k, v| [k.capitalize, v] }), { style: "display: none;" }) %>
             <span id="appointmentStatus" data-action="click->appointments#handleStatusEditableBehaviour"><%= appointment.status.titleize %></span>
           </dd>
       </div>
