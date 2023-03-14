@@ -194,6 +194,7 @@ Rails.application.routes.draw do
     resources :appointments do
       member do
         get :interpreter_requests
+        patch :status, to: "appointments#update_status"
       end
     end
     resources :customers

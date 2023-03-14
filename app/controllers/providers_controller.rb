@@ -21,7 +21,7 @@ class ProvidersController < ApplicationController
   # GET /providers/new
   def new
     @provider = Provider.new
-    @account_customers = current_account.customers
+    @account_customers = current_account.customers unless customer_logged_in?
 
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
@@ -30,7 +30,7 @@ class ProvidersController < ApplicationController
       @departments = Department.where(site_id: @site_id).order("name ASC")
 
     end
-    @sites ||= []
+    @sites ||= customer_logged_in? ? current_account.sites : []
     @departments ||= []
 
     # Uncomment to authorize with Pundit
@@ -39,8 +39,8 @@ class ProvidersController < ApplicationController
 
   # GET /providers/1/edit
   def edit
-    @account_customers = current_account.customers
-    @sites = current_account.account_sites.order("name ASC")
+    @account_customers = current_account.customers unless customer_logged_in?
+    @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
 
     @departments = if @provider.site_id.present?
       Department.where(site_id: @provider.site_id).order("name ASC")
@@ -53,6 +53,7 @@ class ProvidersController < ApplicationController
   def create
     @provider = Provider.new(provider_params)
     @account_customers = current_account.customers
+    @provider.customer_id = current_account.id if customer_logged_in?
     @sites = current_account.account_sites.order("name ASC")
     @departments = if @provider.site_id.present?
       Department.where(site_id: @provider.site_id).order("name ASC")

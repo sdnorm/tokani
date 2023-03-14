@@ -1,8 +1,9 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status]
 
   before_action :authenticate_user!
   before_action :set_account
+  before_action :appointments_per_logged_in_account, only: [:index]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -10,7 +11,13 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @pagy, @appointments = pagy(@account.appointments.sort_by_params(params[:sort], sort_direction))
+    @customer_appts = appointments_per_logged_in_account
+    @pagy, @appointments = pagy(appointments_per_status.sort_by_params(params[:sort], sort_direction))
+
+    if customer_logged_in?
+      @scheduled_appts_count = Appointment.by_appointment_specific_status("scheduled").count
+      @finished_appts_count = Appointment.by_appointment_specific_status("finished").count
+    end
 
     # Uncomment to authorize with Pundit
     # authorize @appointments
@@ -29,35 +36,20 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1 or /appointments/1.json
   def show
     # @appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
+    @appt_statuses = customer_logged_in? ?
+      AppointmentStatus.names.slice("created", "cancelled") :
+      AppointmentStatus.names.slice("opened", "finished")
   end
 
   # GET /appointments/new
   def new
     @appointment = Appointment.new
 
-    if params[:customer_id].blank?
+    if params[:customer_id].blank? && !customer_logged_in?
       @account_customers = current_account.customers
-      # @agency_customers = AgencyCustomer.all.order('name ASC')
-      return
+    else
+      setup_appointment_vars
     end
-
-    @account_customers = current_account.customers
-    @customer = Customer.find(params[:customer_id])
-    @sites = @customer.sites.order("name ASC")
-
-    department_list = Department.where(site_id: @sites).order("name ASC")
-    @departments = [["None", ""]]
-    @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
-
-    @languages = current_account.account_languages
-
-    @interpreters = current_account.interpreters
-    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
-    @requestors = User.where(id: requestor_ids)
-    @providers = @customer.providers
-    @recipients = @customer.recipients
-    @general_int_requested = true
-    @specific_int_requested = !@general_int_requested
   end
 
   # GET /appointments/1/edit
@@ -89,6 +81,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
+    @appointment.customer = current_account if customer_logged_in?
 
     # NW - have to include all these variables for form to re-render correctly if errors are thrown on create
     @account_customers = current_account.customers
@@ -116,6 +109,7 @@ class AppointmentsController < ApplicationController
         format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
         format.json { render :show, status: :created, location: @appointment }
       else
+        setup_appointment_vars
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
@@ -150,6 +144,19 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def update_status
+    @appt_status = @appointment.appointment_statuses.new(
+      name: params.dig(:appointment, :status),
+      user_id: current_account.owner_id
+    )
+
+    respond_to do |format|
+      @appt_status.save ?
+        format.json { render json: {status: @appointment.status} } :
+        format.json { render json: {error: "Something went wrong while updating appointment's status!"} }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -164,6 +171,36 @@ class AppointmentsController < ApplicationController
 
   def set_account
     @account = current_account
+  end
+
+  def appointments_per_logged_in_account
+    customer_logged_in? ?
+      Appointment.where(customer_id: @account.id) :
+      @account.appointments
+  end
+
+  def appointments_per_status
+    params[:status].present? ? @customer_appts.by_appointment_specific_status(params[:status]) : @customer_appts
+  end
+
+  def setup_appointment_vars
+    @account_customers = current_account.customers
+    @customer = customer_logged_in? ? current_account : Customer.find(params[:customer_id])
+    @sites = @customer.sites.order("name ASC")
+
+    department_list = Department.where(site_id: @sites).order("name ASC")
+    @departments = [["None", ""]]
+    @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
+
+    @languages = current_account.account_languages
+
+    @interpreters = current_account.interpreters
+    requestor_ids = @customer.requestor_details.pluck(:requestor_id)
+    @requestors = User.where(id: requestor_ids)
+    @providers = @customer.providers
+    @recipients = @customer.recipients
+    @general_int_requested = true
+    @specific_int_requested = !@general_int_requested
   end
 
   # Only allow a list of trusted parameters through.
