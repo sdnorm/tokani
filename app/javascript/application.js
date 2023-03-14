@@ -20,7 +20,6 @@ import "./controllers"
 import "./src/**/*"
 require("local-time").start()
 
-import "flowbite"
 // Start Rails UJS
 Rails.start()
 
