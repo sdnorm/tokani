@@ -47,7 +47,7 @@ export default class extends Controller {
       return item?.value
     })
 
-    timeframeTextContainer.innerHTML = (arrayToSentence(selectedFiltersValues) + "")
+    timeframeTextContainer.innerHTML = (arrayToSentence(selectedFiltersValues) + "'s ")
 
     if (selectedFilters.length == 0) {
       timeframeTextContainer.innerHTML = "All"
