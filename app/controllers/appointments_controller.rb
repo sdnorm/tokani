@@ -36,7 +36,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1 or /appointments/1.json
   def show
     # @appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
-    @appt_statuses = customer_logged_in? ? 
+    @appt_statuses = customer_logged_in? ?
       AppointmentStatus.names.slice("created", "cancelled") :
       AppointmentStatus.names.slice("opened", "finished")
   end
