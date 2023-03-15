@@ -22,3 +22,11 @@ export function removeElement(el) {
 export function insertAfter(el, referenceNode) {
     return referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
 }
+
+export function arrayToSentence(arr) {
+  return arr.join(", ").replace(/,\s([^,]+)$/, ' and $1');
+}
+
+export function toSentence(str) {
+  return str.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+}
