@@ -1,35 +1,34 @@
-<div class="flex flex-1 flex-col md:pl-64">
-  <main class="flex-1">
-    <div class="py-6">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-        <div class="px-4 sm:px-6 lg:px-8">
-          <div class="sm:flex sm:items-center pb-6">
-            <div class="sm:flex-auto"> 
-              <h1 class="text-xl font-semibold text-gray-900">
-                Invite Users
-              </h1>
-              <p class="mt-2 text-sm text-gray-700">Add email to invite users on Tokani Platform</p>
-            </div>      
-          </div>
-          <div class="p-8 bg-white rounded shadow">
-            <div class="md:col-span-2">
-              <div class="bg-white">
-                <div class="grid grid-cols-6 gap-6">
-                  <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input placeholder="Enter Email" type="email" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
-                    <%#= form.label :first_name, class: "block text-sm font-medium text-gray-700" %>
-                    <%#= form.email_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
-                </div>
-                <input type="submit" value="Send Invitation" class="mt-4 inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2">
-                <%#= form.button button_text(form.send(:submit_default_value)), class:"mt-4 inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              </div>
-            </div>
-          </div>
-        </div>
+<main class="md:pl-64">
+  <div class="py-6 max-w-7xl px-4 sm:px-6 md:px-8 mx-auto">
+    <h1 class="text-xl font-semibold text-gray-900">
+      Invite Users
+    </h1>
+    <p class="mt-2 text-sm text-gray-700">Add details to invite users on Tokani Platform</p>
+    <div class="p-8 bg-white rounded shadow mt-4 flex flex-col gap-4 items-start">
+      <div class="w-full xl:w-2/3">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input id="email" placeholder="Enter Email" type="email" class=" mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+        <%#= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+        <%#= form.email_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", id: "email" %>
       </div>
+      <div class="w-full xl:w-2/3">
+        <label for="roles" class="block text-sm font-medium text-gray-700">Roles</label>
+        <input id="email" type="text" class="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm">
+        <%#= form.label :roles, class: "block text-sm font-medium text-gray-700" %>
+        <%#= form.text_field :roles, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", id: "roles" %>
+      </div>
+      <div class="w-full xl:w-2/3">
+        <label for="account" class="block text-sm font-medium text-gray-700">Account</label>
+        <select id="account" name="industry" class="select">
+          <option value="" selected>Choose an account</option>
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+          <option value="customer_admin">Customer Admin</option>
+        </select>
+        <%#= form.select :account, options_for_select(accounts, appointment.department_id), {}, {class: 'select'} %>
+      </div>
+      <input type="submit" value="Send Invitation" class="mt-4 inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2">
+      <%#= form.button button_text(form.send(:submit_default_value)), class:"mt-4 inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
     </div>
-  </main>
-</div>
-<!-- Invite User Page -->
+  </div>
+</main>
