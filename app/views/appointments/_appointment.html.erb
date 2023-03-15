@@ -7,10 +7,17 @@
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Status</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <%= select_tag("appointmentStatusDropdown", options_for_select(@appt_statuses.map{ |k, v| [k.capitalize, v] }), { style: "display: none;" }) %>
-            <span id="appointmentStatus" data-action="click->appointments#handleStatusEditableBehaviour"><%= appointment.status.titleize %></span>
-          </dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 w-full xl:w-2/3">
+          <%= select_tag("appointmentStatusDropdown", options_for_select(@appt_statuses.map{ |k, v| [k.capitalize, v] }), { prompt:"Change Status", style: "display: none;" }) %>
+          <div class="group">
+            <span id="appointmentStatus" data-action="click->appointments#handleStatusEditableBehaviour">
+              <span class="inline-block p-2 -mx-2 hover:bg-gray-100 cursor-pointer"><%= appointment.status.titleize %></span>
+              <span class="group-hover:bg-gray-600">
+              <i class="fas fa-info-circle pl-3 mr-1 text-gray-600"></i>Click to edit status</span>
+            </span>
+            
+          </div>
+        </dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Start Time</dt>
@@ -102,4 +109,3 @@
     </dl>
   </div>
 </div>
-
