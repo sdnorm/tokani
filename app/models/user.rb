@@ -119,4 +119,15 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def complete_invitation_details
+    self.password = SecureRandom.alphanumeric
+    self.terms_of_service = true
+    self.accepted_terms_at = Time.current
+  end
+
+  def create_account_user
+    account_users.create(roles: {"client" => true}) # Putting up a client role temporarily
+    TokaniAgencyCreationMailer.welcome(self).deliver_later
+  end
 end
