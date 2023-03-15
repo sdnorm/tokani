@@ -21,6 +21,8 @@ let toggleSpanAndDropdownView = (statusElement, statusDropdown, hideStatusAndSho
     statusDropdown.style.display = "block"
   } else {
     statusElement.style.display = "block"
+    statusElement.setAttribute("class", "inline-block p-2 -mx-2 hover:bg-gray-100 cursor-pointer")
+    statusElement.setAttribute("title", "Click to edit status")
     statusDropdown.style.display = "none"
   }
 }
