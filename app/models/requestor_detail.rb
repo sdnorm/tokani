@@ -32,7 +32,7 @@ class RequestorDetail < ApplicationRecord
   belongs_to :department, optional: true
   belongs_to :customer, class_name: "Account", foreign_key: "customer_id"
 
-  enum requestor_type: {site_admin: 1, site_member: 2, client: 3}
+  enum requestor_type: {site_admin: 1, site_member: 2, client: 3, customer_admin: 4}
   validates :primary_phone, phone: {possible: true, allow_blank: false, message: "is invalid, please use format 222-222-2222"}
   validates :requestor_type, presence: {message: "is required"}
   validates :customer_id, presence: {message: "is required"}

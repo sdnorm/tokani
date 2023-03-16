@@ -9,9 +9,13 @@ class RequestorsController < ApplicationController
 
   # GET /interpreters
   def index
-    @requestor_accounts = current_account.account_users.client.pluck(:user_id)
-    @requestor_accounts << current_account.account_users.site_member.pluck(:user_id)
-    @requestor_accounts << current_account.account_users.site_admin.pluck(:user_id)
+    if customer_logged_in?
+      @requestor_accounts = current_account.account_users.customer_admin.pluck(:user_id)
+    else
+      @requestor_accounts = current_account.account_users.client.pluck(:user_id)
+      @requestor_accounts << current_account.account_users.site_member.pluck(:user_id)
+      @requestor_accounts << current_account.account_users.site_admin.pluck(:user_id)
+    end
 
     @pagy, @requestors = pagy(User.where(id: @requestor_accounts.flatten).sort_by_params(params[:sort], sort_direction))
   end
@@ -61,9 +65,13 @@ class RequestorsController < ApplicationController
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
 
-    @requestor.requestor_detail.customer_id = current_account.id if customer_logged_in?
-
-    req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
+    if customer_logged_in?
+      @requestor.requestor_detail.customer_id = current_account.id
+      @requestor.requestor_detail.requestor_type = 4
+      req_type = { "customer_admin" => true }
+    else
+      req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
+    end
 
     if req_type == "site_admin"
       req_type = {"site_admin" => true}
@@ -114,6 +122,7 @@ class RequestorsController < ApplicationController
     requestor = current_account.account_users.client.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
+    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?   
     req_id = requestor.user_id
     @requestor = User.find_by(id: req_id)
   rescue ActiveRecord::RecordNotFound
