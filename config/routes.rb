@@ -204,6 +204,8 @@ Rails.application.routes.draw do
         get :search
         get :fetch_appointments
         get :public
+        get :appointments
+        get :filter_appointments
       end
       member do
         get :appointment_details

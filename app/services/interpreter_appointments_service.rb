@@ -11,6 +11,7 @@ class InterpreterAppointmentsService
     scope = filter_by_status(scope)
     scope = filter_by_display_range(scope)
     scope = filter_by_modality(scope)
+    scope = scope_by_date_range(scope)
     order_by_start_time(scope)
   end
 
@@ -46,8 +47,6 @@ class InterpreterAppointmentsService
       scope_by_today(scope)
     when "tomorrow"
       scope_by_tomorrow(scope)
-    when "date_range"
-      scope_by_date_range(scope)
     else
       scope
     end

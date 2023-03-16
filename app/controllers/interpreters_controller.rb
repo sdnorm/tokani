@@ -244,6 +244,15 @@ class InterpretersController < ApplicationController
     redirect_to("/interpreters/availability")
   end
 
+  def appointments
+    @statuses = ["scheduled", "opened", "offered"]
+    @timeframes = ["today", "tomorrow"]
+    @modalities = ["in_person", "video", "phone"]
+  end
+
+  def filter_appointments
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
