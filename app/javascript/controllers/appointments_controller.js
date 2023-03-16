@@ -32,9 +32,10 @@ let capitalize = (str) => {
 }
 
 let updateStatusOnServer = (statusElement, dropdown) => {
-  let status = dropdown.selectedOptions[0].textContent
+  let selectedOption = dropdown.selectedOptions[0]
+  let status = selectedOption.textContent
 
-  if (status === "Created") {
+  if (status === "Created" || selectedOption.value === '') {
     toggleSpanAndDropdownView(statusElement, dropdown, false)
     return
   }    
