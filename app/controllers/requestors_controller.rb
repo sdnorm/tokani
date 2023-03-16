@@ -68,7 +68,7 @@ class RequestorsController < ApplicationController
     if customer_logged_in?
       @requestor.requestor_detail.customer_id = current_account.id
       @requestor.requestor_detail.requestor_type = 4
-      req_type = { "customer_admin" => true }
+      req_type = {"customer_admin" => true}
     else
       req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
     end
@@ -122,7 +122,7 @@ class RequestorsController < ApplicationController
     requestor = current_account.account_users.client.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
-    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?   
+    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?
     req_id = requestor.user_id
     @requestor = User.find_by(id: req_id)
   rescue ActiveRecord::RecordNotFound

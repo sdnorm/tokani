@@ -226,7 +226,7 @@ Rails.application.routes.draw do
     resources :notification_settings, only: [:create, :update]
 
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
-    
+
     resources :availabilities, only: [:create, :destroy]
     get "agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
     # put "agency_detail_update", to: "agencies#agency_detail_update", as: :agency_detail_update
