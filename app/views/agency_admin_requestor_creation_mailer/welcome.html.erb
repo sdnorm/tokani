@@ -1,5 +1,11 @@
 <h1>Welcome to Tokani!</h1>
 
-<p>Your team, <%= @customer.name %>, uses Tokani and you have been added as a member. You will need to follow the link below to set your password and complete your registration.</p>
+<p>Your team, <%= @customer.name %>, uses Tokani and you have been added as a member. 
+  <% unless @customer_admin_member %>
+    You will need to follow the link below to set your password and complete your registration.
+  <% else %>
+    Finish setting up your account by following the link below:
+  <% end %> 
+</p>
 
 <p><%= link_to "Reset Password", edit_password_url(@user, reset_password_token: @token) %></p>
