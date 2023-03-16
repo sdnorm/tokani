@@ -225,10 +225,6 @@ Rails.application.routes.draw do
 
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
     
-    # Users invitation routes for requestors and interpreters
-    get "invite_users", to: "dashboard#invite_users", as: :invitation
-    post "invitation", to: "dashboard#create_invitation", as: :create_invitation
-
     resources :availabilities, only: [:create, :destroy]
     get "agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
     # put "agency_detail_update", to: "agencies#agency_detail_update", as: :agency_detail_update

@@ -27,27 +27,6 @@ class DashboardController < ApplicationController
     end
   end
 
-  def invite_users
-    unless current_account_user.roles["interpreter"] ||
-           current_account_user.roles["requestor"]
-      redirect_to(root_path, alert: "Not authorized to access this page")
-    end
-
-    @user = User.new
-  end
-
-  def create_invitation
-    @user = User.new(user_params)
-    @user.complete_invitation_details
-
-    if @user.save
-      CreateInvitedUserAccountJob.perform_later(@user.id)
-      redirect_to(invitation_path, notice: "User was successfully created.")
-    else
-      redirect_to(invitation_path, notice: @user.errors.full_messages.join(","))
-    end
-  end
-
   private
 
     def grab_appointments_data_for_customer
