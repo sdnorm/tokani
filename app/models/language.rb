@@ -26,6 +26,13 @@ class Language < ApplicationRecord
   # has_many :appointment_languages, dependent: :destroy
   has_many :interpreter_languages, dependent: :destroy
   belongs_to :account
+
+  has_many :bill_rate_languages, dependent: :destroy
+  has_many :bill_rates, through: :bill_rate_languages
+
+  has_many :pay_rate_languages, dependent: :destroy
+  has_many :pay_rates, through: :pay_rate_languages
+
   validates :name, presence: true
 
   def toggle_active!

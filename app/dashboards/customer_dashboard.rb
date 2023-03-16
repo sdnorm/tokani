@@ -34,8 +34,6 @@ class CustomerDashboard < Administrate::BaseDashboard
     name: Field::String,
     notifications: Field::HasMany,
     owner: Field::BelongsTo,
-    pay_bill_configs: Field::HasMany,
-    pay_bill_rates: Field::HasMany,
     pay_customers: Field::HasMany,
     payment_processor: Field::HasOne,
     personal: Field::Boolean,
@@ -98,8 +96,6 @@ class CustomerDashboard < Administrate::BaseDashboard
     name
     notifications
     owner
-    pay_bill_configs
-    pay_bill_rates
     pay_customers
     payment_processor
     personal
@@ -150,8 +146,6 @@ class CustomerDashboard < Administrate::BaseDashboard
     name
     notifications
     owner
-    pay_bill_configs
-    pay_bill_rates
     pay_customers
     payment_processor
     personal
