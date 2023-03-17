@@ -245,9 +245,9 @@ class InterpretersController < ApplicationController
   end
 
   def appointments
-    @statuses = ["scheduled", "opened", "offered"]
-    @timeframes = ["today", "tomorrow"]
+    @statuses = ["all", "scheduled", "opened", "offered"]
     @modalities = ["in_person", "video", "phone"]
+    @sort_by_filters = ["date"]
   end
 
   def filter_appointments
@@ -315,6 +315,6 @@ class InterpretersController < ApplicationController
   end
 
   def appointment_query_params
-    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video)
+    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video, :sort_by)
   end
 end
