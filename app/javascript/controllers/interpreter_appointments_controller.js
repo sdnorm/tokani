@@ -65,4 +65,12 @@ export default class extends Controller {
       modalitiesTextContainer.innerHTML = "Modality"
     }
   }
+
+  sort() {
+    const icon = document.querySelector("#sort-chevron")
+    const dateField = document.querySelector("#sort_by")
+    dateField.value == "date" ? dateField.value = "" : dateField.value = "date"
+    icon.classList.toggle("rotate-180")
+    Rails.fire(this.formTarget, "submit")
+  }
 }
