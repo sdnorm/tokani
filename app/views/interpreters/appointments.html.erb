@@ -9,7 +9,7 @@
         <div class="flex flex-wrap items-center">
           <div>
             <button data-action="click->interpreter-appointments#sort" role="button" class="inline-flex items-center select-none" aria-label="Sort By">
-              <p class="text-sm">Sort</p>
+              <p class="text-sm">Date</p>
               <%= f.hidden_field :sort_by %>
               <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-2 00" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
@@ -22,7 +22,7 @@
                   <p class="text-sm capitalize" id="statusesTextContainer">Status</p>
                   <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div data-dropdown-target="menu" class="hidden inline-flex top-6 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
+                <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
                   <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
                     <div data-interpreter-appointments-target="status">
                       <% @statuses.each do |status| %>
@@ -41,7 +41,7 @@
                   <p class="text-sm" id="modalitiesTextContainer">Modality</p>
                   <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div data-dropdown-target="menu" class="hidden inline-flex top-6 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
+                <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
                   <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
                     <div data-interpreter-appointments-target="modality">
                       <% @modalities.each do |modality| %>
