@@ -7,9 +7,7 @@ export default class extends Controller {
   static targets = ["form", "appointments", "status", "displayRange", "modality"]
 
   connect() {
-    const checkboxOpenedStatus = this.statusTarget.querySelectorAll("input[type='radio'][value='opened']")[0]
-
-    const checkboxDisplayRange = this.displayRangeTarget.querySelectorAll("input[type='radio'][value='today']")[0]
+    const checkboxOpenedStatus = this.statusTarget.querySelectorAll("input[type='radio'][value='all']")[0]
 
     if (checkboxOpenedStatus !== undefined) {
       checkboxOpenedStatus.click()
@@ -31,12 +29,12 @@ export default class extends Controller {
   }
 
   updateCurrentFilterText(event) {
-    const categoryFilter = event.target.dataset.categoryFilter
-    const categoriesTextContainer = this.formTarget.querySelector("#categoriesTextContainer")
+    const statusFilter = event.target.dataset.statusFilter
+    const statusesTextContainer = this.formTarget.querySelector("#statusesTextContainer")
     const timeframeTextContainer = this.formTarget.querySelector("#timeframeTextContainer")
 
-    if (categoryFilter &&!categoriesTextContainer.innerHTML.includes(categoryFilter)) {
-      categoriesTextContainer.innerHTML = categoryFilter
+    if (statusFilter &&!statusesTextContainer.innerHTML.includes(statusFilter)) {
+      statusesTextContainer.innerHTML = statusFilter
     }
   }
 
@@ -64,7 +62,7 @@ export default class extends Controller {
     modalitiesTextContainer.innerHTML = (arrayToSentence(selectedFiltersValues))
 
     if (selectedFilters.length == 0) {
-      modalitiesTextContainer.innerHTML = "All"
+      modalitiesTextContainer.innerHTML = "Modality"
     }
   }
 }

@@ -12,7 +12,7 @@ class InterpreterAppointmentsService
     scope = filter_by_display_range(scope)
     scope = filter_by_modality(scope)
     scope = scope_by_date_range(scope)
-    order_by_start_time(scope)
+    order_by_sort(scope)
   end
 
   private
@@ -34,6 +34,8 @@ class InterpreterAppointmentsService
       scope.where(interpreter_id: @user.id)
         .joins(:appointment_statuses)
         .where(appointment_statuses: {current: true, name: AppointmentStatus.names[@params[:status]]})
+    when "all"
+      scope.unscoped
     else
       scope # Should never get here, but just in case
     end
@@ -104,5 +106,16 @@ class InterpreterAppointmentsService
   def scope_by_range(scope, start_time, end_time)
     scope.where("appointments.start_time > ?", start_time.utc)
       .where("appointments.start_time < ?", end_time.utc)
+  end
+
+  def order_by_sort(scope)
+    return scope unless @params[:sort_by].present?
+
+    case @params[:sort_by]
+    when "date"
+      scope.order(start_time: :asc)
+    else
+      scope
+    end
   end
 end
