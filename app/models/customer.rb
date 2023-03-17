@@ -35,6 +35,9 @@ class Customer < Account
   has_many :recipients
   has_many :requestors
 
+  has_many :bill_rate_customers, dependent: :destroy
+  has_many :bill_rates, through: :bill_rate_customers, validate: false, class_name: "BillRate", foreign_key: :bill_rate_id
+
   has_one :customer_detail, dependent: :destroy, inverse_of: :customer
   validates_presence_of :customer_detail
   accepts_nested_attributes_for :customer_detail

@@ -36,13 +36,13 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
+#  bill_rate_id             :integer
 #  creator_id               :uuid
 #  customer_id              :uuid
 #  department_id            :uuid
 #  interpreter_id           :uuid
 #  language_id              :bigint           not null
-#  pay_bill_config_id       :integer
-#  pay_bill_rate_id         :integer
+#  pay_rate_id              :integer
 #  provider_id              :uuid
 #  recipient_id             :uuid
 #  requestor_id             :uuid
@@ -92,8 +92,6 @@ class Appointment < ApplicationRecord
   belongs_to :requestor, class_name: "User"
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
-  belongs_to :pay_bill_rate, optional: true
-  belongs_to :pay_bill_config, optional: true
 
   has_many_attached :documents
 
@@ -249,22 +247,22 @@ class Appointment < ApplicationRecord
     start_time.in_time_zone(zone)
   end
 
-  def associate_rate_via_service
-    service = RateDeterminationService.new(self)
-    rate = service.determine_rate
-    update_column(:pay_bill_rate_id, rate.id) if rate.present?
+  def associate_bill_rate_via_service
+    service = BillRateDeterminationService.new(self)
+    rate = service.determine_bill_rate
+    update_column(:bill_rate_id, rate.id) if rate.present?
   end
 
-  def associate_config_via_service
-    service = ConfigDeterminationService.new(self)
-    config = service.determine_config
-    update_column(:pay_bill_config_id, config.id) if config.present?
+  def associate_pay_rate_via_service
+    service = PayRateDeterminationService.new(self)
+    rate = service.determine_pay_rate
+    update_column(:pay_rate_id, rate.id) if rate.present?
   end
 
   def create_line_items_and_save_totals
-    return unless pay_bill_rate_id.present? && pay_bill_config_id.present?
+    return unless bill_rate_id.present? && pay_rate_id.present?
 
-    service = RateCalculationService.new(self)
+    service = RateCalculatorService.new(self)
 
     billing_line_items.destroy_all
     BillingLineItem.persist_from_struct(self, service.billing_line_items)
@@ -280,6 +278,12 @@ class Appointment < ApplicationRecord
     return nil unless start_time.present? && finish_time.present?
 
     TimeDifference.between(start_time, finish_time).in_hours
+  end
+
+  def calculated_appointment_duration_in_minutes
+    return nil unless start_time.present? && finish_time.present?
+
+    TimeDifference.between(start_time, finish_time).in_minutes
   end
 
   def starts_on_weekday?

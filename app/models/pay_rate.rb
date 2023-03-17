@@ -29,6 +29,8 @@ class PayRate < ApplicationRecord
   has_many :pay_rate_languages, dependent: :destroy
   has_many :languages, through: :pay_rate_languages
 
-  has_many :pay_rate_customers, dependent: :destroy
-  has_many :accounts, through: :pay_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+  has_many :pay_rate_interpreters, dependent: :destroy
+  has_many :interpreters, through: :pay_rate_interpreters, validate: false, class_name: "User", foreign_key: :interpreter_id
+
+  scope :active, -> { where(is_active: true) }
 end

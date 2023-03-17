@@ -49,9 +49,6 @@ class Account < ApplicationRecord
   has_many :customer_agencies, foreign_key: :customer_id
   has_many :agencies, through: :customer_agencies
 
-  has_many :pay_bill_rates
-  has_many :pay_bill_configs
-
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
   has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
@@ -70,6 +67,8 @@ class Account < ApplicationRecord
   has_many :process_batches, dependent: :destroy
   has_many :rate_criteria, dependent: :destroy
   has_many :reports, dependent: :destroy
+  has_many :bill_rates, dependent: :destroy
+  has_many :pay_rates, dependent: :destroy
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

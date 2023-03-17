@@ -235,8 +235,6 @@ Rails.application.routes.draw do
   resources :recipients
   resources :providers
   resources :requestor_details
-  resources :pay_bill_configs
-  resources :pay_bill_rates
   resources :languages do
     member do
       patch :toggle_active

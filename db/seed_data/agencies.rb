@@ -45,10 +45,3 @@ Agency.where(agency: true).each do |agency|
   agency.update!(owner_id: user.id)
   agency.account_users.create!(user: user, roles: {"agency_admin" => true})
 end
-
-Account.where(agency: true).each do |agency|
-  RateCriterium.create!(account_id: agency.id, type_key: :sites_departments, name: "Site/Department", sort_order: 0)
-  RateCriterium.create!(account_id: agency.id, type_key: :specialty, name: "Specialty", sort_order: 1)
-  RateCriterium.create!(account_id: agency.id, type_key: :language, name: "Language", sort_order: 2)
-  RateCriterium.create!(account_id: agency.id, type_key: :interpreter_type, name: "Interpreter Type", sort_order: 3)
-end
