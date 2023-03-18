@@ -1,6 +1,6 @@
 
   <div>
-    <% form_url = pay_rate.new_record? ? pay_rates_path : pay_rate_path(pay_rate) %>
+    <% form_url = pay_rate.new_record? ? pay_rates_path : bpay_rate_path(pay_rate) %>
     <%= form_with(model: pay_rate, url: form_url) do |form| %>
       <%= render "shared/error_messages", resource: form.object %>
 
@@ -116,6 +116,25 @@
 
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
+                <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Default Rate*</h3>
+                <dt class="text-sm font-medium text-gray-500">Check to make this the default pay rate for the modalities selected.</dt>
+              </div>
+              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
+                <fieldset class="space-y-2">
+                  <div class="relative flex ">
+                    <div class="flex h-5 items-center">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box :default_rate, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400" %>
+                        <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
+                      </div>
+                    </div>
+                  </div>  
+                </fieldset>
+              </div>
+            </div>
+
+            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+              <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Active Status*</h3>
                 <dt class="text-sm font-medium text-gray-500">Make this rate active to have it apply to payment calculations.</dt>
               </div>
@@ -133,52 +152,23 @@
               </div>
             </div>
 
-            
-        <div data-controller="checkbox">
-            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-              <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
-                <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Default Rate*</h3>
-                <dt class="text-sm font-medium text-gray-500">Check to make this the default pay rate for the modalities selected.</dt>
-              </div>
-              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-                <fieldset class="space-y-2">
-                  <div class="relative flex ">
-                    <div class="flex h-5 items-center">
-                      <div class="flex h-5 items-center" id="default_rate">
-                        <%= form.check_box :default_rate, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400", data: {action: 'checkbox#toggleHide checkbox#showFields' } %>
-                        <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
-                      </div>
-                    </div>
-                  </div>  
-                </fieldset>
-              </div>
-            </div>
-
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Langugage Specific Rate*</h3>
                 <dt class="text-sm font-medium text-gray-500">If your rate is not a defaulat rate, please select which languges it will apply to.</dt>
               </div>
-              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0 <%= 'hidden' if @pay_rate.is_default? %>" data-checkbox-target="toggleHide">
-                  <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Pay Rate" class="">
-                    <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[language_ids][]" id="pay_rate_language_ids" style="display: none;"></select>
-                  </div>
+              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
+                <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Pay Rate" class="">
+                  <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[language_ids][]" id="pay_rate_language_ids" style="display: none;"></select>
                 </div>
-
-              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-4 <%= 'hidden' if !@pay_rate.is_default? %>"  data-checkbox-target="showFields">
-               <span class="text-sm font-medium text-tokaniaccent-500">You cannot have a default rate that is language specific.  If you want to make this rate apply to languages, unckeck default rate box.</span>
               </div>
             </div>
-
-          </div>
 
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Apply Rate to Interpreters*</h3>
                 <dt class="text-sm font-medium text-gray-500">Select which of your interpreters will use this rate.</dt>
               </div>
-
-              
               <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <div data-controller="multiselect" data-multiselect-items-value='<%= @interpreters_json %>' data-placeholder="Select Interpreters for this Pay Rate" class="">
                   <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[interpreter_ids][]" id="pay_rate_interpreter_ids" style="display: none;"></select>
