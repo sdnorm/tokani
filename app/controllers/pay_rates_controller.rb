@@ -20,6 +20,13 @@ class PayRatesController < ApplicationController
   # GET /pay_rates/new
   def new
     @pay_rate = PayRate.new
+    @interpreters = current_account.account_interpreters
+    @languages = current_account.languages.all.order("name ASC")
+    
+  
+    @languages_json = current_account.languages.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
+    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map{ |u| { value: u[0], text: u[1]+u[2] } }.to_json
+  
 
     # Uncomment to authorize with Pundit
     # authorize @pay_rate
