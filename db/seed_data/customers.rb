@@ -1,5 +1,8 @@
-Account.all.each do |account|
-  account.update(name: Faker::Company.name, customer: true)
+25.times do
+  Account.create!(
+    name: Faker::Company.name,
+    customer: true
+  )
 end
 
 Account.where(customer: true).each do |customer|
