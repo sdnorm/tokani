@@ -6,7 +6,7 @@ class CustomerAdminPolicy < ApplicationPolicy
   end
 
   def access_to_interpreters?
-    !customer_admin? 
+    !customer_admin?
   end
 
   private

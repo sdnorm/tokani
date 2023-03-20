@@ -5,11 +5,10 @@ class InterpretersController < ApplicationController
   # Uncomment to enforce Pundit authorization
   before_action :verify_authorized
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  
+
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
     :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
-    
 
   # GET /interpreters
   def index
