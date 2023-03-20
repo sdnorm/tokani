@@ -2,13 +2,13 @@ class InterpretersController < ApplicationController
   include CurrentHelper
 
   before_action :authenticate_user!
+  # Uncomment to enforce Pundit authorization
+  before_action :verify_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
     :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
-
-  # Uncomment to enforce Pundit authorization
-  # after_action :verify_authorized
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # GET /interpreters
   def index
@@ -256,6 +256,10 @@ class InterpretersController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def verify_authorized
+    raise Pundit::NotAuthorizedError if customer_logged_in?
+  end
+
   def set_interpreter
     int = current_account.account_users.interpreter.find_by(user_id: params[:id])
     int_id = int.user_id

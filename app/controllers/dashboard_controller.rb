@@ -6,7 +6,8 @@ class DashboardController < ApplicationController
       # redirect_to new_interpreter_detail_path
       redirect_to controller: :interpreters, action: :dashboard
     elsif current_account_user.customer_admin?
-      render template: "dashboard/customer"
+      grab_appointments_data_for_customer
+      # render template: "dashboard/customer"
     elsif current_account_user.agency_admin? || current_account_user.agency_member?
       redirect_to agency_dashboard_path
     elsif current_user.admin?
@@ -24,5 +25,15 @@ class DashboardController < ApplicationController
       appointments = @agency.appointments
       @pagy, @appointments = pagy(appointments)
     end
+  end
+
+  private
+
+  def grab_appointments_data_for_customer
+    @pagy, @appointments = pagy(Appointment.where(customer_id: current_account.id))
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :first_name, :last_name)
   end
 end

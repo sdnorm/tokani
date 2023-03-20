@@ -118,6 +118,7 @@
                     Requestors
                   <% end %>
                 </li>
+                <% if policy(:customer_admin).access_to_interpreters? %>
                 <li class="pl-4">
                   <%= link_to interpreters_path,  class: "text-gray-100 hover:bg-gray-50 hover:opacity-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" stroke-width="1" stroke="currentColor" class="text-gray-100 group-hover:text-gray-500 mr-3 flex-shrink-0 h-4 w-4">
@@ -126,6 +127,7 @@
                     Interpreters
                   <% end %>
                 </li>
+                <% end %>
                 <li class="pl-4">
                   <%= link_to providers_path,  class: "text-gray-100 hover:bg-gray-50 hover:opacity-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" stroke-width="1" stroke="currentColor" class="text-gray-100 group-hover:text-gray-500 mr-3 flex-shrink-0 h-4 w-4">
