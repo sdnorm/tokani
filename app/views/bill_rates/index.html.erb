@@ -1,48 +1,68 @@
 <%= content_for :title, "Bill Rates" %>
 <%= turbo_stream_from :bill_rates %>
+<div>
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center">
+              <div class="sm:flex-auto">
+                <h1 class="text-xl font-semibold text-gray-900">Bill Rates</h1>
+                <p class="mt-2 text-sm text-gray-700">A list of all the bill rates in your account.</p>
+              </div>
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to t("shared.scaffold.new.title", model: "Bill Rate"), new_bill_rate_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
+              </div>
+            </div>
 
-<div class="container px-4 mx-auto my-8">
-  <div class="flex items-center justify-between mb-4">
-    <div>
-      <h1 class="h3">Bill Rates</h1>
-
-      <div class="text-sm font-medium">
-        <span class="text-gray-500">Sort by:</span>
-        <%= sortable @bill_rates, :account_id, "Account", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :name, "Name", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :hourly_bill_rate, "Hourly bill rate", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :is_active, "Is active", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :minimum_time_charged, "Minimum time charged", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :round_time, "Round time", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :round_increment, "Round increment", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :after_hours_overage, "After hours overage", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :after_hours_start_seconds, "After hours start seconds", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :after_hours_end_seconds, "After hours end seconds", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :rush_overage, "Rush overage", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :rush_overage_trigger, "Rush overage trigger", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :cancel_rate, "Cancel rate", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :cancel_rate_trigger, "Cancel rate trigger", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :default_rate, "Default rate", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :in_person, "In person", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :phone, "Phone", class: "text-gray-700 mr-1" %>
-        <%= sortable @bill_rates, :video, "Video", class: "text-gray-700 mr-1" %>
-      </div>
-    </div>
-
-    <%= link_to t("shared.scaffold.new.title", model: "Bill Rate"), new_bill_rate_path, class: "btn btn-white" %>
+  <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @bill_rates, :name, "Name" %></th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Hourly Rate</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Min Time Billed</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Modalities</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Languages</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Default Rate?</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Active</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+      <% @bill_rates.each do |bill_rate| %>
+        <tr>
+          <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+              <%= link_to(bill_rate.name, bill_rate_path(bill_rate)) %>
+              <dl class="font-normal lg:hidden">
+                <dt class="sr-only">Hourly Rate</dt>
+                <dd class="mt-1 truncate text-gray-700"><%= number_to_currency(bill_rate.hourly_bill_rate) %></dd>
+                <dt class="sr-only">Min Time Charged</dt>
+                <dd class="mt-1 truncate text-gray-700"><%= bill_rate.minimum_time_charged %></dd>
+                <dt class="sr-only">Modalities</dt>
+                <dd class="mt-1 truncate text-gray-500"><%= bill_rate.modality_list.titleize %></dd>
+                <dt class="sr-only">Languages</dt>
+                <dd class="mt-1 truncate text-gray-500"><%= bill_rate.language_list.titleize %></dd>
+                <dt class="sr-only">Default Rate?</dt>
+                <dd class="mt-1 truncate text-gray-500"><%= yes_no(bill_rate.default_rate) %></dd>
+              </dl>
+          </td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= number_to_currency(bill_rate.hourly_bill_rate) %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= bill_rate.minimum_time_charged %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= bill_rate.modality_list.titleize %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= bill_rate.language_list.titleize %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= yes_no(bill_rate.default_rate) %></td>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= yes_no(bill_rate.is_active) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
-
-  <%= tag.div id: ("bill_rates" if first_page?), class: "bg-white rounded-md shadow p-6 space-y-8" do %>
-    <%= render partial: "bill_rates/index", collection: @bill_rates, as: :bill_rate, cached: true %>
-
-    <div class="hidden only:flex flex-col items-center justify-between lg:flex-row">
-      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
-      <div class="flex-1 text-center">
-        <p class="mb-4 h3">Create your first Bill Rate</p>
-        <%= link_to t("shared.scaffold.new.title", model: "Bill Rate"), new_bill_rate_path, class: "btn btn-primary" %>
-      </div>
-    </div>
-  <% end %>
+</div>
+</div>
+</div>
+</main>
+</div>
 
   <% if @pagy.pages > 1 %>
     <div class="my-6 text-center">
@@ -50,3 +70,4 @@
     </div>
   <% end %>
 </div>
+
