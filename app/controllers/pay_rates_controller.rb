@@ -59,7 +59,6 @@ class PayRatesController < ApplicationController
 
   # PATCH/PUT /pay_rates/1 or /pay_rates/1.json
   def update
-   
     respond_to do |format|
       if @pay_rate.update(pay_rate_params)
         format.html { redirect_to @pay_rate, notice: "Pay rate was successfully updated." }

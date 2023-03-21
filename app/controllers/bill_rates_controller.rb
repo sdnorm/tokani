@@ -15,7 +15,6 @@ class BillRatesController < ApplicationController
 
   # GET /bill_rates/1 or /bill_rates/1.json
   def show
-    
   end
 
   # GET /bill_rates/new

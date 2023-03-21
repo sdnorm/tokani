@@ -36,5 +36,92 @@ class BillRate < ApplicationRecord
   has_many :languages, through: :bill_rate_languages
 
   has_many :bill_rate_customers, dependent: :destroy
-  has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+  # has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+  has_many :customers, through: :bill_rate_customers, class_name: "Account", foreign_key: :account_id
+  enum round_time: {round_closest: 1, round_down: 2, round_up: 3}
+
+  def start_hour(column, use_time_libs: false)
+    return nil if self[column].blank?
+
+    if use_time_libs == true
+      Time.use_zone(timezone) do
+        return (Time.zone.now.beginning_of_day + self[column]).hour
+      end
+    else
+      self[column] / 3600
+    end
+  end
+
+  def start_minute(column, use_time_libs: false)
+    return nil if self[column].blank?
+
+    if use_time_libs == true
+      Time.use_zone(timezone) do
+        return (Time.zone.now.beginning_of_day + self[column]).min
+      end
+    else
+      ((self[column] / 3600.0).modulo(1) * 60).to_i
+    end
+  end
+
+  def end_hour(column, use_time_libs: false)
+    return nil if self[column].blank?
+
+    if use_time_libs == true
+      Time.use_zone(timezone) do
+        return (Time.zone.now.beginning_of_day + self[column]).hour
+      end
+    else
+      self[column] / 3600
+    end
+  end
+
+  def end_minute(column, use_time_libs: false)
+    return nil if self[column].blank?
+
+    if use_time_libs == true
+      Time.use_zone(timezone) do
+        return (Time.zone.now.beginning_of_day + self[column]).min
+      end
+    else
+      ((self[column] / 3600.0).modulo(1) * 60).to_i
+    end
+  end
+
+  def make_afterhours_times_from_hash(thash)
+    start_times = thash.try(:fetch, :after_hours_start_seconds)
+    end_times = thash.try(:fetch, :after_hours_end_seconds)
+
+    return false if start_times.blank? || end_times.blank?
+
+    return false if start_times[:hour].blank? || end_times[:hour].blank?
+
+    begin
+      start_hour = Integer(start_times[:hour].sub(/^0/, ""))
+
+      end_hour = Integer(end_times[:hour].sub(/^0/, ""))
+
+      self.after_hours_start_seconds = (start_hour * 3600)
+      self.after_hours_end_seconds = (end_hour * 3600)
+    rescue => e
+      logger.warn "Error: #{e}"
+      false
+    end
+  end
+
+  def modality_list
+    list = []
+    list << "In Person" if in_person
+    list << "Phone" if phone
+    list << "Video" if video
+    list.join(", ")
+  end
+
+  def language_list
+    languages.map(&:name).sort.join(", ")
+  end
+
+  def customer_list
+    customers.map(&:name).sort.join(", ")
+  end
 end
