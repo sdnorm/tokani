@@ -91,8 +91,8 @@ class User < ApplicationRecord
   has_many :pay_bill_config_interpreters, dependent: :destroy
   has_many :pay_bill_configs, through: :pay_bill_config_interpreters
 
-  has_many :pay_rate_interpreters, dependent: :destroy
-  has_many :pay_rates, through: :pay_rate_interpreters
+  # has_many :pay_rate_interpreters, dependent: :destroy
+  # has_many :pay_rates, through: :pay_rate_interpreters
 
   has_many :availabilities
 
