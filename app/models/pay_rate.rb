@@ -61,4 +61,8 @@ class PayRate < ApplicationRecord
   def is_default?
     default_rate
   end
+
+  has_many :interpreters, through: :pay_rate_interpreters, validate: false, class_name: "User", foreign_key: :interpreter_id
+
+  scope :active, -> { where(is_active: true) }
 end

@@ -124,4 +124,8 @@ class BillRate < ApplicationRecord
   def customer_list
     customers.map(&:name).sort.join(", ")
   end
+
+  has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+
+  scope :active, -> { where(is_active: true) }
 end
