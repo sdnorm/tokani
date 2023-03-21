@@ -1,50 +1,81 @@
-<div id="<%= dom_id pay_rate %>">
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Account</p>
-    <%= pay_rate.account_id %>
+<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-tokanisecondary-900">Pay Rate Information</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500"></p>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Name</p>
-    <%= pay_rate.name %>
+  <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Rate Name</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_rate.name %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Account</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_rate.account&.name %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Is Default?</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= yes_no(pay_rate.default_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Is Active?</dt>
+        <dd class="mt-1 text-sm text-gray-900"> <%= yes_no(pay_rate.is_active) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Hourly Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_rate.hourly_pay_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Minimum Minutes</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_rate.minimum_time_charged %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Rush Overage</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_rate.rush_overage)  %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">After Hours Overage</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_rate.after_hours_overage) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Cancel Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(pay_rate.cancel_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Modalities</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= pay_rate.modality_list.titleize %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Languages</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if pay_rate.languages.empty? %>
+            <p>Rate not applied to any Languges</p>
+          <% else %>
+            <%= pay_rate.language_list.titleize %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Interpreters</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if pay_rate.interpreters.empty? %>
+            <p>Rate not applied to any Interpreters</p>
+          <% else %>
+            <%= pay_rate.interpreter_list %>
+          <% end %>
+        </dd>
+      </div>
+      
+  </dl>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Hourly pay rate</p>
-    <%= pay_rate.hourly_pay_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Is active</p>
-    <%= pay_rate.is_active %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Minimum time charged</p>
-    <%= pay_rate.minimum_time_charged %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">After hours overage</p>
-    <%= pay_rate.after_hours_overage %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Rush overage</p>
-    <%= pay_rate.rush_overage %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel rate</p>
-    <%= pay_rate.cancel_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Default rate</p>
-    <%= pay_rate.default_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">In person</p>
-    <%= pay_rate.in_person %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Phone</p>
-    <%= pay_rate.phone %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Video</p>
-    <%= pay_rate.video %>
-  </div>
-</div>
+
+  
+
+  
+
+<!-- </dl>
+  </div> -->
+<!-- </div> -->
+
+
+
