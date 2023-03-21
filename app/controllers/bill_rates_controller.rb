@@ -15,18 +15,16 @@ class BillRatesController < ApplicationController
 
   # GET /bill_rates/1 or /bill_rates/1.json
   def show
-    
   end
 
   # GET /bill_rates/new
   def new
     @bill_rate = BillRate.new
-     @languages = current_account.languages.all.order("name ASC")
+    @languages = current_account.languages.all.order("name ASC")
     @customers = current_account.customers.order("name ASC")
-  
-    @languages_json = current_account.languages.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
-    @customers_json = current_account.customers.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
-  
+
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
 
     # Uncomment to authorize with Pundit
     # authorize @bill_rate
@@ -36,10 +34,9 @@ class BillRatesController < ApplicationController
   def edit
     @languages = current_account.languages.all.order("name ASC")
     @customers = current_account.customers.order("name ASC")
-  
-    @languages_json = current_account.languages.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
-    @customers_json = current_account.customers.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
-  
+
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
   end
 
   # POST /bill_rates or /bill_rates.json

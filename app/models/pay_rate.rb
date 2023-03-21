@@ -47,17 +47,18 @@ class PayRate < ApplicationRecord
   end
 
   def interpreter_list
-    interpreters.map{ |int| [int.first_name, int.last_name].join(' ')}.sort.join(", ")
+    interpreters.map { |int| [int.first_name, int.last_name].join(" ") }.sort.join(", ")
   end
 
   def check_default_or_language_rate
-    if self.language_ids.present? && !self.default_rate == false
-      self.errors.add(:base, 'Cannot have default and language specific rate')
+    if language_ids.present? && !default_rate == false
+      errors.add(:base, "Cannot have default and language specific rate")
       return false
     end
-    return true
+    true
   end
+
   def is_default?
-    return self.default_rate
+    default_rate
   end
 end

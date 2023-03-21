@@ -51,6 +51,7 @@ class BillRate < ApplicationRecord
       self[column] / 3600
     end
   end
+
   def start_minute(column, use_time_libs: false)
     return nil if self[column].blank?
 
@@ -93,22 +94,20 @@ class BillRate < ApplicationRecord
 
     return false if start_times.blank? || end_times.blank?
 
-    return false if start_times[:hour].blank? || end_times[:hour].blank? 
+    return false if start_times[:hour].blank? || end_times[:hour].blank?
 
     begin
       start_hour = Integer(start_times[:hour].sub(/^0/, ""))
-     
 
       end_hour = Integer(end_times[:hour].sub(/^0/, ""))
-      
-      self.after_hours_start_seconds = (start_hour * 3600) 
-      self.after_hours_end_seconds = (end_hour * 3600) 
+
+      self.after_hours_start_seconds = (start_hour * 3600)
+      self.after_hours_end_seconds = (end_hour * 3600)
     rescue => e
       logger.warn "Error: #{e}"
       false
     end
   end
-
 
   def modality_list
     list = []
@@ -125,9 +124,4 @@ class BillRate < ApplicationRecord
   def customer_list
     customers.map(&:name).sort.join(", ")
   end
-
-
-
-
-
 end

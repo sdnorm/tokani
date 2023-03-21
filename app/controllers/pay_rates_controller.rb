@@ -22,11 +22,9 @@ class PayRatesController < ApplicationController
     @pay_rate = PayRate.new
     @interpreters = current_account.account_interpreters
     @languages = current_account.languages.all.order("name ASC")
-    
-  
-    @languages_json = current_account.languages.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
-    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map{ |u| { value: u[0], text: u[1]+u[2] } }.to_json
-  
+
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: u[1] + u[2]} }.to_json
 
     # Uncomment to authorize with Pundit
     # authorize @pay_rate
@@ -34,13 +32,11 @@ class PayRatesController < ApplicationController
 
   # GET /pay_rates/1/edit
   def edit
-    
-    @languages_json = current_account.languages.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
-    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map{ |u| { value: u[0], text: [u[1], u[2]].join(' ') } }.to_json
-  
-    @pr_languages_json = @pay_rate.languages.pluck(:id, :name).map{ |u| { value: u[0], text: u[1] } }.to_json
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: [u[1], u[2]].join(" ")} }.to_json
+
+    @pr_languages_json = @pay_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
     @default_disabled = !@pay_rate.languages.empty?
-    
   end
 
   # POST /pay_rates or /pay_rates.json
@@ -63,7 +59,6 @@ class PayRatesController < ApplicationController
 
   # PATCH/PUT /pay_rates/1 or /pay_rates/1.json
   def update
-   
     respond_to do |format|
       if @pay_rate.update(pay_rate_params)
         format.html { redirect_to @pay_rate, notice: "Pay rate was successfully updated." }
