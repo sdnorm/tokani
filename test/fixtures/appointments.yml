@@ -36,13 +36,13 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :uuid
+#  bill_rate_id             :integer
 #  creator_id               :uuid
 #  customer_id              :uuid
 #  department_id            :uuid
 #  interpreter_id           :uuid
 #  language_id              :bigint           not null
-#  pay_bill_config_id       :integer
-#  pay_bill_rate_id         :integer
+#  pay_rate_id              :integer
 #  provider_id              :uuid
 #  recipient_id             :uuid
 #  requestor_id             :uuid

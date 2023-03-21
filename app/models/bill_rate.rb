@@ -36,6 +36,7 @@ class BillRate < ApplicationRecord
   has_many :languages, through: :bill_rate_languages
 
   has_many :bill_rate_customers, dependent: :destroy
+
   # has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
   has_many :customers, through: :bill_rate_customers, class_name: "Account", foreign_key: :account_id
   enum round_time: {round_closest: 1, round_down: 2, round_up: 3}
@@ -124,4 +125,9 @@ class BillRate < ApplicationRecord
   def customer_list
     customers.map(&:name).sort.join(", ")
   end
+
+  has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+
+  scope :active, -> { where(is_active: true) }
+
 end

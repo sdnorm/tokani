@@ -37,7 +37,7 @@ class AppointmentsController < ApplicationController
   def show
     # @appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
     @appt_statuses = customer_logged_in? ?
-      AppointmentStatus.names.slice("created", "cancelled") :
+      AppointmentStatus.names.slice("cancelled") :
       AppointmentStatus.names.slice("opened", "finished")
   end
 

@@ -3,7 +3,7 @@
 <% elsif current_account_user.agency_admin? %>
   <%= render template: "agency_admin" %>
 <% elsif current_account_user.customer_admin? %>
-  <%= render template: "customer" %>
+  <%= render partial: "customer" %>
 <% elsif current_account_user.admin? %>
   <%= render partial: "tokani_admin" %>
 <% else %>

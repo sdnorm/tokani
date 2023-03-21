@@ -66,8 +66,8 @@ class AppointmentStatus < ApplicationRecord
   def handle_triggers
     case name
     when "finished"
-      appointment.associate_rate_via_service
-      appointment.associate_config_via_service
+      appointment.associate_bill_rate_via_service
+      appointment.associate_pay_rate_via_service
     when "cancelled"
       appointment.update(cancelled_at: DateTime.now.utc)
     when "verified"

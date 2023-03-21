@@ -5,6 +5,10 @@ class CustomerAdminPolicy < ApplicationPolicy
     customer_admin? && blacklisted_controllers.exclude?(controller_name)
   end
 
+  def access_to_interpreters?
+    !customer_admin?
+  end
+
   private
 
   # hide sidenav only from these controllers

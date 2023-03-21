@@ -2,13 +2,13 @@ class InterpretersController < ApplicationController
   include CurrentHelper
 
   before_action :authenticate_user!
+  # Uncomment to enforce Pundit authorization
+  before_action :verify_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
     :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
-
-  # Uncomment to enforce Pundit authorization
-  # after_action :verify_authorized
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # GET /interpreters
   def index
@@ -244,9 +244,22 @@ class InterpretersController < ApplicationController
     redirect_to("/interpreters/availability")
   end
 
+  def appointments
+    @statuses = ["all", "scheduled", "opened", "offered"]
+    @modalities = ["in_person", "video", "phone"]
+    @sort_by_filters = ["date"]
+  end
+
+  def filter_appointments
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def verify_authorized
+    raise Pundit::NotAuthorizedError if customer_logged_in?
+  end
+
   def set_interpreter
     int = current_account.account_users.interpreter.find_by(user_id: params[:id])
     int_id = int.user_id
@@ -306,6 +319,6 @@ class InterpretersController < ApplicationController
   end
 
   def appointment_query_params
-    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video)
+    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video, :sort_by)
   end
 end

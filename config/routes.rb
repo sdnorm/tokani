@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :interpreter_details
   get "interpreters/availability"
   get "interpreters/dashboard", to: "interpreters#dashboard", as: "interpreter_dashboard"
+  get "interpreters/invitation", to: "interpreters#invitation"
   get "interpreters/my_scheduled"
   get "interpreters/my_scheduled/details", to: "interpreters#my_scheduled_details"
   get "interpreters/my_assigned"
@@ -203,6 +204,8 @@ Rails.application.routes.draw do
         get :search
         get :fetch_appointments
         get :public
+        get :appointments
+        get :filter_appointments
       end
       member do
         get :appointment_details
@@ -223,6 +226,7 @@ Rails.application.routes.draw do
     resources :notification_settings, only: [:create, :update]
 
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
+
     resources :availabilities, only: [:create, :destroy]
     get "agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
     # put "agency_detail_update", to: "agencies#agency_detail_update", as: :agency_detail_update
@@ -233,8 +237,6 @@ Rails.application.routes.draw do
   resources :recipients
   resources :providers
   resources :requestor_details
-  resources :pay_bill_configs
-  resources :pay_bill_rates
   resources :languages do
     member do
       patch :toggle_active

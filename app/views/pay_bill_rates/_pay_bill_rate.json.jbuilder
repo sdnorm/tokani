@@ -1,2 +1,0 @@
-json.extract! pay_bill_rate, :id, :account_id, :name, :is_default, :effective_date, :bill_rate, :pay_rate, :after_hours_bill_rate, :after_hours_pay_rate, :rush_bill_rate, :rush_pay_rate, :discount_bill_rate, :discount_pay_rate, :cancel_level_1_bill_rate, :cancel_level_1_pay_rate, :cancel_level_2_bill_rate, :cancel_level_2_pay_rate, :mileage_rate, :travel_time_rate, :in_person, :phone, :video, :interpreter_types, :is_active, :created_at, :updated_at
-json.url pay_bill_rate_url(pay_bill_rate, format: :json)

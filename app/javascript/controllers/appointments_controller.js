@@ -21,6 +21,8 @@ let toggleSpanAndDropdownView = (statusElement, statusDropdown, hideStatusAndSho
     statusDropdown.style.display = "block"
   } else {
     statusElement.style.display = "block"
+    statusElement.setAttribute("class", "inline-block p-2 -mx-2 hover:bg-gray-100 cursor-pointer")
+    statusElement.setAttribute("title", "Click to edit status")
     statusDropdown.style.display = "none"
   }
 }
@@ -30,9 +32,10 @@ let capitalize = (str) => {
 }
 
 let updateStatusOnServer = (statusElement, dropdown) => {
-  let status = dropdown.selectedOptions[0].textContent
+  let selectedOption = dropdown.selectedOptions[0]
+  let status = selectedOption.textContent
 
-  if (status === "Created") {
+  if (status === "Created" || selectedOption.value === '') {
     toggleSpanAndDropdownView(statusElement, dropdown, false)
     return
   }    
