@@ -30,7 +30,6 @@ class PayRate < ApplicationRecord
   has_many :languages, through: :pay_rate_languages
 
   has_many :pay_rate_interpreters, dependent: :destroy
-
   has_many :interpreters, through: :pay_rate_interpreters, class_name: "User", foreign_key: :interpreter_id
   validate :check_default_or_language_rate
   # has_many :accounts, through: :pay_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
@@ -48,22 +47,17 @@ class PayRate < ApplicationRecord
   end
 
   def interpreter_list
-    interpreters.map { |int| [int.first_name, int.last_name].join(" ") }.sort.join(", ")
+    interpreters.map{ |int| [int.first_name, int.last_name].join(' ')}.sort.join(", ")
   end
 
   def check_default_or_language_rate
-    if language_ids.present? && !default_rate == false
-      errors.add(:base, "Cannot have default and language specific rate")
+    if self.language_ids.present? && !self.default_rate == false
+      self.errors.add(:base, 'Cannot have default and language specific rate')
       return false
     end
-    true
+    return true
   end
-
   def is_default?
-    default_rate
+    return self.default_rate
   end
-
-  has_many :interpreters, through: :pay_rate_interpreters, validate: false, class_name: "User", foreign_key: :interpreter_id
-
-  scope :active, -> { where(is_active: true) }
 end

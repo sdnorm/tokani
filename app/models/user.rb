@@ -88,6 +88,9 @@ class User < ApplicationRecord
   # has_many :pay_rate_interpreters, dependent: :destroy
   # has_many :pay_rates, through: :pay_rate_interpreters
 
+  has_many :pay_rate_interpreters, dependent: :destroy
+  has_many :pay_rates, through: :pay_rate_interpreters
+
   has_many :availabilities
 
   accepts_nested_attributes_for :interpreter_detail
