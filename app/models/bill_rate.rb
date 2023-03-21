@@ -129,5 +129,4 @@ class BillRate < ApplicationRecord
   has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
 
   scope :active, -> { where(is_active: true) }
-
 end
