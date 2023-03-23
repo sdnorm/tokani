@@ -1,0 +1,5 @@
+<% @searched_for_interpreters.each do |interpreter| %>
+  <li class="list-group-item" role="option" data-autocomplete-value="<%= interpreter.full_name %>">
+    <%= interpreter.full_name %>
+  </li>
+<% end %>

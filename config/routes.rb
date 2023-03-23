@@ -255,6 +255,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post "search_interpreters_path", to: "appointments#search_interpreters_path", as: "search_interpreters_path"
+
   get "agencies/accounting/process_invoices", to: "agencies#account_process_invoices"
   get "agencies/accounting/invoices", to: "agencies#account_invoices"
 

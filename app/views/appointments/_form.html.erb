@@ -101,7 +101,7 @@
               </div>
             </div>
           </div>
-          <%= render partial: "interpreter_request_fields", locals: {form: form, general_int: @general_int_requested, specific_int: @specific_int_requested, offered_interpreters: @requested_interpreters || []} %>
+          <%= render partial: "interpreter_request_fields", locals: {form: form, assigned_int: @assigned_interpreter, general_int: @general_int_requested, specific_int: @specific_int_requested, offered_interpreters: @requested_interpreters || []} %>
         </div>
         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
           <%= form.hidden_field :customer_id, value: @customer.id %>

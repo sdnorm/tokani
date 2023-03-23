@@ -4,6 +4,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  admin_notes              :text
+#  assigned_interpreter     :uuid
 #  billing_notes            :text
 #  cancel_reason_code       :integer
 #  cancel_type              :integer
@@ -69,9 +70,9 @@
 #
 class Appointment < ApplicationRecord
   # Broadcast changes in realtime with Hotwire
-  after_create_commit -> { broadcast_prepend_later_to :appointments, partial: "appointments/index", locals: {appointment: self} }
-  after_update_commit -> { broadcast_replace_later_to self }
-  after_destroy_commit -> { broadcast_remove_to :appointments, target: dom_id(self, :index) }
+  # after_create_commit -> { broadcast_prepend_later_to :appointments, partial: "appointments/index", locals: {appointment: self} }
+  # after_update_commit -> { broadcast_replace_later_to self }
+  # after_destroy_commit -> { broadcast_remove_to :appointments, target: dom_id(self, :index) }
 
   # has_many :appointment_languages, dependent: :destroy
   has_many :appointment_specialties, dependent: :destroy
@@ -108,8 +109,19 @@ class Appointment < ApplicationRecord
 
   validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
   before_create :gen_refnum
-  after_create :create_offers
+  after_create :create_offers, if: :no_assignemnt?
+  after_create :assign_interpreter, unless: :no_assignemnt?
   after_update :update_offers, if: :unless_no_offers
+  after_update :assign_interpreter, if: :assigned_interpreter_changed?
+
+  def no_assignemnt?
+    assigned_interpreter.nil?
+  end
+
+  def assign_interpreter
+    self.update(interpreter_id: assigned_interpreter)
+    AppointmentStatus.create(appointment: self, name: AppointmentStatus.names["scheduled"], user: User.find(assigned_interpreter))
+  end
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
@@ -164,6 +176,10 @@ class Appointment < ApplicationRecord
   end
 
   def unless_no_offers
+    requested_interpreters.nil?
+  end
+
+  def no_offers
     requested_interpreters.nil?
   end
 

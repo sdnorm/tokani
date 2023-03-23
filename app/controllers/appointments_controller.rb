@@ -25,12 +25,19 @@ class AppointmentsController < ApplicationController
 
   def interpreter_requests
     @requested_interpreters = @appointment.requested_interpreters
+    @assigned_interpreter = @appointment.assigned_interpreter
     @language_id = @appointment.language.id
     @specialties = Specialty.active.order("name ASC")
 
     # this is to set the radio button correctly on interpreter_request fields
     @general_int_requested = @appointment.requested_interpreters.empty?
-    @specific_int_requested = !@general_int_requested
+    @assigned_interpreter = @appointment.assigned_interpreter.nil?
+    @specific_int_requested = !@general_int_requested && !@assigned_interpreter ? true : false
+  end
+
+  def search_interpreters_path
+    @searched_for_interpreters = interpreters.search_by_full_name(params[:q]).order("first_name ASC").limit(10)
+    render partial: "appointments/search_for_interpreters"
   end
 
   # GET /appointments/1 or /appointments/1.json
@@ -75,7 +82,8 @@ class AppointmentsController < ApplicationController
 
     @requested_interpreters = @appointment.offered_interpreters
     @general_int_requested = @appointment.requested_interpreters.empty?
-    @specific_int_requested = !@general_int_requested
+    @assigned_interpreter = @appointment.assigned_interpreter.nil?
+    @specific_int_requested = !@general_int_requested && !@assigned_interpreter ? true : false
   end
 
   # POST /appointments or /appointments.json
@@ -236,6 +244,7 @@ class AppointmentsController < ApplicationController
       :language_id,
       :requestor_id,
       :creator_id,
+      :assigned_interpreter,
       interpreter_req_ids: []
     )
 
