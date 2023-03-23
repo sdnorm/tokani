@@ -3,7 +3,6 @@
     <% form_url = pay_rate.new_record? ? pay_rates_path : pay_rate_path(pay_rate) %>
     <%= form_with(model: pay_rate, url: form_url) do |form| %>
       <%= render "shared/error_messages", resource: form.object %>
-
       <div class=" bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
         </div>
@@ -72,7 +71,6 @@
                     <%= form.text_field  :rush_overage, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                     <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">$/Hr</span>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -109,11 +107,9 @@
                       <%= form.label :phone, class:"font-medium text-gray-700 mr-3" %>
                     </div>
                   </div>
-                  
                 </fieldset>
               </div>
             </div>
-
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Active Status*</h3>
@@ -132,8 +128,6 @@
                 </fieldset>
               </div>
             </div>
-
-            
         <div data-controller="radio-button" >
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
@@ -197,9 +191,6 @@
                 </div>
               </div>
             </div>
-            
-          
-  
           <!-- </div> -->
             <div class="bg-gray-50 mt-4 px-4 py-3 text-right sm:px-6">
                 <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>

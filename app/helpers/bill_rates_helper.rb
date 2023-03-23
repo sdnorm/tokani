@@ -60,7 +60,6 @@ module BillRatesHelper
     end
     time_string
   end
-
   def selected_languages(new_rate, languages)
     if new_rate
       ""

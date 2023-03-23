@@ -8,7 +8,6 @@ export default class extends Controller {
 
   toggleHide(event) {
     let checked = event.target.checked
-    console.log(checked)
     // const inverted = this.invertedValue
   
     // if (inverted == true) {
