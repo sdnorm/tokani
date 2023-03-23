@@ -351,4 +351,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def appointment_info(appointment, time_zone)
+    "#{appointment&.ref_number} - #{appointment&.start_datetime_string_in_zone(time_zone)} - #{appointment&.language&.name} - #{appointment&.customer&.name}"
+  end
 end

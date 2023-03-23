@@ -3,6 +3,26 @@ class NotificationSettingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_notification_setting, only: [:update]
 
+  def index
+    @notification_setting = current_user.notification_setting || NotificationSetting.new
+    if @notification_setting.new_record?
+      @url = notification_settings_path
+      @method_name = :post
+    else
+      @url = notification_setting_path(@notification_setting)
+      @method_name = :put
+    end
+
+    @notification_email = current_account.notification_email || NotificationEmail.new
+    if @notification_email.new_record?
+      @email_url = notification_emails_path
+      @email_method_name = :post
+    else
+      @email_url = notification_email_path(@notification_email)
+      @email_method_name = :put
+    end
+  end
+
   def create
     @notification_setting = NotificationSetting.new(notification_setting_params)
     @notification_setting.user_id = current_user.id
@@ -36,7 +56,7 @@ class NotificationSettingsController < ApplicationController
     if current_account_user.interpreter?
       edit_interpreter_detail_path(current_user&.interpreter_detail)
     else
-      "/"
+      notification_settings_path
     end
   end
 
@@ -50,6 +70,7 @@ class NotificationSettingsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def notification_setting_params
-    params.require(:notification_setting).permit(:sms, :appointment_offered, :appointment_scheduled, :appointment_cancelled)
+    params.require(:notification_setting).permit(:sms, :sms_number, :appointment_offered, :appointment_scheduled, :appointment_cancelled,
+      :appointment_created, :appointment_declined, :appointment_reminder, :appointment_covered)
   end
 end

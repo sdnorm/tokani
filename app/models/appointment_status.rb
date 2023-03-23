@@ -70,6 +70,14 @@ class AppointmentStatus < ApplicationRecord
       appointment.associate_pay_rate_via_service
     when "cancelled"
       appointment.update(cancelled_at: DateTime.now.utc)
+      if appointment.cancel_type == "agency"
+        # Agency cancellation aka a Declined Appointment
+        NotificationsService.deliver_appointment_declined_notifications(account: appointment.agency, appointment: appointment)
+      elsif appointment.cancel_type == "requestor"
+        # Requestor cancellation
+        NotificationsService.deliver_appointment_cancelled_notifications(account: appointment.agency, appointment: appointment)
+      end
+
     when "verified"
       appointment.create_line_items_and_save_totals
     end

@@ -113,4 +113,27 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def is_interpreter?
+    account_users.interpreter.any?
+  end
+
+  def is_agency_admin?
+    account_users.agency_admin.any?
+  end
+
+  def is_requestor?
+    account_users.site_admin.any?
+  end
+
+  # This field is used by the Noticed gem to send Twilio SMS messages
+  def phone_number
+    ph = notification_setting&.sms_number
+    return nil if ph&.strip&.blank?
+
+    ph = ph.delete("^0-9")
+
+    # Add the Country Code (always 1 for US for now) for Twilio
+    "1#{ph}"
+  end
 end

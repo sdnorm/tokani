@@ -108,8 +108,10 @@ class Appointment < ApplicationRecord
 
   validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
   before_create :gen_refnum
+  after_create :send_created_notifications
   after_create :create_offers
   after_update :update_offers, if: :unless_no_offers
+  before_update :send_edited_notifications
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
   def gen_refnum
@@ -247,6 +249,11 @@ class Appointment < ApplicationRecord
     start_time.in_time_zone(zone)
   end
 
+  def start_datetime_string_in_zone(zone)
+    dt = start_time_in_zone(zone)
+    dt.strftime("%B %-d at %I:%M %p (%Z)")
+  end
+
   def associate_bill_rate_via_service
     service = BillRateDeterminationService.new(self)
     rate = service.determine_bill_rate
@@ -301,8 +308,8 @@ class Appointment < ApplicationRecord
     payment_line_items.map { |li| li.type_key.titleize }.join(" - ")
   end
 
-  def duration_in_hours
-    (duration / 60.0).round(0)
+  def duration_in_hours(round_to = 0)
+    (duration / 60.0).round(round_to)
   end
 
   def duration_viewable
@@ -319,5 +326,19 @@ class Appointment < ApplicationRecord
     date = Time.zone.parse(date_portion).to_date
     parsed_datetime_in_zone = Time.zone.parse("#{date.strftime("%F")} #{time.strftime("%T")}")
     self.finish_time = parsed_datetime_in_zone.utc
+  end
+
+  def send_created_notifications
+    NotificationsService.deliver_appointment_created_notifications(account: agency, appointment: self)
+  end
+
+  def send_edited_notifications
+    # We only want to send these if certain fields are updated:
+    # Date or Time Change, Modality, Location or Duration
+    check_for_change_fields = ["start_time", "modality", "site_id", "department_id", "duration"]
+    # Find the common elements of the two arrays
+    if (check_for_change_fields & changed).any?
+      NotificationsService.deliver_appointment_edited_notifications(account: agency, appointment: self)
+    end
   end
 end

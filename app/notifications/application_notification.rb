@@ -25,4 +25,13 @@ class ApplicationNotification < Noticed::Base
   def cleanup_device_token(token:, platform:)
     NotificationToken.where(token: token, platform: ((platform == "fcm") ? "Android" : platform)).destroy_all
   end
+
+  def sms_notifications?
+    ((recipient&.notification_setting&.sms == "everything") ||
+      ((recipient&.notification_setting&.sms == "same_as_email") && email_notifications?)) && has_sms_number?
+  end
+
+  def has_sms_number?
+    recipient&.notification_setting&.sms_number&.present?
+  end
 end

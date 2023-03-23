@@ -1,6 +1,7 @@
 class InterpreterCanceledNotification < ApplicationNotification
   deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
   deliver_by :email, mailer: "InterpreterActionsMailer", method: :interpreter_canceled, if: :email_notifications?
+  deliver_by :twilio, if: :sms_notifications?
 
   param :account
   param :interpreter
@@ -34,6 +35,6 @@ class InterpreterCanceledNotification < ApplicationNotification
   end
 
   def email_notifications?
-    true # TODO: implement conditional email notifcations
+    recipient&.notification_setting&.interpreter_cancelled
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_16_225134) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_21_234126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -426,6 +426,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_225134) do
     t.index ["account_id"], name: "index_languages_on_account_id"
   end
 
+  create_table "notification_emails", force: :cascade do |t|
+    t.uuid "account_id"
+    t.string "email1"
+    t.string "email2"
+    t.boolean "appointment_created", default: true
+    t.boolean "appointment_edited", default: true
+    t.boolean "appointment_declined", default: true
+    t.boolean "appointment_cancelled", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notification_settings", force: :cascade do |t|
     t.uuid "user_id"
     t.integer "sms", default: 2
@@ -434,6 +446,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_225134) do
     t.boolean "appointment_cancelled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "appointment_created", default: true
+    t.boolean "appointment_declined", default: true
+    t.boolean "interpreter_cancelled", default: true
+    t.boolean "appointment_edited", default: true
+    t.boolean "appointment_covered", default: true
+    t.boolean "appointment_reminder", default: true
+    t.string "sms_number"
   end
 
   create_table "notification_tokens", force: :cascade do |t|

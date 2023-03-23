@@ -155,7 +155,7 @@ class InterpretersController < ApplicationController
     # Make sure we kick the Appointment back into the correct status, depending on visibility status
     if @appointment.visibility_status == "opened"
       AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["opened"], user: current_user)
-      NotificationsService.deliver_interpreter_canceled_notification(account: current_account, interpreter: current_user, appointment: @appointment)
+      NotificationsService.deliver_interpreter_cancelled_notifications(account: current_account, interpreter: current_user, appointment: @appointment)
     elsif @appointment.visibility_status == "offered"
       AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["offered"], user: current_user)
     else
