@@ -44,7 +44,13 @@ class RateCalculatorService
 
     line_items = []
 
-    billable_minutes = round_appointment_duration(@appointment.calculated_appointment_duration_in_minutes)
+    if @appointment.calculated_appointment_duration_in_minutes.present?
+      duration_minutes = @appointment.calculated_appointment_duration_in_minutes
+    else
+      duration_minutes = @appointment.duration
+    end
+
+    billable_minutes = round_appointment_duration(duration_minutes)
     billable_minutes = ensure_minimum_duration(billable_minutes)
     billable_hours = (billable_minutes / 60.0).round(2)
 
@@ -77,7 +83,13 @@ class RateCalculatorService
 
     line_items = []
 
-    billable_minutes = round_appointment_duration(@appointment.calculated_appointment_duration_in_minutes)
+    if @appointment.calculated_appointment_duration_in_minutes.present?
+      duration_minutes = @appointment.calculated_appointment_duration_in_minutes
+    else
+      duration_minutes = @appointment.duration
+    end
+
+    billable_minutes = round_appointment_duration(duration_minutes)
     billable_minutes = ensure_minimum_duration(billable_minutes)
     billable_hours = (billable_minutes / 60.0).round(2)
 
@@ -116,21 +128,21 @@ class RateCalculatorService
 
   def after_hours_rate?
     # These values are the offset in seconds from the beginning of the day
-    if @bill_rate.after_hours_start_time.present? && @bill_rate.after_hours_end_time.present?
+    if @bill_rate.after_hours_start_seconds.present? && @bill_rate.after_hours_end_seconds.present?
 
       after_hours_set = Set.new
 
-      0.upto(@bill_rate.after_hours_start_time) do |i|
+      0.upto(@bill_rate.after_hours_start_seconds) do |i|
         after_hours_set.add(i)
       end
 
       # There are 86400 seconds in the day
-      @bill_rate.after_hours_end_time.upto(86400) do |i|
+      @bill_rate.after_hours_end_seconds.upto(86400) do |i|
         after_hours_set.add(i)
       end
 
       # Does the appointment minutes set contain any overalapping minutes with the After Hours set?
-      union = build_appointment_minutes_set & after_hour_set
+      union = build_appointment_minutes_set & after_hours_set
 
       # Check for greater than 1 overlapping element (i.e. exclude on the minute matches)
       return true if union.size > 1
@@ -144,7 +156,7 @@ class RateCalculatorService
     # Get the difference between when the rate was created and its start time
     diff = TimeDifference.between(@appointment.created_at, @appointment.start_time).in_hours
 
-    (diff < @bill_rate.overage_trigger)
+    (diff < @bill_rate.rush_overage_trigger)
   end
 
   private
@@ -158,7 +170,12 @@ class RateCalculatorService
   def build_appointment_minutes_set
     beginning_of_day = @appointment.start_time_with_zone.beginning_of_day
     appointment_start_time_number_seconds_since_beginning_of_day = TimeDifference.between(beginning_of_day, @appointment.start_time_with_zone).in_seconds.round
-    appointment_finish_time_number_seconds_since_beginning_of_day = TimeDifference.between(beginning_of_day, @appointment.finish_time_with_zone).in_seconds.round
+    if @appointment.finish_time.present?
+      end_time = @appointment.finish_time_with_zone
+    else
+      end_time = @appointment.start_time_with_zone + @appointment.duration.minutes
+    end
+    appointment_finish_time_number_seconds_since_beginning_of_day = TimeDifference.between(beginning_of_day, end_time).in_seconds.round
 
     appointment_minutes_set = Set.new
     appointment_start_time_number_seconds_since_beginning_of_day.upto(appointment_finish_time_number_seconds_since_beginning_of_day).each do |i|
