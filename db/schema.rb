@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_16_225134) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_22_033958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -234,6 +234,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_225134) do
     t.string "current_status"
     t.integer "bill_rate_id"
     t.integer "pay_rate_id"
+    t.uuid "assigned_interpreter"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"

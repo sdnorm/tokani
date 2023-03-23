@@ -2,137 +2,118 @@
   <% form_url = appointment.new_record? ? appointments_path : appointment_path(appointment) %>
   <%# form_with(model: appointment, url: form_url) do |form| %>
   <%= form_with model: appointment, class: 'form', data: {controller: "interpreter-autocomplete", interpreter_autocomplete_min_length_value: '3', interpreter_autocomplete_url_value: search_interpreters_path}  do |form| %>
-  <%= render "shared/error_messages", resource: form.object %>
-      <div class="mt-5 md:col-span-2 md:mt-0">
-        <div class="overflow-hidden bg-white rounded shadow">
-          <div class="bg-white px-4 py-5 sm:p-6">
-            <div class="grid grid-cols-6 gap-6">
-              <% if customer.blank? %>
-                <%= render partial: "customer_select" %>
-              <% else %>
-              <div class="col-span-6 sm:col-span-6">
-                <h3 class="text-tokanisecondary-700 mb-3"><%= customer.name.titleize %></h3>
-                <div class="relative">
-                  <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                    <div class="w-full border-t border-gray-300"></div>
-                  </div>
+    <%= render "shared/error_messages", resource: form.object %>
+    <div class="mt-5 md:col-span-2 md:mt-0">
+      <div class="overflow-hidden bg-white rounded shadow">
+        <div class="bg-white px-4 py-5 sm:p-6">
+          <div class="grid grid-cols-6 gap-6">
+            <% if customer.blank? %>
+              <%= render partial: "customer_select" %>
+            <% else %>
+            <div class="col-span-6 sm:col-span-6">
+              <h3 class="text-tokanisecondary-700 mb-3"><%= customer.name.titleize %></h3>
+              <div class="relative">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                  <div class="w-full border-t border-gray-300"></div>
                 </div>
               </div>
-              
-              <div class="lg:col-span-3 sm:col-span-6" data-controller="select-group">
-                <div class="col-span-3 sm:col-span-3">
-                  <div class="form-group">
-                    <%= form.label "Site*", class: 'block text-sm font-medium text-gray-700' %>
-                    <%= form.select :site_id, options_from_collection_for_select(sites, :id, :name, appointment.site_id), {}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'appointment_department_id'}} %>
-                  </div>
-                </div>
-                <div class="col-span-3 sm:col-span-3">
-                  <div class="form-group">
-                    <%= form.label :department_id, class: 'block text-sm font-medium text-gray-700' %>
-                    <%= form.select :department_id, options_for_select(departments, appointment.department_id), {}, {disabled: @field_disabled, class: 'form-control'} %>
-                  </div>
-                </div>
-              </div>
-              <div class="lg:col-span-3 sm:col-span-6">
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <div class="form-group">
-                  <%= form.label "Start Time*", class: "block text-sm font-medium text-gray-700" %>
-                  <%= form.text_field :start_time, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr", flatpickr_enable_time: true,  flatpickr_minute_increment: 15, flatpickr_date_format: "F j, Y h:i K"} %>
-                  </div>
-                </div>
-                <div class="col-span-6 sm:col-span-3">
-                  <div class="form-group">
-                    <%= form.label "Duration (in minutes)*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.number_field :duration , class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
-                    <%# form.select :duration_type, options_for_select([['Minutes', 'minutes'], ['Hour(s)', 'hours']]), {}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="lg:col-span-3 sm:col-span-6">
+            </div>
+            <div class="lg:col-span-3 sm:col-span-6" data-controller="select-group">
+              <div class="col-span-3 sm:col-span-3">
                 <div class="form-group">
-                  <%= form.label "Modality*", class: "block text-sm font-medium text-gray-700" %>
-                  <%= form.select :modality, options_for_select(appt_modality_options, appointment.modality), {prompt: "Please select An Modality"}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                  <%= form.label "Site*", class: 'block text-sm font-medium text-gray-700' %>
+                  <%= form.select :site_id, options_from_collection_for_select(sites, :id, :name, appointment.site_id), {}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'appointment_department_id'}} %>
                 </div>
               </div>
-
-              <div class="lg:col-span-3 sm:col-span-6">
+              <div class="col-span-3 sm:col-span-3">
                 <div class="form-group">
-                  <%= form.label "Language*", class: "block text-sm font-medium text-gray-700" %>
-                  <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name), {prompt: "Please select A Language"}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                  <%= form.label :department_id, class: 'block text-sm font-medium text-gray-700' %>
+                  <%= form.select :department_id, options_for_select(departments, appointment.department_id), {}, {disabled: @field_disabled, class: 'form-control'} %>
                 </div>
               </div>
-
+            </div>
+            <div class="lg:col-span-3 sm:col-span-6">
               <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                 <div class="form-group">
+                  <%= form.label "Start Time*", class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :start_time, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr", flatpickr_enable_time: true,  flatpickr_minute_increment: 15, flatpickr_date_format: "F j, Y h:i K"} %>
+                </div>
+              </div>
+              <div class="col-span-6 sm:col-span-3">
+                <div class="form-group">
+                  <%= form.label "Duration (in minutes)*", class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.number_field :duration , class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                  <%# form.select :duration_type, options_for_select([['Minutes', 'minutes'], ['Hour(s)', 'hours']]), {}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                </div>
+              </div>
+            </div>              
+            <div class="lg:col-span-3 sm:col-span-6">
+              <div class="form-group">
+                <%= form.label "Modality*", class: "block text-sm font-medium text-gray-700" %>
+                <%= form.select :modality, options_for_select(appt_modality_options, appointment.modality), {prompt: "Please select An Modality"}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+              </div>
+            </div>
+            <div class="lg:col-span-3 sm:col-span-6">
+              <div class="form-group">
+                <%= form.label "Language*", class: "block text-sm font-medium text-gray-700" %>
+                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name), {prompt: "Please select A Language"}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+              </div>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <div class="form-group">
                 <%= form.label :requestor_id, "Requestor*", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.select :requestor_id, options_from_collection_for_select(requestors, :id, :name), {prompt: "Please select a Requestor"}, {class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s"} %>
               </div>
-              </div>
-
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <div class="form-group">
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <div class="form-group">
                 <%= form.label :provider_id, "Provider", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.select :provider_id, options_from_collection_for_select(providers, :id, :view_name), {prompt: "Please select a Provider"}, {class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" } %>
               </div>
-              </div>
-
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <div class="form-group">
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <div class="form-group">
                 <%= form.label :recipient_id, "Recipient", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.select :recipient_id, options_from_collection_for_select(recipients, :id, :view_name), {prompt: "Please select a Recipient"}, {class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" } %>
               </div>
-              </div>
-
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= form.label :details, class: "block text-sm font-medium text-gray-700" %>
-                <%= form.text_field :details, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
-                <%= form.text_area :notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
-
-              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                <%= form.label :admin_notes, class: "block text-sm font-medium text-gray-700" %>
-                <%= form.text_area :admin_notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-              </div>
             </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= form.label :details, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.text_field :details, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.text_area :notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+              <%= form.label :admin_notes, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.text_area :admin_notes, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            </div>
+          </div>
           </br>
-
-            <div class="col-span-6 sm:col-span-6 lg:col-span-6">
-              <div class="relative">
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div class="w-full border-t border-tokaniaccent-300"></div>
-                </div>
-                <div class="relative flex justify-center">
-                  <span class="bg-white px-2 text-lg text-tokaniprimary-600">Interpreter Requests</span>
-                </div>
+          <div class="col-span-6 sm:col-span-6 lg:col-span-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-tokaniaccent-300"></div>
+              </div>
+              <div class="relative flex justify-center">
+                <span class="bg-white px-2 text-lg text-tokaniprimary-600">Interpreter Requests</span>
               </div>
             </div>
-
-
-              <%= render partial: "interpreter_request_fields", locals: {form: form, general_int: @general_int_requested, specific_int: @specific_int_requested, offered_interpreters: @requested_interpreters || []} %>
-              
-           
-            </div>
-         
-           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-            <%= form.hidden_field :customer_id, value: @customer.id %>
-            <%= form.hidden_field :creator_id, value: current_user.id %>
-        
-              <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <% if form.object.new_record? %>
-                  <%= link_to t("cancel"), appointments_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <% else %>
-                  <%= link_to t("cancel"), appointment_path(@appointment), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
-              <% end %>
-            </div>
-          <% end %>  
-        </div> 
-      </div>
+          </div>
+          <%= render partial: "interpreter_request_fields", locals: {form: form, assigned_int: @assigned_interpreter, general_int: @general_int_requested, specific_int: @specific_int_requested, offered_interpreters: @requested_interpreters || []} %>
         </div>
-</div>
-<% end %>
+        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+          <%= form.hidden_field :customer_id, value: @customer.id %>
+          <%= form.hidden_field :creator_id, value: current_user.id %>
+          <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% if form.object.new_record? %>
+              <%= link_to t("cancel"), appointments_path, class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% else %>
+              <%= link_to t("cancel"), appointment_path(@appointment), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% end %>
+        </div>
+      <% end %>  
+    </div> 
+  <% end %>
 </div>
