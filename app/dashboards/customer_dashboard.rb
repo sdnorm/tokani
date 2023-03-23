@@ -61,8 +61,7 @@ class CustomerDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    id
-    account_invitations
+    name
     account_languages
     account_sites
   ].freeze
@@ -180,7 +179,7 @@ class CustomerDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how customers are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(customer)
-  #   "Customer ##{customer.id}"
-  # end
+  def display_resource(customer)
+    customer.name.to_s
+  end
 end
