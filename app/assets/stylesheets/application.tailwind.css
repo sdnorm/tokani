@@ -265,6 +265,7 @@
   border-bottom-left-radius: 0;
   border-top-right-radius: 0.35rem;
   border-bottom-right-radius: 0.35rem;
+  width: fit-content;
  
 }
 
@@ -275,6 +276,7 @@
   border-bottom-left-radius: 0.35rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  width: fit-content;
  
 }
 .select_br select {

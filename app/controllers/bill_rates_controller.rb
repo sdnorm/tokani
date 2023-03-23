@@ -39,6 +39,7 @@ class BillRatesController < ApplicationController
     @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
     @br_languages_json = @bill_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
     @br_customers_json = @bill_rate.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @languages_disabled = @bill_rate.default_rate
   end
 
   # POST /bill_rates or /bill_rates.json
@@ -61,6 +62,12 @@ class BillRatesController < ApplicationController
 
   # PATCH/PUT /bill_rates/1 or /bill_rates/1.json
   def update
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_languages_json = @bill_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_customers_json = @bill_rate.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @languages_disabled = @bill_rate.default_rate
+
     respond_to do |format|
       if @bill_rate.update(bill_rate_params)
         format.html { redirect_to @bill_rate, notice: "Bill rate was successfully updated." }

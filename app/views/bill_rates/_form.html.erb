@@ -54,7 +54,7 @@
               <div class="mt-1 pl-4 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <div class="flex w-64">
                   <div class="select_br_left grow">
-                    <%= form.select :round_time, options_for_select(round_time_options, bill_rate.round_time), {}, class: " flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-900 transition-colors duration-300 peer-focus/round:border-sky-400 peer-focus/round:bg-tokanisecondary-400 peer-focus/round:text-white" %>
+                    <%= form.select :round_time, options_for_select(round_time_options, bill_rate.round_time), {}, class: "flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-900 transition-colors duration-300 peer-focus/round:border-sky-400 peer-focus/round:bg-tokanisecondary-400 peer-focus/round:text-white" %>
                   </div> 
                   <div class="select_br_right grow">
                     <%= form.select :round_increment, options_for_select(round_increment_options, bill_rate.round_increment), {}, class:"peer/round w-full rounded-r-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-sky-400 focus:outline-none" %>
