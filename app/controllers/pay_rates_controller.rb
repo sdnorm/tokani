@@ -36,7 +36,8 @@ class PayRatesController < ApplicationController
     @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: [u[1], u[2]].join(" ")} }.to_json
 
     @pr_languages_json = @pay_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
-    @default_disabled = !@pay_rate.languages.empty?
+    @pr_interpreters_json = @pay_rate.interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: [u[1], u[2]].join(" ")} }.to_json
+    @languages_disabled = @pay_rate.default_rate
   end
 
   # POST /pay_rates or /pay_rates.json
@@ -59,6 +60,12 @@ class PayRatesController < ApplicationController
 
   # PATCH/PUT /pay_rates/1 or /pay_rates/1.json
   def update
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: [u[1], u[2]].join(" ")} }.to_json
+
+    @pr_languages_json = @pay_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @pr_interpreters_json = @pay_rate.interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: [u[1], u[2]].join(" ")} }.to_json
+    @languages_disabled = @pay_rate.default_rate
     respond_to do |format|
       if @pay_rate.update(pay_rate_params)
         format.html { redirect_to @pay_rate, notice: "Pay rate was successfully updated." }

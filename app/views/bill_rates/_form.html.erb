@@ -54,7 +54,7 @@
               <div class="mt-1 pl-4 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <div class="flex w-64">
                   <div class="select_br_left grow">
-                    <%= form.select :round_time, options_for_select(round_time_options, bill_rate.round_time), {}, class: " flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-900 transition-colors duration-300 peer-focus/round:border-sky-400 peer-focus/round:bg-tokanisecondary-400 peer-focus/round:text-white" %>
+                    <%= form.select :round_time, options_for_select(round_time_options, bill_rate.round_time), {}, class: "flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-900 transition-colors duration-300 peer-focus/round:border-sky-400 peer-focus/round:bg-tokanisecondary-400 peer-focus/round:text-white" %>
                   </div> 
                   <div class="select_br_right grow">
                     <%= form.select :round_increment, options_for_select(round_increment_options, bill_rate.round_increment), {}, class:"peer/round w-full rounded-r-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-sky-400 focus:outline-none" %>
@@ -147,26 +147,6 @@
                 </fieldset>
               </div>
             </div>
-
-            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-              <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
-                <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Default Rate*</h3>
-                <dt class="text-sm font-medium text-gray-500">Check to make this the default bill rate for the modalities selected.</dt>
-              </div>
-              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-                <fieldset class="space-y-2">
-                  <div class="relative flex ">
-                    <div class="flex h-5 items-center">
-                      <div class="flex h-5 items-center">
-                        <%= form.check_box :default_rate, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400" %>
-                        <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
-                      </div>
-                    </div>
-                  </div>  
-                </fieldset>
-              </div>
-            </div>
-
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Active Status*</h3>
@@ -186,15 +166,49 @@
               </div>
             </div>
 
+            <div data-controller="radio-button" >
+            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+              <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
+                <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Default Rate*</h3>
+                <dt class="text-sm font-medium text-gray-500">Check to make this the default bill rate for the modalities selected.</dt>
+              </div>
+              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
+                <fieldset class="space-y-2">
+                  <div class="relative flex ">
+                    <div class="flex h-5 items-center">
+                      <div data-controller="popover" data-popover-translate-x="0" data-popover-translate-y="-128%" data-action="mouseover->popover#mouseOver mouseout->popover#mouseOut">
+                        <div class="content hidden absolute max-w-xs bg-slate-200 shadow-lg rounded p-2 inline-block inline-block rounded px-7 pt-3 pb-2.5 text-sm font-bold uppercase leading-normal text-tokanisecondary-400 transition duration-150 ease-in-out" data-popover-target="content">
+                          Changing langauage specific rate to default will remove languages from rate.
+                        </div>
+                        <div  class="flex h-5 items-center" id="default_rate">
+                          <%= form.radio_button :default_rate, true, class: 'h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "default_rate"} %>
+                          <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
+                          <%= form.radio_button :default_rate, false, class: 'h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "language_rate"} %>
+                          <%= form.label :is_language_specific, class:"font-medium text-gray-700 mr-3" %>   
+                        </div>
+                      </div>
+                    </div>
+                  </div>  
+                </fieldset>
+              </div>
+            </div>
+            
+
+            
+
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Langugage Specific Rate*</h3>
                 <dt class="text-sm font-medium text-gray-500">If your rate is not a defaulat rate, please select which languges it will apply to.</dt>
+                <%= hidden_field_tag "#{form.object_name}[language_ids][]", '' %>
               </div>
               <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-                <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Bill Rate" class="">
+                <%= field_set_tag nil, id: 'language_rate', class: 'mb-3', disabled: @languages_disabled, data: {radio_button_target: "fieldset"} do %>
+                <div id="languages" data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Bill Rate" <%= raw selected_languages(bill_rate.new_record?, @br_languages_json) %>>
                   <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="bill_rate[language_ids][]" id="bill_rate_language_ids" style="display: none;"></select>
+              </div>
                 </div>
+                <% end %>
               </div>
             </div>
 
@@ -204,15 +218,15 @@
                 <dt class="text-sm font-medium text-gray-500">Select which of your customers will use this rate.</dt>
               </div>
               <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-                <div data-controller="multiselect" data-multiselect-items-value='<%= @customers_json %>' data-placeholder="Select Customers for this Bill Rate" class="">
+                <div data-controller="multiselect" data-multiselect-items-value='<%= @customers_json %>' data-placeholder="Select Customers for this Bill Rate" <%= raw selected_customers(bill_rate.new_record?, @br_customers_json) %>>
                   <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="bill_rate[customer_ids][]" id="bill_rate_customer_ids" style="display: none;"></select>
+                  <%= hidden_field_tag "#{form.object_name}[customer_ids][]", '' %>
                 </div>
               </div>
             </div>
             
           
   
-          </div>
             <div class="bg-gray-50 mt-4 px-4 py-3 text-right sm:px-6">
                 <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
                 <% if form.object.new_record? %>
