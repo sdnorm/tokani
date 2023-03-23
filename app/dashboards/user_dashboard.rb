@@ -15,7 +15,10 @@ class UserDashboard < Administrate::BaseDashboard
     email: Field::String,
     password: Field::Password.with_options(searchable: false),
     password_confirmation: Field::Password.with_options(searchable: false),
-    accounts: Field::HasMany,
+    accounts: Field::HasMany.with_options(
+      searchable: true,
+      searchable_fields: ['name'],
+    ),
     connected_accounts: Field::HasMany.with_options(class_name: "ConnectedAccount"),
     avatar: Field::ActiveStorage,
     reset_password_token: Field::String,
@@ -47,7 +50,7 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :id,
+    # :id,
     :name,
     :email,
     :accounts,

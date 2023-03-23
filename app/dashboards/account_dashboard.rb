@@ -18,6 +18,7 @@ class AccountDashboard < Administrate::BaseDashboard
     id: Field::String,
     name: Field::String,
     personal: Field::Boolean,
+    agency: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     extra_billing_info: Field::Text,
@@ -31,10 +32,10 @@ class AccountDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :id,
-    :owner,
+    # :id,
     :name,
-    :personal,
+    :owner,
+    :agency,
     :account_users
   ].freeze
 

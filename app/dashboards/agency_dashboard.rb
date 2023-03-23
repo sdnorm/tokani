@@ -177,7 +177,7 @@ class AgencyDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how agencies are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(agency)
-  #   "Agency ##{agency.id}"
-  # end
+  def display_resource(agency)
+    "#{agency.id}"
+  end
 end
