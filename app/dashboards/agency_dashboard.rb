@@ -177,6 +177,6 @@ class AgencyDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(agency)
-    "#{agency.name}"
+    agency.name.to_s
   end
 end

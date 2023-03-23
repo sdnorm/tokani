@@ -15,7 +15,7 @@ class CustomerDetailDashboard < Administrate::BaseDashboard
     contact_name: Field::String,
     customer: Field::BelongsTo.with_options(
       searchable: true,
-      searchable_fields: ['name'],
+      searchable_fields: ["name"]
     ),
     customer_category: Field::BelongsTo,
     email: Field::String,

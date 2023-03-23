@@ -17,7 +17,7 @@ class UserDashboard < Administrate::BaseDashboard
     password_confirmation: Field::Password.with_options(searchable: false),
     accounts: Field::HasMany.with_options(
       searchable: true,
-      searchable_fields: ['name'],
+      searchable_fields: ["name"]
     ),
     connected_accounts: Field::HasMany.with_options(class_name: "ConnectedAccount"),
     avatar: Field::ActiveStorage,

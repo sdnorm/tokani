@@ -11,7 +11,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     id: Field::Number,
     agency: Field::BelongsTo.with_options(
       searchable: true,
-      searchable_fields: ['name'],
+      searchable_fields: ["name"]
     ),
     phone_number: Field::String,
     primary_contact_email: Field::String,

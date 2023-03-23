@@ -180,6 +180,6 @@ class CustomerDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(customer)
-    "#{customer.name}"
+    customer.name.to_s
   end
 end
