@@ -13,11 +13,11 @@ class CustomerDetailDashboard < Administrate::BaseDashboard
     appointments_phone: Field::Boolean,
     appointments_video: Field::Boolean,
     contact_name: Field::String,
-    customer: Field::BelongsTo,
-    customer_category: Field::BelongsTo.with_options(
+    customer: Field::BelongsTo.with_options(
       searchable: true,
       searchable_fields: ['name'],
     ),
+    customer_category: Field::BelongsTo,
     email: Field::String,
     fax: Field::String,
     notes: Field::Text,

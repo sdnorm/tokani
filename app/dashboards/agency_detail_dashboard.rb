@@ -9,7 +9,10 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    agency: Field::BelongsTo,
+    agency: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ['name'],
+    ),
     phone_number: Field::String,
     primary_contact_email: Field::String,
     primary_contact_first_name: Field::String,
@@ -33,8 +36,9 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    id
     agency
+    primary_contact_first_name
+    primary_contact_last_name
     phone_number
     primary_contact_email
   ].freeze

@@ -62,7 +62,6 @@ class CustomerDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     name
-    account_invitations
     account_languages
     account_sites
   ].freeze

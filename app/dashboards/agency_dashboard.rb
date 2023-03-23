@@ -60,8 +60,7 @@ class AgencyDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    id
-    account_invitations
+    name
     account_languages
     account_sites
   ].freeze
@@ -178,6 +177,6 @@ class AgencyDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(agency)
-    "#{agency.id}"
+    "#{agency.name}"
   end
 end
