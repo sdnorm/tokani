@@ -32,7 +32,7 @@ class AppointmentsController < ApplicationController
     # this is to set the radio button correctly on interpreter_request fields
     @general_int_requested = @appointment.requested_interpreters.empty?
     @assigned_interpreter = @appointment.assigned_interpreter.nil?
-    @specific_int_requested = !@general_int_requested && !@assigned_interpreter ? true : false
+    @specific_int_requested = (!@general_int_requested && !@assigned_interpreter) ? true : false
   end
 
   def search_interpreters_path
@@ -83,7 +83,7 @@ class AppointmentsController < ApplicationController
     @requested_interpreters = @appointment.offered_interpreters
     @general_int_requested = @appointment.requested_interpreters.empty?
     @assigned_interpreter = @appointment.assigned_interpreter.nil?
-    @specific_int_requested = !@general_int_requested && !@assigned_interpreter ? true : false
+    @specific_int_requested = (!@general_int_requested && !@assigned_interpreter) ? true : false
   end
 
   # POST /appointments or /appointments.json

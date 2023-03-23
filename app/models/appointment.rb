@@ -119,7 +119,7 @@ class Appointment < ApplicationRecord
   end
 
   def assign_interpreter
-    self.update(interpreter_id: assigned_interpreter)
+    update(interpreter_id: assigned_interpreter)
     AppointmentStatus.create(appointment: self, name: AppointmentStatus.names["scheduled"], user: User.find(assigned_interpreter))
   end
 
