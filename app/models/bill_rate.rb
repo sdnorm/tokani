@@ -36,10 +36,13 @@ class BillRate < ApplicationRecord
   has_many :languages, through: :bill_rate_languages
 
   has_many :bill_rate_customers, dependent: :destroy
+  has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
 
-  # has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+  scope :active, -> { where(is_active: true) }
+
   has_many :customers, through: :bill_rate_customers, class_name: "Account", foreign_key: :account_id
   enum round_time: {round_closest: 1, round_down: 2, round_up: 3}
+  validate :check_default_or_language_rate
 
   def start_hour(column, use_time_libs: false)
     return nil if self[column].blank?
@@ -126,7 +129,15 @@ class BillRate < ApplicationRecord
     customers.map(&:name).sort.join(", ")
   end
 
-  has_many :accounts, through: :bill_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
+  def check_default_or_language_rate
+    if language_ids.present? && !default_rate == false
+      errors.add(:base, "Cannot have default and language specific rate")
+      return false
+    end
+    true
+  end
 
-  scope :active, -> { where(is_active: true) }
+  def is_default?
+    default_rate
+  end
 end
