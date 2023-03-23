@@ -250,7 +250,7 @@
   display: none;
   margin-top: 0.5rem;
   z-index: 50;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .multiselect__dropdown--open {

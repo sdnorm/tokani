@@ -35,7 +35,6 @@ export default class extends Controller {
 
     }
     this.fieldsetTargets.forEach( fs => {
-      console.log(fs)
       if (fs.id != selectedFieldset) {
        fs.querySelector('div#languages').setAttribute('data-multiselect-selected-value', "[]")
       
