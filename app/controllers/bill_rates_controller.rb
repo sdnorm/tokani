@@ -37,6 +37,8 @@ class BillRatesController < ApplicationController
 
     @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
     @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_languages_json = @bill_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_customers_json = @bill_rate.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
   end
 
   # POST /bill_rates or /bill_rates.json

@@ -8,13 +8,14 @@ export default class extends Controller {
 
   toggleHide(event) {
     let checked = event.target.checked
-    
+    console.log(checked)
     // const inverted = this.invertedValue
   
     // if (inverted == true) {
     //   checked = !checked
     // }
-    if (!checked) {
+    // if (!checked) {
+    if (checked) {
       this.toggleHideTarget.querySelectorAll("input,select").forEach((i) => i.disabled = false)
       this.toggleHideTarget.classList.remove('hidden')
       

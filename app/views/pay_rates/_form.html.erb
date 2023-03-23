@@ -134,7 +134,7 @@
             </div>
 
             
-        <div data-controller="checkbox">
+        <div data-controller="radio-button" >
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Default Rate*</h3>
@@ -144,12 +144,20 @@
                 <fieldset class="space-y-2">
                   <div class="relative flex ">
                     <div class="flex h-5 items-center">
-                      <div class="flex h-5 items-center" id="default_rate">
-                        <%= form.check_box :default_rate, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400", data: {action: 'checkbox#toggleHide checkbox#showFields' } %>
-                        <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
+                      <div data-controller="popover" data-popover-translate-x="0" data-popover-translate-y="-128%" data-action="mouseover->popover#mouseOver mouseout->popover#mouseOut">
+                        <div class="content hidden absolute max-w-xs bg-gray-300 rounded p-2 inline-block inline-block rounded px-7 pt-3 pb-2.5 text-sm font-bold uppercase leading-normal text-tokanisecondary-500 transition duration-150 ease-in-out" data-popover-target="content">
+                          Changing langauage specific rate to default will remove languages from rate.
+                        </div>
+                        <div  class="flex h-5 items-center" id="default_rate">
+                          <%= form.radio_button :default_rate, true, class: 'h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "default_rate"} %>
+                          <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
+                          <%= form.radio_button :default_rate, false, class: 'h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "language_rate"} %>
+                          <%= form.label :is_language_specific, class:"font-medium text-gray-700 mr-3" %>   
+                        </div>
                       </div>
                     </div>
-                  </div>  
+                    <!-- </div> -->
+                  
                 </fieldset>
               </div>
             </div>
@@ -158,19 +166,22 @@
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Langugage Specific Rate*</h3>
                 <dt class="text-sm font-medium text-gray-500">If your rate is not a defaulat rate, please select which languges it will apply to.</dt>
+                <%= hidden_field_tag "#{form.object_name}[language_ids][]", '' %>
               </div>
-              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0 <%= 'hidden' if @pay_rate.is_default? %>" data-checkbox-target="toggleHide">
-                  <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Pay Rate" class="">
+             
+              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
+                <%= field_set_tag nil, id: 'language_rate', class: 'mb-3', disabled: @languages_disabled, data: {radio_button_target: "fieldset"} do %>
+                  <div id="languages" data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Pay Rate" <%= raw selected_languages(pay_rate.new_record?, @pr_languages_json) %>>
                     <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[language_ids][]" id="pay_rate_language_ids" style="display: none;"></select>
+                    
                   </div>
                 </div>
-
-              <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-4 <%= 'hidden' if !@pay_rate.is_default? %>"  data-checkbox-target="showFields">
-               <span class="text-sm font-medium text-tokaniaccent-500">You cannot have a default rate that is language specific.  If you want to make this rate apply to languages, unckeck default rate box.</span>
-              </div>
+                <% end %>
             </div>
-
+            
+           
           </div>
+  
 
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
@@ -180,15 +191,16 @@
 
               
               <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-                <div data-controller="multiselect" data-multiselect-items-value='<%= @interpreters_json %>' data-placeholder="Select Interpreters for this Pay Rate" class="">
+                <div data-controller="multiselect" data-multiselect-items-value='<%= @interpreters_json %>' data-placeholder="Select Interpreters for this Pay Rate" <%= raw selected_interpreters(pay_rate.new_record?, @pr_interpreters_json) %>>
                   <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[interpreter_ids][]" id="pay_rate_interpreter_ids" style="display: none;"></select>
+                  <%= hidden_field_tag "#{form.object_name}[interpreter_ids][]", '' %>
                 </div>
               </div>
             </div>
             
           
   
-          </div>
+          <!-- </div> -->
             <div class="bg-gray-50 mt-4 px-4 py-3 text-right sm:px-6">
                 <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
                 <% if form.object.new_record? %>
