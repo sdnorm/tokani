@@ -3,7 +3,8 @@ class AppointmentsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_account
-  before_action :appointments_per_logged_in_account, only: [:index]
+  before_action :set_appointments, only: [:index, :fetch_appointments]
+  # before_action :appointments_per_logged_in_account, only: [:index]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -11,16 +12,21 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @customer_appts = appointments_per_logged_in_account
-    @pagy, @appointments = pagy(appointments_per_status.sort_by_params(params[:sort], sort_direction))
+    @pagy, @appointments = pagy(@appointments.sort_by_params("start_time", sort_direction))
 
-    if customer_logged_in?
-      @scheduled_appts_count = Appointment.by_appointment_specific_status("scheduled").count
-      @finished_appts_count = Appointment.by_appointment_specific_status("finished").count
-    end
+    @statuses = ["all", "scheduled", "finished"]
+    @customer_names = @appointments.map(&:customer).pluck(:name).uniq
+    @modalities = Appointment.modalities.keys
 
-    # Uncomment to authorize with Pundit
-    # authorize @appointments
+    @scheduled_appts_count = @appointments.by_appointment_specific_status("scheduled").count
+    @finished_appts_count = @appointments.by_appointment_specific_status("finished").count
+  end
+
+  def fetch_appointments
+    @appointments = AppointmentsFilteringService.new(current_user, filtering_params, @appointments).fetch_appointments
+
+    @pagy, @appointments = pagy(@appointments)
+    render layout: nil
   end
 
   def interpreter_requests
@@ -173,14 +179,9 @@ class AppointmentsController < ApplicationController
     @account = current_account
   end
 
-  def appointments_per_logged_in_account
-    customer_logged_in? ?
-      Appointment.where(customer_id: @account.id) :
-      @account.appointments
-  end
-
-  def appointments_per_status
-    params[:status].present? ? @customer_appts.by_appointment_specific_status(params[:status]) : @customer_appts
+  def set_appointments
+    # Scope appointments for current_account
+    @appointments = AppointmentPolicy::AccountScope.new(current_account, Appointment).resolve
   end
 
   def setup_appointment_vars
@@ -201,6 +202,19 @@ class AppointmentsController < ApplicationController
     @recipients = @customer.recipients
     @general_int_requested = true
     @specific_int_requested = !@general_int_requested
+  end
+
+  def filtering_params
+    params.permit(
+      :status,
+      :start_date,
+      :end_date,
+      :modality_in_person,
+      :modality_phone,
+      :modality_video,
+      :sort_by,
+      :customer_name
+    )
   end
 
   # Only allow a list of trusted parameters through.
