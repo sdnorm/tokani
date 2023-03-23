@@ -39,7 +39,6 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     agency
     primary_contact_first_name
     primary_contact_last_name
-    phone_number
     primary_contact_email
   ].freeze
 
