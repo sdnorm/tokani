@@ -12,7 +12,8 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @pagy, @appointments = pagy(@appointments.sort_by_params("start_time", sort_direction))
+    @appointments = AppointmentsFilteringService.new(current_user, filtering_params, @appointments).fetch_appointments
+    @pagy, @appointments = pagy(@appointments)
 
     @statuses = ["all", "scheduled", "finished"]
     @customer_names = @appointments.map(&:customer).pluck(:name).uniq
@@ -20,13 +21,6 @@ class AppointmentsController < ApplicationController
 
     @scheduled_appts_count = @appointments.by_appointment_specific_status("scheduled").count
     @finished_appts_count = @appointments.by_appointment_specific_status("finished").count
-  end
-
-  def fetch_appointments
-    @appointments = AppointmentsFilteringService.new(current_user, filtering_params, @appointments).fetch_appointments
-
-    @pagy, @appointments = pagy(@appointments)
-    render layout: nil
   end
 
   def interpreter_requests
@@ -217,11 +211,11 @@ class AppointmentsController < ApplicationController
       :status,
       :start_date,
       :end_date,
+      :customer_name,
       :modality_in_person,
       :modality_phone,
       :modality_video,
-      :sort_by,
-      :customer_name
+      sort_by: [:date, :customer]
     )
   end
 
