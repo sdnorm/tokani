@@ -211,6 +211,7 @@ class AppointmentsController < ApplicationController
       :status,
       :start_date,
       :end_date,
+      :customer_name,
       :modality_in_person,
       :modality_phone,
       :modality_video,
