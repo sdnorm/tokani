@@ -44,10 +44,10 @@ class RateCalculatorService
 
     line_items = []
 
-    if @appointment.calculated_appointment_duration_in_minutes.present?
-      duration_minutes = @appointment.calculated_appointment_duration_in_minutes
+    duration_minutes = if @appointment.calculated_appointment_duration_in_minutes.present?
+      @appointment.calculated_appointment_duration_in_minutes
     else
-      duration_minutes = @appointment.duration
+      @appointment.duration
     end
 
     billable_minutes = round_appointment_duration(duration_minutes)
@@ -83,10 +83,10 @@ class RateCalculatorService
 
     line_items = []
 
-    if @appointment.calculated_appointment_duration_in_minutes.present?
-      duration_minutes = @appointment.calculated_appointment_duration_in_minutes
+    duration_minutes = if @appointment.calculated_appointment_duration_in_minutes.present?
+      @appointment.calculated_appointment_duration_in_minutes
     else
-      duration_minutes = @appointment.duration
+      @appointment.duration
     end
 
     billable_minutes = round_appointment_duration(duration_minutes)
@@ -170,10 +170,10 @@ class RateCalculatorService
   def build_appointment_minutes_set
     beginning_of_day = @appointment.start_time_with_zone.beginning_of_day
     appointment_start_time_number_seconds_since_beginning_of_day = TimeDifference.between(beginning_of_day, @appointment.start_time_with_zone).in_seconds.round
-    if @appointment.finish_time.present?
-      end_time = @appointment.finish_time_with_zone
+    end_time = if @appointment.finish_time.present?
+      @appointment.finish_time_with_zone
     else
-      end_time = @appointment.start_time_with_zone + @appointment.duration.minutes
+      @appointment.start_time_with_zone + @appointment.duration.minutes
     end
     appointment_finish_time_number_seconds_since_beginning_of_day = TimeDifference.between(beginning_of_day, end_time).in_seconds.round
 
