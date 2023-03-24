@@ -13,7 +13,7 @@ module CurrentHelper
   end
 
   def customer_logged_in?
-    current_account.customer
+    current_account_user.customer_admin?
   end
 
   def current_account_admin?

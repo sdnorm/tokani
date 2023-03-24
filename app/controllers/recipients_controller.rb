@@ -8,7 +8,12 @@ class RecipientsController < ApplicationController
 
   # GET /recipients
   def index
-    @pagy, @recipients = pagy(Recipient.sort_by_params(params[:sort], sort_direction))
+    recipients = if current_account.agency?
+      current_account.agency_recipients
+    elsif current_account.customer?
+      current_account.recipients
+    end
+    @pagy, @recipients = pagy(recipients.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @recipients
@@ -21,7 +26,10 @@ class RecipientsController < ApplicationController
   # GET /recipients/new
   def new
     @recipient = Recipient.new
-    grab_account_customers_when_needed
+    if current_account.agency?
+      @customers = current_account.customers
+    end
+    # grab_account_customers_when_needed
     # Uncomment to authorize with Pundit
     # authorize @recipient
   end
