@@ -1,12 +1,17 @@
 # A service object for fetching interpreter appointments with various filters
 class InterpreterAppointmentsService
+  include ActionController::Helpers
+  include Sortable
+
   def initialize(user, params)
     @user = user
     @params = params
   end
 
+  attr_accessor :params
+
   def fetch_appointments
-    scope = Appointment
+    scope = Appointment.all
 
     scope = filter_by_status(scope)
     scope = filter_by_display_range(scope)
@@ -22,22 +27,10 @@ class InterpreterAppointmentsService
 
     # We need to scope by custom queries depending on the status
     case @params[:status]
-    when "opened"
-      scope.joins(:appointment_statuses)
-        .where(appointment_statuses: {current: true, name: AppointmentStatus.names[@params[:status]]})
-    when "offered"
-      scope.joins(:requested_interpreters)
-        .where(requested_interpreters: {rejected: false, user_id: @user.id})
-        .joins(:appointment_statuses)
-        .where(appointment_statuses: {current: true, name: AppointmentStatus.names[@params[:status]]})
-    when "scheduled"
-      scope.where(interpreter_id: @user.id)
-        .joins(:appointment_statuses)
-        .where(appointment_statuses: {current: true, name: AppointmentStatus.names[@params[:status]]})
     when "all"
       scope.unscoped
     else
-      scope # Should never get here, but just in case
+      scope.by_appointment_specific_status(@params[:status])
     end
   end
 
@@ -111,9 +104,10 @@ class InterpreterAppointmentsService
   def order_by_sort(scope)
     return scope unless @params[:sort_by].present?
 
-    case @params[:sort_by]
-    when "date"
-      scope.order(start_time: :asc)
+    if @params[:sort_by][:date] == "true"
+      scope.sort_by_params("start_time", sort_direction)
+    elsif @params[:sort_by][:customer] == "true"
+      scope.sort_by_account_name
     else
       scope
     end

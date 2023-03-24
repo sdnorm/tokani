@@ -19,31 +19,25 @@
                 <div class="ml-auto">
                   <div class="flex flex-wrap items-center">
                     <div class="flex flex-wrap items-center">
-                      <!-- Need to add in a statusTarget
-                      if appointment statuses are hidden to avoid JS errors -->
-                      <%= tag.div data: { appointments_target: "status" } unless AppointmentPolicy.new(current_account, @appointment).show_appointments_statuses? %>
-
-                      <% if AppointmentPolicy.new(current_account, @appointment).show_appointments_statuses? %>
-                        <!-- Status-->
-                        <div data-controller="dropdown" class="pr-3 relative">
-                          <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Status">
-                            <p class="text-sm capitalize" id="statusesTextContainer">Status</p>
-                            <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                          </a>
-                          <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
-                            <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
-                              <div data-appointments-target="status">
-                                <% @statuses.each do |status| %>
-                                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
-                                    <input name="status" class="<%= dropdown_item_classes %>" type="radio" id="status_<%= status %>" value="<%= status %>" data-action="change->appointments#search change->appointments#updateCurrentFilterText" data-status-filter="<%= status %>">
-                                    <label class="form-check-label <%= label_classes %>" for="status_<%= status %>"><%= status.titleize %></label>
-                                  </div>
-                                <% end %>
-                              </div>
+                      <!-- Status-->
+                      <div data-controller="dropdown" class="pr-3 relative">
+                        <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Status">
+                          <p class="text-sm capitalize" id="statusesTextContainer">Status</p>
+                          <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
+                          <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
+                            <div data-appointments-target="status">
+                              <% @statuses.each do |status| %>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
+                                  <input name="status" class="<%= dropdown_item_classes %>" type="radio" id="status_<%= status %>" value="<%= status %>" data-action="change->appointments#search change->appointments#updateCurrentFilterText" data-status-filter="<%= status %>">
+                                  <label class="form-check-label <%= label_classes %>" for="status_<%= status %>"><%= status.titleize %></label>
+                                </div>
+                              <% end %>
                             </div>
                           </div>
                         </div>
-                      <% end %>
+                      </div>
 
                       <% if AppointmentPolicy.new(current_account, @appointment).show_appointment_customers? %>
                         <div data-controller="dropdown" class="pr-3 relative">
@@ -51,7 +45,7 @@
                             <p class="text-sm capitalize" id="statusesTextContainer">Customer</p>
                             <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                           </a>
-                          <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
+                          <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block" style="width:max-content;">
                             <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
                               <div data-appointments-target="customerNames">
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
@@ -136,16 +130,16 @@
               </div>
               <%= turbo_frame_tag "appointments" do %>
                 <%= render partial: "appointments" %>
+                <% if @pagy.pages > 1 %>
+                  <div class="my-6 text-center">
+                    <%== pagy_nav(@pagy) %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           </div>
         </div>
       </div>
-      <% if @pagy.pages > 1 %>
-        <div class="my-6 text-center">
-          <%== pagy_nav(@pagy) %>
-        </div>
-      <% end %>
     </main>
   </div>
 </div>
