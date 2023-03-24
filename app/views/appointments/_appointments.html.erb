@@ -51,7 +51,7 @@
           <a href="<%= edit_appointment_path(appointment) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= appointment.id %></span></a>
         </td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-          <a href="<%= appointment_path(appointment) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900" data-no-turbolink='true'>Show<span class="sr-only">, <%= appointment.id %></span></a>
+          <%= link_to "Show", appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900", target: "_top" %>
         </td>
       </tr>
     <% end %>
