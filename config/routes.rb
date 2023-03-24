@@ -193,9 +193,6 @@ Rails.application.routes.draw do
     # get "/dashboard", to: "dashboard#show", as: :user_root
     # resources :accounts do
     resources :appointments do
-      collection do
-        get :fetch_appointments
-      end
       member do
         get :interpreter_requests
         patch :status, to: "appointments#update_status"

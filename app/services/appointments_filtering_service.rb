@@ -1,10 +1,15 @@
 # A service object for fetching appointments with various filters
 class AppointmentsFilteringService
+  include ActionController::Helpers
+  include Sortable
+
   def initialize(user, params, scope)
     @user = user
     @params = params
     @scope = scope
   end
+
+  attr_accessor :params
 
   def fetch_appointments
     return @scope if @params.values.blank?
@@ -96,9 +101,10 @@ class AppointmentsFilteringService
   def order_by_sort(scope)
     return scope unless @params[:sort_by].present?
 
-    case @params[:sort_by]
-    when "date"
-      scope.order(start_time: :asc)
+    if @params[:sort_by][:date] == "true"
+      scope.sort_by_params("start_time", sort_direction)
+    elsif @params[:sort_by][:customer] == "true"
+      scope.sort_by_account_name
     else
       scope
     end

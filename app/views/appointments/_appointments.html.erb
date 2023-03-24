@@ -3,16 +3,22 @@
     <thead class="bg-gray-50">
       <tr>
         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @appointments, :id, "Ref Numb" %></th>
-        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Customer</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">
+          <a data-action="click->appointments#sort" class="inline-flex items-center select-none" aria-label="Sort By">
+            <p class="text-sm uppercase" data-sort-type="customer">Customer</p>
+            <%= hidden_field_tag 'sort_by[customer]', params[:sort_by].try(:[], :customer) %>
+            <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-200 <%= params[:sort_by].try(:[], :customer) == "true" ? "rotate-180" : "" %>" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </a>
+        </th>
         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Modality</th>
         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Language</th>
         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Duration</th>
         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">
-          <button data-action="click->appointments#sort" role="button" class="inline-flex items-center select-none" aria-label="Sort By">
-            <p class="text-sm uppercase">Start Time</p>
-            <%= hidden_field_tag :sort_by, params[:sort_by] %>
-            <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-200 <%= params[:sort_by] == "date" ? "rotate-180" : "" %>" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
+          <a data-action="click->appointments#sort" class="inline-flex items-center select-none" aria-label="Sort By">
+            <p class="text-sm uppercase" data-sort-type="date">Date</p>
+            <%= hidden_field_tag 'sort_by[date]', params[:sort_by].try(:[], :date) %>
+            <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-200 <%= params[:sort_by].try(:[], :date) == "true" ? "rotate-180" : "" %>" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </a>
         </th>
         <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
         <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>

@@ -11,7 +11,7 @@
       <div class="py-6">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
           <div class="px-4 sm:px-6 lg:px-8">
-            <%= form_with url: fetch_appointments_appointments_path, class: 'form', remote: true, method: :get, data: { remote: true, action: "ajax:success->appointments#handleResults", target: "appointments.form", appointments_target: "form" } do |f| %>
+            <%= form_with url: appointments_path, class: 'form', method: :get, data: { turbo_frame: "appointments", turbo_action: "advance", target: "appointments.form", appointments_target: "form" } do |f| %>
               <div class="sm:flex sm:items-center">
                 <div class="mt-4 sm:mt-0 sm:flex-none">
                   <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
@@ -19,19 +19,23 @@
                 <div class="ml-auto">
                   <div class="flex flex-wrap items-center">
                     <div class="flex flex-wrap items-center">
+                      <!-- Need to add in a statusTarget
+                      if appointment statuses are hidden to avoid JS errors -->
+                      <%= tag.div data: { appointments_target: "status" } unless AppointmentPolicy.new(current_account, @appointment).show_appointments_statuses? %>
+
                       <% if AppointmentPolicy.new(current_account, @appointment).show_appointments_statuses? %>
                         <!-- Status-->
                         <div data-controller="dropdown" class="pr-3 relative">
-                          <button data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" role="button" class="inline-flex items-center select-none" aria-label="Status">
+                          <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Status">
                             <p class="text-sm capitalize" id="statusesTextContainer">Status</p>
                             <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                          </button>
+                          </a>
                           <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
                             <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
                               <div data-appointments-target="status">
                                 <% @statuses.each do |status| %>
                                   <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
-                                    <input name="status" class="<%= dropdown_item_classes %>" type="radio" id="status_<%= status %>" value="<%= status %>" data-action="change->appointments#changed change->appointments#updateCurrentFilterText" data-status-filter="<%= status %>">
+                                    <input name="status" class="<%= dropdown_item_classes %>" type="radio" id="status_<%= status %>" value="<%= status %>" data-action="change->appointments#search change->appointments#updateCurrentFilterText" data-status-filter="<%= status %>">
                                     <label class="form-check-label <%= label_classes %>" for="status_<%= status %>"><%= status.titleize %></label>
                                   </div>
                                 <% end %>
@@ -43,20 +47,20 @@
 
                       <% if AppointmentPolicy.new(current_account, @appointment).show_appointment_customers? %>
                         <div data-controller="dropdown" class="pr-3 relative">
-                          <button data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" role="button" class="inline-flex items-center select-none" aria-label="Status">
+                          <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Status">
                             <p class="text-sm capitalize" id="statusesTextContainer">Customer</p>
                             <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                          </button>
+                          </a>
                           <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
                             <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
                               <div data-appointments-target="customerNames">
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
-                                  <input name="customer_name" class="<%= dropdown_item_classes %>" type="radio" id="name_all" value="all" data-action="change->appointments#changed change->appointments#updateCurrentFilterText" data-name-filter="all">
+                                  <input name="customer_name" class="<%= dropdown_item_classes %>" type="radio" id="name_all" value="all" data-action="click->appointments#search change->appointments#updateCurrentFilterText" data-name-filter="all">
                                   <label class="form-check-label <%= label_classes %>" for="name_all">All</label>
                                 </div>
                                 <% @customer_names.each do |name| %>
                                   <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
-                                    <input name="customer_name" class="<%= dropdown_item_classes %>" type="radio" id="name_<%= name %>" value="<%= name %>" data-action="change->appointments#changed change->appointments#updateCurrentFilterText" data-name-filter="<%= name %>">
+                                    <input name="customer_name" class="<%= dropdown_item_classes %>" type="radio" id="name_<%= name %>" value="<%= name %>" data-action="click->appointments#search change->appointments#updateCurrentFilterText" data-name-filter="<%= name %>">
                                     <label class="form-check-label <%= label_classes %>" for="name_<%= name %>"><%= name.titleize %></label>
                                   </div>
                                 <% end %>
@@ -68,16 +72,16 @@
 
                       <!-- Modality-->
                       <div data-controller="dropdown" class="pr-3 relative">
-                        <button data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" role="button" class="inline-flex items-center select-none" aria-label="Profile Menu">
+                        <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Profile Menu">
                           <p class="text-sm" id="modalitiesTextContainer">Modality</p>
                           <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
+                        </a>
                         <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block" style="width:max-content;">
                           <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
                             <div data-appointments-target="modality">
                               <% @modalities.each do |modality| %>
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
-                                  <input name="modality_<%= modality %>" class="<%= dropdown_item_classes %>" type="checkbox" id="modality_<%= modality %>" value="<%= modality %>" data-action="change->appointments#changed change->appointments#toggleModalityFilterText">
+                                  <%= f.check_box "modality_#{modality}", { data: { action: "click->appointments#search change->appointments#toggleModalityFilterText" }}, modality, false %>
                                   <label class="form-check-label <%= label_classes %>" for="modality_<%= modality %>"><%= modality.titleize %></label>
                                 </div>
                               <% end %>
@@ -99,7 +103,7 @@
                             <%= f.text_field :start_date,
                             data: {
                               controller: "flatpickr",
-                              action: "change->appointments#changed",
+                              action: "change->appointments#search",
                               flatpickr_alt_format: "%a %m/%d",
                               flatpickr_alt_input: true
                             }, placeholder: "Start Date", class: "border-none py-2 px-4 bg-slate-50 placeholder-gray-400 text-gray-500 appearance-none w-full block pl-12 focus:outline-none rounded-l-lg",
@@ -118,7 +122,7 @@
                             <%= f.text_field :end_date,
                             data: {
                               controller: "flatpickr",
-                              action: "change->appointments#changed",
+                              action: "change->appointments#search",
                               flatpickr_alt_format: "%a %m/%d",
                               flatpickr_alt_input: true
                             }, placeholder: "End Date", class: "border-none py-2 px-4 bg-slate-50 placeholder-gray-400 text-gray-500 appearance-none w-full block pl-12 focus:outline-none rounded-l-lg",
@@ -130,9 +134,9 @@
                   </div>
                 </div>
               </div>
-              <div data-appointments-target="appointments">
-                <%= render template: "appointments/fetch_appointments" %>
-              </div>
+              <%= turbo_frame_tag "appointments" do %>
+                <%= render partial: "appointments" %>
+              <% end %>
             <% end %>
           </div>
         </div>

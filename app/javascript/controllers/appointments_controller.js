@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { arrayToSentence, toSentence } from "../helpers"
 
 export default class extends Controller {
   static targets = ["form", "appointments", "status", "displayRange", "modality"]
@@ -9,20 +10,6 @@ export default class extends Controller {
     if (checkboxOpenedStatus !== undefined) {
       checkboxOpenedStatus.click()
     }
-  }
-
-  changed(event) {
-    Rails.fire(this.formTarget, "submit")
-  }
-
-  handleResults() {
-    const [data, status, xhr] = event.detail
-    this.appointmentsTarget.innerHTML = xhr.response
-  }
-
-  toggleNestedDropdown() {
-    const nestedDropdown = this.displayRangeTarget.querySelector(".nestedDropdown")
-    nestedDropdown.classList.toggle("hidden")
   }
 
   updateCurrentFilterText(event) {
@@ -63,12 +50,21 @@ export default class extends Controller {
     }
   }
 
-  sort() {
-    const icon = document.querySelector("#sort-chevron")
-    const dateField = document.querySelector("#sort_by")
-    dateField.value == "date" ? dateField.value = "" : dateField.value = "date"
+  sort(event) {
+    const sortType = event.target.dataset.sortType
+    // Get the hidden field node
+    const field = event.target.nextElementSibling
+    const icon = field.nextElementSibling
+    field.value == sortType ? field.value = "" : field.value = true
     icon.classList.toggle("rotate-180")
-    Rails.fire(this.formTarget, "submit")
+    this.search()
+  }
+
+  search() {
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+      Rails.fire(this.formTarget, "submit")
+    }, 200)
   }
 }
 
