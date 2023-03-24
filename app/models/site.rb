@@ -44,7 +44,7 @@ class Site < ApplicationRecord
   has_many :providers
   has_many :requestor_details
 
-  accepts_nested_attributes_for :departments
+  accepts_nested_attributes_for :departments, reject_if: :all_blank
 
   validates :name, presence: true
   validates :contact_name, presence: true

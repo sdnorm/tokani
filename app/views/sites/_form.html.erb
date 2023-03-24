@@ -55,7 +55,7 @@
           </div>
           <div class="lg:col-span-3 sm:col-span-3">
             <%= form.label "State*", class: "block text-sm font-medium text-gray-700" %>
-            <%= form.select :state, options_for_select(state_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            <%= form.select :state, options_for_select(state_select_options, selected: form.object.state), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
           </div>
           <div class="col-span-6 sm:col-span-6 lg:col-span-3">
             <%= form.label "Zip Code*", class: "block text-sm font-medium text-gray-700" %>
