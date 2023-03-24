@@ -66,25 +66,24 @@
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">After Hours</h3>
-                <dt class="text-sm font-medium text-gray-500">What time and how much overage is billed for appointments outside of normal business hours.</dt>
+                <dt class="text-sm font-medium text-gray-500">What time are <strong>normal business hours</strong>, and how much overage is billed for appointments outside of that timeframe.</dt>
               </div>
               <div class="mt-1 pl-4 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-               
-                <div class="flex h-10 flex-row w-64 rounded-lg mb-4">
+                <div class="select_br_right flex h-10  flex-row-reverse justify-end rounded-lg mb-5">
+
+                  <%= select_hour bill_rate.end_hour(:regular_hours_end_seconds), { ampm: true, field_name: 'regular_hours_end_seconds[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@bill_rate, 'times_end_hour'), class: "peer w-full rounded-r-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-sky-400 focus:outline-none"}  %>
+                  <span class="flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white"> To </span>
+                  &nbsp;&nbsp;
+                  <%= select_hour bill_rate.start_hour(:regular_hours_start_seconds), { ampm: true, field_name: 'regular_hours_start_seconds[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@bill_rate, 'times_start_hour'), class: "peer w-full rounded-r-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-sky-400 focus:outline-none"}  %>
+                  <span class="peer flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">FROM</span>
+                       
+                </div>
+                <div class="flex h-10 flex-row w-64 rounded-lg">
                   <%= form.text_field  :after_hours_overage, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                   <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">$/Hr</span>
                   
                 </div>
-                <div class="select_br_right flex h-10  flex-row rounded-lg">
-                 
-                  <span class="flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">FROM</span>
-                  <%= select_hour bill_rate.start_hour(:after_hours_start_seconds), { ampm: true, field_name: 'after_hours_start_seconds[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@bill_rate, 'times_start_hour'), class: "peer w-full rounded-r-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-sky-400 focus:outline-none"}  %>
-                  &nbsp;&nbsp;
-                 
-                  <span class="flex items-center rounded-l-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white"> To </span>
-                  <%= select_hour bill_rate.end_hour(:after_hours_end_seconds), { ampm: true, field_name: 'after_hours_end_seconds[hour]', prefix: 'times', prompt: 'None' }, { id: dom_id(@bill_rate, 'times_end_hour'), class: "peer w-full rounded-r-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-sky-400 focus:outline-none"}  %>
-                     
-                </div>
+                
               </div>
             </div>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
