@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_23_142100) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -288,8 +288,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_23_142100) do
     t.integer "round_time"
     t.integer "round_increment"
     t.decimal "after_hours_overage", precision: 8, scale: 2
-    t.integer "after_hours_start_seconds"
-    t.integer "after_hours_end_seconds"
+    t.integer "regular_hours_start_seconds"
+    t.integer "regular_hours_end_seconds"
     t.decimal "rush_overage", precision: 8, scale: 2
     t.integer "rush_overage_trigger"
     t.decimal "cancel_rate", precision: 8, scale: 2
