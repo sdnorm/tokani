@@ -14,8 +14,8 @@
             <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-200 <%= params[:sort_by] == "date" ? "rotate-180" : "" %>" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
         </th>
-        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
-        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Show</th>
+        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
+        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
@@ -33,14 +33,14 @@
             <dt class="sr-only">Duration</dt>
             <dd class="mt-1 truncate text-gray-500"><%= appointment.duration %> minutes</dd>
             <dt class="sr-only">Start Time</dt>
-            <dd class="mt-1 truncate text-gray-500"><%= appointment.start_time %></dd>
+            <dd class="mt-1 truncate text-gray-500"><%= appointment.start_time.strftime("%B %-d at %l:%M %p") %></dd>
           </dl>
         </td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.customer&.name %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.modality.titleize %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.language&.name %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.duration %> minutes</td>
-        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p") %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
           <a href="<%= edit_appointment_path(appointment) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= appointment.id %></span></a>
         </td>

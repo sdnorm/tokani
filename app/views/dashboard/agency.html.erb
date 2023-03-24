@@ -171,7 +171,7 @@
                               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 capitalize"><%= appointment.status %></span>
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
-                              <time datetime="2020-07-11"><%= appointment.start_time %></time>
+                              <time datetime="2020-07-11"><%= appointment.start_time.strftime("%B %-d at %l:%M %p") %></time>
                             </td>
                           </tr>
                         <% end %>

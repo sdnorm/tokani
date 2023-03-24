@@ -17,13 +17,13 @@
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Start Time</dt>
           <% if appointment.start_time.present? %>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.start_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.start_time.strftime("%a %Y-%m-%d, %l:%M %p") %></dd>
           <% end %>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Finish Time</dt>
           <% if appointment.finish_time.present? %>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.finish_time.strftime("%a %Y-%m-%d, %l:%M %p (%z)") %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.finish_time.strftime("%a %Y-%m-%d, %l:%M %p") %></dd>
           <% end %>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
