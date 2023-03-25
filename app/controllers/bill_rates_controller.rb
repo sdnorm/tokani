@@ -20,6 +20,11 @@ class BillRatesController < ApplicationController
   # GET /bill_rates/new
   def new
     @bill_rate = BillRate.new
+    @languages = current_account.languages.all.order("name ASC")
+    @customers = current_account.customers.order("name ASC")
+
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
 
     # Uncomment to authorize with Pundit
     # authorize @bill_rate
@@ -27,12 +32,20 @@ class BillRatesController < ApplicationController
 
   # GET /bill_rates/1/edit
   def edit
+    @languages = current_account.languages.all.order("name ASC")
+    @customers = current_account.customers.order("name ASC")
+
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_languages_json = @bill_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_customers_json = @bill_rate.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @languages_disabled = @bill_rate.default_rate
   end
 
   # POST /bill_rates or /bill_rates.json
   def create
     @bill_rate = BillRate.new(bill_rate_params)
-
+    @bill_rate.make_regularhours_times_from_hash(params[:times])
     # Uncomment to authorize with Pundit
     # authorize @bill_rate
 
@@ -49,6 +62,15 @@ class BillRatesController < ApplicationController
 
   # PATCH/PUT /bill_rates/1 or /bill_rates/1.json
   def update
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @customers_json = current_account.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_languages_json = @bill_rate.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @br_customers_json = @bill_rate.customers.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @languages_disabled = @bill_rate.default_rate
+
+    if params[:times].present?
+      @bill_rate.make_regularhours_times_from_hash(params[:times])
+    end
     respond_to do |format|
       if @bill_rate.update(bill_rate_params)
         format.html { redirect_to @bill_rate, notice: "Bill rate was successfully updated." }
@@ -83,7 +105,7 @@ class BillRatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def bill_rate_params
-    params.require(:bill_rate).permit(:account_id, :name, :hourly_bill_rate, :is_active, :minimum_time_charged, :round_time, :round_increment, :after_hours_overage, :after_hours_start_seconds, :after_hours_end_seconds, :rush_overage, :rush_overage_trigger, :cancel_rate, :cancel_rate_trigger, :default_rate, :in_person, :phone, :video)
+    params.require(:bill_rate).permit(:account_id, :name, :hourly_bill_rate, :is_active, :minimum_time_charged, :round_time, :round_increment, :after_hours_overage, :regular_hours_start_seconds, :regular_hours_end_seconds, :rush_overage, :rush_overage_trigger, :cancel_rate, :cancel_rate_trigger, :default_rate, :in_person, :phone, :video, language_ids: [], customer_ids: [])
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:bill_rate).permit(policy(@bill_rate).permitted_attributes)

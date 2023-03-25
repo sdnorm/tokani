@@ -1,23 +1,23 @@
-# A service object for fetching interpreter appointments with various filters
-class InterpreterAppointmentsService
+# A service object for fetching appointments with various filters
+class AppointmentsFilteringService
   include ActionController::Helpers
   include Sortable
 
-  def initialize(user, params)
+  def initialize(user, params, scope)
     @user = user
     @params = params
+    @scope = scope
   end
 
   attr_accessor :params
 
   def fetch_appointments
-    scope = Appointment.all
-
-    scope = filter_by_status(scope)
-    scope = filter_by_display_range(scope)
-    scope = filter_by_modality(scope)
-    scope = scope_by_date_range(scope)
-    order_by_sort(scope)
+    return @scope if @params.values.blank?
+    @scope = filter_by_status(@scope)
+    @scope = filter_by_customer(@scope)
+    @scope = filter_by_modality(@scope)
+    @scope = scope_by_date_range(@scope)
+    order_by_sort(@scope)
   end
 
   private
@@ -25,25 +25,22 @@ class InterpreterAppointmentsService
   def filter_by_status(scope)
     return scope unless @params[:status].present?
 
-    # We need to scope by custom queries depending on the status
     case @params[:status]
     when "all"
-      scope.unscoped
+      scope
     else
       scope.by_appointment_specific_status(@params[:status])
     end
   end
 
-  def filter_by_display_range(scope)
-    return scope unless @params[:display_range].present?
+  def filter_by_customer(scope)
+    return scope unless @params[:customer_name].present?
 
-    case @params[:display_range]
-    when "today"
-      scope_by_today(scope)
-    when "tomorrow"
-      scope_by_tomorrow(scope)
-    else
+    case @params[:customer_name]
+    when "all"
       scope
+    else
+      scope.by_customer_name(@params[:customer_name])
     end
   end
 

@@ -18,4 +18,12 @@ module AppointmentsHelper
       %w[None none]
     ]
   end
+
+  def colored_appointment_status(status)
+    color_class = (status == "scheduled") ? "text-green-500" : "text-gray-500"
+
+    content_tag :p, class: color_class do
+      status
+    end
+  end
 end

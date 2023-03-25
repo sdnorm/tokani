@@ -3,7 +3,8 @@ class AppointmentsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_account
-  before_action :appointments_per_logged_in_account, only: [:index]
+  before_action :set_appointments, only: [:index, :fetch_appointments]
+  # before_action :appointments_per_logged_in_account, only: [:index]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -11,33 +12,39 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @customer_appts = appointments_per_logged_in_account
-    @pagy, @appointments = pagy(appointments_per_status.sort_by_params(params[:sort], sort_direction))
+    @appointments = AppointmentsFilteringService.new(current_user, filtering_params, @appointments).fetch_appointments
+    @pagy, @appointments = pagy(@appointments)
 
-    if customer_logged_in?
-      @scheduled_appts_count = Appointment.by_appointment_specific_status("scheduled").count
-      @finished_appts_count = Appointment.by_appointment_specific_status("finished").count
-    end
+    @statuses = ["all", "scheduled", "finished"]
+    @customer_names = @appointments.map(&:customer).pluck(:name).uniq
+    @modalities = Appointment.modalities.keys
 
-    # Uncomment to authorize with Pundit
-    # authorize @appointments
+    @scheduled_appts_count = @appointments.by_appointment_specific_status("scheduled").count
+    @finished_appts_count = @appointments.by_appointment_specific_status("finished").count
   end
 
   def interpreter_requests
     @requested_interpreters = @appointment.requested_interpreters
+    @assigned_interpreter = @appointment.assigned_interpreter
     @language_id = @appointment.language.id
     @specialties = Specialty.active.order("name ASC")
 
     # this is to set the radio button correctly on interpreter_request fields
     @general_int_requested = @appointment.requested_interpreters.empty?
-    @specific_int_requested = !@general_int_requested
+    @assigned_interpreter = @appointment.assigned_interpreter.nil?
+    @specific_int_requested = (!@general_int_requested && !@assigned_interpreter) ? true : false
+  end
+
+  def search_interpreters_path
+    @searched_for_interpreters = interpreters.search_by_full_name(params[:q]).order("first_name ASC").limit(10)
+    render partial: "appointments/search_for_interpreters"
   end
 
   # GET /appointments/1 or /appointments/1.json
   def show
     # @appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
     @appt_statuses = customer_logged_in? ?
-      AppointmentStatus.names.slice("created", "cancelled") :
+      AppointmentStatus.names.slice("cancelled") :
       AppointmentStatus.names.slice("opened", "finished")
   end
 
@@ -75,7 +82,8 @@ class AppointmentsController < ApplicationController
 
     @requested_interpreters = @appointment.offered_interpreters
     @general_int_requested = @appointment.requested_interpreters.empty?
-    @specific_int_requested = !@general_int_requested
+    @assigned_interpreter = @appointment.assigned_interpreter.nil?
+    @specific_int_requested = (!@general_int_requested && !@assigned_interpreter) ? true : false
   end
 
   # POST /appointments or /appointments.json
@@ -173,14 +181,9 @@ class AppointmentsController < ApplicationController
     @account = current_account
   end
 
-  def appointments_per_logged_in_account
-    customer_logged_in? ?
-      Appointment.where(customer_id: @account.id) :
-      @account.appointments
-  end
-
-  def appointments_per_status
-    params[:status].present? ? @customer_appts.by_appointment_specific_status(params[:status]) : @customer_appts
+  def set_appointments
+    # Scope appointments for current_account
+    @appointments = AppointmentPolicy::AccountScope.new(current_account, Appointment).resolve
   end
 
   def setup_appointment_vars
@@ -201,6 +204,19 @@ class AppointmentsController < ApplicationController
     @recipients = @customer.recipients
     @general_int_requested = true
     @specific_int_requested = !@general_int_requested
+  end
+
+  def filtering_params
+    params.permit(
+      :status,
+      :start_date,
+      :end_date,
+      :customer_name,
+      :modality_in_person,
+      :modality_phone,
+      :modality_video,
+      sort_by: [:date, :customer]
+    )
   end
 
   # Only allow a list of trusted parameters through.
@@ -236,6 +252,7 @@ class AppointmentsController < ApplicationController
       :language_id,
       :requestor_id,
       :creator_id,
+      :assigned_interpreter,
       interpreter_req_ids: []
     )
 

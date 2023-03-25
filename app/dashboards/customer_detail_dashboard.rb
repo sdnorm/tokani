@@ -13,7 +13,10 @@ class CustomerDetailDashboard < Administrate::BaseDashboard
     appointments_phone: Field::Boolean,
     appointments_video: Field::Boolean,
     contact_name: Field::String,
-    customer: Field::BelongsTo,
+    customer: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ["name"]
+    ),
     customer_category: Field::BelongsTo,
     email: Field::String,
     fax: Field::String,
@@ -30,9 +33,8 @@ class CustomerDetailDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    appointments_in_person
-    appointments_phone
-    appointments_video
+    customer
+    contact_name
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

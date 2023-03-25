@@ -38,9 +38,11 @@
   padding-left: 0.5rem;
   background: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right #ddd;
   background-color: transparent;
-  border-radius: 0.25rem;
+  /* border-radius: 0.25rem; */
+  border-radius: 0.35rem;
   appearance: none;
-  border: 1px solid rgb(218 218 218);
+  /* border: 1px solid rgb(218 218 218); */
+  border: 1px solid rgb(148 163 184);
   outline-offset: 2px;
   outline: transparent solid 2px;
   color: rgb(55 61 63);
@@ -65,11 +67,14 @@
 }
 
 .multiselect__addable-button:hover {
-  color: rgb(29 115 186);
+  /* color: rgb(29 115 186); */
+  color: rgb(187 99 201);
+
 }
 
 .multiselect__container:focus-within {
-  border-color: rgb(44 141 222);
+  /* border-color: rgb(44 141 222); */
+  border-color: rgb(187 99 201);
   --tw-shadow:  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --tw-shadow-colored:  0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -245,16 +250,50 @@
   display: none;
   margin-top: 0.5rem;
   z-index: 50;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .multiselect__dropdown--open {
   display: block;
 }
 
+
+.select_br_right select {
+  margin-top: 0;
+  border: 1px solid rgb(148 163 184);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0.35rem;
+  border-bottom-right-radius: 0.35rem;
+  width: fit-content;
+ 
+}
+
+.select_br_left select {
+  margin-top: 0;
+  border: 1px solid rgb(148 163 184);
+  border-top-left-radius: 0.35rem;
+  border-bottom-left-radius: 0.35rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  width: fit-content;
+ 
+}
+.select_br select {
+  margin-top: 0;
+  border-radius: 0.35rem;
+  border: 1px solid rgb(148 163 184);
+  width: 100%;
+  
+ 
+}
+
+
+
 .rotate-180 {
   transform: rotate(180deg);
 }
+
 
 @import "dropzone/dist/dropzone.css";
 @import "tippy.js/dist/tippy.css";

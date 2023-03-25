@@ -1,0 +1,70 @@
+<div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @appointments, :id, "Ref Numb" %></th>
+        <% if AppointmentPolicy.new(current_account, @appointment).show_appointment_customers? %>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">
+            <a data-action="click->appointments#sort" class="inline-flex items-center select-none" aria-label="Sort By">
+              <p class="text-sm uppercase" data-sort-type="customer">Customer</p>
+              <%= hidden_field_tag 'sort_by[customer]', params[:sort_by].try(:[], :customer) %>
+              <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-200 <%= params[:sort_by].try(:[], :customer) == "true" ? "rotate-180" : "" %>" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </a>
+          </th>
+        <% end %>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Modality</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Language</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Duration</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">
+          <a data-action="click->appointments#sort" class="inline-flex items-center select-none" aria-label="Sort By">
+            <p class="text-sm uppercase" data-sort-type="date">Date</p>
+            <%= hidden_field_tag 'sort_by[date]', params[:sort_by].try(:[], :date) %>
+            <svg class="w-4 h-4 ml-2 text-gray-500 ease-in duration-200 <%= params[:sort_by].try(:[], :date) == "true" ? "rotate-180" : "" %>" id="sort-chevron" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </a>
+        </th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Status</th>
+        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
+        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+          <%= link_to appointment.ref_number, appointment_path(appointment), data: { turbo: false } %>
+          <dl class="font-normal lg:hidden">
+            <% if AppointmentPolicy.new(current_account, @appointment).show_appointment_customers? %>
+              <dt class="sr-only">Customer</dt>
+              <dd class="mt-1 truncate text-gray-700"><%= appointment.customer&.name %></dd>
+            <% end %>
+            <dt class="sr-only">Modality</dt>
+            <dd class="mt-1 truncate text-gray-700"><%= appointment.modality.titleize %></dd>
+            <dt class="sr-only">Language</dt>
+            <dd class="mt-1 truncate text-gray-500"><%= appointment.language&.name %></dd>
+            <dt class="sr-only">Duration</dt>
+            <dd class="mt-1 truncate text-gray-500"><%= appointment.duration %> minutes</dd>
+            <dt class="sr-only">Status</dt>
+            <dd class="mt-1 truncate capitalize"><%= colored_appointment_status(appointment.status) %></dd>
+            <dt class="sr-only">Start Time</dt>
+            <dd class="mt-1 truncate text-gray-500"><%= appointment.start_time.strftime("%B %-d at %l:%M %p") %></dd>
+          </dl>
+        </td>
+        <% if AppointmentPolicy.new(current_account, @appointment).show_appointment_customers? %>
+          <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.customer&.name %></td>
+        <% end %>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.modality.titleize %></td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.language&.name %></td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.duration %> minutes</td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p") %></td>
+        <td class="hidden px-3 py-4 text-sm lg:table-cell capitalize"><%= colored_appointment_status(appointment.status) %></td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+          <a href="<%= edit_appointment_path(appointment) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= appointment.id %></span></a>
+        </td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+          <%= link_to "Show", appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900", target: "_top" %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

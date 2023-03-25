@@ -1,54 +1,59 @@
 <div class="card-body">
-    <div class="d-flex flex-row">
-      
-  <div class="col-md-10 mx-auto" data-controller='radio-button'>
+  <div class="d-flex flex-row">
+    <div class="col-md-10 mx-auto" data-controller='radio-button'>
       <div class="row mt-4 mb-3">
         <div class="col-md-5 mx-3">
           <div class="form-check mb-3"> 
-            <%= radio_button_tag 'interpreter_reqs', 'specific', specific_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "specific_interpreters"} %> Specific Interpreter
+            <%= radio_button_tag 'interpreter_reqs', 'specific', specific_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "specific_interpreters"} %> Offer Interpreters
           </div>
           <%= field_set_tag nil, id: 'specific_interpreters', class: 'mb-3', disabled: @general_int_requested, data: {radio_button_target: "fieldset"} do %>
-  
             <div class="input-group input-group-static mb-3">
               <%= form.label :interpreter %>
               <%= text_field_tag 'interpreter_automplete', '', data: {interpreter_autocomplete_target: 'input'}, class: "form-control" %>
               <ul class="list-group mt-3" data-interpreter-autocomplete-target="results"></ul>
             </div>
-  
             <template data-interpreter-autocomplete-target='chipTemplate'>
               <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700 " data-controller="element" data-element-target="remove">
                 <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"></span>
                 <input type="hidden" name="appointment[interpreter_req_ids][]" value="">
-                    <div class="flex flex-auto flex-row-reverse">
-                        <div>
-                            <svg data-action="click->element#remove" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-tokanisecondary-400 rounded-full w-4 h-4 ml-2">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </div>
-                    </div>
-                <!-- <i data-action="click->element#remove" class="fas fa-times"></i> -->
-            </div>
+                <div class="flex flex-auto flex-row-reverse">
+                  <div>
+                    <svg data-action="click->element#remove" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-tokanisecondary-400 rounded-full w-4 h-4 ml-2">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </template>
-  
             <div class="flex" id="interpreter_list" data-interpreter-autocomplete-target='chipList'>
               <% offered_interpreters.each do |oint| %>
-                    <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700" data-controller="element" data-element-target="remove">
-                        <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"><%= oint.full_name %></span>
-                        <input type="hidden" name="appointment[interpreter_req_ids][]" value="<%= oint.id %>">
-                        <div class="flex flex-auto flex-row-reverse">
-                            <div>
-                                <svg data-action="click->element#remove" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-tokanisecondary-400 rounded-full w-4 h-4 ml-2">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </div>
-                        </div>
-                        <!-- <i data-action="click->element#remove" class="fas fa-times"></i> -->
+                <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700" data-controller="element" data-element-target="remove">
+                  <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"><%= oint.full_name %></span>
+                  <input type="hidden" name="appointment[interpreter_req_ids][]" value="<%= oint.id %>">
+                  <div class="flex flex-auto flex-row-reverse">
+                    <div>
+                      <svg data-action="click->element#remove" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-tokanisecondary-400 rounded-full w-4 h-4 ml-2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
                     </div>
+                  </div>  
+                </div>
               <% end %>
             </div>
+          <% end %>
+          <% if current_account_user.agency_admin? %>
+            <div class="form-check mb-3"> 
+              <%= radio_button_tag 'interpreter_reqs', 'assigned', assigned_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "assigned_interpreters"} %> Assign Interpreter
+            </div>
+            <%= field_set_tag nil, id: 'assigned_interpreters', class: 'mb-3', disabled: @assigned_interpreter, data: {radio_button_target: "fieldset"} do %>
+              <div data-controller="autocomplete" data-autocomplete-url-value=<%= search_interpreters_path %> role="combobox">
+                <%= form.text_field :assigned_interpreter, class: "form-control", data: { "autocomplete-target": "input" } %>
+                <%= form.hidden_field :assigned_interpreter, data: { "autocomplete-target": "hidden" } %>
+                <ul class="list-group" data-autocomplete-target="results"></ul>
+              </div>
+            <% end %>
           <% end %>
         </div>
         <br>
@@ -62,13 +67,12 @@
            
             <%= form.label :gender_request, class: 'text-blueCoral'  %>
             <%= form.select :gender_req, options_for_select(gender_req_options, @appointment.gender_req), {include_blank: 'None'}, class: "form-select mb-3" %>
-        </br>
+            </br>
             <%= form.label :appointment_is_viewable_to, class: 'text-blueCoral'  %>
             <%= form.select :interpreter_type, options_for_select(interpreter_filter_options, @appointment.interpreter_type), {}, class: "form-select mb-3" %>
-            <% end %>
+          <% end %>
         </div>
-      
-  </div>
-  </div>
+      </div>
     </div>
+  </div>
 </div>

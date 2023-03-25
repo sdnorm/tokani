@@ -5,6 +5,7 @@ class AgencyAdminRequestorCreationMailer < ApplicationMailer
   def welcome(user)
     create_reset_password_token(user)
     @user = user
+    @customer_admin_member = @user.requestor_detail.requestor_type == "customer_admin"
     @customer = @user.requestor_detail.customer
     mail(to: user.email, subject: "Welcome to Tokani!")
   end

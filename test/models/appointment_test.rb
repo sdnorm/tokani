@@ -4,6 +4,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  admin_notes              :text
+#  assigned_interpreter     :uuid
 #  billing_notes            :text
 #  cancel_reason_code       :integer
 #  cancel_type              :integer

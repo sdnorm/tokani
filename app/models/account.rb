@@ -71,6 +71,8 @@ class Account < ApplicationRecord
   has_many :bill_rates, dependent: :destroy
   has_many :pay_rates, dependent: :destroy
 
+  has_many :agency_recipients, through: :customers, source: :recipients
+
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }
   scope :sorted, -> { order(personal: :desc, name: :asc) }

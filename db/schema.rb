@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_21_234126) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -145,6 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_21_234126) do
     t.uuid "agency_id"
     t.string "time_zones", array: true
     t.string "company_website"
+    t.string "time_zone"
     t.index ["agency_id"], name: "index_agency_details_on_agency_id"
   end
 
@@ -234,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_21_234126) do
     t.string "current_status"
     t.integer "bill_rate_id"
     t.integer "pay_rate_id"
+    t.uuid "assigned_interpreter"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -286,8 +288,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_21_234126) do
     t.integer "round_time"
     t.integer "round_increment"
     t.decimal "after_hours_overage", precision: 8, scale: 2
-    t.integer "after_hours_start_seconds"
-    t.integer "after_hours_end_seconds"
+    t.integer "regular_hours_start_seconds"
+    t.integer "regular_hours_end_seconds"
     t.decimal "rush_overage", precision: 8, scale: 2
     t.integer "rush_overage_trigger"
     t.decimal "cancel_rate", precision: 8, scale: 2

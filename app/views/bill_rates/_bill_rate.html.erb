@@ -1,74 +1,95 @@
-<div id="<%= dom_id bill_rate %>">
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Account</p>
-    <%= bill_rate.account_id %>
+<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-tokanisecondary-900">Bill Rate Information</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500"></p>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Name</p>
-    <%= bill_rate.name %>
+  <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Rate Name</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.name %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Account</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.account&.name %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Is Default?</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= yes_no(bill_rate.default_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Is Active?</dt>
+        <dd class="mt-1 text-sm text-gray-900"> <%= yes_no(bill_rate.is_active) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Hourly Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(bill_rate.hourly_bill_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Normal Business Hours</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <%= start_config(bill_rate, "regular_hours_start_seconds") %> to <%= end_config(bill_rate, "regular_hours_end_seconds" ) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Round Time</dt>
+        <dd class="mt-1 text-sm text-gray-900"> <%= bill_rate.round_time.titleize %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Round Increment</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.round_increment %> Minute</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Minimum Minutes</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.minimum_time_charged %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Rush Overage</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(bill_rate.rush_overage)  %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Rush Time Frame</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.rush_overage_trigger %> Hours</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">After Hours Overage</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(bill_rate.after_hours_overage) %></dd>
+      </div>
+      
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Cancel Rate</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= number_to_currency(bill_rate.cancel_rate) %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Cancel Rate Time Frame</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.cancel_rate_trigger %> Hours</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Modalities</dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= bill_rate.modality_list.titleize %></dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Languages</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if bill_rate.languages.empty? %>
+            <p>Rate not applied to any Languges</p>
+          <% else %>
+            <%= bill_rate.language_list.titleize %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium text-tokanisecondary-500">Customers</dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <% if bill_rate.customers.empty? %>
+            <p>Rate not applied to any Customers</p>
+          <% else %>
+            <%= bill_rate.customer_list %>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
   </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Hourly bill rate</p>
-    <%= bill_rate.hourly_bill_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Is active</p>
-    <%= bill_rate.is_active %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Minimum time charged</p>
-    <%= bill_rate.minimum_time_charged %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Round time</p>
-    <%= bill_rate.round_time %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Round increment</p>
-    <%= bill_rate.round_increment %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">After hours overage</p>
-    <%= bill_rate.after_hours_overage %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">After hours start seconds</p>
-    <%= bill_rate.after_hours_start_seconds %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">After hours end seconds</p>
-    <%= bill_rate.after_hours_end_seconds %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Rush overage</p>
-    <%= bill_rate.rush_overage %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Rush overage trigger</p>
-    <%= bill_rate.rush_overage_trigger %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel rate</p>
-    <%= bill_rate.cancel_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Cancel rate trigger</p>
-    <%= bill_rate.cancel_rate_trigger %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Default rate</p>
-    <%= bill_rate.default_rate %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">In person</p>
-    <%= bill_rate.in_person %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Phone</p>
-    <%= bill_rate.phone %>
-  </div>
-  <div class="mb-4">
-    <p class="text-sm font-medium text-gray-500">Video</p>
-    <%= bill_rate.video %>
+
+</dl>
   </div>
 </div>
