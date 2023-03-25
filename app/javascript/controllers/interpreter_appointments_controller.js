@@ -66,11 +66,17 @@ export default class extends Controller {
     }
   }
 
-  sort() {
-    const icon = document.querySelector("#sort-chevron")
-    const dateField = document.querySelector("#sort_by")
-    dateField.value == "date" ? dateField.value = "" : dateField.value = "date"
+  sort(event) {
+    const sortType = event.target.dataset.sortType
+    // Get the hidden field node
+    const field = event.target.nextElementSibling
+    const icon = field.nextElementSibling
+    field.value == sortType ? field.value = "" : field.value = true
     icon.classList.toggle("rotate-180")
+    this.search()
+  }
+
+  search() {
     Rails.fire(this.formTarget, "submit")
   }
 }

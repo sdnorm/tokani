@@ -119,12 +119,6 @@ class InterpretersController < ApplicationController
   def my_assigned_details
   end
 
-  def fetch_appointments
-    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
-    @appointments = @service.fetch_appointments
-    render layout: nil
-  end
-
   def claim_public
     @appointment.update(interpreter_id: current_user.id)
     AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
@@ -245,7 +239,11 @@ class InterpretersController < ApplicationController
   end
 
   def appointments
-    @statuses = ["all", "scheduled", "opened", "offered"]
+    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
+    @appointments = @service.fetch_appointments
+    @pagy, @appointments = pagy(@appointments)
+
+    @statuses = ["all", "scheduled", "finished", "opened"]
     @modalities = ["in_person", "video", "phone"]
     @sort_by_filters = ["date"]
   end
@@ -319,6 +317,6 @@ class InterpretersController < ApplicationController
   end
 
   def appointment_query_params
-    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video, :sort_by)
+    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video, sort_by: [:date, :customer])
   end
 end
