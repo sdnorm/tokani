@@ -32,15 +32,15 @@ export default class extends Controller {
   clearFields(event) {
     const selectedFieldset = event.params.fieldset
     if (selectedFieldset == "default_rate"){
-
+      this.fieldsetTargets.forEach( fs => {
+        if (fs.id != selectedFieldset) {
+         fs.querySelector('div#languages').setAttribute('data-multiselect-selected-value', "[]")
+        
+      }
+  
+    }) 
     }
-    this.fieldsetTargets.forEach( fs => {
-      if (fs.id != selectedFieldset) {
-       fs.querySelector('div#languages').setAttribute('data-multiselect-selected-value', "[]")
-      
-    }
-
-  }) 
+    
 } 
 
 }
