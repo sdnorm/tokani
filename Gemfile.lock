@@ -437,7 +437,7 @@ GEM
       rubocop-performance (~> 1.16.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
-    stripe (8.3.0)
+    stripe (8.4.0)
     thin (1.8.1)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
