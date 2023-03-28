@@ -16,6 +16,7 @@ class AvailabilitiesController < ApplicationController
       # NK This new availability is JUST for a reset of the create form.  Not being saved
       @new_availability = @availability.interpreter.availabilities.build(wday: @availability.wday)
       @notice = "Availability created!"
+      @availabilities = @availability.interpreter.availabilities.where(wday: @availability.wday)
     else
       render turbo_stream: turbo_stream.update("new_availability_#{@availability.wday}_notice", partial: "shared/error_messages", locals: {resource: @availability})
     end

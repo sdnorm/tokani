@@ -20,10 +20,12 @@ module AppointmentsHelper
   end
 
   def colored_appointment_status(status)
-    color_class = (status == "scheduled") ? "text-green-500" : "text-gray-500"
+    color_class = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 capitalize "
+    color_class += (status == "scheduled") ? "text-green-500" : "text-gray-500"
 
     content_tag :p, class: color_class do
       status
     end
   end
 end
+

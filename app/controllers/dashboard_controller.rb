@@ -1,20 +1,6 @@
 class DashboardController < ApplicationController
   def show
-    if current_account_user.nil?
-      render template: "dashboard/general"
-    elsif current_account_user.interpreter? # && current_user.interpreter_profile.nil?
-      # redirect_to new_interpreter_detail_path
-      redirect_to controller: :interpreters, action: :dashboard
-    elsif current_account_user.customer_admin?
-      grab_appointments_data_for_customer
-      # render template: "dashboard/customer"
-    elsif current_account_user.agency_admin? || current_account_user.agency_member?
-      redirect_to agency_dashboard_path
-    elsif current_user.admin?
-      redirect_to agencies_path
-    else
-      render template: "dashboard/requestor_details"
-    end
+    render_view_for(current_account_user)
   end
 
   def agency
@@ -28,6 +14,31 @@ class DashboardController < ApplicationController
   end
 
   private
+
+  def render_view_for(user)
+    case user_type(user)
+    when :general
+      render template: "dashboard/general"
+    when :interpreter
+      redirect_to controller: :interpreters, action: :dashboard
+    when :customer_admin
+      grab_appointments_data_for_customer
+    when :agency_admin_or_member
+      redirect_to agency_dashboard_path
+    when :admin
+      redirect_to agencies_path
+    else
+      render template: "dashboard/requestor_details"
+    end
+  end
+
+  def user_type(user)
+    return :general if user.nil?
+    return :interpreter if user.interpreter?
+    return :customer_admin if user.customer_admin?
+    return :agency_admin_or_member if user.agency_admin? || user.agency_member?
+    return :admin if user.admin?
+  end
 
   def grab_appointments_data_for_customer
     @pagy, @appointments = pagy(Appointment.where(customer_id: current_account.id))

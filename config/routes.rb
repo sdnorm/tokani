@@ -206,6 +206,7 @@ Rails.application.routes.draw do
         get :public
         get :appointments
         get :filter_appointments
+        get :add_availability
       end
       member do
         get :appointment_details
