@@ -1,6 +1,6 @@
-class AppointmentEditedNotification < ApplicationNotification
+class AppointmentReminderNotification < ApplicationNotification
   deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
-  deliver_by :email, mailer: "AppointmentsMailer", method: :appointment_edited, if: :email_notifications?
+  deliver_by :email, mailer: "AppointmentsMailer", method: :appointment_reminder, if: :email_notifications?
   deliver_by :twilio, if: :sms_notifications?
 
   param :account
@@ -14,7 +14,7 @@ class AppointmentEditedNotification < ApplicationNotification
   end
 
   def message
-    "Appointment edited: #{ref_number} - #{appointment.start_datetime_string_in_zone(time_zone)} - #{language} - #{customer}"
+    "Appointment reminder: #{ref_number} - #{appointment.start_datetime_string_in_zone(time_zone)} - #{language} - #{customer}"
   end
 
   def time_zone
@@ -42,6 +42,6 @@ class AppointmentEditedNotification < ApplicationNotification
   end
 
   def email_notifications?
-    recipient&.notification_setting&.appointment_edited
+    recipient&.notification_setting&.appointment_reminder
   end
 end

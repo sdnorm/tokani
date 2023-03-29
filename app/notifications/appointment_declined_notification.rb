@@ -14,7 +14,11 @@ class AppointmentDeclinedNotification < ApplicationNotification
   end
 
   def message
-    "Appointment declined: #{ref_number} - #{appointment.start_datetime_string_in_zone(recipient.time_zone)} - #{language} - #{customer}"
+    "Appointment declined: #{ref_number} - #{appointment.start_datetime_string_in_zone(time_zone)} - #{language} - #{customer}"
+  end
+
+  def time_zone
+    recipient&.time_zone || appointment&.agency&.agency_detail&.time_zone || Account.time_zone_default
   end
 
   def appointment

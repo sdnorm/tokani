@@ -65,6 +65,10 @@ class AppointmentStatus < ApplicationRecord
 
   def handle_triggers
     case name
+    when "scheduled"
+      if appointment.interpreter.present?
+        AppointmentScheduledNotification.with(account: appointment.agency, appointment: appointment).deliver_later(appointment.interpreter)
+      end
     when "finished"
       appointment.associate_bill_rate_via_service
       appointment.associate_pay_rate_via_service
@@ -77,7 +81,6 @@ class AppointmentStatus < ApplicationRecord
         # Requestor cancellation
         NotificationsService.deliver_appointment_cancelled_notifications(account: appointment.agency, appointment: appointment)
       end
-
     when "verified"
       appointment.create_line_items_and_save_totals
     end

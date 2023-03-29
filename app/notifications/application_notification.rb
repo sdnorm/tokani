@@ -27,6 +27,9 @@ class ApplicationNotification < Noticed::Base
   end
 
   def sms_notifications?
+    # Do not send Twilio notification in development environment
+    return false if Rails.env.development?
+
     ((recipient&.notification_setting&.sms == "everything") ||
       ((recipient&.notification_setting&.sms == "same_as_email") && email_notifications?)) && has_sms_number?
   end

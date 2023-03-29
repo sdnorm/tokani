@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_043241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -236,6 +236,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
     t.integer "bill_rate_id"
     t.integer "pay_rate_id"
     t.uuid "assigned_interpreter"
+    t.boolean "interpreter_reminder_sent", default: false
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -715,6 +716,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
     t.boolean "rejected", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notification_sent", default: false
     t.index ["appointment_id"], name: "index_requested_interpreters_on_appointment_id"
     t.index ["user_id"], name: "index_requested_interpreters_on_user_id"
   end

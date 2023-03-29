@@ -15,7 +15,11 @@ class InterpreterCanceledNotification < ApplicationNotification
   end
 
   def message
-    t "notifications.interpreter_canceled", interpreter: interpreter_name, ref_number: ref_number, status: status
+    "Interpreter cancelled appointment: #{ref_number} - #{appointment.start_datetime_string_in_zone(time_zone)} - #{language} - #{customer}"
+  end
+
+  def time_zone
+    recipient&.time_zone || appointment&.agency&.agency_detail&.time_zone || Account.time_zone_default
   end
 
   def url

@@ -14,7 +14,11 @@ class AppointmentCancelledNotification < ApplicationNotification
   end
 
   def message
-    "Appopintment cancelled: #{ref_number} - #{appointment.start_datetime_string_in_zone(recipient.time_zone)} - #{language} - #{customer}"
+    "Appopintment cancelled: #{ref_number} - #{appointment.start_datetime_string_in_zone(time_zone)} - #{language} - #{customer}"
+  end
+
+  def time_zone
+    recipient&.time_zone || appointment&.agency&.agency_detail&.time_zone || Account.time_zone_default
   end
 
   def appointment

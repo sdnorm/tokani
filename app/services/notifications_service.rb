@@ -94,6 +94,7 @@ class NotificationsService
 
       recipients << appointment.creator
       recipients << appointment.requestor
+      recipients << appointment.interpreter
 
       recipients.compact.uniq.each do |recipient|
         AppointmentCancelledNotification.with(with_params).deliver_later(recipient)
@@ -123,6 +124,7 @@ class NotificationsService
 
       recipients << appointment.creator
       recipients << appointment.requestor
+      recipients << appointment.interpreter
 
       recipients.compact.uniq.each do |recipient|
         AppointmentDeclinedNotification.with(with_params).deliver_later(recipient)
@@ -137,6 +139,29 @@ class NotificationsService
           with_params[:email] = email
           AppointmentsMailer.with(with_params).appointment_declined.deliver_now
         end
+      end
+    end
+
+    def deliver_appointment_offered_notifications(with_params = {})
+      appointment = with_params[:appointment]
+      recipients = []
+
+      appointment.requested_interpreters.unsent_notifications.each do |ri|
+        recipients << ri&.interpreter
+        ri.update(notification_sent: true)
+      end
+
+      recipients.compact.uniq.each do |recipient|
+        AppointmentOfferedNotification.with(with_params).deliver_later(recipient)
+      end
+    end
+
+    def deliver_appointment_reminder_notifications
+      Appointment.where(interpreter_reminder_sent: false).where("start_time < ?", 24.hours.from_now.utc).where("start_time > ?", DateTime.now.utc).each do |appointment|
+        next unless appointment&.interpreter.present?
+        with_params = {account: appointment&.agency, appointment: appointment}
+        AppointmentReminderNotification.with(with_params).deliver_later(appointment&.interpreter)
+        appointment.update(interpreter_reminder_sent: true)
       end
     end
   end
