@@ -1,0 +1,69 @@
+<%= form_with(model: @notification_email, url: @email_url, method: @email_method_name) do |form| %>
+  <div class="overflow-hidden shadow sm:rounded-md">
+    <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+      <fieldset>
+        <legend class="text-base font-medium text-gray-900">Agency Account Settings</legend>
+
+        <div class="mt-4 space-y-4">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="ml-3 text-sm">
+              <label for="notification_email_email1" class="font-medium text-gray-700">1st Notification Email</label>
+            </div>
+            <div class="flex h-5 items-center">
+              <%= form.text_field(:email1, { class: 'form-control' }) %>
+            </div>
+            <div></div>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="ml-3 text-sm">
+              <label for="notification_email_email2" class="font-medium text-gray-700">2nd Notification Email</label>
+            </div>
+            <div class="flex h-5 items-center">
+              <%= form.text_field(:email2, { class: 'form-control' }) %>
+            </div>
+            <div></div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex h-5 items-center">
+              <%= form.check_box(:appointment_created, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="notification_email_appointment_created" class="font-medium text-gray-700">Appointments Created</label>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <div class="flex h-5 items-center">
+              <%= form.check_box(:appointment_edited, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="notification_email_appointment_edited" class="font-medium text-gray-700">Appointments Edited</label>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <div class="flex h-5 items-center">
+              <%= form.check_box(:appointment_declined, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="notification_email_appointment_declined" class="font-medium text-gray-700">Appointments Declined</label>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <div class="flex h-5 items-center">
+              <%= form.check_box(:appointment_cancelled, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="notification_email_appointment_cancelled" class="font-medium text-gray-700">Appointments Cancelled</label>
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+
+    </div>
+    <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+      <%= form.submit 'Save Agency Account Settings', class: "inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+    </div>
+  </div>
+  <br>
+<% end %>

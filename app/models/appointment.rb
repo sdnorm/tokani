@@ -2,52 +2,53 @@
 #
 # Table name: appointments
 #
-#  id                       :bigint           not null, primary key
-#  admin_notes              :text
-#  assigned_interpreter     :uuid
-#  billing_notes            :text
-#  cancel_reason_code       :integer
-#  cancel_type              :integer
-#  canceled_by              :integer
-#  cancelled_at             :datetime
-#  confirmation_date        :datetime
-#  confirmation_notes       :text
-#  confirmation_phone       :string
-#  current_status           :string
-#  details                  :text
-#  duration                 :integer
-#  finish_time              :datetime
-#  gender_req               :integer
-#  home_health_appointment  :boolean
-#  interpreter_type         :integer
-#  lock_version             :integer
-#  modality                 :integer
-#  notes                    :text
-#  processed_by_customer    :boolean          default(FALSE)
-#  processed_by_interpreter :boolean          default(FALSE)
-#  ref_number               :string
-#  start_time               :datetime
-#  status                   :boolean
-#  sub_type                 :integer
-#  time_zone                :string
-#  total_billed             :decimal(, )
-#  total_paid               :decimal(, )
-#  video_link               :string
-#  visibility_status        :integer
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  agency_id                :uuid
-#  bill_rate_id             :integer
-#  creator_id               :uuid
-#  customer_id              :uuid
-#  department_id            :uuid
-#  interpreter_id           :uuid
-#  language_id              :bigint           not null
-#  pay_rate_id              :integer
-#  provider_id              :uuid
-#  recipient_id             :uuid
-#  requestor_id             :uuid
-#  site_id                  :uuid
+#  id                        :bigint           not null, primary key
+#  admin_notes               :text
+#  assigned_interpreter      :uuid
+#  billing_notes             :text
+#  cancel_reason_code        :integer
+#  cancel_type               :integer
+#  canceled_by               :integer
+#  cancelled_at              :datetime
+#  confirmation_date         :datetime
+#  confirmation_notes        :text
+#  confirmation_phone        :string
+#  current_status            :string
+#  details                   :text
+#  duration                  :integer
+#  finish_time               :datetime
+#  gender_req                :integer
+#  home_health_appointment   :boolean
+#  interpreter_reminder_sent :boolean          default(FALSE)
+#  interpreter_type          :integer
+#  lock_version              :integer
+#  modality                  :integer
+#  notes                     :text
+#  processed_by_customer     :boolean          default(FALSE)
+#  processed_by_interpreter  :boolean          default(FALSE)
+#  ref_number                :string
+#  start_time                :datetime
+#  status                    :boolean
+#  sub_type                  :integer
+#  time_zone                 :string
+#  total_billed              :decimal(, )
+#  total_paid                :decimal(, )
+#  video_link                :string
+#  visibility_status         :integer
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  agency_id                 :uuid
+#  bill_rate_id              :integer
+#  creator_id                :uuid
+#  customer_id               :uuid
+#  department_id             :uuid
+#  interpreter_id            :uuid
+#  language_id               :bigint           not null
+#  pay_rate_id               :integer
+#  provider_id               :uuid
+#  recipient_id              :uuid
+#  requestor_id              :uuid
+#  site_id                   :uuid
 #
 # Indexes
 #
@@ -111,10 +112,13 @@ class Appointment < ApplicationRecord
 
   validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
   before_create :gen_refnum
+
+  after_create :send_created_notifications
   after_create :create_offers, if: :no_assignemnt?
   after_create :assign_interpreter, unless: :no_assignemnt?
   after_update :update_offers, if: :unless_no_offers
   after_update :assign_interpreter, if: :assigned_interpreter_changed?
+  before_update :send_edited_notifications
 
   def no_assignemnt?
     assigned_interpreter.nil?
@@ -175,6 +179,10 @@ class Appointment < ApplicationRecord
         throw ActiveRecord::RecordInvalid
       end
     end
+
+    if offered
+      NotificationsService.deliver_appointment_offered_notifications(account: agency, appointment: self)
+    end
   end
 
   def unless_no_offers
@@ -223,6 +231,7 @@ class Appointment < ApplicationRecord
       update_columns(visibility_status: "opened") unless visibility_status == "opened"
       AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "opened")
     else
+      NotificationsService.deliver_appointment_offered_notifications(account: agency, appointment: self)
       update_columns(visibility_status: "offered") unless visibility_status == "offered"
       AppointmentStatus.new(user_id: creator_id, appointment_id: id, name: "offered")
     end
@@ -263,6 +272,11 @@ class Appointment < ApplicationRecord
 
   def start_time_in_zone(zone)
     start_time.in_time_zone(zone)
+  end
+
+  def start_datetime_string_in_zone(zone)
+    dt = start_time_in_zone(zone)
+    dt.strftime("%B %-d at %I:%M %p (%Z)")
   end
 
   def associate_bill_rate_via_service
@@ -319,8 +333,8 @@ class Appointment < ApplicationRecord
     payment_line_items.map { |li| li.type_key.titleize }.join(" - ")
   end
 
-  def duration_in_hours
-    (duration / 60.0).round(0)
+  def duration_in_hours(round_to = 0)
+    (duration / 60.0).round(round_to)
   end
 
   def duration_viewable
@@ -337,5 +351,19 @@ class Appointment < ApplicationRecord
     date = Time.zone.parse(date_portion).to_date
     parsed_datetime_in_zone = Time.zone.parse("#{date.strftime("%F")} #{time.strftime("%T")}")
     self.finish_time = parsed_datetime_in_zone.utc
+  end
+
+  def send_created_notifications
+    NotificationsService.deliver_appointment_created_notifications(account: agency, appointment: self)
+  end
+
+  def send_edited_notifications
+    # We only want to send these if certain fields are updated:
+    # Date or Time Change, Modality, Location or Duration
+    check_for_change_fields = ["start_time", "modality", "site_id", "department_id", "duration"]
+    # Find the common elements of the two arrays
+    if (check_for_change_fields & changed).any?
+      NotificationsService.deliver_appointment_edited_notifications(account: agency, appointment: self)
+    end
   end
 end

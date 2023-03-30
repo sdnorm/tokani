@@ -2,12 +2,13 @@
 #
 # Table name: requested_interpreters
 #
-#  id             :bigint           not null, primary key
-#  rejected       :boolean          default(FALSE)
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  appointment_id :bigint           not null
-#  user_id        :uuid             not null
+#  id                :bigint           not null, primary key
+#  notification_sent :boolean          default(FALSE)
+#  rejected          :boolean          default(FALSE)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  appointment_id    :bigint           not null
+#  user_id           :uuid             not null
 #
 # Indexes
 #
@@ -24,4 +25,6 @@ class RequestedInterpreter < ApplicationRecord
   belongs_to :appointment
 
   enum status: {accepted: 1, rejected: 2, pending: 0}
+
+  scope :unsent_notifications, -> { where(notification_sent: false) }
 end

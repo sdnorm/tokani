@@ -1,0 +1,9 @@
+<div style="text-align: center;">
+  <h1 style="font-weight:400;line-height: 1.25;">
+    <%= @subject %>
+  </h1>
+
+  <%= render partial: "appointment_details" %>
+
+  <%= link_to "View Appointment", appointment_url(@appointment), style: "background:#38b2ac; color:#fff; border-radius: 4px; text-decoration: none; padding:.75rem 1rem;" %>
+</div>

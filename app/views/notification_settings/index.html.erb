@@ -1,0 +1,163 @@
+<% content_for :title, "Notifications" %>
+
+<div class="flex flex-wrap my-4 lg:px-4">
+  <div class="w-full mb-4 lg:w-1/4 lg:p-4">
+    <%= render partial: "shared/account_navbar" %>
+  </div>
+
+  <div class="w-full lg:w-3/4 lg:p-4">
+    <div class="lg:p-10 p-4 bg-white rounded-lg border border-gray-200">
+      <h1 class="h3 mb-2">Notifications</h1>
+
+      <% if current_user.is_agency_admin? %>
+        <%= render partial: "agency_admin_settings" %>
+      <% end %>
+
+      <%= form_with(model: @notification_setting, url: @url, method: @method_name) do |form| %>
+        <div class="overflow-hidden shadow sm:rounded-md">
+          <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+            <fieldset>
+              <legend class="text-base font-medium text-gray-900">By Email</legend>
+
+              <% if current_user.is_interpreter? %>
+                <div class="mt-4 space-y-4">
+                  <div class="flex items-start">
+                    <div class="flex h-5 items-center">
+                      <%= form.check_box(:appointment_offered, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                    </div>
+                    <div class="ml-3 text-sm">
+                      <label for="notification_setting_appointment_offered" class="font-medium text-gray-700">Appointments Offered</label>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_scheduled, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_scheduled" class="font-medium text-gray-700">Appointments Scheduled</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_cancelled, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_cancelled" class="font-medium text-gray-700">Appointments Cancelled</label>
+                      </div>
+                    </div>
+                  </div>
+                <% elsif current_user.is_agency_admin? %>
+                  <div class="mt-4 space-y-4">
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_created, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_created" class="font-medium text-gray-700">Appointments Created</label>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_declined, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_declined" class="font-medium text-gray-700">Appointments Declined</label>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_cancelled, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_cancelled" class="font-medium text-gray-700">Appointments Cancelled</label>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:interpreter_cancelled, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_interpreter_cancelled" class="font-medium text-gray-700">Interpreter Cancelled</label>
+                      </div>
+                    </div>
+                  </div>
+                <% elsif current_user.is_requestor? %>
+
+                  <div class="mt-4 space-y-4">
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_reminder, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_reminder" class="font-medium text-gray-700">Appointment Reminders</label>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_covered, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_covered" class="font-medium text-gray-700">Appointments Covered</label>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:appointment_declined, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_appointment_declined" class="font-medium text-gray-700">Appointments Declined</label>
+                      </div>
+                    </div>
+                  </div>
+
+                <% end %>
+
+              </div>
+            </fieldset>
+            <fieldset class="mt-6 ml-5">
+              <legend class="text-base font-medium text-gray-900">Push Notifications</legend>
+              <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
+              <div class="mt-4 space-y-4">
+                <div class="flex items-center">
+                  <%= form.radio_button :sms, "everything", checked: (@notification_setting.sms == "everything"), class: "h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+                  <label for="notification_setting_sms_everything" class="ml-3">
+                    <span class="block text-sm font-medium text-gray-700">Everything</span>
+                  </label>
+                </div>
+                <div class="flex items-center">
+                  <%= form.radio_button :sms, "same_as_email", checked: (@notification_setting.sms == "same_as_email"), class: "h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+                  <label for="notification_setting_sms_same_as_email" class="ml-3">
+                    <span class="block text-sm font-medium text-gray-700">Same as email</span>
+                  </label>
+                </div>
+                <div class="flex items-center">
+                  <%= form.radio_button :sms, "no_sms", checked: (@notification_setting.sms == "no_sms") , class: "h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
+                  <label for="notification_setting_sms_no_sms" class="ml-3">
+                    <span class="block text-sm font-medium text-gray-700">No push notifications</span>
+                  </label>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mb-5">
+                  <div class="text-sm">
+                    <label for="notification_email_email1" class="font-medium text-gray-700">SMS Number for Notifications</label>
+                  </div>
+                  <div class="flex h-5 items-center">
+                    <%= form.text_field(:sms_number, { class: 'form-control' }) %>
+                  </div>
+                  <div></div>
+                </div>
+                <br>
+              </div>
+            </fieldset>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <%= form.submit 'Save', class: "inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

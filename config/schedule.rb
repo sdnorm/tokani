@@ -18,3 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+# Run the Reminder service every 1 hour. That way interpreters will get the reminders within 23-24 hours of their appointment.
+every 1.hours do
+  runner "DeliverAppointmentReminderNotificationsJob.perform_later"
+end
