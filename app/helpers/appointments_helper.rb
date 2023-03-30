@@ -28,4 +28,3 @@ module AppointmentsHelper
     end
   end
 end
-
