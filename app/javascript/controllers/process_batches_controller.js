@@ -5,10 +5,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["customers", "interpreters"]
 
-  connect() {
-    console.log("process batches controller connected...")
-  }
-
   processBy(event) {
 
     let batch_type = event.target.value
