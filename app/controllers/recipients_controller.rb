@@ -46,7 +46,6 @@ class RecipientsController < ApplicationController
       customer_ids = current_account.agency_customers.pluck(:customer_id)
       @customers = Customer.where(id: customer_ids)
     end
-    
   end
 
   # POST /recipients or /recipients.json

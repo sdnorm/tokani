@@ -53,24 +53,23 @@ class Customer < Account
       email: customer_detail.email,
       password: SecureRandom.alphanumeric,
       terms_of_service: true,
-      accepted_terms_at: Time.current,
+      accepted_terms_at: Time.current
     )
     update(owner_id: user.id)
     account_users.create(user: user, roles: {"customer_admin" => true})
     RequestorDetail.create(
       allow_offsite: true,
       allow_view_docs: true,
-      allow_view_checklist: true, 
+      allow_view_checklist: true,
       primary_phone: customer_detail.phone,
       customer_id: customer_detail.customer_id,
       requestor_id: user.id,
-      requestor_type: 4,
+      requestor_type: 4
     )
     CustomerRequestor.create(customer_id: customer_detail.customer_id, requestor_id: user.id)
-   
+
     AgencyCustomerCreationMailer.welcome(user, self).deliver_later
   end
-
 
   private
 

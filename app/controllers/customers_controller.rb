@@ -45,7 +45,7 @@ class CustomersController < ApplicationController
       if @customer.save
         CreateCustomerOwnerUserAccountJob.perform_later(@customer.id)
         AgencyCustomer.create!(agency: current_account, customer: @customer)
-        
+
         format.html { redirect_to @customer, notice: "Customer was successfully created." }
         format.json { render :show, status: :created, location: @customer }
       else

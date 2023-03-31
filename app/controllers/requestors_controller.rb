@@ -7,43 +7,40 @@ class RequestorsController < ApplicationController
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  
   def index
-    
     if agency_logged_in?
       customer_ids = current_account.agency_customers.pluck(:customer_id)
-      @requestor_accounts =  CustomerRequestor.where(customer_id: customer_ids).pluck(:requestor_id)
+      @requestor_accounts = CustomerRequestor.where(customer_id: customer_ids).pluck(:requestor_id)
 
     else
       @requestor_accounts = current_account.account_users.client.pluck(:user_id)
       @requestor_accounts << current_account.account_users.site_member.pluck(:user_id)
       @requestor_accounts << current_account.account_users.site_admin.pluck(:user_id)
       @requestor_accounts << current_account.account_users.customer_admin.pluck(:user_id)
-     end
+    end
 
     @pagy, @requestors = pagy(User.where(id: @requestor_accounts.flatten).sort_by_params(params[:sort], sort_direction))
-    
   end
 
   def new
     @requestor = User.new
     @requestor.build_requestor_detail
-   
+
     if agency_logged_in?
       customer_ids = current_account.agency_customers.pluck(:customer_id)
       @account_customers = Customer.where(id: customer_ids)
     else
-    @account_customers =  current_account.customers 
+      @account_customers = current_account.customers
     end
-   
+
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
       @customer = Customer.find(@customer_id)
       @sites = @customer.sites.order("name ASC")
       @departments = Department.where(site_id: @site_id).order("name ASC")
     end
-    #@sites = customer_logged_in? ? Customer.find(current_user.requestor_detail.customer_id).sites : []
-     @sites ||= !agency_logged_in? ? current_account.sites : []
+    # @sites = customer_logged_in? ? Customer.find(current_user.requestor_detail.customer_id).sites : []
+    @sites ||= (!agency_logged_in?) ? current_account.sites : []
     #  @departments = Department.where(site_id: @sites).order("name ASC")
     @departments ||= []
     @remote = params[:remote] == "true"
@@ -58,7 +55,7 @@ class RequestorsController < ApplicationController
       customer_ids = current_account.agency_customers.pluck(:customer_id)
       @account_customers = Customer.where(id: customer_ids)
     else
-    @account_customers =  current_account.customers 
+      @account_customers = current_account.customers
     end
     @sites = agency_logged_in? ? current_account.account_sites.order("name ASC") : current_account.sites.order("name ASC")
     # @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
@@ -87,11 +84,11 @@ class RequestorsController < ApplicationController
       @requestor.requestor_detail.customer_id = current_account.id
       # @requestor.requestor_detail.customer_id = current_user.requestor_detail.customer_id
     end
-      # @requestor.requestor_detail.customer_id = current_account.id
-      # @requestor.requestor_detail.requestor_type = 4
-      # req_type = {"customer_admin" => true}
+    # @requestor.requestor_detail.customer_id = current_account.id
+    # @requestor.requestor_detail.requestor_type = 4
+    # req_type = {"customer_admin" => true}
     # else
-      req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
+    req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
     # end
 
     if req_type == "site_admin"
@@ -148,9 +145,9 @@ class RequestorsController < ApplicationController
     requestor = current_account.account_users.client.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
-    
+
     # requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?
-    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) 
+    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id])
 
     req_id = requestor.user_id
     @requestor = User.find_by(id: req_id)

@@ -11,13 +11,12 @@ class ProvidersController < ApplicationController
     if agency_logged_in?
       customer_ids = current_account.agency_customers.pluck(:customer_id)
       @pagy, @providers = pagy(Provider.where(customer_id: customer_ids).sort_by_params(params[:sort], sort_direction))
-       
+
     else
       customer = current_account.id
       @pagy, @providers = pagy(Provider.where(customer_id: customer).sort_by_params(params[:sort], sort_direction))
 
     end
-
 
     # Uncomment to authorize with Pundit
     # authorize @providers
@@ -31,7 +30,7 @@ class ProvidersController < ApplicationController
   def new
     @provider = Provider.new
     # @account_customers = current_account.customers unless customer_logged_in?
-    @account_customers = current_account.customers 
+    @account_customers = current_account.customers
 
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
@@ -51,8 +50,7 @@ class ProvidersController < ApplicationController
   # GET /providers/1/edit
   def edit
     @account_customers = current_account.customers unless customer_logged_in?
-    @sites = agency_logged_in? ? current_account.account_sites.order("name ASC"): current_account.sites.order("name ASC") 
-byebug
+    @sites = agency_logged_in? ? current_account.account_sites.order("name ASC") : current_account.sites.order("name ASC")
     @departments = if @provider.site_id.present?
       Department.where(site_id: @provider.site_id).order("name ASC")
     else
