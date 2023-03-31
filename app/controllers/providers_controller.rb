@@ -8,7 +8,16 @@ class ProvidersController < ApplicationController
 
   # GET /providers
   def index
-    @pagy, @providers = pagy(Provider.sort_by_params(params[:sort], sort_direction))
+    if agency_logged_in?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @pagy, @providers = pagy(Provider.where(customer_id: customer_ids).sort_by_params(params[:sort], sort_direction))
+       
+    else
+      customer = current_account.id
+      @pagy, @providers = pagy(Provider.where(customer_id: customer).sort_by_params(params[:sort], sort_direction))
+
+    end
+
 
     # Uncomment to authorize with Pundit
     # authorize @providers
@@ -21,7 +30,8 @@ class ProvidersController < ApplicationController
   # GET /providers/new
   def new
     @provider = Provider.new
-    @account_customers = current_account.customers unless customer_logged_in?
+    # @account_customers = current_account.customers unless customer_logged_in?
+    @account_customers = current_account.customers 
 
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
@@ -30,7 +40,8 @@ class ProvidersController < ApplicationController
       @departments = Department.where(site_id: @site_id).order("name ASC")
 
     end
-    @sites ||= customer_logged_in? ? current_account.sites : []
+    @sites = agency_logged_in? ? current_account.account_sites.order("name ASC") : current_account.sites.order("name ASC")
+    # @sites ||= customer_logged_in? ? current_account.sites : []
     @departments ||= []
 
     # Uncomment to authorize with Pundit
@@ -40,8 +51,8 @@ class ProvidersController < ApplicationController
   # GET /providers/1/edit
   def edit
     @account_customers = current_account.customers unless customer_logged_in?
-    @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
-
+    @sites = agency_logged_in? ? current_account.account_sites.order("name ASC"): current_account.sites.order("name ASC") 
+byebug
     @departments = if @provider.site_id.present?
       Department.where(site_id: @provider.site_id).order("name ASC")
     else
@@ -53,7 +64,7 @@ class ProvidersController < ApplicationController
   def create
     @provider = Provider.new(provider_params)
     @account_customers = current_account.customers
-    @provider.customer_id = current_account.id if customer_logged_in?
+    @provider.customer_id = current_account.id unless agency_logged_in?
     @sites = current_account.account_sites.order("name ASC")
     @departments = if @provider.site_id.present?
       Department.where(site_id: @provider.site_id).order("name ASC")

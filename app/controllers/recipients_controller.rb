@@ -10,9 +10,12 @@ class RecipientsController < ApplicationController
   def index
     recipients = if current_account.agency?
       current_account.agency_recipients
-    elsif current_account.customer?
+    else
       current_account.recipients
     end
+    # elsif current_account.customer?
+    #   current_account.recipients
+    # end
     @pagy, @recipients = pagy(recipients.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
@@ -27,7 +30,9 @@ class RecipientsController < ApplicationController
   def new
     @recipient = Recipient.new
     if current_account.agency?
-      @customers = current_account.customers
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @customers = Customer.where(id: customer_ids)
+
     end
     # grab_account_customers_when_needed
     # Uncomment to authorize with Pundit
@@ -36,17 +41,24 @@ class RecipientsController < ApplicationController
 
   # GET /recipients/1/edit
   def edit
-    grab_account_customers_when_needed
+    # grab_account_customers_when_needed
+    if current_account.agency?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @customers = Customer.where(id: customer_ids)
+    end
+    
   end
 
   # POST /recipients or /recipients.json
   def create
     @recipient = Recipient.new(recipient_params)
-    grab_account_customers_when_needed
+    if !agency_logged_in?
+      @recipient.customer_id = current_account.id
+    end
+    # grab_account_customers_when_needed
 
     # Uncomment to authorize with Pundit
     # authorize @recipient
-
     respond_to do |format|
       if @recipient.save
         format.html { redirect_to @recipient, notice: "Recipient was successfully created." }

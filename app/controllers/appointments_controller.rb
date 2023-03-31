@@ -188,7 +188,9 @@ class AppointmentsController < ApplicationController
 
   def setup_appointment_vars
     @account_customers = current_account.customers
-    @customer = customer_logged_in? ? current_account : Customer.find(params[:customer_id])
+    # @customer = customer_logged_in? ? current_account : Customer.find(params[:customer_id])
+    @customer = customer_logged_in? ? Customer.find(current_user.requestor_detail.customer_id) : Customer.find(params[:customer_id])
+    
     @sites = @customer.sites.order("name ASC")
 
     department_list = Department.where(site_id: @sites).order("name ASC")

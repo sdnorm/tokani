@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_29_190659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -366,6 +366,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_171737) do
     t.bigint "customer_category_id"
     t.index ["customer_category_id"], name: "index_customer_details_on_customer_category_id"
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
+  end
+
+  create_table "customer_requestors", force: :cascade do |t|
+    t.uuid "customer_id"
+    t.uuid "requestor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

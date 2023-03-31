@@ -7,32 +7,44 @@ class RequestorsController < ApplicationController
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  # GET /interpreters
+  
   def index
-    if customer_logged_in?
-      @requestor_accounts = current_account.account_users.customer_admin.pluck(:user_id)
+    
+    if agency_logged_in?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @requestor_accounts =  CustomerRequestor.where(customer_id: customer_ids).pluck(:requestor_id)
+
     else
       @requestor_accounts = current_account.account_users.client.pluck(:user_id)
       @requestor_accounts << current_account.account_users.site_member.pluck(:user_id)
       @requestor_accounts << current_account.account_users.site_admin.pluck(:user_id)
-    end
+      @requestor_accounts << current_account.account_users.customer_admin.pluck(:user_id)
+     end
 
     @pagy, @requestors = pagy(User.where(id: @requestor_accounts.flatten).sort_by_params(params[:sort], sort_direction))
+    
   end
 
   def new
     @requestor = User.new
     @requestor.build_requestor_detail
-    @account_customers = current_account.customers unless customer_logged_in?
-
+   
+    if agency_logged_in?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @account_customers = Customer.where(id: customer_ids)
+    else
+    @account_customers =  current_account.customers 
+    end
+   
     if params[:customer_id].present?
       @customer_id = params[:customer_id]
       @customer = Customer.find(@customer_id)
       @sites = @customer.sites.order("name ASC")
       @departments = Department.where(site_id: @site_id).order("name ASC")
-
     end
-    @sites ||= customer_logged_in? ? current_account.sites : []
+    #@sites = customer_logged_in? ? Customer.find(current_user.requestor_detail.customer_id).sites : []
+     @sites ||= !agency_logged_in? ? current_account.sites : []
+    #  @departments = Department.where(site_id: @sites).order("name ASC")
     @departments ||= []
     @remote = params[:remote] == "true"
   end
@@ -42,8 +54,14 @@ class RequestorsController < ApplicationController
   end
 
   def edit
-    @account_customers = current_account.customers unless customer_logged_in?
-    @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
+    if agency_logged_in?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @account_customers = Customer.where(id: customer_ids)
+    else
+    @account_customers =  current_account.customers 
+    end
+    @sites = agency_logged_in? ? current_account.account_sites.order("name ASC") : current_account.sites.order("name ASC")
+    # @sites = customer_logged_in? ? current_account.sites.order("name ASC") : current_account.account_sites.order("name ASC")
     @departments = if @requestor.requestor_detail.site_id.present?
       Department.where(site_id: @requestor.requestor_detail.site_id).order("name ASC")
     else
@@ -65,13 +83,16 @@ class RequestorsController < ApplicationController
     @requestor.password = SecureRandom.alphanumeric
     @requestor.accepted_terms_at = Time.current
 
-    if customer_logged_in?
+    unless agency_logged_in?
       @requestor.requestor_detail.customer_id = current_account.id
-      @requestor.requestor_detail.requestor_type = 4
-      req_type = {"customer_admin" => true}
-    else
-      req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
+      # @requestor.requestor_detail.customer_id = current_user.requestor_detail.customer_id
     end
+      # @requestor.requestor_detail.customer_id = current_account.id
+      # @requestor.requestor_detail.requestor_type = 4
+      # req_type = {"customer_admin" => true}
+    # else
+      req_type = requestor_params[:requestor_detail_attributes][:requestor_type]
+    # end
 
     if req_type == "site_admin"
       req_type = {"site_admin" => true}
@@ -82,11 +103,16 @@ class RequestorsController < ApplicationController
     if req_type == "client"
       req_type = {"client" => true}
     end
-    @requestor.skip_default_account = true
+
+    if req_type == "customer_admin"
+      req_type = {"customer_admin" => true}
+    end
+    # @requestor.skip_default_account = true
 
     respond_to do |format|
       if @requestor.save
         AccountUser.create!(account_id: current_account.id, user_id: @requestor.id, roles: req_type)
+        CustomerRequestor.create!(requestor_id: @requestor.id, customer_id: @requestor.requestor_detail.customer_id)
         AgencyAdminRequestorCreationMailer.welcome(@requestor).deliver_later
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully created." }
         format.json { render :show, status: :created, location: @requestor }
@@ -122,7 +148,10 @@ class RequestorsController < ApplicationController
     requestor = current_account.account_users.client.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
-    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?
+    
+    # requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?
+    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) 
+
     req_id = requestor.user_id
     @requestor = User.find_by(id: req_id)
   rescue ActiveRecord::RecordNotFound
