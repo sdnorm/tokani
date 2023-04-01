@@ -1,6 +1,4 @@
 <div>
-  <% form_url = appointment.new_record? ? appointments_path : appointment_path(appointment) %>
-  <%# form_with(model: appointment, url: form_url) do |form| %>
   <%= form_with model: appointment, class: 'form', data: {controller: "interpreter-autocomplete", interpreter_autocomplete_min_length_value: '3', interpreter_autocomplete_url_value: search_interpreters_path}  do |form| %>
     <%= render "shared/error_messages", resource: form.object %>
     <div class="mt-5 md:col-span-2 md:mt-0">
@@ -46,7 +44,7 @@
                   <%# form.select :duration_type, options_for_select([['Minutes', 'minutes'], ['Hour(s)', 'hours']]), {}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
                 </div>
               </div>
-            </div>              
+            </div>
             <div class="lg:col-span-3 sm:col-span-6">
               <div class="form-group">
                 <%= form.label "Modality*", class: "block text-sm font-medium text-gray-700" %>
@@ -113,7 +111,7 @@
               <%= link_to t("cancel"), appointment_path(@appointment), class:"inline-flex justify-center rounded-md border border-transparent bg-tokaniprimary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
           <% end %>
         </div>
-      <% end %>  
-    </div> 
+      <% end %>
+    </div>
   <% end %>
 </div>

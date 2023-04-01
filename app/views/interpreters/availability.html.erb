@@ -1,4 +1,4 @@
-
+<%= turbo_frame_tag "availability" do %>
 <div class="flex flex-1 flex-col md:pl-64">
   <main class="flex-1">
     <div class="py-6">
@@ -7,47 +7,34 @@
 
           <div class="p-8 bg-white rounded shadow">
             <div class="px-4 sm:px-6 lg:px-8 container">
-              <div class="justify-center content-center mb-5" data-controller="interpreters">
-                <%= form_with url:  update_timezone_interpreter_path(@interpreter), class: "form", method: :patch, data: { turbo_frame: "interpreters", target: "interpreters_target.form", interpreters_target: "form" } do |form| %>
-                  <div class="mb-3">
-                    <p id="timezone_notice"><%= flash[:timezone_notice] %></p>
+              <div class="flex flex-wrap">
+                <div class="py-4">
+                  <div>
+                    <%= link_to update_timezone_view_interpreters_path, class: "mt-3 inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-tokanisecondary-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm", data: { turbo_frame: "update_timezone_view" } do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p class="ml-2">Update Timezone</p>
+                    <% end %>
                   </div>
-
-                  <div class="mb-3">
-                    <div></div>
-                    <div class="w-1/2 m-auto">
-                      <button id="submit-timezone__btn" type="submit" class="hidden mt-3 inline-flex w-full items-center justify-center rounded-none border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                      data-controller="interpreters" data-turbo-confirm="Updating this resets availabilities. Do you want to proceed?" data-turbo="true">Update</button>
-                      <%= form.select :timezone, options_from_collection_for_select(Account.available_timezones, :name, :name, @interpreter.time_zone), {}, {class: 'form-select', data: { action: "change->interpreters#submitForm", selected_value: @interpreter.time_zone }} %>
-                    </div>
+                  <%= turbo_frame_tag "update_timezone_view" %>
+                  <%#= render partial: "availability_table", locals: {index: index} %>
+                </div>
+                <div class="py-4 ml-auto">
+                  <div class="text-right">
+                    <%= link_to add_availability_interpreters_path, class: "mt-3 inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-tokanisecondary-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm", data: { turbo_frame: "add_availability" } do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p class="ml-2">Add Availability</p>
+                    <% end %>
                   </div>
-                <% end %>
+                  <%= turbo_frame_tag "add_availability" %>
+                </div>
               </div>
 
-              <div data-controller="tabs">
-                <ul class="list-reset list-none flex justify-center border-b">
-                  <% @days.each_with_index do |day, index| %>
-                    <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
-                      <a class="text-sm inline-flex align-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" href="#">
-                        <%= day %>
-                      </a>
-                    </li>
-                  <% end %>
-                </ul>
-                <% @days.each_with_index do |day, index| %>
-                  <div class="hidden py-4" data-tabs-target="panel">
-                    <div class="text-right">
-                      <%= link_to add_availability_interpreters_path(index: index), class: "mt-3 inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-tokanisecondary-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm", data: { turbo_frame: "availability_day_#{index}"}  do %>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p class="ml-2">Add Availability</p>
-                      <% end %>
-                    </div>
-                    <%= turbo_frame_tag "availability_day_#{index}" %>
-                		<%= render partial: "availability_table", locals: {index: index} %>
-                  </div>
-                <% end %>
+              <div class="bg-white rounded shadow">
+                <%= render partial: "availability_table", locals: { availabilities: @availabilities } %>
               </div>
             </div>
           </div>
@@ -56,3 +43,4 @@
     </div>
   </main>
 </div>
+<% end %>

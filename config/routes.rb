@@ -207,6 +207,7 @@ Rails.application.routes.draw do
         get :appointments
         get :filter_appointments
         get :add_availability
+        get :update_timezone_view
       end
       member do
         get :appointment_details

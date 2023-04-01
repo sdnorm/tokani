@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "update_timezone_view" do %>
+  <div class="justify-center content-center mb-5" data-controller="interpreters">
+    <%= form_with url:  update_timezone_interpreter_path(@interpreter), class: "form", method: :patch, data: { turbo_frame: "interpreters", target: "interpreters_target.form", interpreters_target: "form" } do |form| %>
+      <div class="mb-3">
+        <p id="timezone_notice"><%= flash[:timezone_notice] %></p>
+      </div>
+
+      <div class="mb-3">
+        <div></div>
+        <div class="w-full my-5">
+          <button id="submit-timezone__btn" type="submit" class="hidden mt-3 inline-flex w-full items-center justify-center rounded-none border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+          data-controller="interpreters" data-turbo-confirm="Updating this resets availabilities. Do you want to proceed?">Update</button>
+          <%= form.select :timezone, options_from_collection_for_select(Account.available_timezones, :name, :name, @interpreter.time_zone), {}, {class: 'form-select', data: { action: "change->interpreters#submitForm", selected_value: @interpreter.time_zone, }} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,4 +1,7 @@
 <tr id="<%= availability.id %>_form_wrapper" class= "">
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <%= availability_day(availability.wday) %>
+  </td>
   <td class="whitespace-nowrap py-4 pl-4 text-sm text-gray-500"><%= start_avail(availability) %></td>
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= end_avail(availability) %></td>
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">

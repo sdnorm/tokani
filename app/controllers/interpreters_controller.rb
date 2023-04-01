@@ -213,15 +213,18 @@ class InterpretersController < ApplicationController
   end
 
   def add_availability
-    @index = params[:index]
     @interpreter = current_user
     @availabilities = @interpreter.availabilities.group_by(&:wday)
     @days = Date::DAYNAMES
   end
 
+  def update_timezone_view
+    @interpreter = current_user
+  end
+
   def availability
     @interpreter = current_user
-    @availabilities = @interpreter.availabilities.group_by(&:wday)
+    @availabilities = @interpreter.availabilities
     @days = Date::DAYNAMES
   end
 
@@ -244,7 +247,8 @@ class InterpretersController < ApplicationController
       flash[:timezone_notice] = "Something went wrong updating your timezone: #{@interpreter.errors.full_messages.join("; ")}"
     end
 
-    redirect_to("/interpreters/availability")
+    render turbo_stream: turbo_stream.replace("availability", template: "interpreters/availability")
+    # redirect_to interpreters_availability_path
   end
 
   def appointments

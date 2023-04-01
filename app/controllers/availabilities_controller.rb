@@ -9,6 +9,7 @@ class AvailabilitiesController < ApplicationController
       render status: :unprocessable_entity
       return false
     end
+    @days = Date::DAYNAMES
     @availability = Availability.new(availability_params)
     @availability.set_times_from_hash(params[:times])
 
@@ -18,11 +19,12 @@ class AvailabilitiesController < ApplicationController
       @notice = "Availability created!"
       @availabilities = @availability.interpreter.availabilities.where(wday: @availability.wday)
     else
-      render turbo_stream: turbo_stream.update("new_availability_#{@availability.wday}_notice", partial: "shared/error_messages", locals: {resource: @availability})
+      render turbo_stream: turbo_stream.update("new_availability_notice", partial: "shared/error_messages", locals: {resource: @availability})
     end
   end
 
   def destroy
+    @days = Date::DAYNAMES
     @availability = Availability.find(params[:id])
     @target = "#{@availability.id}_form_wrapper"
     @availability.destroy!

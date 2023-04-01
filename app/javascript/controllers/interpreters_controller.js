@@ -6,7 +6,7 @@ export default class extends Controller {
   removeElement() {
     const index = this.element.querySelector("button").dataset.index
 
-    const availabilityFormElement = document.querySelector(`#new_availability_${index}_form_wrapper`)
+    const availabilityFormElement = document.querySelector(`#new_availability_form_wrapper`)
 
     availabilityFormElement.remove()
   }
@@ -16,7 +16,7 @@ export default class extends Controller {
 
     const submitTimezoneBtn = document.querySelector("#submit-timezone__btn")
 
-    if(!submitTimezoneBtn.click()) {
+    if (!submitTimezoneBtn.click()) {
       event.target.value = previousValue
     }
   }
