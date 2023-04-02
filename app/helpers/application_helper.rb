@@ -355,4 +355,8 @@ module ApplicationHelper
   def appointment_info(appointment, time_zone)
     "#{appointment&.ref_number} - #{appointment&.start_datetime_string_in_zone(time_zone)} - #{appointment&.language&.name} - #{appointment&.customer&.name}"
   end
+
+  def format_date_time(date_time)
+    date_time.strftime("%B %-d at %I:%M %p (%Z)")
+  end
 end

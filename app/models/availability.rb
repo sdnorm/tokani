@@ -33,7 +33,7 @@ class Availability < ApplicationRecord
     4 => "Thursday",
     5 => "Friday",
     6 => "Saturday"
-  }.with_indifferent_access
+  }
 
   belongs_to :interpreter, foreign_key: "user_id", class_name: "User"
 

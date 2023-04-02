@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   get "interpreters/profile/notifications_edit", to: "interpreters#profile_notifications_edit"
   get "interpreters/profile/security_edit", to: "interpreters#profile_security_edit"
   get "interpreters/public/details", to: "interpreters#public_details"
-  get "interpreters/time-off", to: "interpreters#time_off"
+  get "interpreters/time-off", to: "time_offs#index"
 
   get "dashboard/customer", to: "dashboard#customer"
   get "customers/customer_details", to: "customers#customer_details"
@@ -231,6 +231,7 @@ Rails.application.routes.draw do
     get "/dashboard", to: "dashboard#agency", as: :agency_dashboard
 
     resources :availabilities, only: [:create, :destroy]
+    resources :time_offs
     get "agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
     # put "agency_detail_update", to: "agencies#agency_detail_update", as: :agency_detail_update
     patch "agency_details", to: "agencies#agency_detail_update", as: :agency_detail_update
