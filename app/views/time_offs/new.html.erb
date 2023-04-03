@@ -1,0 +1,9 @@
+<%= content_for :title, t("shared.scaffold.new.title", model: "Time Off") %>
+
+<%= turbo_frame_tag "new_time_off" do %>
+  <div class="container px-4 mx-auto my-8">
+    <div class="p-8 bg-white rounded shadow">
+      <%= render "form", time_off: @time_off %>
+    </div>
+  </div>
+<% end %>

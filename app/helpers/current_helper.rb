@@ -16,6 +16,14 @@ module CurrentHelper
     current_account_user.customer_admin?
   end
 
+  def agency_logged_in?
+    current_account_user.agency_admin? || current_account_user.agency_member?
+  end
+
+  def requestor_logged_in?
+    current_account_user.site_admin? || current_account_user.site_member? || current_account_user.client?
+  end
+
   def current_account_admin?
     !!current_account_user&.admin?
   end

@@ -14,4 +14,8 @@ module AvailabilitiesHelper
   def modalities_pretty(availability)
     availability.modalities.map { |m| m.to_s.titleize }.join(", ").to_s
   end
+
+  def availability_day(week_day)
+    Availability::WDAY_MAPPING[week_day].to_s
+  end
 end

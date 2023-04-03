@@ -1,0 +1,17 @@
+<%= content_for :title, "Time Offs ##{@time_off.id}" %>
+<%= turbo_stream_from @time_off %>
+
+<div class="container px-4 mx-auto my-8">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="h3">
+      <%= link_to "Time Offs", time_offs_path, class: "text-black" %>
+      <span class="text-gray-400 font-light mx-2">\</span>
+      Time Off #<%= @time_off.id %>
+    </h1>
+    <%= link_to t("edit"), edit_time_off_path(@time_off), class: "btn btn-white" %>
+  </div>
+
+  <div class="p-8 bg-white rounded shadow">
+    <%= render @time_off %>
+  </div>
+</div>

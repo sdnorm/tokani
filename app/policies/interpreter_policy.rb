@@ -13,7 +13,7 @@ class InterpreterPolicy < ApplicationPolicy
 
   # show sidenav only on these controllers
   def whitelisted_controllers
-    %w[dashboard interpreters]
+    %w[dashboard interpreters time_offs]
   end
 
   def pure_interpreter?

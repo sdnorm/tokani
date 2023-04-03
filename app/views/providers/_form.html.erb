@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="col-span-6 sm:col-span-6" data-controller="select-group">
-              <% unless customer_logged_in? %>
+              <% if agency_logged_in? %>
                 <div class="col-span-3 sm:col-span-3">
                   <div class="form-group">
                     <%= form.label "Customer*", class: "block text-sm font-medium text-gray-700" %>
@@ -56,13 +56,13 @@
               <div class="col-span-3 sm:col-span-3">
                 <div class="form-group">
                   <%= form.label :site_id, class: 'text-blueCoral' %>
-                  <%= form.select :site_id, options_from_collection_for_select(sites, :id, :name, provider.site_id), {include_blank: 'None'}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'provider_department_id'}} %>
+                  <%= form.select :site_id, options_from_collection_for_select(sites, :id, :name, provider.site_id), {include_blank: 'None'}, {disabled: @field_disabled, class: 'form-control', data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: department_select_list_sites_path, select_group_select_key_param: 'site_id', select_group_select_update_target_param: 'provider_department_id', select_group_select_clear_target_param: 'provider_department_id'}} %>
                 </div>
              </div>
             <div class="col-span-3 sm:col-span-3">
               <div class="form-group">
                 <%= form.label :department_id, class: 'text-blueCoral' %>
-                <%= form.select :department_id, options_from_collection_for_select(departments, :id, :name, provider.department_id), {include_blank: 'None'}, {disabled: @field_disabled, class: 'form-select'} %>
+                <%= form.select :department_id, options_from_collection_for_select(departments, :id, :name, provider.department_id), {include_blank: 'None'}, {disabled: @field_disabled, class: 'form-control'} %>
               </div>
             </div>
           </div>
