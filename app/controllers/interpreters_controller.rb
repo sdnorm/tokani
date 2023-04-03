@@ -48,6 +48,10 @@ class InterpretersController < ApplicationController
   def show
   end
 
+  def edit
+    setup_edit_form_vars
+  end
+
   def create
     @interpreter = User.new(interpreter_params)
     @interpreter.terms_of_service = true
@@ -73,6 +77,7 @@ class InterpretersController < ApplicationController
         format.html { redirect_to interpreter_path(@interpreter), notice: "Interpreter was successfully updated." }
         format.json { render :show, status: :ok, location: @interpreter }
       else
+        setup_edit_form_vars
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @interpreter.errors, status: :unprocessable_entity }
       end
@@ -273,6 +278,11 @@ class InterpretersController < ApplicationController
     end
   end
 
+  def setup_edit_form_vars
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @interpreter_languages_json = @interpreter.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+  end
+
   def setup_form_vars
     @docs_list = @appointment.documents.map { |doc| {name: doc.filename.to_s, size: doc.byte_size, url: url_for(doc), signed_id: doc.signed_id} }
     @docs_list_json = @docs_list.to_json
@@ -286,6 +296,7 @@ class InterpretersController < ApplicationController
       :first_name,
       :last_name,
       :terms_of_service,
+      language_ids: [],
       interpreter_detail_attributes: [
         :id,
         :interpreter_id,

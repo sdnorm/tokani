@@ -44,4 +44,12 @@ class AgencyDetail < ApplicationRecord
   validates :secondary_contact_email, email: true, allow_blank: true
   validates :company_website, url: {allow_blank: true}
   validates_uniqueness_of :url, case_sensitive: false
+
+  def primary_contact_full_name
+    "#{primary_contact_first_name} #{primary_contact_last_name}"
+  end
+
+  def secondary_contact_full_name
+    "#{secondary_contact_first_name} #{secondary_contact_last_name}"
+  end
 end
