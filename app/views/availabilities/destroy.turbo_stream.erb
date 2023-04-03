@@ -1,4 +1,4 @@
-<%= turbo_stream.replace "new_availability_#{@new_availability.wday}_form_wrapper" do %>
+<%= turbo_stream.replace "new_availability_form_wrapper" do %>
     <%= render partial: "interpreters/availability_form", locals: {availability: @new_availability, notice: nil} %>
 <% end %>
 <%= turbo_stream.remove @target %>

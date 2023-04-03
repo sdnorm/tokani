@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: time_offs
+#
+#  id             :bigint           not null, primary key
+#  end_datetime   :datetime
+#  reason         :string
+#  start_datetime :datetime
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  user_id        :uuid             not null
+#
+# Indexes
+#
+#  index_time_offs_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+
+one:
+  start_datetime: 2023-04-02 22:45:35
+  end_datetime: 2023-04-02 22:46:35
+  reason: MyString
+  interpreter: one
+
+two:
+  start_datetime: 2023-04-02 22:47:35
+  end_datetime: 2023-04-02 22:48:35
+  reason: MyString
+  interpreter: two

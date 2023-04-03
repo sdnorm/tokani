@@ -8,7 +8,7 @@
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Status</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 w-full xl:w-1/3 lg:w-2/3">
-          <%= select_tag("appointmentStatusDropdown", options_for_select(@appt_statuses.map{ |k, v| [k.capitalize, v] }), { prompt:"Change Status", style: "display: none;" }) %>
+          <%= select_tag("appointmentStatusDropdown", options_for_select(Array.wrap(@appt_statuses).map{ |k, v| [k.capitalize, v] }), { prompt:"Change Status", style: "display: none;" }) %>
           <span id="appointmentStatus" data-action="click->appointments#handleStatusEditableBehaviour">
             <span class="inline-block p-2 -mx-2 hover:bg-gray-100 cursor-pointer" id="wrappedSpanElementForStatus" title="Click to edit status"><%= appointment.status.titleize %></span>
           </span>
@@ -28,7 +28,7 @@
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Duration</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.duration %> minutes</dd> 
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> <%= appointment.duration %> minutes</dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Modality</dt>
@@ -60,31 +60,31 @@
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Site</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.site&.name %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.site&.name %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Department</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.department&.name %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.department&.name %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Details</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.details %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.details %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Notes</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.notes %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.notes %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Admin Notes</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.admin_notes %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.admin_notes %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Gender Request</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.gender_req.titleize unless appointment.gender_req.nil? %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.gender_req.titleize unless appointment.gender_req.nil? %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Appointment Viewable To:</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.interpreter_type.titleize unless appointment.interpreter_type.nil? %></dd>   
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= appointment.interpreter_type.titleize unless appointment.interpreter_type.nil? %></dd>
       </div>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Requested Interpreters</dt>
@@ -96,11 +96,11 @@
             <% end %>
           <% else %>
             <p>No interpreters requested.</p>
-          <br>    
-        <% end %>  
-      </dd> 
+          <br>
+        <% end %>
+      </dd>
       </div>
-      
+
     </dl>
   </div>
 </div>

@@ -1,0 +1,16 @@
+<%= content_for :title, t("shared.scaffold.edit.title", model: "Time Off") %>
+
+<div class="container mx-auto px-4 my-8">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="h3">
+      <%= link_to "Time Offs", time_offs_path, class: "text-black" %>
+      <span class="text-gray-400 font-light mx-2">\</span>
+      <%= t("shared.scaffold.edit.title", model: "Time Off") %>
+    </h1>
+    <%= button_to t("delete"), @time_off, method: :delete, class: "btn btn-white", form: { data: { turbo_confirm: t("are_you_sure") } } %>
+  </div>
+
+  <div class="p-8 bg-white rounded shadow">
+    <%= render "form", time_off: @time_off %>
+  </div>
+</div>
