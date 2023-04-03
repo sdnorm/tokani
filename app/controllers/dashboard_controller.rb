@@ -12,6 +12,9 @@ class DashboardController < ApplicationController
       redirect_to agency_dashboard_path
     elsif current_user.admin?
       redirect_to agencies_path
+    elsif current_account_user.site_admin? || current_account_user.site_member?
+      grab_appointments_data_for_customer
+      render template: "dashboard/requestor"
     else
       render template: "dashboard/requestor_details"
     end

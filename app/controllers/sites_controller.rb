@@ -10,7 +10,12 @@ class SitesController < ApplicationController
   # GET /sites
   def index
     # @pagy, @sites = pagy(Site.sort_by_params(params[:sort], sort_direction))
-    @pagy, @sites = pagy(current_account.account_sites.sort_by_params(params[:sort], sort_direction))
+    if agency_logged_in?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @pagy, @sites = pagy(Site.where(customer_id: customer_ids).sort_by_params(params[:sort], sort_direction))
+    else
+      @pagy, @sites = pagy(current_account.sites.sort_by_params(params[:sort], sort_direction))
+    end
 
     # Uncomment to authorize with Pundit
     # authorize @sites
@@ -25,12 +30,16 @@ class SitesController < ApplicationController
     @site = Site.new
     @customer_id = params[:customer_id]
     setup_site_vars
+    unless agency_logged_in?
+      @customer = Customer.find(current_account.id)
+    end
     # Uncomment to authorize with Pundit
     # authorize @site
   end
 
   # GET /sites/1/edit
   def edit
+    @customer = Customer.find(@site.customer_id)
   end
 
   def select_list
@@ -138,8 +147,11 @@ class SitesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_site
-    @site = current_account.account_sites.find(params[:id])
-
+    @site = if agency_logged_in?
+      current_account.account_sites.find(params[:id])
+    else
+      current_account.sites.find(params[:id])
+    end
     # Uncomment to authorize with Pundit
     # authorize @site
   rescue ActiveRecord::RecordNotFound

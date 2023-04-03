@@ -369,6 +369,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_144535) do
     t.index ["customer_id"], name: "index_customer_details_on_customer_id"
   end
 
+  create_table "customer_requestors", force: :cascade do |t|
+    t.uuid "customer_id"
+    t.uuid "requestor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "location"

@@ -48,7 +48,7 @@ class Customer < Account
 
   # move to job so it retries
   def create_user_and_owner
-    User.create(
+    user = User.create(
       name: customer_detail.contact_name,
       email: customer_detail.email,
       password: SecureRandom.alphanumeric,
@@ -57,7 +57,18 @@ class Customer < Account
     )
     update(owner_id: user.id)
     account_users.create(user: user, roles: {"customer_admin" => true})
-    # TokaniAgencyCreationMailer.welcome(user).deliver_later
+    RequestorDetail.create(
+      allow_offsite: true,
+      allow_view_docs: true,
+      allow_view_checklist: true,
+      primary_phone: customer_detail.phone,
+      customer_id: customer_detail.customer_id,
+      requestor_id: user.id,
+      requestor_type: 4
+    )
+    CustomerRequestor.create(customer_id: customer_detail.customer_id, requestor_id: user.id)
+
+    AgencyCustomerCreationMailer.welcome(user, self).deliver_later
   end
 
   private

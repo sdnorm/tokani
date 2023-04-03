@@ -15,7 +15,7 @@ module UserAccounts
     accepts_nested_attributes_for :owned_accounts, reject_if: :all_blank
 
     # Used for skipping a default account on create
-    attribute :skip_default_account, :boolean, default: false
+    attribute :skip_default_account, :boolean, default: true
   end
 
   def create_default_account
