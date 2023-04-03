@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_043241) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_144535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -768,6 +768,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_043241) do
     t.index ["account_id"], name: "index_specialties_on_account_id"
   end
 
+  create_table "time_offs", force: :cascade do |t|
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.string "reason"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_time_offs_on_user_id"
+    t.check_constraint "start_datetime < end_datetime", name: "check_valid_datetime_range"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -838,4 +849,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_043241) do
   add_foreign_key "requested_interpreters", "users"
   add_foreign_key "sites", "accounts"
   add_foreign_key "specialties", "accounts"
+  add_foreign_key "time_offs", "users"
 end

@@ -266,7 +266,7 @@
   border-top-right-radius: 0.35rem;
   border-bottom-right-radius: 0.35rem;
   width: fit-content;
- 
+
 }
 
 .select_br_left select {
@@ -277,21 +277,26 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   width: fit-content;
- 
+
 }
 .select_br select {
   margin-top: 0;
   border-radius: 0.35rem;
   border: 1px solid rgb(148 163 184);
   width: 100%;
-  
- 
+
+
 }
 
 
 
 .rotate-180 {
   transform: rotate(180deg);
+}
+
+.active {
+  color: rgb(0, 0, 255);
+  border-bottom: 2px solid rgb(0, 0, 255);
 }
 
 

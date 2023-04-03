@@ -1,7 +1,6 @@
-<%= turbo_stream.append "interpreter_availabilities_table_#{@availability.wday}" do %>
+<%= turbo_stream.append "interpreter_availabilities_table" do %>
   <%= render partial: "availabilities/availability_row", locals: {availability: @availability, notice: @notice} %>
 <% end %>
-
-<%= turbo_stream.replace "new_availability_#{@availability.wday}_form_wrapper" do %>
-  <%= render partial: "interpreters/availability_form", locals: {availability: @new_availability, notice: nil, index: @new_availability.wday} %>
+<%= turbo_stream.replace "new_availability_form_wrapper" do %>
+  <%= render partial: "interpreters/availability_form", locals: {availability: @new_availability, notice: @notice, index: @new_availability.wday} %>
 <% end %>

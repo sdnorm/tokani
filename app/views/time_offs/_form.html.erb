@@ -1,0 +1,39 @@
+<%= form_with(model: time_off) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="grid grid-cols-3">
+    <div class="mb-6 md:mb-0">
+      <%= form.label :reason, class: "text-left block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+      <div class="mt-1">
+        <%= form.text_field :reason, class: "block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "Doctor's Appointment" %>
+      </div>
+    </div>
+    <div class="mb-6 md:mb-0">
+      <%= form.label :start_datetime, class: "text-left block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+      <div class="flex flex-start">
+        <div>
+          <%= form.datetime_field :start_datetime, class: "w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
+      </div>
+    </div>
+    <div class="mb-6 md:mb-0">
+      <%= form.label :end_datetime, class: "text-left block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+      <div class="flex flex-start">
+        <div>
+          <%= form.datetime_field :end_datetime, class: "ml-1 w-1/8 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mt-6">
+    <%= form.button button_text(form.send(:submit_default_value)), class: "inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-tokanisecondary-700 px-4 py-2 font-medium text-white shadow-sm hover:bg-tokanisecondary-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), time_offs_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), time_off_path(@time_off), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>
