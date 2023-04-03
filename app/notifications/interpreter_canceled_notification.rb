@@ -1,6 +1,7 @@
 class InterpreterCanceledNotification < ApplicationNotification
   deliver_by :action_cable, format: :to_websocket, channel: "NotificationChannel"
   deliver_by :email, mailer: "InterpreterActionsMailer", method: :interpreter_canceled, if: :email_notifications?
+  deliver_by :twilio, if: :sms_notifications?
 
   param :account
   param :interpreter
@@ -14,7 +15,11 @@ class InterpreterCanceledNotification < ApplicationNotification
   end
 
   def message
-    t "notifications.interpreter_canceled", interpreter: interpreter_name, ref_number: ref_number, status: status
+    "Interpreter cancelled appointment: #{ref_number} - #{appointment.start_datetime_string_in_zone(time_zone)} - #{language} - #{customer}"
+  end
+
+  def time_zone
+    recipient&.time_zone || appointment&.agency&.agency_detail&.time_zone || Account.time_zone_default
   end
 
   def url
@@ -34,6 +39,6 @@ class InterpreterCanceledNotification < ApplicationNotification
   end
 
   def email_notifications?
-    true # TODO: implement conditional email notifcations
+    recipient&.notification_setting&.interpreter_cancelled
   end
 end

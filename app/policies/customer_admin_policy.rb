@@ -14,7 +14,7 @@ class CustomerAdminPolicy < ApplicationPolicy
   # hide sidenav only from these controllers
   def blacklisted_controllers
     %w[
-      registrations accounts subscriptions passwords
+      registrations accounts subscriptions passwords notification_settings
     ]
   end
 

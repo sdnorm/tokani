@@ -52,6 +52,7 @@ class Account < ApplicationRecord
   has_one :customer_detail, foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer, autosave: true
 
   has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
+  has_one :notification_email, foreign_key: :account_id, dependent: :destroy, inverse_of: :account
   # validates_presence_of :agency_detail
   accepts_nested_attributes_for :agency_detail
 
@@ -90,6 +91,10 @@ class Account < ApplicationRecord
   def self.available_timezones
     list = ["Alaska", "Hawaii", "Arizona", "Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"]
     ActiveSupport::TimeZone.us_zones.filter { |tz| list.include?(tz.name) }
+  end
+
+  def self.time_zone_default
+    "Pacific Time (US & Canada)"
   end
 
   def account_interpreters

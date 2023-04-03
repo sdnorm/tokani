@@ -164,9 +164,9 @@ module ApplicationHelper
   end
 
   def accounting_highlight?
-    if controller_name == "agencies" && action_name == "account_invoices"
+    if controller_name == "process_batches" && action_name == "new"
       highlighted
-    elsif controller_name == "agencies" && action_name == "account_process_invoices"
+    elsif controller_name == "process_batches" && action_name == "index"
       highlighted
     else
       unhighlighted
@@ -174,9 +174,9 @@ module ApplicationHelper
   end
 
   def accounting_highlight_icon?
-    if controller_name == "agencies" && action_name == "account_invoices"
+    if controller_name == "process_batches" && action_name == "new"
       highlighted_icon
-    elsif controller_name == "agencies" && action_name == "account_process_invoices"
+    elsif controller_name == "process_batches" && action_name == "index"
       highlighted_icon
     else
       unhighlighted_icon
@@ -350,5 +350,9 @@ module ApplicationHelper
         icon_class
       end
     end
+  end
+
+  def appointment_info(appointment, time_zone)
+    "#{appointment&.ref_number} - #{appointment&.start_datetime_string_in_zone(time_zone)} - #{appointment&.language&.name} - #{appointment&.customer&.name}"
   end
 end

@@ -236,6 +236,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_190659) do
     t.integer "bill_rate_id"
     t.integer "pay_rate_id"
     t.uuid "assigned_interpreter"
+    t.boolean "interpreter_reminder_sent", default: false
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -435,6 +436,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_190659) do
     t.index ["account_id"], name: "index_languages_on_account_id"
   end
 
+  create_table "notification_emails", force: :cascade do |t|
+    t.uuid "account_id"
+    t.string "email1"
+    t.string "email2"
+    t.boolean "appointment_created", default: true
+    t.boolean "appointment_edited", default: true
+    t.boolean "appointment_declined", default: true
+    t.boolean "appointment_cancelled", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notification_settings", force: :cascade do |t|
     t.uuid "user_id"
     t.integer "sms", default: 2
@@ -443,6 +456,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_190659) do
     t.boolean "appointment_cancelled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "appointment_created", default: true
+    t.boolean "appointment_declined", default: true
+    t.boolean "interpreter_cancelled", default: true
+    t.boolean "appointment_edited", default: true
+    t.boolean "appointment_covered", default: true
+    t.boolean "appointment_reminder", default: true
+    t.string "sms_number"
   end
 
   create_table "notification_tokens", force: :cascade do |t|
@@ -703,6 +723,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_190659) do
     t.boolean "rejected", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notification_sent", default: false
     t.index ["appointment_id"], name: "index_requested_interpreters_on_appointment_id"
     t.index ["user_id"], name: "index_requested_interpreters_on_user_id"
   end

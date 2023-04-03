@@ -1,0 +1,46 @@
+<p>
+  <b>Appointment Modality:</b>
+  <%= @appointment.modality.titleize %>
+</p>
+<p>
+  <b>Appointment ID Number:</b>
+  <%= @appointment.ref_number %>
+</p>
+<p>
+  <b>Date of Appointment:</b>
+  <%= @appointment.start_time_in_zone(@time_zone).strftime("%A %m/%d/%y") %>
+</p>
+<p>
+  <b>Start Time of Appointment:</b>
+  <%= @appointment.start_time_in_zone(@time_zone).strftime("%l:%M %p (%Z)") %>
+</p>
+<p>
+  <b>Appointment Duration:</b>
+  <%= @appointment.duration_in_hours(2) %> hour(s)
+</p>
+<p>
+  <b>Language Requested:</b>
+  <%= @appointment.language.name %>
+</p>
+<p>
+  <b>Location:</b>
+  <%= @appointment.customer.name %>
+  <% if @appointment.site.present? %>
+    <br>
+    <%= @appointment.site.name %> - <%= @appointment.site.address %> <%= @appointment.site.city %> <%= @appointment.site.state %> <%= @appointment.site.zip_code %>
+  <% end %>
+</p>
+<p>
+  <b>Department:</b>
+  <% if @appointment.department.present? %>
+    <%= @appointment.department.name %>
+  <% else %>
+    N/A
+  <% end %>
+</p>
+<% if @appointment.requestor.present? %>
+  <p>
+    <b>Requestor's Name:</b>
+    <%= @appointment.requestor.full_name %>
+  </p>
+<% end %>
