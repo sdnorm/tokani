@@ -26,7 +26,7 @@ class SiteDashboard < Administrate::BaseDashboard
     state: Field::String,
     zip_code: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
