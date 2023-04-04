@@ -3,7 +3,7 @@ class InterpretersController < ApplicationController
 
   before_action :authenticate_user!
   # Uncomment to enforce Pundit authorization
-  before_action :verify_authorized
+  before_action :verify_authorized, except: :search
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
@@ -31,7 +31,12 @@ class InterpretersController < ApplicationController
       @interpreters = []
     else
       # @interpreters = Interpreter.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
-      @interpreters = current_account.interpreters
+      if agency_logged_in?
+        @interpreters = current_account.interpreters
+      else
+        agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
+        @interpreters = Account.find(agency_id).interpreters
+      end
       @interpreters = @interpreters.where("last_name ilike ? or first_name ilike ?", name_query, name_query)
     end
 

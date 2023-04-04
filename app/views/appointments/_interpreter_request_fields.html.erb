@@ -28,7 +28,7 @@
             </template>
             <div class="flex" id="interpreter_list" data-interpreter-autocomplete-target='chipList'>
               <% offered_interpreters.each do |oint| %>
-                <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700" data-controller="element" data-element-target="remove">
+                <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700" data-controller="element" data-element-target="remove">
                   <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"><%= oint.full_name %></span>
                   <input type="hidden" name="appointment[interpreter_req_ids][]" value="<%= oint.id %>">
                   <div class="flex flex-auto flex-row-reverse">
