@@ -12,6 +12,16 @@ export default class extends Controller {
     }
   }
 
+  handleStatusEditableBehaviour() {
+    const statusElement = document.getElementById("appointmentStatus")
+    const statusDropdown = document.getElementById("appointmentStatusDropdown")
+    toggleSpanAndDropdownView(statusElement, statusDropdown)
+    
+    statusDropdown.addEventListener('change', () => {
+      updateStatusOnServer(statusElement, statusDropdown)
+    })
+  }
+
   updateCurrentFilterText(event) {
     const statusFilter = event.target.dataset.statusFilter
     const statusesTextContainer = this.formTarget.querySelector("#statusesTextContainer")

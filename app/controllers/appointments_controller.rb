@@ -52,7 +52,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
 
-    if params[:customer_id].blank? && !customer_logged_in?
+    if params[:customer_id].blank? && !requestor_logged_in?
       @account_customers = current_account.customers
     else
       setup_appointment_vars
@@ -187,9 +187,17 @@ class AppointmentsController < ApplicationController
   end
 
   def setup_appointment_vars
-    @account_customers = current_account.customers
-    # @customer = customer_logged_in? ? current_account : Customer.find(params[:customer_id])
-    @customer = customer_logged_in? ? Customer.find(current_user.requestor_detail.customer_id) : Customer.find(params[:customer_id])
+    if agency_logged_in?
+      @account_customers = current_account.customers
+      @interpreters = current_account.interpreters
+      @languages = current_account.account_languages
+    else
+      agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
+      @interpreters = Account.find(agency_id).interpreters
+      @languages = Language.where(account_id: agency_id)
+    end
+
+    @customer = requestor_logged_in? ? Customer.find(current_account.id) : Customer.find(params[:customer_id])
 
     @sites = @customer.sites.order("name ASC")
 
@@ -197,9 +205,6 @@ class AppointmentsController < ApplicationController
     @departments = [["None", ""]]
     @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
 
-    @languages = current_account.account_languages
-
-    @interpreters = current_account.interpreters
     requestor_ids = @customer.requestor_details.pluck(:requestor_id)
     @requestors = User.where(id: requestor_ids)
     @providers = @customer.providers

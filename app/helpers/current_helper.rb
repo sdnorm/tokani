@@ -21,7 +21,7 @@ module CurrentHelper
   end
 
   def requestor_logged_in?
-    current_account_user.site_admin? || current_account_user.site_member? || current_account_user.client?
+    current_account_user.site_admin? || current_account_user.site_member? || current_account_user.client? || current_account_user.customer_admin?
   end
 
   def current_account_admin?
