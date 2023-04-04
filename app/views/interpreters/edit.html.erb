@@ -1,5 +1,4 @@
-<%= content_for :title, t("shared.scaffold.edit.title", model: "Interpreters") %>
-<%= content_for :title, "interpreters ##{@interpreter.id}" %>
+<%= content_for :title, "Edit interpreter - #{@interpreter.full_name}" %>
 <%= turbo_stream_from @interpreter %>
 <%= render partial: "shared/sidenav" %>
 <div class="flex flex-1 flex-col md:pl-64">

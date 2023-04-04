@@ -1,4 +1,5 @@
 class InterpreterDetailsController < ApplicationController
+  include CurrentHelper
   before_action :authenticate_user!
   before_action :authenticate_interpreter_user!
   before_action :set_interpreter_detail, only: [:show, :edit, :update, :destroy]
@@ -7,19 +8,12 @@ class InterpreterDetailsController < ApplicationController
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  # GET /interpreter_details
-  def index
-    @pagy, @interpreter_details = pagy(InterpreterDetail.sort_by_params(params[:sort], sort_direction))
-
-    # Uncomment to authorize with Pundit
-    # authorize @interpreter_details
-  end
-
   # GET /interpreter_details/1 or /interpreter_details/1.json
   def show
     @interpreter_detail_fields = %w[
       interpreter_type address city dob drivers_license emergency_contact_name
       emergency_contact_phone gender interpreter_type primary_phone ssn start_date state zip
+      languages
     ]
   end
 
@@ -34,6 +28,9 @@ class InterpreterDetailsController < ApplicationController
   # GET /interpreter_details/1/edit
   def edit
     @notification_setting = current_user&.notification_setting || NotificationSetting.new
+
+    @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
+    @interpreter_languages_json = current_user.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
   end
 
   # POST /interpreter_details or /interpreter_details.json
@@ -76,11 +73,30 @@ class InterpreterDetailsController < ApplicationController
     end
   end
 
+  def update_languages
+    @interpreter_detail = current_user&.interpreter_detail
+
+    respond_to do |format|
+      if current_user.update(language_params)
+        format.html { redirect_to @interpreter_detail, notice: "Languages were successfully updated." }
+        format.json { render :show, status: :ok, location: @interpreter_detail }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @interpreter_detail.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_interpreter_detail
-    @interpreter_detail = InterpreterDetail.find(params[:id])
+    # Make sure the details requested belong to the current user
+    @interpreter_detail = current_user&.interpreter_detail
+
+    if @interpreter_detail&.id != (params[:id] || 0).to_i
+      redirect_to "/"
+    end
 
     # Uncomment to authorize with Pundit
     # authorize @interpreter_detail
@@ -95,6 +111,10 @@ class InterpreterDetailsController < ApplicationController
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:interpreter_detail).permit(policy(@interpreter_detail).permitted_attributes)
+  end
+
+  def language_params
+    params.require(:user).permit(language_ids: [])
   end
 
   def authenticate_interpreter_user!

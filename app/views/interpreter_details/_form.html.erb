@@ -9,126 +9,160 @@
         </div>
       </div>
       <div class="mt-5 md:col-span-2 md:mt-0">
-        <form action="#" method="POST">
-          <div class="overflow-hidden shadow sm:rounded-md">
-            <div class="bg-white px-4 py-5 sm:p-6">
-              <div class="grid grid-cols-6 gap-6">
+        <div class="overflow-hidden shadow sm:rounded-md">
+          <div class="bg-white px-4 py-5 sm:p-6">
+            <div class="grid grid-cols-6 gap-6">
 
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <div class="form-group">
-                      <%= form.label :primary_phone, class:" block text-sm font-medium text-gray-700" %>
-                      <%= form.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
+              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                <div class="form-group">
+                    <%= form.label :primary_phone, class:" block text-sm font-medium text-gray-700" %>
+                    <%= form.text_field :primary_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+              </div>
 
-                <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-                  <div class="form-group">
-                    <%= form.label :start_date, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
-                  </div>
+              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                <div class="form-group">
+                  <%= form.label :start_date, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
                 </div>
+              </div>
 
 
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                  <div class="form-group">
-                    <%= form.label :SSN, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :ssn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <div class="form-group">
+                  <%= form.label :SSN, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :ssn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+              </div>
 
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <div class="form-group">
-                    <%= form.label :drivers_license, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :drivers_license, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
+              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div class="form-group">
+                  <%= form.label :drivers_license, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :drivers_license, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+              </div>
 
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <div class="form-group">
-                    <%= form.label :birth_date, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :dob, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
-                  </div>
+              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div class="form-group">
+                  <%= form.label :birth_date, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :dob, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
                 </div>
+              </div>
 
 
 
-                <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                  <div class="form-group">
-                    <%= form.label :emergency_contact_name, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :emergency_contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
-                 </div>
-
-                <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                  <div class="form-group">
-                    <%= form.label :emergency_contact_phone, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :emergency_contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
+              <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                <div class="form-group">
+                  <%= form.label :emergency_contact_name, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :emergency_contact_name, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+               </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                    <div class="form-group">
-                        <%= form.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
-                        <%= form.select :interpreter_type, options_for_select(interpreter_type_options), {}, class: "form-control" %>
-                      </div>
+              <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                <div class="form-group">
+                  <%= form.label :emergency_contact_phone, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :emergency_contact_phone, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
+              </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                    <div class="form-group">
-                        <%= form.label :gender , class: "block text-sm font-medium text-gray-700" %>
-                        <%= form.select :gender, options_for_select(gender_options), {}, {class: 'form-control' } %>
-                      </div>
-                </div>
-
-
-
-                <div class="col-span-6">
+              <div class="col-span-6 sm:col-span-3">
                   <div class="form-group">
-                    <%= form.label :street_address, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
-                </div>
+                      <%= form.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
+                      <%= form.select :interpreter_type, options_for_select(interpreter_type_options), {}, class: "form-control" %>
+                    </div>
+              </div>
 
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+              <div class="col-span-6 sm:col-span-3">
                   <div class="form-group">
-                    <%= form.label :city, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
-                </div>
+                      <%= form.label :gender , class: "block text-sm font-medium text-gray-700" %>
+                      <%= form.select :gender, options_for_select(gender_options), {}, {class: 'form-control' } %>
+                    </div>
+              </div>
 
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <div class="form-group">
-                    <%= form.label :state, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
-                </div>
 
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <div class="form-group">
-                    <%= form.label :zip_code, class:" block text-sm font-medium text-gray-700" %>
-                    <%= form.text_field :zip, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
-                  </div>
+
+              <div class="col-span-6">
+                <div class="form-group">
+                  <%= form.label :street_address, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :address, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <div class="form-group">
+                  <%= form.label :city, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :city, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div class="form-group">
+                  <%= form.label :state, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :state, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div class="form-group">
+                  <%= form.label :zip_code, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.text_field :zip, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                <div>
-                    <%= form.hidden_field :interpreter_id, value: current_user.id %>
-                    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-tokani_purple" %>
-
-                    <% if form.object.new_record? %>
-                      <%= link_to t("cancel"), interpreter_details_path, class: "btn btn-white" %>
-                    <% else %>
-                      <%= link_to t("cancel"), interpreter_detail_path(@interpreter_detail), class: "btn btn-white" %>
-                    <% end %>
-                  </div>
-            </div>
           </div>
-        </form>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+              <div>
+                  <%= form.hidden_field :interpreter_id, value: current_user.id %>
+                  <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-tokani_purple" %>
+
+                  <% if form.object.new_record? %>
+                    <%= link_to t("cancel"), interpreter_details_path, class: "btn btn-white" %>
+                  <% else %>
+                    <%= link_to t("cancel"), interpreter_detail_path(@interpreter_detail), class: "btn btn-white" %>
+                  <% end %>
+                </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 <% end %>
+
+<div class="hidden sm:block" aria-hidden="true">
+  <div class="py-5">
+    <div class="border-t border-gray-200"></div>
+  </div>
+</div>
+
+<div class="mt-10 sm:mt-0">
+  <div class="md:grid md:grid-cols-3 md:gap-6">
+    <div class="md:col-span-1">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Languages</h3>
+        <p class="mt-1 text-sm text-gray-600">Specify the languages for which you can provide interpreter services.</p>
+      </div>
+    </div>
+    <div class="mt-5 md:col-span-2 md:mt-0">
+      <%= form_with(model: current_user, url: update_languages_interpreter_details_path, method: :put) do |form| %>
+        <div class="overflow-hidden shadow sm:rounded-md">
+          <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+            <fieldset>
+              <legend class="text-base font-medium text-gray-900">Languages</legend>
+              <br>
+              <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages" data-multiselect-selected-value='<%= raw @interpreter_languages_json %>'>
+                <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="user[language_ids][]" id="user_language_ids" style="display: none;"></select>
+                <%= hidden_field_tag "user[language_ids][]", '' %>
+              </div>
+            </fieldset>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <%= form.submit 'Save', class: "inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <div class="hidden sm:block" aria-hidden="true">
   <div class="py-5">
@@ -189,29 +223,16 @@
                         </div>
                       </div>
                     </div>
-                    <!-- not needed for MVP
                     <div>
                       <div class="flex items-start">
                         <div class="flex h-5 items-center">
-                          <input id="edited" name="edited" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
+                          <%= form.check_box(:appointment_edited, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
                         </div>
                         <div class="ml-3 text-sm">
-                          <label for="edited" class="font-medium text-gray-700">Appointments Edited</label>
-                        </div>
-                      </div>
-                      </div>
-                      <div>
-                      <div class="flex items-start">
-                        <div class="flex h-5 items-center">
-                          <input id="checklist" name="checklist" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500">
-                        </div>
-                        <div class="ml-3 text-sm">
-                          <label for="checklist" class="font-medium text-gray-700">Checklist Items</label>
-                          <p class="text-gray-500">Get notified when a checklist item will soon expire.</p>
+                          <label for="notification_setting_appointment_edited" class="font-medium text-gray-700">Appointments Edited</label>
                         </div>
                       </div>
                     </div>
-                  -->
                   </div>
               </fieldset>
               <fieldset class="mt-6">

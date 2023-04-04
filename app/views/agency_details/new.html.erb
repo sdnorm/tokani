@@ -1,0 +1,25 @@
+<div class="flex flex-wrap my-4 lg:px-4">
+  <div class="lg:w-1/4 w-full p-4">
+    <%= render partial: "shared/account_navbar" %>
+  </div>
+
+  <%= content_for :title, t("shared.scaffold.new.title", model: "Agency Details") %>
+
+  <div class="lg:w-3/4 w-full p-4">
+    <div class="lg:p-10 p-4 bg-white rounded-lg border border-gray-200">
+      <h1 class="h3">
+        <%= link_to "Home", '/', class: "text-black" %>
+        <span class="text-gray-400 font-light mx-2">\</span>
+        Agency Details
+      </h1>
+
+      <div class="p-8 bg-gray-100 rounded shadow">
+        <%= form_with(model: current_account, url: agency_details_path, method: :post, class: "space-y-8 divide-y divide-gray-200") do |form| %>
+          <%= render "form", form: form %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+

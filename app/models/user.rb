@@ -73,6 +73,7 @@ class User < ApplicationRecord
   has_many :notification_tokens, dependent: :destroy
 
   has_many :interpreter_languages, dependent: :destroy, foreign_key: :interpreter_id
+  has_many :languages, through: :interpreter_languages
 
   has_one :requestor_detail, dependent: :destroy, foreign_key: :requestor_id, inverse_of: :requestor, autosave: true
   has_one :interpreter_detail, foreign_key: :interpreter_id, dependent: :destroy, inverse_of: :interpreter, autosave: true
@@ -94,6 +95,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :interpreter_detail
   accepts_nested_attributes_for :requestor_detail
   accepts_nested_attributes_for :appointment_statuses
+  accepts_nested_attributes_for :languages
+
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
@@ -139,5 +142,9 @@ class User < ApplicationRecord
 
     # Add the Country Code (always 1 for US for now) for Twilio
     "1#{ph}"
+  end
+
+  def languages_list
+    languages.map(&:name).join(", ")
   end
 end

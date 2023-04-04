@@ -21,7 +21,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :interpreter_details
+  resources :interpreter_details, except: [:index] do
+    collection do
+      put :update_languages
+    end
+  end
+
+  resources :agency_details, only: [:new, :show, :edit, :create, :update]
+
   get "interpreters/availability"
   get "interpreters/dashboard", to: "interpreters#dashboard", as: "interpreter_dashboard"
   get "interpreters/invitation", to: "interpreters#invitation"
@@ -232,9 +239,8 @@ Rails.application.routes.draw do
 
     resources :availabilities, only: [:create, :destroy]
     resources :time_offs
-    get "agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
-    # put "agency_detail_update", to: "agencies#agency_detail_update", as: :agency_detail_update
-    patch "agency_details", to: "agencies#agency_detail_update", as: :agency_detail_update
+    get "/agencies/agency_details", to: "agencies#agency_detail_form", as: :agency_detail_form
+    patch "/agencies/agency_details", to: "agencies#agency_detail_update", as: :agency_detail_update
   end
 
   resources :customer_categories

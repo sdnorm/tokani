@@ -53,8 +53,6 @@ class Account < ApplicationRecord
 
   has_one :agency_detail, foreign_key: :agency_id, dependent: :destroy, inverse_of: :agency
   has_one :notification_email, foreign_key: :account_id, dependent: :destroy, inverse_of: :account
-  # validates_presence_of :agency_detail
-  accepts_nested_attributes_for :agency_detail
 
   has_many :specialties, dependent: :destroy, foreign_key: :account_id
 
@@ -72,6 +70,9 @@ class Account < ApplicationRecord
   has_many :pay_rates, dependent: :destroy
 
   has_many :agency_recipients, through: :customers, source: :recipients
+
+  accepts_nested_attributes_for :agency_detail
+  accepts_nested_attributes_for :physical_address
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

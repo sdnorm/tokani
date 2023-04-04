@@ -1,0 +1,86 @@
+<div id="<%= dom_id agency_detail %>">
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Company Name</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.name %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Company Website</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.company_website %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Street Address</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.physical_address.line1 %> <%= @agency.physical_address.line2 %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>City</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.physical_address.city %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>State</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.physical_address.state %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Zip</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.physical_address.postal_code %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Phone #</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.phone_number %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Time Zone</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.time_zone %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Primary Contact Name</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.primary_contact_full_name %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Primary Contact Title</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.primary_contact_title %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Primary Contact Email</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.primary_contact_email %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Secondary Contact Name</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.secondary_contact_full_name %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Secondary Contact Title</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.secondary_contact_title %></div>
+  </div>
+  <div class="grid md:grid-cols-3 py-5 text-gray-500 border-t border-gray-200">
+    <div>
+      <p>Secondary Contact Email</p>
+    </div>
+    <div class="col-span-2 text-gray-800 capitalize"><%= @agency.agency_detail.secondary_contact_email %></div>
+  </div>
+</div>

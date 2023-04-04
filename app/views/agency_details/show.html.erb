@@ -1,0 +1,21 @@
+<%= content_for :title, "Agency Details" %>
+
+<div class="flex flex-wrap my-4 lg:px-4">
+  <div class="w-full mb-4 lg:w-1/4 lg:p-4">
+    <%= render partial: "shared/account_navbar" %>
+  </div>
+
+  <div class="w-full lg:w-3/4 lg:p-4">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg lg:p-10">
+    <div class="mb-5 sm:flex items-center justify-between">
+      <div class="flex-1">
+        <p class="font-bold">Agency Information</p>
+        <p class="text-sm font-medium text-gray-500">Agency details</p>
+      </div>
+      <%= link_to "Edit Agency Details", edit_agency_detail_path(current_account.agency_detail), class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
+    </div>
+      <%= render @agency_detail %>
+    </div>
+  </div>
+
+</div>
