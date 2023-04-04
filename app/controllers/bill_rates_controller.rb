@@ -7,7 +7,9 @@ class BillRatesController < ApplicationController
 
   # GET /bill_rates
   def index
-    @pagy, @bill_rates = pagy(BillRate.sort_by_params(params[:sort], sort_direction))
+    # This assumes billrate is only accessible to agency-type accounts
+    @pagy, @bill_rates = pagy(BillRate.where(account_id: current_account.id).sort_by_params(params[:sort], sort_direction))
+    # @pagy, @bill_rates = pagy(BillRate.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @bill_rates

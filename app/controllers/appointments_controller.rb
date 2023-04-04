@@ -89,25 +89,44 @@ class AppointmentsController < ApplicationController
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    @appointment.customer = current_account if customer_logged_in?
+    # @appointment.customer = current_account if requestor_logged_in?
 
     # NW - have to include all these variables for form to re-render correctly if errors are thrown on create
-    @account_customers = current_account.customers
+    # @account_customers = current_account.customers
+    if agency_logged_in?
+      @account_customers = current_account.customers
+      @interpreters = current_account.interpreters
+      @languages = current_account.account_languages
+    else
+      agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
+      @interpreters = Account.find(agency_id).interpreters
+      @languages = Language.where(account_id: agency_id)
+    end
     @customer = Customer.find(appointment_params[:customer_id])
     @sites = @customer.sites.order("name ASC")
 
     department_list = Department.where(site_id: @sites).order("name ASC")
     @departments = [["None", ""]]
     @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
-    @languages = current_account.account_languages
+    # @languages = current_account.account_languages
 
-    @interpreters = current_account.interpreters
+    # @interpreters = current_account.interpreters
     requestor_ids = @customer.requestor_details.pluck(:requestor_id)
     @requestors = User.where(id: requestor_ids)
     @providers = @customer.providers
     @recipients = @customer.recipients
     @general_int_requested = true
     @specific_int_requested = !@general_int_requested
+
+    if agency_logged_in?
+      @account_customers = current_account.customers
+      @interpreters = current_account.interpreters
+      @languages = current_account.account_languages
+    else
+      agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
+      @interpreters = Account.find(agency_id).interpreters
+      @languages = Language.where(account_id: agency_id)
+    end
     # Uncomment to authorize with Pundit
     # authorize @appointment
 
@@ -117,7 +136,8 @@ class AppointmentsController < ApplicationController
         format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
         format.json { render :show, status: :created, location: @appointment }
       else
-        setup_appointment_vars
+        # NW - commenting this out because it preventa validation errors from being shown to user
+        # setup_appointment_vars
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
