@@ -65,6 +65,7 @@ class AccountDashboard < Administrate::BaseDashboard
     :owner,
     :name,
     :customer,
+    :agency,
     # :customer_id,
     :personal,
     :extra_billing_info
