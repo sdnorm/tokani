@@ -5,8 +5,12 @@
         <p id="timezone_notice"><%= flash[:timezone_notice] %></p>
       </div>
 
-      <div class="mb-3">
-        <div></div>
+      <div class="mb-3 relative">
+        <div class="absolute -right-10">
+          <%= link_to interpreters_availability_path, class: "float-right" do %>
+            <%= fa_icon("circle-xmark", class: "text-slate-400 h-5 flex m-auto") %>
+          <% end %>
+        </div>
         <div class="w-full my-5">
           <button id="submit-timezone__btn" type="submit" class="hidden mt-3 inline-flex w-full items-center justify-center rounded-none border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
           data-controller="interpreters" data-turbo-confirm="Updating this resets availabilities. Do you want to proceed?">Update</button>
