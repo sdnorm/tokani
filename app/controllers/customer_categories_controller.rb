@@ -7,7 +7,8 @@ class CustomerCategoriesController < ApplicationController
 
   # GET /customer_categories
   def index
-    @pagy, @customer_categories = pagy(CustomerCategory.sort_by_params(params[:sort], sort_direction))
+    @pagy, @customer_categories = pagy(CustomerCategory.where(account_id: current_account.id).sort_by_params(params[:sort], sort_direction))
+    # @pagy, @customer_categories = pagy(CustomerCategory.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @customer_categories
@@ -32,7 +33,9 @@ class CustomerCategoriesController < ApplicationController
   # POST /customer_categories or /customer_categories.json
   def create
     @customer_category = CustomerCategory.new(customer_category_params)
-
+    if agency_logged_in?
+      @customer_category.account_id = current_account.id
+    end
     # Uncomment to authorize with Pundit
     # authorize @customer_category
 
@@ -83,7 +86,7 @@ class CustomerCategoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def customer_category_params
-    params.require(:customer_category).permit(:display_value, :appointment_prefix, :telephone_prefix, :video_prefix, :is_active)
+    params.require(:customer_category).permit(:display_value, :appointment_prefix, :telephone_prefix, :video_prefix, :is_active, :account_id)
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:customer_category).permit(policy(@customer_category).permitted_attributes)
