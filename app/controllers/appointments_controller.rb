@@ -89,7 +89,6 @@ class AppointmentsController < ApplicationController
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    # @appointment.customer = current_account if requestor_logged_in?
 
     # NW - have to include all these variables for form to re-render correctly if errors are thrown on create
     # @account_customers = current_account.customers
@@ -97,10 +96,12 @@ class AppointmentsController < ApplicationController
       @account_customers = current_account.customers
       @interpreters = current_account.interpreters
       @languages = current_account.account_languages
+      @appointment.agency_id = @account.id
     else
       agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
       @interpreters = Account.find(agency_id).interpreters
       @languages = Language.where(account_id: agency_id)
+      @appointment.agency_id = agency_id
     end
     @customer = Customer.find(appointment_params[:customer_id])
     @sites = @customer.sites.order("name ASC")
@@ -108,9 +109,7 @@ class AppointmentsController < ApplicationController
     department_list = Department.where(site_id: @sites).order("name ASC")
     @departments = [["None", ""]]
     @departments += department_list.map { |dept| [dept.name, dept.id] } if department_list.present?
-    # @languages = current_account.account_languages
 
-    # @interpreters = current_account.interpreters
     requestor_ids = @customer.requestor_details.pluck(:requestor_id)
     @requestors = User.where(id: requestor_ids)
     @providers = @customer.providers
@@ -118,15 +117,6 @@ class AppointmentsController < ApplicationController
     @general_int_requested = true
     @specific_int_requested = !@general_int_requested
 
-    if agency_logged_in?
-      @account_customers = current_account.customers
-      @interpreters = current_account.interpreters
-      @languages = current_account.account_languages
-    else
-      agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
-      @interpreters = Account.find(agency_id).interpreters
-      @languages = Language.where(account_id: agency_id)
-    end
     # Uncomment to authorize with Pundit
     # authorize @appointment
 
