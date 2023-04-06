@@ -2,9 +2,14 @@
 
 import { Controller } from "@hotwired/stimulus"
 import { arrayToSentence, toSentence } from "../helpers"
+import debounce from "debounce"
 
 export default class extends Controller {
   static targets = ["form", "appointments", "status", "displayRange", "modality"]
+
+  initialize() {
+    this.submit = debounce(this.submit.bind(this), 300)
+  }
 
   connect() {
     const checkboxOpenedStatus = this.statusTarget.querySelectorAll("input[type='radio'][value='all']")[0]
@@ -12,6 +17,10 @@ export default class extends Controller {
     if (checkboxOpenedStatus !== undefined) {
       checkboxOpenedStatus.click()
     }
+  }
+
+  submit() {
+    Rails.fire(this.formTarget, "submit")
   }
 
   changed(event) {
@@ -33,7 +42,7 @@ export default class extends Controller {
     const statusesTextContainer = this.formTarget.querySelector("#statusesTextContainer")
     const timeframeTextContainer = this.formTarget.querySelector("#timeframeTextContainer")
 
-    if (statusFilter &&!statusesTextContainer.innerHTML.includes(statusFilter)) {
+    if (statusFilter && !statusesTextContainer.innerHTML.includes(statusFilter)) {
       statusesTextContainer.innerHTML = statusFilter
     }
   }

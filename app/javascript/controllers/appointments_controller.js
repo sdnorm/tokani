@@ -1,8 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 import { arrayToSentence, toSentence } from "../helpers"
+import debounce from "debounce"
 
 export default class extends Controller {
   static targets = ["form", "appointments", "status", "displayRange", "modality"]
+
+  initialize() {
+    this.search = debounce(this.search.bind(this), 300)
+  }
 
   connect() {
     const checkboxOpenedStatus = this.statusTarget.querySelectorAll("input[type='radio'][value='all']")[0]
@@ -16,7 +21,7 @@ export default class extends Controller {
     const statusElement = document.getElementById("appointmentStatus")
     const statusDropdown = document.getElementById("appointmentStatusDropdown")
     toggleSpanAndDropdownView(statusElement, statusDropdown)
-    
+
     statusDropdown.addEventListener('change', () => {
       updateStatusOnServer(statusElement, statusDropdown)
     })
@@ -27,7 +32,7 @@ export default class extends Controller {
     const statusesTextContainer = this.formTarget.querySelector("#statusesTextContainer")
     const timeframeTextContainer = this.formTarget.querySelector("#timeframeTextContainer")
 
-    if (statusFilter &&!statusesTextContainer.innerHTML.includes(statusFilter)) {
+    if (statusFilter && !statusesTextContainer.innerHTML.includes(statusFilter)) {
       statusesTextContainer.innerHTML = statusFilter
     }
   }
@@ -71,10 +76,7 @@ export default class extends Controller {
   }
 
   search() {
-    clearTimeout(this.timeout)
-    this.timeout = setTimeout(() => {
-      Rails.fire(this.formTarget, "submit")
-    }, 200)
+    Rails.fire(this.formTarget, "submit")
   }
 }
 
