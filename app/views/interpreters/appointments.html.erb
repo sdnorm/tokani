@@ -14,9 +14,9 @@
                     <div class="flex flex-wrap items-center">
                       <!-- Need to add in a statusTarget
                       if appointment statuses are hidden to avoid JS errors -->
-                      <%= tag.div data: { appointments_target: "status" } unless AppointmentPolicy.new(current_account, @appointment).show_appointments_statuses? %>
+                      <%= tag.div data: { appointments_target: "status" } unless AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointments_statuses? %>
 
-                      <% if AppointmentPolicy.new(current_account, @appointment).show_appointments_statuses? %>
+                      <% if AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointments_statuses? %>
                         <!-- Status-->
                         <div data-controller="dropdown" class="pr-3 relative">
                           <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Status">
