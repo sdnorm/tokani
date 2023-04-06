@@ -68,6 +68,7 @@
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (recipient_id => recipients.id)
 #  fk_rails_...  (requestor_id => users.id)
+#  fk_rails_...  (site_id => sites.id)
 #
 class Appointment < ApplicationRecord
   # Broadcast changes in realtime with Hotwire

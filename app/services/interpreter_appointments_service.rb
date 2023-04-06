@@ -17,6 +17,7 @@ class InterpreterAppointmentsService
     scope = filter_by_display_range(scope)
     scope = filter_by_modality(scope)
     scope = scope_by_date_range(scope)
+    scope = filter_by_search_query(scope)
     order_by_sort(scope)
   end
 
@@ -65,6 +66,19 @@ class InterpreterAppointmentsService
     end
 
     scope.where(modality: modalities)
+  end
+
+  def filter_by_search_query(scope)
+    return scope unless @params[:search_query].present?
+    query = @params[:search_query]
+    query = "%#{query}%"
+
+    scope.includes(:customer, :site)
+      .references(:account, :site)
+      .where(
+        "appointments.ref_number ILIKE ? OR accounts.name ILIKE ? OR sites.name ILIKE ?",
+        query, query, query
+      )
   end
 
   def order_by_start_time(scope)

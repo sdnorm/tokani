@@ -232,6 +232,7 @@ class AppointmentsController < ApplicationController
       :modality_in_person,
       :modality_phone,
       :modality_video,
+      :search_query,
       sort_by: [:date, :customer]
     )
   end
