@@ -347,6 +347,10 @@ class InterpretersController < ApplicationController
   end
 
   def appointment_query_params
-    params.permit(:status, :display_range, :start_date, :end_date, :modality_in_person, :modality_phone, :modality_video, sort_by: [:date, :customer])
+    params.permit(
+      :status, :display_range, :start_date,
+      :end_date, :modality_in_person, :modality_phone,
+      :modality_video, :search_query, sort_by: [:date, :customer]
+    )
   end
 end

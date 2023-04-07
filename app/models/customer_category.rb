@@ -11,6 +11,7 @@
 #  video_prefix       :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  account_id         :uuid
 #  backport_id        :bigint
 #
 # Indexes

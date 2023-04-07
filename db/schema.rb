@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_05_015842) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_06_053655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -373,6 +373,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_015842) do
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "account_id"
     t.index ["backport_id"], name: "index_customer_categories_on_backport_id"
     t.index ["display_value"], name: "index_customer_categories_on_display_value"
   end
@@ -863,6 +864,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_015842) do
   add_foreign_key "appointments", "languages"
   add_foreign_key "appointments", "providers"
   add_foreign_key "appointments", "recipients"
+  add_foreign_key "appointments", "sites"
   add_foreign_key "appointments", "users", column: "requestor_id"
   add_foreign_key "availabilities", "users"
   add_foreign_key "checklist_items", "checklist_types"

@@ -7,7 +7,9 @@ class PayRatesController < ApplicationController
 
   # GET /pay_rates
   def index
-    @pagy, @pay_rates = pagy(PayRate.sort_by_params(params[:sort], sort_direction))
+    # This assumes pay rate is only accessible to agency accounts - not customer/requestors
+    @pagy, @pay_rates = pagy(PayRate.where(account_id: current_account.id).sort_by_params(params[:sort], sort_direction))
+    # @pagy, @pay_rates = pagy(PayRate.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @pay_rates
@@ -24,7 +26,7 @@ class PayRatesController < ApplicationController
     @languages = current_account.languages.all.order("name ASC")
 
     @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
-    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: u[1] + u[2]} }.to_json
+    @interpreters_json = current_account.account_interpreters.pluck(:id, :first_name, :last_name).map { |u| {value: u[0], text: [u[1], u[2]].join(" ")} }.to_json
 
     # Uncomment to authorize with Pundit
     # authorize @pay_rate

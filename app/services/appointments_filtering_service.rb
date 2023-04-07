@@ -17,6 +17,7 @@ class AppointmentsFilteringService
     @scope = filter_by_customer(@scope)
     @scope = filter_by_modality(@scope)
     @scope = scope_by_date_range(@scope)
+    @scope = filter_by_search_query(@scope)
     order_by_sort(@scope)
   end
 
@@ -108,5 +109,18 @@ class AppointmentsFilteringService
     else
       scope
     end
+  end
+
+  def filter_by_search_query(scope)
+    return scope unless @params[:search_query].present?
+    query = @params[:search_query]
+    query = "%#{query}%"
+
+    scope.includes(:customer, :site, :interpreter)
+      .references(:account, :site, :users)
+      .where(
+        "appointments.ref_number ILIKE ? OR accounts.name ILIKE ? OR sites.name ILIKE ? OR users.first_name ILIKE ? OR users.last_name ILIKE ?",
+        query, query, query, query, query
+      )
   end
 end

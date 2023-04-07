@@ -43,6 +43,7 @@ class Site < ApplicationRecord
   has_many :departments, dependent: :destroy
   has_many :providers
   has_many :requestor_details
+  has_many :appointments
 
   accepts_nested_attributes_for :departments, reject_if: :all_blank
 
