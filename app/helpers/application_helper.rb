@@ -132,7 +132,8 @@ module ApplicationHelper
   end
 
   def system_admin_highlight?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories" ||
+        controller_name == "checklist_types"
       highlighted
     else
       unhighlighted
@@ -140,7 +141,8 @@ module ApplicationHelper
   end
 
   def system_admin_highlight_icon?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories" ||
+        controller_name == "checklist_types"
       highlighted_icon
     else
       unhighlighted_icon

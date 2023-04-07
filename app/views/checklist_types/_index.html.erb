@@ -1,0 +1,6 @@
+<div id="<%= dom_id(checklist_type, :index) %>">
+  <%= turbo_stream_from checklist_type %>
+  <%= render checklist_type %>
+  <%= link_to "View", checklist_type, class: "btn btn-white" %>
+</div>
+
