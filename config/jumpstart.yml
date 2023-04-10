@@ -8,7 +8,7 @@ business_address: |-
   5921 Sutter Ave.
   Carmichael, California 95608
 background_job_processor: sidekiq
-email_provider: mailjet
+email_provider: ses
 personal_accounts: false
 solargraph: false
 register_with_account: true
