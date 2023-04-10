@@ -1,0 +1,79 @@
+<div id="<%= citem.id || "new_checklist" %>_form_wrapper" class="p-8 bg-white rounded shadow mb-4 mt-4">
+
+  <% unless citem.new_record? %>
+  <div class="float-right">
+    <%= button_to url_for(controller: "checklist_items", action: "destroy", id: citem.id), method: :delete, class: "floated-right" do %>
+      <i class="fas fa-window-close"></i>
+    <% end %>
+  </div>
+  <% end %>
+
+  <%= form_with model: citem do |form| %>
+    <% if citem.new_record? %>
+      <%= form.hidden_field :user_id %>
+    <% end %>
+
+    <div class="row">
+      <div class="col" id="<%= if citem.new_record? then 'new_checklist_item' else citem.id end %>_notice">
+        <%= notice %>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mb-3 mt-3">
+      <div class="text-center ps-4 mb-3">
+        <% if citem.new_record? %>
+          <h4 class="txt-blueCoral">Add New Checklist Item</h4>
+        <% else %>
+          <h4 class="text-blueCoral text-center"><%= citem.checklist_type.name %></h4>
+        <% end %>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+
+        <div>
+        </div>
+
+        <div>
+
+        <% if citem.new_record? %>
+          <div class="text-center col-6 m-auto mb-4">
+            <%= form.select :checklist_type_id, options_from_collection_for_select(@avail_checklist_types, 'id', 'name'), {}, {class: 'form-select' } %>
+          </div>
+        <% end %>
+
+        <div class="row text-center m-auto mb-4" >
+          <div class="form-check text-blueCoral" data-controller="checkbox">
+            <%= check_box_tag 'exp_date_toggle', 'true', citem.exp_date.present?, class: 'form-check-input', data: { action: 'change->checkbox#toggleHide'} %>Expiration Date
+            <div id="citem_exp_date_wrapper_<%= citem.id  %>" class="<%= 'hidden' if citem.exp_date.blank? %>" data-checkbox-target="toggleHide">
+              <%= form.text_field :exp_date, class: "form-control", disabled: citem.exp_date.blank? , data: {controller: "flatpickr"} %>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center m-auto mb-4" id="<%= citem.id %>_document_url">
+          <span class="text-blueCoral">
+            <strong>Document: </strong>
+            <% if citem.document.attached? %>
+              <%= link_to citem.document.try(:filename), url_for(citem.document) %>
+            <% else %>
+            None
+            <% end %>
+          </span>
+          <div class="col mt-3 input-group input-group-static justify-content-center" data-controller="form">
+            <%= form.file_field :document, id: "#{citem.id}_document_file_field" , class: "inputfile", data: { action: 'change->form#showFileName'}%>
+            <%= form.label :upload_document %>
+            <input class="form-control text-center" placeholder="(Choose File)" disabled="disabled" data-form-target="showFile" />
+          </div>
+        </div>
+
+        <div class="text-center m-auto mb-4">
+          <%= form.submit (if citem.new_record? then 'Add' else 'Update' end), class: 'inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2' %>
+        </div>
+      </div>
+
+      <div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

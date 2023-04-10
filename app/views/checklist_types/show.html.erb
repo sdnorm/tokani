@@ -1,0 +1,29 @@
+<%= content_for :title, "Checklist Type - #{@checklist_type.name}" %>
+<%= turbo_stream_from @checklist_types %>
+<%= render partial: "shared/sidenav" %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center pb-6">
+                <div class="sm:flex-auto">
+                  <h1 class="text-xl font-semibold text-gray-900">
+                    <%= link_to "Checklist Types", checklist_types_path, class: "text-tokanisecondary-500" %>
+                      <span class="text-gray-400 font-light mx-2">\</span>
+                      <%= @checklist_type.name %>
+                  </h1>
+                </div>
+                  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <%= link_to t("edit"), edit_checklist_type_path(@checklist_type), class: "btn btn-tokani_purple" %>
+                  </div>
+                </div>
+
+                <div class="p-8 bg-white rounded shadow">
+                  <%= render partial: 'checklist_type', locals: { checklist_type: @checklist_type} %>
+                </div>
+            </div>
+          </div>
+        </div>
+  </main>
+</div>

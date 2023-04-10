@@ -51,6 +51,7 @@ class InterpretersController < ApplicationController
   end
 
   def show
+    @checklist_items = @interpreter.checklist_items.includes(:checklist_type).with_attached_document.order("checklist_types.name ASC")
   end
 
   def edit

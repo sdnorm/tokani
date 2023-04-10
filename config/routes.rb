@@ -1,5 +1,11 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :checklist_items, only: [:update, :create, :destroy] do
+    member do
+      get :interpreter_items
+    end
+  end
+  resources :checklist_types, except: [:destroy]
   resources :pay_rates
   resources :bill_rates
   resources :reports, only: [:index, :create] do

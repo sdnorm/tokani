@@ -288,8 +288,6 @@
 
 }
 
-
-
 .rotate-180 {
   transform: rotate(180deg);
 }
@@ -299,6 +297,9 @@
   border-bottom: 2px solid rgb(0, 0, 255);
 }
 
+.floted-right {
+  float: right;
+}
 
 @import "dropzone/dist/dropzone.css";
 @import "tippy.js/dist/tippy.css";

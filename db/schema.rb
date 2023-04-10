@@ -314,6 +314,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_053655) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "checklist_items", force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.bigint "checklist_type_id", null: false
+    t.boolean "bool_val"
+    t.string "text_val"
+    t.date "start_date"
+    t.date "exp_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checklist_type_id"], name: "index_checklist_items_on_checklist_type_id"
+    t.index ["user_id"], name: "index_checklist_items_on_user_id"
+  end
+
+  create_table "checklist_types", force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.string "name"
+    t.integer "format"
+    t.boolean "is_active", default: true, null: false
+    t.boolean "requires_expiration"
+    t.boolean "requires_upload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_checklist_types_on_account_id"
+  end
+
   create_table "connected_accounts", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
@@ -842,6 +867,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_053655) do
   add_foreign_key "appointments", "sites"
   add_foreign_key "appointments", "users", column: "requestor_id"
   add_foreign_key "availabilities", "users"
+  add_foreign_key "checklist_items", "checklist_types"
+  add_foreign_key "checklist_items", "users"
+  add_foreign_key "checklist_types", "accounts"
   add_foreign_key "customer_details", "customer_categories"
   add_foreign_key "departments", "sites"
   add_foreign_key "interpreter_languages", "languages"

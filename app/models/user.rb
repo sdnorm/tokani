@@ -91,6 +91,8 @@ class User < ApplicationRecord
 
   has_many :availabilities, dependent: :destroy, foreign_key: :user_id
   has_many :time_offs, dependent: :destroy, foreign_key: :user_id
+  has_many :checklist_items, dependent: :destroy, foreign_key: :user_id
+  has_many :checklist_types, through: :checklist_items
 
   accepts_nested_attributes_for :interpreter_detail
   accepts_nested_attributes_for :requestor_detail
@@ -146,5 +148,9 @@ class User < ApplicationRecord
 
   def languages_list
     languages.map(&:name).join(", ")
+  end
+
+  def available_checklist_types(account)
+    account.checklist_types.order("name ASC") - checklist_types.uniq
   end
 end

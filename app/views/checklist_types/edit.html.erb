@@ -1,0 +1,25 @@
+<%= content_for :title, t("shared.scaffold.edit.title", model: "Checklist Type") %>
+<%= render partial: "shared/sidenav" %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+        <div class="px-4 sm:px-6 lg:px-8">
+          <div class="sm:flex sm:items-center pb-6">
+            <div class="sm:flex-auto">
+              <h1 class="text-xl font-semibold text-gray-900">
+                <%= link_to "Checklist Types", checklist_types_path, class: "text-tokanisecondary-500" %>
+                <span class="text-gray-400 font-light mx-2">\</span>
+                <%= @checklist_type.name %>
+              </h1>
+            </div>
+          </div>
+          <div class="p-8 bg-white rounded shadow">
+            <%= render partial: "form", locals: { checklist_type: @checklist_type } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
