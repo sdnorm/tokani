@@ -1,7 +1,5 @@
 # Tokani
 
-## Jira Test
-
 ## Development Things
 
 Testing sending and style of emails locally can be viewed at `localhost:3000/letter_opener`
