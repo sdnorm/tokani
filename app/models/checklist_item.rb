@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: checklist_items
+#
+#  id                :bigint           not null, primary key
+#  bool_val          :boolean
+#  exp_date          :date
+#  start_date        :date
+#  text_val          :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  checklist_type_id :bigint           not null
+#  user_id           :uuid             not null
+#
+# Indexes
+#
+#  index_checklist_items_on_checklist_type_id  (checklist_type_id)
+#  index_checklist_items_on_user_id            (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (checklist_type_id => checklist_types.id)
+#  fk_rails_...  (user_id => users.id)
+#
 class ChecklistItem < ApplicationRecord
   #  belongs_to :interpreter, foreign_key: 'user_id'
   belongs_to :user
