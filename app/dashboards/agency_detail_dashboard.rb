@@ -29,7 +29,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     time_zones: Field::String,
     url: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

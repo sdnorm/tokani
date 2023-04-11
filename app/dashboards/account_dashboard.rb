@@ -19,7 +19,6 @@ class AccountDashboard < Administrate::BaseDashboard
     account_invitations: Field::HasMany,
     account_languages: Field::HasMany,
     account_sites: Field::HasMany,
-    account_users: Field::HasMany,
     account_users_count: Field::Number,
     addresses: Field::HasMany,
     agencies: Field::HasMany,
@@ -31,7 +30,6 @@ class AccountDashboard < Administrate::BaseDashboard
     bill_rates: Field::HasMany,
     billing_address: Field::HasOne,
     billing_email: Field::String,
-    charges: Field::HasMany,
     checklist_types: Field::HasMany,
     customer: Field::Boolean,
     customer_agencies: Field::HasMany,
@@ -45,8 +43,6 @@ class AccountDashboard < Administrate::BaseDashboard
     name: Field::String,
     notification_email: Field::HasOne,
     notifications: Field::HasMany,
-    owner: Field::BelongsTo,
-    pay_customers: Field::HasMany,
     pay_rates: Field::HasMany,
     payment_processor: Field::HasOne,
     personal: Field::Boolean,
@@ -61,10 +57,8 @@ class AccountDashboard < Administrate::BaseDashboard
     sites: Field::HasMany,
     specialties: Field::HasMany,
     subdomain: Field::String,
-    subscriptions: Field::HasMany,
-    users: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
