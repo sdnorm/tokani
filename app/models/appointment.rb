@@ -152,7 +152,7 @@ class Appointment < ApplicationRecord
     nil
   end
 
-  def set_visibility_status
+  defk,  set_visibility_status
     vis_status = if (interpreter_req_ids.blank? || interpreter_req_ids.class != Array) || interpreter_req_ids.compact_blank.empty?
       "opened"
     else
