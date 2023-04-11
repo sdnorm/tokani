@@ -13,6 +13,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
       searchable: true,
       searchable_fields: ["name"]
     ),
+    company_website: Field::String,
     phone_number: Field::String,
     primary_contact_email: Field::String,
     primary_contact_first_name: Field::String,
@@ -24,6 +25,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_last_name: Field::String,
     secondary_contact_phone_number: Field::String,
     secondary_contact_title: Field::String,
+    time_zone: Field::String,
     time_zones: Field::String,
     url: Field::String,
     created_at: Field::DateTime,
@@ -47,6 +49,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     agency
+    company_website
     phone_number
     primary_contact_email
     primary_contact_first_name
@@ -58,6 +61,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_last_name
     secondary_contact_phone_number
     secondary_contact_title
+    time_zone
     time_zones
     url
     created_at
@@ -69,6 +73,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     agency
+    company_website
     phone_number
     primary_contact_email
     primary_contact_first_name
@@ -80,6 +85,7 @@ class AgencyDetailDashboard < Administrate::BaseDashboard
     secondary_contact_last_name
     secondary_contact_phone_number
     secondary_contact_title
+    time_zone
     time_zones
     url
   ].freeze
