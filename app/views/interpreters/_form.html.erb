@@ -90,15 +90,17 @@
                   </div>
                 </div>
             <% end %>
-
+            <% if form.object.new_record? %>
             <div class="col-span-12 sm:col-span-12">
-              <%= form.label "Languages", class: "block text-sm font-medium text-gray-700" %>
-              <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages" data-multiselect-selected-value='<%= raw @interpreter_languages_json %>'>
+             
+              <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Interpreter" <%= raw selected_languages(@interpreter.new_record?, @interpreter_languages_json) %>>
+              <!-- <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages" data-multiselect-selected-value='<%= raw @interpreter_languages_json %>'>> -->
                 <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="user[language_ids][]" id="user_language_ids" style="display: none;"></select>
                 <%= hidden_field_tag "user[language_ids][]", '' %>
+              </div>
+              <br>
             </div>
-            <br>
-          </div>
+          <% end %>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <% if form.object.new_record? %>
               <%= link_to t("cancel"), interpreters_path, class:"inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>

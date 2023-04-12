@@ -1,10 +1,8 @@
 import { Autocomplete } from 'stimulus-autocomplete'
 
-
-// NK *** This should be turned into a mix-in instead of plain inheritance
 export default class extends Autocomplete {
 
-  static targets = ["input", "hidden", "results", "agencyCustomerId", "languageId", 'chipTemplate', 'chipList']
+  static targets = ["input",  "hidden", "results", "agencyCustomerId", "languageId", 'chipTemplate', 'chipList']
 
   initialize() {
     super.initialize()
@@ -12,7 +10,6 @@ export default class extends Autocomplete {
 
   connect() {
     super.connect()
-    
   }
 
   commit(selected) {
@@ -26,7 +23,6 @@ export default class extends Autocomplete {
 
     const textValue = selected.getAttribute("data-autocomplete-label") || selected.textContent.trim()
     const value = selected.getAttribute("data-autocomplete-value") || textValue
-
     const template = this.chipTemplateTarget.content.firstElementChild.cloneNode(true)
     template.querySelector('.selected-option-label').innerHTML = textValue
     template.querySelector("[name='appointment[interpreter_req_ids][]']").value = value
@@ -45,10 +41,11 @@ export default class extends Autocomplete {
     )
   }
 
-  buildQueryURL() {
-
+  buildURL(){
     const query = this.inputTarget.value.trim()
-
+    // const query1 = this.assignedTarget.value.trim()
+console.log(this.inputTarget)
+console.log(this.assignedTarget)
     if (!query || query.length < this.minLengthValue) {
       this.hideAndRemoveOptions()
       return null
@@ -65,9 +62,9 @@ export default class extends Autocomplete {
       return null
     }
 
-    // NK This is the magic and what makes this ridiculously specific, not sure I like it.
     // const agency_customer_id = this.agencyCustomerIdTarget.value || this.agencyCustomerIdTarget.selectedOptions[0].value
     const language_id = this.languageIdTarget.value || this.languageIdTarget.selectedOptions[0].value
+    
     // const modality = this.modalityTarget.value || this.modalityTarget.selectedOptions[0].value
     
     params.set("language_id", language_id)

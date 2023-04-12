@@ -210,6 +210,7 @@ Rails.application.routes.draw do
     resources :interpreters do
       collection do
         get :search
+        get :search_assigned_int
         get :fetch_appointments
         get :public
         get :appointments

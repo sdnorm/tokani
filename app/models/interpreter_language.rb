@@ -24,5 +24,6 @@ class InterpreterLanguage < ApplicationRecord
   # after_destroy_commit -> { broadcast_remove_to :interpreter_languages, target: dom_id(self, :index) }
 
   belongs_to :language
-  belongs_to :interpreter, class_name: "User"
+  # belongs_to :interpreter, class_name: "User", inverse_of: :interpreter_language
+  belongs_to :interpreter, class_name: "User", foreign_key: "interpreter_id", inverse_of: :interpreter_languages
 end

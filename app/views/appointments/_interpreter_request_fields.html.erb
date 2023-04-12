@@ -48,7 +48,7 @@
               <%= radio_button_tag 'interpreter_reqs', 'assigned', assigned_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "assigned_interpreters"} %> Assign Interpreter
             </div>
             <%= field_set_tag nil, id: 'assigned_interpreters', class: 'mb-3', disabled: @assigned_interpreter, data: {radio_button_target: "fieldset"} do %>
-              <div data-controller="autocomplete" data-autocomplete-url-value=<%= search_interpreters_path %> role="combobox">
+              <div data-controller="autocomplete" data-autocomplete-url-value=<%= search_assigned_int_interpreters_path %> role="combobox">
                 <%= form.text_field :assigned_interpreter, class: "form-control", data: { "autocomplete-target": "input" } %>
                 <%= form.hidden_field :assigned_interpreter, data: { "autocomplete-target": "hidden" } %>
                 <ul class="list-group" data-autocomplete-target="results"></ul>

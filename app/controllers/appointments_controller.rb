@@ -73,7 +73,7 @@ class AppointmentsController < ApplicationController
 
     @languages = current_account.account_languages
 
-    @interpreters = current_account.interpreters
+    # @interpreters = current_account.interpreters
     requestor_ids = @customer.requestor_details.pluck(:requestor_id)
     @requestors = User.where(id: requestor_ids)
 
@@ -94,12 +94,12 @@ class AppointmentsController < ApplicationController
     # @account_customers = current_account.customers
     if agency_logged_in?
       @account_customers = current_account.customers
-      @interpreters = current_account.interpreters
+      # @interpreters = current_account.interpreters
       @languages = current_account.account_languages
       @appointment.agency_id = @account.id
     else
       agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
-      @interpreters = Account.find(agency_id).interpreters
+      # @interpreters = Account.find(agency_id).interpreters
       @languages = Language.where(account_id: agency_id)
       @appointment.agency_id = agency_id
     end
