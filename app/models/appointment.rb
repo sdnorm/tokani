@@ -370,13 +370,13 @@ class Appointment < ApplicationRecord
   end
 
   def video_modality?
-    modality == 'video'
+    modality == "video"
   end
 
   def valid_video_link
     return true if video_link.blank?
 
-    errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?('https://', 'http://')
-    return false
+    errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?("https://", "http://")
+    false
   end
 end
