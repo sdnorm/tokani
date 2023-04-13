@@ -1,5 +1,3 @@
-<%= render partial: 'shared/sidenav' %>
-
 <div>
   <div class="flex flex-1 flex-col md:pl-64">
     <main class="flex-1">
@@ -28,15 +26,15 @@
                     <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Site</th>
                     <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 sm:table-cell">Role</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Phone</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>  
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                 <% @requestors.each do |requestor| %>
                   <tr>
                     <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                      <%= link_to "#{requestor.first_name} #{requestor.last_name}", requestor_path(requestor) %> 
-                        
+                      <%= link_to "#{requestor.first_name} #{requestor.last_name}", requestor_path(requestor) %>
+
                       <dl class="font-normal lg:hidden">
                         <dt class="sr-only">Email</dt>
                         <dd class="mt-1 truncate text-gray-700"><%= requestor.email %></dd>

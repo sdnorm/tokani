@@ -1,6 +1,5 @@
 <% content_for :sidenav do %><% end %>
 <div>
-<%= render partial: "shared/sidenav" %>
   <div class="min-h-full">
     <div class="flex flex-1 flex-col lg:pl-64">
       <main class="flex-1 pb-8">
@@ -94,7 +93,7 @@
 
           <% if @appointments.count == 0 %>
             <div class="mt-10 only:flex flex-col items-center justify-center lg:flex-row">
-                
+
               <div class="flex-1 text-center">
                 <p class="mb-4 h3">Create your first Appointment</p>
                 <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "btn btn-primary" %>
