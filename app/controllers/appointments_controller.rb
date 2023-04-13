@@ -271,6 +271,7 @@ class AppointmentsController < ApplicationController
       :requestor_id,
       :creator_id,
       :assigned_interpreter,
+      :video_link,
       interpreter_req_ids: []
     )
 
