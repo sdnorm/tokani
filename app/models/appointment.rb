@@ -112,6 +112,7 @@ class Appointment < ApplicationRecord
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
   validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
+  validate :valid_video_link
   before_create :gen_refnum
 
   after_create :send_created_notifications
@@ -366,5 +367,16 @@ class Appointment < ApplicationRecord
     if (check_for_change_fields & changed).any?
       NotificationsService.deliver_appointment_edited_notifications(account: agency, appointment: self)
     end
+  end
+
+  def video_modality?
+    modality == "video"
+  end
+
+  def valid_video_link
+    return true if video_link.blank?
+
+    errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?("https://", "http://")
+    false
   end
 end
