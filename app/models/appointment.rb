@@ -354,6 +354,14 @@ class Appointment < ApplicationRecord
     self.finish_time = parsed_datetime_in_zone.utc
   end
 
+  def time_finished?
+    ["finished", "verified", "exported"].include?(status)
+  end
+
+  def verified?
+    ["verified", "exported"].include?(status)
+  end
+
   def send_created_notifications
     NotificationsService.deliver_appointment_created_notifications(account: agency, appointment: self)
   end
