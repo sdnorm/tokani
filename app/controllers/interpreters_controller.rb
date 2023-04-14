@@ -67,6 +67,7 @@ class InterpretersController < ApplicationController
     respond_to do |format|
       if @interpreter.save
         AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles: {"interpreter" => true})
+        @interpreter.send_interpreter_creation_mailer
         format.html { redirect_to interpreter_path(@interpreter), notice: "Interpreter was successfully created." }
         format.json { render :show, status: :created, location: @interpreter }
       else
