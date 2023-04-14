@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :time_finish, :update_time_finish]
 
   before_action :authenticate_user!
   before_action :set_account
@@ -84,6 +84,30 @@ class AppointmentsController < ApplicationController
     @general_int_requested = @appointment.requested_interpreters.empty?
     @assigned_interpreter = @appointment.assigned_interpreter.nil?
     @specific_int_requested = (!@general_int_requested && !@assigned_interpreter) ? true : false
+  end
+
+  def time_finish
+    setup_time_finish_vars
+  end
+
+  def update_time_finish
+    @appointment.combine_finish_date_and_time(appointment_time_finish_params[:submitted_finish_date], appointment_time_finish_params[:submitted_finish_time], current_user)
+
+    if @appointment.finish_time < @appointment.start_time
+      setup_time_finish_vars
+      flash[:alert] = "There was a problem time finishing the appointment: Finish time must be later than the start time."
+      return render :time_finish
+    end
+
+    if @appointment.update(appointment_time_finish_params)
+      AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["finished"], user: current_user)
+      redirect_to(appointment_path(@appointment), notice: "Appointment successfully time finished.")
+    else
+      setup_time_finish_vars
+      errors = @appointment.errors.full_messages.join("; ")
+      flash[:alert] = "There was a problem time finishing the appointment: #{errors}"
+      render :time_finish
+    end
   end
 
   # POST /appointments or /appointments.json
@@ -223,6 +247,11 @@ class AppointmentsController < ApplicationController
     @specific_int_requested = !@general_int_requested
   end
 
+  def setup_time_finish_vars
+    @docs_list = @appointment.documents.map { |doc| {name: doc.filename.to_s, size: doc.byte_size, url: url_for(doc), signed_id: doc.signed_id} }
+    @docs_list_json = @docs_list.to_json
+  end
+
   def filtering_params
     params.permit(
       :status,
@@ -277,5 +306,14 @@ class AppointmentsController < ApplicationController
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:appointment).permit(policy(@appointment).permitted_attributes)
+  end
+
+  def appointment_time_finish_params
+    params.require(:appointment).permit(
+      :submitted_finish_date,
+      :submitted_finish_time,
+      :billing_notes,
+      documents: []
+    )
   end
 end
