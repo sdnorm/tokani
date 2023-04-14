@@ -4,7 +4,7 @@
   <h5 class="mb-2"><%= t("accounts.roles") %></h5>
   <div class="form-group">
     <% if current_account_user.agency_admin? %>
-      <% AccountUser::AGENCY_ROLES.each do |role| %>
+      <% AccountUser::AGENCY_ROLES_TO_SHOW.each do |role| %>
         <div>
           <%= form.check_box role, id: role.to_s.parameterize, class: "form-checkbox mr-1", disabled: role == :admin && account_user.account_owner? %>
           <label for="<%= role.to_s.parameterize %>" class="inline-block"><%= role.to_s.humanize %></label>
