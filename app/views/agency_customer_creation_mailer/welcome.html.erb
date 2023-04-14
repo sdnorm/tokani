@@ -1,5 +1,5 @@
 <h1>Welcome to Tokani!</h1>
 
-<p>Your  customer account has been created by <%= AgencyCustomer.find_by(customer_id: @customer.id).agency.name %>. You will need to follow the link below to set your password and complete your registration.</p>
+<p>Your customer account has been created by <%= AgencyCustomer.find_by(customer_id: @customer.id).agency.name %>. You will need to follow the link below to set your password and complete your registration.</p>
 
-<p><%= link_to "Finish Setting Up Account", edit_password_url(@user, reset_password_token: @token, new_account: "true") %></p>
+<p><%= link_to "Finish Setting Up Your Account", edit_password_url(@user, reset_password_token: @token, new_account: "true") %></p>

@@ -1,0 +1,2 @@
+class InterpreterCreationMailer < ApplicationMailer
+end
