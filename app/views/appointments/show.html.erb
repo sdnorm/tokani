@@ -15,11 +15,13 @@
               </h1>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <% unless @appointment.verified? %>
+                <%= link_to "Time Finish", time_finish_appointment_path(@appointment), class: "btn btn-secondary" %>
+              <% end %>
               <%= link_to t("edit"), edit_appointment_path(@appointment), class: "btn btn-tokani_purple" %>
             </div>
           </div>
           <div class="p-8 bg-white rounded shadow">
-            <%# render @appointment,locals: { appt_status: @appt_status } %>
             <%= render partial: 'appointment', locals: { appointment: @appointment, appt_status: @appt_status } %>
           </div>
         </div>
