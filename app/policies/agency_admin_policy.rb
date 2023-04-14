@@ -10,7 +10,7 @@ class AgencyAdminPolicy < ApplicationPolicy
   # hide sidenav only from these controllers
   def blacklisted_controllers
     %w[
-      registrations accounts subscriptions passwords notification_settings agency_details
+      registrations accounts subscriptions passwords notification_settings agency_details agencies account_invitations account_users
     ]
   end
 
