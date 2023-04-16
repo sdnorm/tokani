@@ -1,5 +1,15 @@
 <nav class="flex flex-wrap items-center justify-between px-4 py-2 bg-white border-b border-gray-200 text-sm font-medium" data-controller="toggle">
-  <div class="flex items-center flex-shrink-0 mr-6">
+  <!-- Slider for mobile -->
+  <div class="block lg:hidden" data-controller="menu">
+    <button type="button" id="sidebar-open" class="flex items-center p-3 text-gray-500 lg:hidden focus:outline-none focus:text-gray-700" data-action="click->menu#toggleMenu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black">
+        <title>Sidebar</title>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
+    </button>
+  </div>
+  <!-- END/Slider for mobile -->
+  <div class="flex items-center flex-shrink-0 m-auto md:mr-6">
     <%= link_to root_path do %>
       <%= image_tag "logo.png", class: "pl-6 md:0 h-8 w-auto fill-current text-gray-700 hover:text-gray-800" %>
       <span class="sr-only"><%= Jumpstart.config.application_name %></span>
