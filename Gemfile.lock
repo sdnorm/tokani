@@ -296,7 +296,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.8)
+    nio4r (2.5.9)
     nokogiri (1.14.2)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
@@ -342,7 +342,7 @@ GEM
     pretender (0.4.0)
       actionpack (>= 5.2)
     public_suffix (5.0.1)
-    puma (6.1.1)
+    puma (6.2.1)
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
@@ -560,7 +560,7 @@ DEPENDENCIES
   prawn!
   prefixed_ids (~> 1.5)
   pretender (~> 0.4.0)
-  puma (~> 6.1)
+  puma (~> 6.2)
   pundit (~> 2.3)
   rails (~> 7.0.4)
   receipts (~> 2.2.0)
