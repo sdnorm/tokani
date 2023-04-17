@@ -59,10 +59,18 @@ module ApplicationHelper
   end
 
   def int_appointment_hightlight?
-    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled")
+    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled") || current_page?("/interpreters/appointments")
       highlighted
     else
       unhighlighted
+    end
+  end
+
+  def int_appointment_highlight_icon?
+    if current_page?(root_path) || current_page?(appointments_interpreters_path)
+      highlighted_icon
+    else
+      unhighlighted_icon
     end
   end
 
@@ -109,6 +117,14 @@ module ApplicationHelper
 
   def int_dashboard_highlight?
     if current_page?(root_path) || current_page?(interpreter_dashboard_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def int_time_off_highlight?
+    if current_page?(root_path) || current_page?(interpreters_time_off_path)
       highlighted
     else
       unhighlighted
