@@ -12,4 +12,8 @@ export default class extends Controller {
 
     document.querySelector('#slideover').classList.toggle('h-full');
   }
+
+  hideSidebarChevron() {
+    document.querySelector("#sidebar-open").classList.toggle("hidden")
+  }
 }
