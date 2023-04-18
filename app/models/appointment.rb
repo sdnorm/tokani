@@ -95,6 +95,8 @@ class Appointment < ApplicationRecord
   belongs_to :requestor, class_name: "User"
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
+  belongs_to :bill_rate, optional: true
+  belongs_to :pay_rate, optional: true
 
   has_many_attached :documents
 

@@ -128,16 +128,16 @@ class RateCalculatorService
 
   def after_hours_rate?
     # These values are the offset in seconds from the beginning of the day
-    if @bill_rate.after_hours_start_seconds.present? && @bill_rate.after_hours_end_seconds.present?
+    if @bill_rate.regular_hours_start_seconds.present? && @bill_rate.regular_hours_end_seconds.present?
 
       after_hours_set = Set.new
 
-      0.upto(@bill_rate.after_hours_start_seconds) do |i|
+      0.upto(@bill_rate.regular_hours_start_seconds) do |i|
         after_hours_set.add(i)
       end
 
       # There are 86400 seconds in the day
-      @bill_rate.after_hours_end_seconds.upto(86400) do |i|
+      @bill_rate.regular_hours_end_seconds.upto(86400) do |i|
         after_hours_set.add(i)
       end
 

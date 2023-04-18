@@ -276,6 +276,21 @@ class InterpretersController < ApplicationController
   def filter_appointments
   end
 
+  def income
+    search_params = appointment_query_params
+    if search_params.blank? || search_params[:status].blank? || search_params[:status] == "all"
+      search_params[:status] = "processed"
+    end
+    @service = InterpreterAppointmentsService.new(current_user, search_params)
+    @appointments = @service.fetch_appointments
+    @pagy, @appointments = pagy(@appointments)
+
+    @statuses = ["all", "finished", "verified", "exported"]
+    @modalities = ["in_person", "video", "phone"]
+    @sort_by_filters = ["date"]
+    @show_payment_amount = true
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
