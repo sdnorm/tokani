@@ -39,12 +39,21 @@ class AccountUser < ApplicationRecord
     :tokani_admin
   ].freeze
 
+  CUSTOMER_ROLES = [
+    :customer_admin,
+    :customer_member
+  ].freeze
+
   AGENCY_ROLES = [
     :agency_admin,
-    :site_admin,
     :interpreter,
     :agency_member
   ].freeze
+
+  AGENCY_ROLES_TO_SHOW = [
+    :agency_admin,
+    :agency_member
+  ]
 
   SITE_ROLES = [
     :site_admin,

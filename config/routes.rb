@@ -209,6 +209,8 @@ Rails.application.routes.draw do
     resources :appointments do
       member do
         get :interpreter_requests
+        get :time_finish
+        put :update_time_finish
         patch :status, to: "appointments#update_status"
       end
     end

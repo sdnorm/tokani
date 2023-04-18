@@ -107,6 +107,31 @@
         </div>
       <% end %>
 
+
+      <% if appointment.time_finished? %>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600">Billing Notes</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= simple_format(appointment.billing_notes) %></dd>
+        </div>
+
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600">Attached Billing Documents</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+
+            <% if appointment.documents.attached? %>
+              <ul>
+                <% appointment.documents.each do |doc| %>
+                  <li><%= link_to(doc.blob.filename.to_s, url_for(doc)) %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              <i>N/A - none present</i>
+            <% end %>
+
+          </dd>
+        </div>
+      <% end %>
+
     </dl>
   </div>
 </div>

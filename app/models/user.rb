@@ -154,7 +154,7 @@ class User < ApplicationRecord
     account.checklist_types.order("name ASC") - checklist_types.uniq
   end
 
-  def send_interpreter_creation_mailer
-    InterpreterCreationMailer.welcome(seld).deliver_later
+  def send_interpreter_creation_mailer(agency)
+    InterpreterCreationMailer.welcome(self, agency).deliver_later
   end
 end
