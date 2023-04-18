@@ -82,8 +82,8 @@ class AppointmentStatus < ApplicationRecord
         # Requestor cancellation
         NotificationsService.deliver_appointment_cancelled_notifications(account: appointment.agency, appointment: appointment)
       end
-    #when "verified"
-    #  appointment.create_line_items_and_save_totals
+      # when "verified"
+      #  appointment.create_line_items_and_save_totals
     end
   end
 end
