@@ -13,6 +13,9 @@
         </a>
       </th>
       <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Status</th>
+      <% if @show_payment_amount %>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Payment Amount</th>
+      <% end %>
     </tr>
   </thead>
   <tbody class="divide-y divide-gray-200 bg-white">
@@ -38,6 +41,9 @@
       <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.duration %> minutes</td>
       <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p") %></td>
       <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell capitalize"><%= colored_appointment_status(appointment.current_status) %></td>
+      <% if @show_payment_amount %>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.total_paid.present? ? number_to_currency(appointment.total_paid) : "" %></td>
+      <% end %>
     </tr>
   <% end %>
   </tbody>

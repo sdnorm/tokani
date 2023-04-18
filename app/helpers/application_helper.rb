@@ -131,6 +131,14 @@ module ApplicationHelper
     end
   end
 
+  def int_income_hightlight?
+    if current_page?(income_interpreters_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
   def dashboard_highlight_icon?
     if current_page?("/dashboard") || current_page?(root_path) || controller_name == "agencies" || current_page?(interpreter_dashboard_path)
       highlighted_icon
