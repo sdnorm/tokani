@@ -13,7 +13,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   def index
     @appointments = AppointmentsFilteringService.new(current_user, filtering_params, @appointments).fetch_appointments
-    @pagy, @appointments = pagy(@appointments)
+    @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
     @statuses = ["all", "scheduled", "finished"]
     @customer_names = @appointments.map(&:customer).pluck(:name).uniq

@@ -18,7 +18,7 @@ class InterpreterAppointmentsService
     scope = filter_by_modality(scope)
     scope = scope_by_date_range(scope)
     scope = filter_by_search_query(scope)
-    order_by_sort(scope)
+    scope
   end
 
   private
@@ -117,17 +117,5 @@ class InterpreterAppointmentsService
   def scope_by_range(scope, start_time, end_time)
     scope.where("appointments.start_time > ?", start_time.utc)
       .where("appointments.start_time < ?", end_time.utc)
-  end
-
-  def order_by_sort(scope)
-    return scope unless @params[:sort_by].present?
-
-    if @params[:sort_by][:date] == "true"
-      scope.sort_by_params("start_time", sort_direction)
-    elsif @params[:sort_by][:customer] == "true"
-      scope.sort_by_account_name
-    else
-      scope
-    end
   end
 end
