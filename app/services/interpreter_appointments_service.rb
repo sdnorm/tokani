@@ -17,8 +17,7 @@ class InterpreterAppointmentsService
     scope = filter_by_display_range(scope)
     scope = filter_by_modality(scope)
     scope = scope_by_date_range(scope)
-    scope = filter_by_search_query(scope)
-    scope
+    filter_by_search_query(scope)
   end
 
   private
