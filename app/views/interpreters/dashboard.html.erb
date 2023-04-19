@@ -136,22 +136,22 @@
                 <thead>
                   <tr>
                     <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :id, "Ref Numb" %></th>
-                    <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :id, "Customer Name" %></th>
-                    <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block" scope="col">Status</th>
-                    <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900" scope="col">Date</th>
+                    <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :customer_id, "Customer Name" %></th>
+                    <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block" scope="col"><%= sortable @appointments, :status, "Status" %></th>
+                    <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900" scope="col"><%= sortable(@appointments, :start_time, "Date") %></th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                   <% @appointments.each do |appointment| %>
                     <tr class="bg-white">
                       <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
-                        <time datetime="2020-07-11"><%= appointment.ref_number %></time>
+                        <time datetime="2020-07-11">
+                          <%= link_to appointment.ref_number, appointment_path(appointment), data: { turbo: false } %>
+                        </time>
                       </td>
                       <td class="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                         <div class="flex">
-                          <a href="#" class="group inline-flex space-x-2 truncate text-sm">
-                            <p class="truncate text-gray-500 group-hover:text-gray-900"><%= appointment.customer.name %></p>
-                          </a>
+                          <p class="truncate text-gray-500 group-hover:text-gray-900"><%= appointment.customer.name %></p>
                         </div>
                       </td>
                       <td class="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
