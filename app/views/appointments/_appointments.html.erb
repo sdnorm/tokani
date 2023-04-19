@@ -16,7 +16,6 @@
         </th>
         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell"><%= sortable @appointments, :status, "Status" %></th>
         <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
-        <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
@@ -50,12 +49,9 @@
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p") %></td>
         <td class="hidden px-3 py-4 text-sm lg:table-cell capitalize"><%= colored_appointment_status(appointment.status) %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-          <%= link_to "Edit", edit_appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900", target: "_top" %>
+          <%= link_to fa_icon("pencil", class: "text-slate-400"), edit_appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900", target: "_top" %>
         </td>
 
-        </td>
-        <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-          <%= link_to "Show", appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900", target: "_top" %>
         </td>
       </tr>
     <% end %>
