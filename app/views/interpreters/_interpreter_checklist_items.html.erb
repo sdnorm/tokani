@@ -1,0 +1,21 @@
+<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+
+      <% checklist_items.each do |ci| %>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600"><%= ci.name %></dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <% if ci.exp_date.present? %>
+              Exp. date: <%= ci.exp_date %><br>
+            <% end %>
+            <% if ci.document.present? %>
+              Document Attached: <%= ci.document.try(:filename) %>
+            <% end %>
+          </dd>
+        </div>
+      <% end %>
+
+    </dl>
+  </div>
+</div>

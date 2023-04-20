@@ -68,6 +68,7 @@ class Account < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_many :bill_rates, dependent: :destroy
   has_many :pay_rates, dependent: :destroy
+  has_many :checklist_types, dependent: :destroy
 
   has_many :agency_recipients, through: :customers, source: :recipients
 

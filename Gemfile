@@ -13,7 +13,7 @@ gem "sprockets-rails", ">= 3.4.1"
 gem "pg"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.1"
+gem "puma", "~> 6.2"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails", "~> 1.4"
@@ -94,7 +94,7 @@ gem "administrate-field-active_storage", "~> 0.4.2"
 gem "chartkick", "~> 5.0", ">= 5.0.1"
 gem "cssbundling-rails", "~> 1.1.2"
 gem "country_select", "~> 8.0"
-gem "devise", "~> 4.9.0"
+gem "devise", "~> 4.9.2"
 gem "devise-i18n", "~> 1.10"
 gem "inline_svg", "~> 1.6"
 gem "invisible_captcha", "~> 2.1"
@@ -135,3 +135,5 @@ gem "faker"
 gem "phonelib"
 gem "email_validator"
 gem "validate_url"
+
+gem "aws-sdk-s3", require: false

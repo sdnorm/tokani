@@ -1,0 +1,123 @@
+<% dropdown_item_classes = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" %>
+<% label_classes = "w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300" %>
+
+<div data-controller="interpreter-appointments">
+  <div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <%= form_with url: income_interpreters_path, class: 'form', method: :get, data: { turbo_frame: "interpreter_appointments", turbo_action: "advance", target: "interpreter-appointments.form", interpreter_appointments_target: "form", action: "input->interpreter-appointments#submit"  } do |f| %>
+              <div class="sm:flex sm:items-center">
+                <div class="ml-auto">
+                  <div class="flex flex-wrap items-center">
+                    <div class="flex flex-wrap items-center">
+                      <!-- Need to add in a statusTarget
+                      if appointment statuses are hidden to avoid JS errors -->
+                      <%= tag.div data: { appointments_target: "status" } unless AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointments_statuses? %>
+
+                      <% if AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointments_statuses? %>
+                        <!-- Status-->
+                        <div data-controller="dropdown" class="pr-3 relative">
+                          <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Status">
+                            <p class="text-sm capitalize" id="statusesTextContainer">Status</p>
+                            <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                          </a>
+                          <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
+                            <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
+                              <div data-interpreter-appointments-target="status">
+                                <% @statuses.each do |status| %>
+                                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
+                                    <input name="status" class="<%= dropdown_item_classes %>" type="radio" id="status_<%= status %>" value="<%= status %>" data-action="change->interpreter-appointments#search change->interpreter-appointments#updateCurrentFilterText" data-status-filter="<%= status %>">
+                                    <label class="form-check-label <%= label_classes %>" for="status_<%= status %>"><%= status.titleize %></label>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+
+                      <!-- Modality-->
+                      <div data-controller="dropdown" class="pr-3 relative">
+                        <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none" aria-label="Profile Menu">
+                          <p class="text-sm" id="modalitiesTextContainer">Modality</p>
+                          <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <div data-dropdown-target="menu" class="hidden right-4 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block" style="width:max-content;">
+                          <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md">
+                            <div data-interpreter-appointments-target="modality">
+                              <% @modalities.each do |modality| %>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
+                                  <%= f.check_box "modality_#{modality}", { data: { action: "click->interpreter-appointments#search change->interpreter-appointments#toggleModalityFilterText" }}, modality, false %>
+                                  <label class="form-check-label <%= label_classes %>" for="modality_<%= modality %>"><%= modality.titleize %></label>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Start & End Date-->
+                      <div class="flex">
+                        <div class="w-40 pr-1">
+                          <label class="relative text-gray-400 focus-within:text-gray-600 block">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 left-3">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                            </svg>
+
+                            <svg class="w-4 h-4 absolute top-1/2 transform -translate-y-1/2 right-4 rotate-90" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="w-4 h-4 absolute top-1/2 transform -translate-y-1/2 right-1 -rotate-90" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+
+                            <%= f.text_field :start_date,
+                            data: {
+                              controller: "flatpickr",
+                              action: "change->interpreter-appointments#search",
+                              flatpickr_alt_format: "%a %m/%d",
+                              flatpickr_alt_input: true
+                            }, placeholder: "Start Date", class: "border-none py-2 px-4 bg-slate-50 placeholder-gray-400 text-gray-500 appearance-none w-full block pl-12 focus:outline-none rounded-l-lg",
+                            style: "border-top-left-radius:0.5rem;border-bottom-left-radius:0.5rem;" %>
+                          </label>
+                        </div>
+                        <div class="w-40">
+                          <label class="relative text-gray-400 focus-within:text-gray-600 block">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 left-3">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                            </svg>
+
+                            <svg class="w-4 h-4 absolute top-1/2 transform -translate-y-1/2 right-4 rotate-90" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="w-4 h-4 absolute top-1/2 transform -translate-y-1/2 right-1 -rotate-90" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+
+                            <%= f.text_field :end_date,
+                            data: {
+                              controller: "flatpickr",
+                              action: "change->interpreter-appointments#search",
+                              flatpickr_alt_format: "%a %m/%d",
+                              flatpickr_alt_input: true
+                            }, placeholder: "End Date", class: "border-none py-2 px-4 bg-slate-50 placeholder-gray-400 text-gray-500 appearance-none w-full block pl-12 focus:outline-none rounded-l-lg",
+                            style: "border-top-left-radius:0.5rem;border-bottom-left-radius:0.5rem;" %>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="pr-3 relative">
+                        <%= text_field_tag :search_query, nil, placeholder: "Search", class: "inline-block rounded-md border border-gray-200 outline-none px-3 py-2 ml-3 w-full" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%= turbo_frame_tag "interpreter_appointments" do %>
+                <%= render partial: "appointments" %>
+                <% if @pagy.pages > 1 %>
+                  <div class="my-6 text-center">
+                    <%== pagy_nav(@pagy) %>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

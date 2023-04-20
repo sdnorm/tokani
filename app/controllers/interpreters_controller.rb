@@ -75,6 +75,7 @@ class InterpretersController < ApplicationController
   end
 
   def show
+    @checklist_items = @interpreter.checklist_items.includes(:checklist_type).with_attached_document.order("checklist_types.name ASC")
   end
 
   def edit
@@ -90,6 +91,7 @@ class InterpretersController < ApplicationController
     respond_to do |format|
       if @interpreter.save
         AccountUser.create!(account_id: current_account.id, user_id: @interpreter.id, roles: {"interpreter" => true})
+        @interpreter.send_interpreter_creation_mailer(current_account)
         format.html { redirect_to interpreter_path(@interpreter), notice: "Interpreter was successfully created." }
         format.json { render :show, status: :created, location: @interpreter }
       else
@@ -296,6 +298,21 @@ class InterpretersController < ApplicationController
   end
 
   def filter_appointments
+  end
+
+  def income
+    search_params = appointment_query_params
+    if search_params.blank? || search_params[:status].blank? || search_params[:status] == "all"
+      search_params[:status] = "processed"
+    end
+    @service = InterpreterAppointmentsService.new(current_user, search_params)
+    @appointments = @service.fetch_appointments
+    @pagy, @appointments = pagy(@appointments)
+
+    @statuses = ["all", "finished", "verified", "exported"]
+    @modalities = ["in_person", "video", "phone"]
+    @sort_by_filters = ["date"]
+    @show_payment_amount = true
   end
 
   private

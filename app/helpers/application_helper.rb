@@ -59,10 +59,18 @@ module ApplicationHelper
   end
 
   def int_appointment_hightlight?
-    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled")
+    if current_page?("/interpreters/public") || current_page?("/interpreters/my_assigned") || current_page?("/interpreters/my_scheduled") || current_page?("/interpreters/appointments")
       highlighted
     else
       unhighlighted
+    end
+  end
+
+  def int_appointment_highlight_icon?
+    if current_page?(root_path) || current_page?(appointments_interpreters_path)
+      highlighted_icon
+    else
+      unhighlighted_icon
     end
   end
 
@@ -115,6 +123,22 @@ module ApplicationHelper
     end
   end
 
+  def int_time_off_highlight?
+    if current_page?(root_path) || current_page?(interpreters_time_off_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
+  def int_income_hightlight?
+    if current_page?(income_interpreters_path)
+      highlighted
+    else
+      unhighlighted
+    end
+  end
+
   def dashboard_highlight_icon?
     if current_page?("/dashboard") || current_page?(root_path) || controller_name == "agencies" || current_page?(interpreter_dashboard_path)
       highlighted_icon
@@ -132,7 +156,8 @@ module ApplicationHelper
   end
 
   def system_admin_highlight?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories" ||
+        controller_name == "checklist_types"
       highlighted
     else
       unhighlighted
@@ -140,7 +165,8 @@ module ApplicationHelper
   end
 
   def system_admin_highlight_icon?
-    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories"
+    if controller_name == "sites" || controller_name == "customers" || controller_name == "languages" || controller_name == "customer_categories" ||
+        controller_name == "checklist_types"
       highlighted_icon
     else
       unhighlighted_icon

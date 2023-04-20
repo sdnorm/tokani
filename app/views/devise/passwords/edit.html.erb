@@ -1,12 +1,15 @@
 <% content_for :form_block do %>
-  <h2 class="h3"><%= t('.change_your_password') %></h2>
+  <% if params[:new_account] %>
+    <h2 class="h3">Finish Setting Up Your Account</h2>
+  <% else %>
+    <h2 class="h3"><%= t('.change_your_password') %></h2>
+  <% end %>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
     <%= render "shared/error_messages", resource: resource %>
     <%= f.hidden_field :reset_password_token %>
 
     <div class="form-group" data-controller="password-visibility">
-      <%= params[:new_account] %>
       <%= f.label :password, t('.new_password'), class: "block text-sm font-medium text-gray-700" %>
       <div class="relative mt-1 rounded-md shadow-sm">
       <%= f.password_field :password, data: { password_visibility_target: "input"}, autocomplete: "new-password", placeholder: "password", class: "block w-full rounded-md border-gray-300 pr-10 focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %>

@@ -96,6 +96,8 @@ class Appointment < ApplicationRecord
   belongs_to :requestor, class_name: "User"
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
+  belongs_to :bill_rate, optional: true
+  belongs_to :pay_rate, optional: true
 
   has_many_attached :documents
 
@@ -114,6 +116,7 @@ class Appointment < ApplicationRecord
   attr_accessor :interpreter_req_ids, :submitted_finish_date, :submitted_finish_time
 
   validates :start_time, :modality, :duration, :language_id, :requestor_id, presence: true
+  validate :valid_video_link
   before_create :gen_refnum
 
   after_create :send_created_notifications
@@ -371,6 +374,14 @@ class Appointment < ApplicationRecord
     self.finish_time = parsed_datetime_in_zone.utc
   end
 
+  def time_finished?
+    ["finished", "verified", "exported"].include?(status)
+  end
+
+  def verified?
+    ["verified", "exported"].include?(status)
+  end
+
   def send_created_notifications
     NotificationsService.deliver_appointment_created_notifications(account: agency, appointment: self)
   end
@@ -385,6 +396,7 @@ class Appointment < ApplicationRecord
     end
   end
 
+
   def can_schedule?
     status == "opened" || status == "offered"
   end
@@ -396,5 +408,16 @@ class Appointment < ApplicationRecord
   def to_tsrange
     duration_in_seconds = duration * 60
     start_time..(start_time + duration_in_seconds)
+
+  def video_modality?
+    modality == "video"
+  end
+
+  def valid_video_link
+    return true if video_link.blank?
+
+    errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?("https://", "http://")
+    false
+
   end
 end

@@ -30,6 +30,10 @@ class InterpreterAppointmentsService
     case @params[:status]
     when "all"
       scope.unscoped
+    when "processed"
+      # Special scope to show just several appointment status types
+      processed_statuses = ["finished", "verified", "exported"]
+      scope.by_appointment_specific_status(processed_statuses)
     else
       scope.by_appointment_specific_status(@params[:status])
     end
