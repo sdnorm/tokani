@@ -201,8 +201,10 @@ Rails.application.routes.draw do
     # get "/dashboard", to: "dashboard#show", as: :user_root
     # resources :accounts do
     resources :appointments do
+      get :search
       member do
         get :interpreter_requests
+        get :schedule
         patch :status, to: "appointments#update_status"
       end
     end

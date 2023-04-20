@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :schedule]
 
   before_action :authenticate_user!
   before_action :set_account
@@ -21,6 +21,71 @@ class AppointmentsController < ApplicationController
 
     @scheduled_appts_count = @appointments.by_appointment_specific_status("scheduled").count
     @finished_appts_count = @appointments.by_appointment_specific_status("finished").count
+  end
+  def schedule
+    
+    # available interpreters are: Interpreters that are limited by: language, availability, modality, time off
+    modality = @appointment.modality
+    language_id = @appointment.language_id
+    agency_id = @appointment.agency_id
+    agency_time_zone = Account.find(agency_id).agency_detail.time_zone
+
+    my_range = @appointment.to_tsrange
+    duration_in_seconds = @appointment.duration.to_i * 60
+    cast_time = nil
+    start_day = nil
+    updated_time = nil
+    tod_start = nil
+    tod_end = nil
+    
+    #By language
+    @interpreters = Account.find(agency_id).interpreters.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
+    #@interpreters = Account.find(agency_id).interpreters
+    
+
+    # By availability
+    Time.use_zone(agency_time_zone) do
+      start_day = @appointment.start_time.wday
+      updated_time = @appointment.start_time
+    end
+    
+    @avail_interpreters = @interpreters.joins(:availabilities).where(availabilities: {wday: start_day, modality.to_sym => true})
+    or_call = nil
+
+    # Check all the agency available timezones appointment times in relation to those zone, and then check interpreter availabilities
+    Agency.available_timezones.each do |tz|
+      Time.use_zone(tz) do
+        #appointments getting stored as UTC but when offset is applied based on timezones - messes up result of the appointment time in the
+        #zone it was taken in.  For example, appointment intook for 11am on Thurday April 27 is stored as Thu, 27 Apr 2023 11:00:00.000000000 UTC +00:00,
+        #with no offset to reflect the timezone it was intook in (for this example it is pacific).  So when we loop through on pacific time zone I am 
+        #not applying pacific offset....timezones and how appointment date/time is getting set in DB needs to get looked at!
+        unless tz.name == agency_time_zone || tz.name == @appointment.time_zone
+        new_time = Time.zone.at(@appointment.start_time)
+        else
+          new_time = @appointment.start_time
+        end
+        tod_start = new_time.seconds_since_midnight
+        tod_end = tod_start + duration_in_seconds
+
+        if or_call.nil?
+          or_call = User.where('(availabilities.time_zone = :timezone AND availabilities.start_seconds <= :start_seconds AND availabilities.end_seconds >= :end_seconds)', {timezone: tz.name, start_seconds: tod_start, end_seconds: tod_end})
+        else
+          or_call = or_call.or(User.where('(availabilities.time_zone = :timezone AND availabilities.start_seconds <= :start_seconds AND availabilities.end_seconds >= :end_seconds)', {timezone: tz.name, start_seconds: tod_start, end_seconds: tod_end}))
+        end
+      end
+    end
+
+    @avail_interpreters = @avail_interpreters.and(or_call)
+
+    # make it distinct
+    @avail_interpreters_ids = @avail_interpreters.distinct
+
+    avail_interpreters_ids = @avail_interpreters.map(&:id)
+    #check time off
+     @interpreters_off = User.joins(:time_offs).where(id: avail_interpreters_ids).where('time_offs.date_range && tsrange(:st, :et)', {st: my_range.first, et: my_range.last})
+    
+     @avail_interpreters = @avail_interpreters - @interpreters_off
+
   end
 
   def interpreter_requests
@@ -81,25 +146,20 @@ class AppointmentsController < ApplicationController
     @recipients = @customer.recipients
 
     @requested_interpreters = @appointment.offered_interpreters
-    @general_int_requested = @appointment.requested_interpreters.empty?
-    @assigned_interpreter = @appointment.assigned_interpreter.nil?
-    @specific_int_requested = (!@general_int_requested && !@assigned_interpreter) ? true : false
-  end
+    @specific_int_requested = true if @appointment.interpreter_type == 'specific'
+   end
 
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
 
     # NW - have to include all these variables for form to re-render correctly if errors are thrown on create
-    # @account_customers = current_account.customers
     if agency_logged_in?
       @account_customers = current_account.customers
-      # @interpreters = current_account.interpreters
       @languages = current_account.account_languages
       @appointment.agency_id = @account.id
     else
       agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
-      # @interpreters = Account.find(agency_id).interpreters
       @languages = Language.where(account_id: agency_id)
       @appointment.agency_id = agency_id
     end
@@ -120,7 +180,7 @@ class AppointmentsController < ApplicationController
     # Uncomment to authorize with Pundit
     # authorize @appointment
 
-    @appointment.agency_id = @account.id
+    # @appointment.agency_id = @account.id
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
@@ -136,14 +196,17 @@ class AppointmentsController < ApplicationController
 
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
-    int_type_requested = params[:interpreter_reqs]
-
+    int_type_requested = appointment_params[:interpreter_type]
     if int_type_requested == "specific"
       @appointment.gender_req = nil
-      @appointment.interpreter_type = "none"
+      @appointment.viewable_by = nil
     end
+
     respond_to do |format|
       if @appointment.update(appointment_params)
+        if appointment_params[:status] =='scheduled'
+          AppointmentStatus.create(name: "scheduled", appointment_id: @appointment.id, user_id: current_user.id)
+        end
         format.html { redirect_to @appointment, notice: "Appointment was successfully updated." }
         format.json { render :show, status: :ok, location: @appointment }
       else
@@ -179,8 +242,8 @@ class AppointmentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
-    @appointment = Appointment.find(params[:id])
-
+   @appointment = Appointment.find(params[:id])
+    
     # Uncomment to authorize with Pundit
     # authorize @appointment
   rescue ActiveRecord::RecordNotFound
@@ -254,6 +317,7 @@ class AppointmentsController < ApplicationController
       :details,
       :status,
       :interpreter_type,
+      :viewable_by,
       :billing_notes,
       :canceled_by,
       :cancel_reason_code,

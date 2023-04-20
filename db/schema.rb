@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_06_053655) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_011859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -237,6 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_053655) do
     t.integer "pay_rate_id"
     t.uuid "assigned_interpreter"
     t.boolean "interpreter_reminder_sent", default: false
+    t.integer "viewable_by"
     t.index ["agency_id"], name: "index_appointments_on_agency_id"
     t.index ["customer_id"], name: "index_appointments_on_customer_id"
     t.index ["department_id"], name: "index_appointments_on_department_id"
@@ -783,6 +784,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_053655) do
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.tsrange "date_range"
     t.index ["user_id"], name: "index_time_offs_on_user_id"
     t.check_constraint "start_datetime < end_datetime", name: "check_valid_datetime_range"
   end

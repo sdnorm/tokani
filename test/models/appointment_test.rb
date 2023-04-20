@@ -34,6 +34,7 @@
 #  total_billed              :decimal(, )
 #  total_paid                :decimal(, )
 #  video_link                :string
+#  viewable_by               :integer
 #  visibility_status         :integer
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null

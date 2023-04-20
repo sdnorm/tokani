@@ -90,7 +90,7 @@
                   </div>
                 </div>
             <% end %>
-            <% if form.object.new_record? %>
+            <% if !form.object.new_record? %>
             <div class="col-span-12 sm:col-span-12">
              
               <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Interpreter" <%= raw selected_languages(@interpreter.new_record?, @interpreter_languages_json) %>>

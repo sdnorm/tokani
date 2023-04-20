@@ -142,6 +142,10 @@ class RequestorsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_requestor
+    if agency_logged_in?
+      @requestor = User.find(params[:id])
+    else
+
     requestor = current_account.account_users.client.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
     requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
@@ -151,6 +155,7 @@ class RequestorsController < ApplicationController
 
     req_id = requestor.user_id
     @requestor = User.find_by(id: req_id)
+    end
   rescue ActiveRecord::RecordNotFound
     redirect_to requestors_path
   end

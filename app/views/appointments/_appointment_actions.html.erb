@@ -1,0 +1,16 @@
+
+  <div class="mt-10 gap-8 columns-1 text-center justify-center pl-5">
+    <%  if appointment.can_schedule? %>
+    
+    <%= link_to 'Find Available Interpreters', schedule_appointment_path(appointment),class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+    
+  
+    <% end %>
+    <%# link_to 'Complete', complete_appointment_path(appointment), class: "btn btn-coral btn-md #{'disabled' if !appointment.can_complete? }" %>
+    <%# link_to 'Cancel', cancel_appointment_path(appointment), class: "btn btn-coral btn-md #{'disabled' if !appointment.can_cancel? }" %>
+    <%# link_to 'Verify', verify_appointment_path(appointment), class: "btn btn-coral btn-md #{'disabled' if !appointment.can_verify? }" %>
+      
+  
+  
+  </div>
+  

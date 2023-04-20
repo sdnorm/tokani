@@ -1,0 +1,70 @@
+<div class="flex flex-1 flex-col md:pl-64">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center pb-6">
+              <div class="sm:flex-auto"> 
+                <h1 class="text-xl font-semibold text-tokaniprimary-400">
+                  <%= link_to "Appointments", appointments_path, class: "text-tokanisecondary-500" %>
+                  <span class="text-tokaniprimary-400 font-light mx-2">/</span>
+                <%= @appointment.ref_number %>
+                </h1>
+              </div>
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to t("edit"), edit_appointment_path(@appointment), class: "btn btn-tokani_purple" %>
+              </div>
+            </div>
+            <div class="p-8 bg-white rounded shadow">
+                <div class="grid grid-cols-2 gap-4 mt-5">
+                <div>
+                    <ul class="list-none list-outside">
+                      <li><i class="fa fa-calendar mr-4"></i> <%= appointment_start_date_and_time_in_user_time_zone(@appointment, current_user) %></li>
+                      <li><i class="fa fa-male mr-4"></i> <%= @appointment.modality.titleize %></li>
+                      <li><i class="fa fa-language mr-2"></i> <%= @appointment.language.name %></li>
+                      <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
+                      <li><i class="fa fa-book mr-3"></i> <%= @appointment.status.titleize %></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="list-none">
+                      <li>Site: <%= @appointment.site.present? ? @appointment.site.name : "N/A" %></li>
+                      <li>Department: <%= @appointment.department.present? ? @appointment.department.name : "N/A" %></li>
+                      <li>Duration: <%= @appointment.duration_viewable %></li>
+                      <li>Provider: <%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></li>
+                      <li>Requester: <%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></li>
+                    </ul>
+                  </div>
+            </div>
+            <% if @appointment.status == "opened" || @appointment.status == "offered" %>
+                
+              <div class="mt-10 gap-8 columns-1 justify-center pl-5">
+                <% if !@avail_interpreters.empty? %> 
+                <%= form_with model: @appointment do |form| %>
+                  <%= form.label :schedule_with, class: 'text-blueCoral' %>
+                  <%= form.select :interpreter_id, options_from_collection_for_select(@avail_interpreters, :id, :full_name), {}, class: 'form-select mb-4' %>
+                  <%= form.hidden_field :status, value: 'scheduled' %>
+                  <%= form.submit 'Schedule', class: "btn btn-tokani_purple" %>
+                <% end %>
+             
+              <% else %>
+              <h3 class="text-xl font-semibold text-tokaniprimary-400">
+                No Interpreters are available that match the appointment criteria.
+            </h1>
+              <% end %>
+            </div>
+              <% end %>
+            
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<div class="grid grid-cols-2 gap-4 mt-5">
+    
+
+    
+   
+  </div>
+

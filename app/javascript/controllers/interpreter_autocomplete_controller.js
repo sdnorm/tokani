@@ -43,9 +43,6 @@ export default class extends Autocomplete {
 
   buildURL(){
     const query = this.inputTarget.value.trim()
-    // const query1 = this.assignedTarget.value.trim()
-console.log(this.inputTarget)
-console.log(this.assignedTarget)
     if (!query || query.length < this.minLengthValue) {
       this.hideAndRemoveOptions()
       return null

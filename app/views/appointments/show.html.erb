@@ -1,6 +1,6 @@
 <%= content_for :title, "Appointments ##{@appointment.ref_number}" %>
 <%= turbo_stream_from @appointment %>
-<%= render partial: 'shared/sidenav' %>
+
 <div class="flex flex-1 flex-col md:pl-64" data-controller="appointments">
   <main class="flex-1">
     <div class="py-6">
@@ -8,10 +8,10 @@
         <div class="px-4 sm:px-6 lg:px-8">
           <div class="sm:flex sm:items-center pb-6">
             <div class="sm:flex-auto"> 
-              <h1 class="text-xl font-semibold text-gray-900">
+              <h1 class="text-xl font-semibold text-tokaniprimary-400">
                 <%= link_to "Appointments", appointments_path, class: "text-tokanisecondary-500" %>
-                <span class="text-gray-400 font-light mx-2">\</span>
-                Appointment #<%= @appointment.ref_number %>
+                <span class="text-tokaniprimary-400 font-light mx-2">/</span>
+              <%= @appointment.ref_number %>
               </h1>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -19,9 +19,11 @@
             </div>
           </div>
           <div class="p-8 bg-white rounded shadow">
-            <%# render @appointment,locals: { appt_status: @appt_status } %>
-            <%= render partial: 'appointment', locals: { appointment: @appointment, appt_status: @appt_status } %>
+            <!-- <%# render @appointment,locals: { appt_status: @appt_status } %>
+            <%# render partial: 'appointment', locals: { appointment: @appointment, appt_status: @appt_status } %> -->
+            <%= render partial: 'appointment_details', locals: { appointment: @appointment, appt_status: @appt_status } %>
           </div>
+          <!-- <%# render partial: "appointment_actions", locals: {appointment: @appointment} %> -->
         </div>
       </div>
     </div>
