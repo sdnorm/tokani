@@ -1,7 +1,5 @@
 class AppointmentsController < ApplicationController
-
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :schedule, :time_finish, :update_time_finish]
-
 
   before_action :authenticate_user!
   before_action :set_account
