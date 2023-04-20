@@ -239,7 +239,7 @@ module ApplicationHelper
     #   {value: "(GMT-05:00) Eastern Time (US & Canada)", text: "(GMT-05:00) Eastern Time (US & Canada)"}
     # ].to_json
 
-    #The format with the (GMT - timeoffset) doesn't work with Time.use_zone that is being used to check availability 
+    # The format with the (GMT - timeoffset) doesn't work with Time.use_zone that is being used to check availability
     # for scheduling an interpreter so removing that part for now - NW 4/18/23
 
     # [

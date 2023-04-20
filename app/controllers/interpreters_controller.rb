@@ -56,10 +56,10 @@ class InterpretersController < ApplicationController
     else
       # @interpreters = Interpreter.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
       if agency_logged_in?
-        @interpreters = current_account.interpreters.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
+        @interpreters = current_account.interpreters.joins(:interpreter_languages).where("interpreter_languages.language_id = :language_id", {language_id: language_id})
       else
         agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
-        @interpreters = Account.find(agency_id).interpreters.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
+        @interpreters = Account.find(agency_id).interpreters.joins(:interpreter_languages).where("interpreter_languages.language_id = :language_id", {language_id: language_id})
       end
       @interpreters = @interpreters.where("last_name ilike ? or first_name ilike ?", name_query, name_query)
     end

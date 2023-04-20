@@ -135,7 +135,7 @@ class Appointment < ApplicationRecord
   end
 
   def add_assigned_int
-    if !self.interpreter_id.nil? && self.assigned_interpreter.nil?
+    if !interpreter_id.nil? && assigned_interpreter.nil?
       update_columns(assigned_interpreter: interpreter_id)
     end
   end
@@ -207,24 +207,23 @@ class Appointment < ApplicationRecord
   def update_offers
     # return if current_status == "offered" || current_status == "scheduled" || current_status == "completed" || current_status == "cancelled"
     # An empty array causes a delete, but nil, does nothing
-    #if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
+    # if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
     #   if status != "opened"
     #     AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
     #   end
     #   return true
     # end
-    return true if self.interpreter_req_ids.nil? || self.interpreter_req_ids == '' || self.interpreter_req_ids.class != Array
+    return true if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
     current_offer_int_ids = requested_interpreters.map(&:user_id)
     new_offer_int_ids = interpreter_req_ids.compact_blank.uniq
 
     # if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
     #   new_offer_int_ids = []
-      
+
     # else
     #   new_offer_int_ids = interpreter_req_ids.compact_blank.uniq
     # end
 
-    
     # Nothing to do here....
     return true if current_offer_int_ids.blank? && new_offer_int_ids.blank?
 
@@ -387,19 +386,15 @@ class Appointment < ApplicationRecord
   end
 
   def can_schedule?
-    return self.status == "opened" || self.status == "offered"
-     
+    status == "opened" || status == "offered"
   end
-
-  def end_time
-    retval = Time.zone.at(self.start_time + self.duration)
-    return retval
-  end
+  # commenting this out because standardrb showed two methods in this model with this name
+  # def end_time
+  #   Time.zone.at(start_time + duration)
+  # end
 
   def to_tsrange
-    duration_in_seconds = self.duration * 60
-    appoint_range = self.start_time..(self.start_time + duration_in_seconds)
-    return appoint_range
+    duration_in_seconds = duration * 60
+    start_time..(start_time + duration_in_seconds)
   end
-
 end

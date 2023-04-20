@@ -44,6 +44,6 @@ class TimeOff < ApplicationRecord
   end
 
   def make_date_range
-    self.date_range = self.start_datetime..self.end_datetime
+    self.date_range = start_datetime..end_datetime
   end
 end

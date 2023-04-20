@@ -22,8 +22,8 @@ class AppointmentsController < ApplicationController
     @scheduled_appts_count = @appointments.by_appointment_specific_status("scheduled").count
     @finished_appts_count = @appointments.by_appointment_specific_status("finished").count
   end
+
   def schedule
-    
     # available interpreters are: Interpreters that are limited by: language, availability, modality, time off
     modality = @appointment.modality
     language_id = @appointment.language_id
@@ -32,45 +32,43 @@ class AppointmentsController < ApplicationController
 
     my_range = @appointment.to_tsrange
     duration_in_seconds = @appointment.duration.to_i * 60
-    cast_time = nil
     start_day = nil
     updated_time = nil
     tod_start = nil
     tod_end = nil
-    
-    #By language
-    @interpreters = Account.find(agency_id).interpreters.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
-    #@interpreters = Account.find(agency_id).interpreters
-    
+
+    # By language
+    @interpreters = Account.find(agency_id).interpreters.joins(:interpreter_languages).where("interpreter_languages.language_id = :language_id", {language_id: language_id})
+    # @interpreters = Account.find(agency_id).interpreters
 
     # By availability
     Time.use_zone(agency_time_zone) do
       start_day = @appointment.start_time.wday
       updated_time = @appointment.start_time
     end
-    
+
     @avail_interpreters = @interpreters.joins(:availabilities).where(availabilities: {wday: start_day, modality.to_sym => true})
     or_call = nil
 
     # Check all the agency available timezones appointment times in relation to those zone, and then check interpreter availabilities
     Agency.available_timezones.each do |tz|
       Time.use_zone(tz) do
-        #appointments getting stored as UTC but when offset is applied based on timezones - messes up result of the appointment time in the
-        #zone it was taken in.  For example, appointment intook for 11am on Thurday April 27 is stored as Thu, 27 Apr 2023 11:00:00.000000000 UTC +00:00,
-        #with no offset to reflect the timezone it was intook in (for this example it is pacific).  So when we loop through on pacific time zone I am 
-        #not applying pacific offset....timezones and how appointment date/time is getting set in DB needs to get looked at!
-        unless tz.name == agency_time_zone || tz.name == @appointment.time_zone
-        new_time = Time.zone.at(@appointment.start_time)
+        # appointments getting stored as UTC but when offset is applied based on timezones - messes up result of the appointment time in the
+        # zone it was taken in.  For example, appointment intook for 11am on Thurday April 27 is stored as Thu, 27 Apr 2023 11:00:00.000000000 UTC +00:00,
+        # with no offset to reflect the timezone it was intook in (for this example it is pacific).  So when we loop through on pacific time zone I am
+        # not applying pacific offset....timezones and how appointment date/time is getting set in DB needs to get looked at!
+        new_time = if tz.name == agency_time_zone || tz.name == @appointment.time_zone
+          @appointment.start_time
         else
-          new_time = @appointment.start_time
+          Time.zone.at(@appointment.start_time)
         end
         tod_start = new_time.seconds_since_midnight
         tod_end = tod_start + duration_in_seconds
 
-        if or_call.nil?
-          or_call = User.where('(availabilities.time_zone = :timezone AND availabilities.start_seconds <= :start_seconds AND availabilities.end_seconds >= :end_seconds)', {timezone: tz.name, start_seconds: tod_start, end_seconds: tod_end})
+        or_call = if or_call.nil?
+          User.where("(availabilities.time_zone = :timezone AND availabilities.start_seconds <= :start_seconds AND availabilities.end_seconds >= :end_seconds)", {timezone: tz.name, start_seconds: tod_start, end_seconds: tod_end})
         else
-          or_call = or_call.or(User.where('(availabilities.time_zone = :timezone AND availabilities.start_seconds <= :start_seconds AND availabilities.end_seconds >= :end_seconds)', {timezone: tz.name, start_seconds: tod_start, end_seconds: tod_end}))
+          or_call.or(User.where("(availabilities.time_zone = :timezone AND availabilities.start_seconds <= :start_seconds AND availabilities.end_seconds >= :end_seconds)", {timezone: tz.name, start_seconds: tod_start, end_seconds: tod_end}))
         end
       end
     end
@@ -81,11 +79,10 @@ class AppointmentsController < ApplicationController
     @avail_interpreters_ids = @avail_interpreters.distinct
 
     avail_interpreters_ids = @avail_interpreters.map(&:id)
-    #check time off
-     @interpreters_off = User.joins(:time_offs).where(id: avail_interpreters_ids).where('time_offs.date_range && tsrange(:st, :et)', {st: my_range.first, et: my_range.last})
-    
-     @avail_interpreters = @avail_interpreters - @interpreters_off
+    # check time off
+    @interpreters_off = User.joins(:time_offs).where(id: avail_interpreters_ids).where("time_offs.date_range && tsrange(:st, :et)", {st: my_range.first, et: my_range.last})
 
+    @avail_interpreters -= @interpreters_off
   end
 
   def interpreter_requests
@@ -146,8 +143,8 @@ class AppointmentsController < ApplicationController
     @recipients = @customer.recipients
 
     @requested_interpreters = @appointment.offered_interpreters
-    @specific_int_requested = true if @appointment.interpreter_type == 'specific'
-   end
+    @specific_int_requested = true if @appointment.interpreter_type == "specific"
+  end
 
   # POST /appointments or /appointments.json
   def create
@@ -204,7 +201,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.update(appointment_params)
-        if appointment_params[:status] =='scheduled'
+        if appointment_params[:status] == "scheduled"
           AppointmentStatus.create(name: "scheduled", appointment_id: @appointment.id, user_id: current_user.id)
         end
         format.html { redirect_to @appointment, notice: "Appointment was successfully updated." }
@@ -242,10 +239,10 @@ class AppointmentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
-   @appointment = Appointment.find(params[:id])
-    
-    # Uncomment to authorize with Pundit
-    # authorize @appointment
+    @appointment = Appointment.find(params[:id])
+
+  # Uncomment to authorize with Pundit
+  # authorize @appointment
   rescue ActiveRecord::RecordNotFound
     redirect_to appointments_path
   end
