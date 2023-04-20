@@ -20,15 +20,15 @@ module AppointmentsHelper
   end
 
   def colored_appointment_status(status)
-    color_class = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 capitalize "
+    color_class = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize "
 
     color_class += case status
     when "scheduled"
-      "text-green-500"
+      "bg-green-200 text-green-500"
     when "processed", "finished"
-      "text-blue-500"
+      "bg-blue-200 text-blue-500"
     else
-      "text-gray-500"
+      "bg-gray-100 text-gray-500"
     end
 
     content_tag :p, class: color_class do
