@@ -19,11 +19,8 @@
             </div>
           </div>
           <div class="p-8 bg-white rounded shadow">
-            <!-- <%# render @appointment,locals: { appt_status: @appt_status } %>
-            <%# render partial: 'appointment', locals: { appointment: @appointment, appt_status: @appt_status } %> -->
             <%= render partial: 'appointment_details', locals: { appointment: @appointment, appt_status: @appt_status } %>
           </div>
-          <!-- <%# render partial: "appointment_actions", locals: {appointment: @appointment} %> -->
         </div>
       </div>
     </div>
