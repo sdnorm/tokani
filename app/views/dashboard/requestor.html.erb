@@ -92,7 +92,7 @@
 
           <% if @appointments.count == 0 %>
             <div class="mt-10 only:flex flex-col items-center justify-center lg:flex-row">
-                
+
               <div class="flex-1 text-center">
                 <p class="mb-4 h3">Create your first Appointment</p>
                 <%= link_to t("shared.scaffold.new.title", model: "Appointment"), new_appointment_path, class: "btn btn-primary" %>
@@ -146,27 +146,27 @@
                     <table class="min-w-full divide-y divide-gray-200">
                       <thead>
                         <tr>
-                          <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :id, "Ref Numb" %></th>
-                          <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :id, "Customer Name" %></th>
-                          <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block" scope="col">Status</th>
-                          <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900" scope="col">Date</th>
+                          <th class="whitespace-nowrap bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :id, "Ref Numb" %></th>
+                          <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :customer_id, "Customer Name" %></th>
+                          <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block" scope="col"><%= sortable @appointments, :status, "Status" %></th>
+                          <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :date, "Date" %></th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-200 bg-white">
                         <% @appointments.each do |appointment| %>
                           <tr class="bg-white">
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
-                              <time datetime="2020-07-11"><%= appointment.ref_number %></time>
+                              <time datetime="2020-07-11">
+                                <%= link_to appointment.ref_number, appointment_path(appointment), data: { turbo: false } %>
+                              </time>
                             </td>
                             <td class="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                               <div class="flex">
-                                <a href="#" class="group inline-flex space-x-2 truncate text-sm">
-                                  <p class="truncate text-gray-500 group-hover:text-gray-900"><%= appointment.customer.name %></p>
-                                </a>
+                                <p class="truncate text-gray-500 group-hover:text-gray-900"><%= appointment.customer.name %></p>
                               </div>
                             </td>
                             <td class="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
-                              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 capitalize"><%= appointment.status %></span>
+                              <span><%= colored_appointment_status appointment.status %></span>
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
                               <time datetime="2020-07-11"><%= appointment.start_time.strftime("%B %-d at %l:%M %p") %></time>

@@ -25,7 +25,7 @@
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= appointment&.language&.name %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex items-center">
             <div class="h-2.5 w-2.5 rounded-full <%= appointment.status == "opened" ? "bg-green-500" : "bg-orange-500" %> mr-2"></div>
-            <%= appointment.status.titleize %>
+            <%= colored_appointment_status appointment.status.titleize %>
           </td>
         </tr>
       </tbody>

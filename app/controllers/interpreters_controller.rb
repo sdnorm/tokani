@@ -99,7 +99,7 @@ class InterpretersController < ApplicationController
     @appointments_scheduled_count = @appointments.where(current_status: "scheduled").count
     @appointments_completed_count = @appointments.where(current_status: "finished").count
 
-    @pagy, @appointments = pagy(@appointments)
+    @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
   end
 
   def public
@@ -266,7 +266,7 @@ class InterpretersController < ApplicationController
   def appointments
     @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
     @appointments = @service.fetch_appointments
-    @pagy, @appointments = pagy(@appointments)
+    @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
     @statuses = ["all", "scheduled", "finished", "opened"]
     @modalities = ["in_person", "video", "phone"]
