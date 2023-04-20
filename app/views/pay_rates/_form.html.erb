@@ -12,8 +12,8 @@
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Name*</h3>
-                <dt class="text-sm font-medium text-gray-500">Descriptive Name for your Pay Rate</dt>  
-              </div>        
+                <dt class="text-sm font-medium text-gray-500">Descriptive Name for your Pay Rate</dt>
+              </div>
               <div class="mt-1 pl-4 pr-4 text-sm text-gray-900 col-span-2 sm:mt-0 pl-0">
                 <%= form.hidden_field :account_id, value: current_account.id %>
                 <%= form.text_field :name, class: "mt-3 block w-full rounded-md border border-slate-400 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
@@ -25,21 +25,21 @@
                 <dt class="text-sm font-medium text-gray-500">This is the amount each Interpreter is paid per hour for each appointment.</dt>
               </div>
               <div class="mt-1 pl-4 pr-4 lg:col-span-1 sm:col-span-2 sm:mt-0 pl-0">
-                <div class="relative flex h-10 w-full flex-row rounded-lg">  
-                 
-                 <%= form.text_field :hourly_pay_rate, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
+                <div class="relative flex h-10 w-full flex-row rounded-lg">
+
+                 <%= form.text_field :hourly_pay_rate, value: (form.object&.hourly_pay_rate.present? ? number_with_precision(form.object&.hourly_pay_rate, precision: 2) : ''), class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                   <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white" for="domain">$/Hr</span>
                 </div>
               </div>
             </div>
-            
+
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
                 <h3 class="text-base font-semibold leading-6 text-tokanisecondary-700">Minimum Time Paid*</h3>
                 <dt class="text-sm font-medium text-gray-500">The minimum time (in minutes) that is paid for each appointment.  If you have no minimum requirement, enter 0.</dt>
               </div>
               <div class="mt-1 pl-4 pr-4 lg:col-span-1 sm:col-span-2 sm:mt-0 pl-0">
-                <div class="relative flex h-10 w-full flex-row rounded-lg">                      
+                <div class="relative flex h-10 w-full flex-row rounded-lg">
                   <%= form.text_field :minimum_time_charged, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                   <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white" for="domain">minutes</span>
                 </div>
@@ -53,11 +53,11 @@
                 <dt class="text-sm font-medium text-gray-500">How much overage is paid for appointments outside of normal business hours. The times of the day that constitute after hours are set on the customer bill rate for the appointment.</dt>
               </div>
               <div class="mt-1 pl-4 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
-               
+
                 <div class="flex h-10 flex-row w-64 rounded-lg mb-4">
-                  <%= form.text_field  :after_hours_overage, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
+                  <%= form.text_field  :after_hours_overage, value: (form.object&.after_hours_overage.present? ? number_with_precision(form.object&.after_hours_overage, precision: 2) : ''), class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                   <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">$/Hr</span>
-                  
+
                 </div>
               </div>
             </div>
@@ -69,10 +69,10 @@
               <div class="mt-1 pl-4 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <div class="flex h-10 flex-row rounded-lg mb-3">
                   <div class=" flex h-10  flex-row rounded-lg">
-                    <%= form.text_field  :rush_overage, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
+                    <%= form.text_field  :rush_overage, value: (form.object&.rush_overage.present? ? number_with_precision(form.object&.rush_overage, precision: 2) : ''), class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                     <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">$/Hr</span>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@
               <div class="mt-1 pl-4 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <div class="flex h-10 flex-row rounded-lg mb-3">
                   <div class=" flex h-10  flex-row rounded-lg">
-                    <%= form.text_field  :cancel_rate, class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
+                    <%= form.text_field  :cancel_rate, value: (form.object&.cancel_rate.present? ? number_with_precision(form.object&.cancel_rate, precision: 2) : ''), class: "peer w-full rounded-l-lg border border-slate-400 px-2 text-slate-900 placeholder-slate-400 transition-colors duration-300 focus:border-tokanisecondary-400 focus:outline-none" %>
                     <span class="flex  items-center rounded-r-lg border border-slate-400 bg-tokanisecondary-100 px-2 text-sm text-slate-500 transition-colors duration-300 peer-focus:border-tokanisecondary-400 peer-focus:bg-tokanisecondary-400 peer-focus:text-white">$/Hr</span>
                   </div>
                 </div>
@@ -104,12 +104,12 @@
                       <%= form.check_box :in_person, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400" %>
                       <%= form.label :in_person, class:"font-medium text-gray-700 mr-3" %>
                       <%= form.check_box :video, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400" %>
-                      <%= form.label :video, class:"font-medium text-gray-700 mr-3" %> 
+                      <%= form.label :video, class:"font-medium text-gray-700 mr-3" %>
                       <%= form.check_box :phone, class:"h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400" %>
                       <%= form.label :phone, class:"font-medium text-gray-700 mr-3" %>
                     </div>
                   </div>
-                  
+
                 </fieldset>
               </div>
             </div>
@@ -133,7 +133,7 @@
               </div>
             </div>
 
-            
+
         <div data-controller="radio-button" >
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
@@ -152,12 +152,12 @@
                           <%= form.radio_button :default_rate, true, class: 'h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "default_rate"} %>
                           <%= form.label :is_default, class:"font-medium text-gray-700 mr-3" %>
                           <%= form.radio_button :default_rate, false, class: 'h-4 w-4 m-4 rounded border-gray-300 text-tokanisecondary-400 focus:ring-tokanisecondary-400', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "language_rate"} %>
-                          <%= form.label :is_language_specific, class:"font-medium text-gray-700 mr-3" %>   
+                          <%= form.label :is_language_specific, class:"font-medium text-gray-700 mr-3" %>
                         </div>
                       </div>
                     </div>
                     <!-- </div> -->
-                  
+
                 </fieldset>
               </div>
             </div>
@@ -168,20 +168,20 @@
                 <dt class="text-sm font-medium text-gray-500">If your rate is not a defaulat rate, please select which languges it will apply to.</dt>
                 <%= hidden_field_tag "#{form.object_name}[language_ids][]", '' %>
               </div>
-             
+
               <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <%= field_set_tag nil, id: 'language_rate', class: 'mb-3', disabled: @languages_disabled, data: {radio_button_target: "fieldset"} do %>
                   <div id="languages" data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Pay Rate" <%= raw selected_languages(pay_rate.new_record?, @pr_languages_json) %>>
                     <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[language_ids][]" id="pay_rate_language_ids" style="display: none;"></select>
-                    
+
                   </div>
                 </div>
                 <% end %>
             </div>
-            
-           
+
+
           </div>
-  
+
 
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <div class="mt-1 lg:col-span-1 sm:col-span-2 sm:mt-0">
@@ -189,7 +189,7 @@
                 <dt class="text-sm font-medium text-gray-500">Select which of your interpreters will use this rate.</dt>
               </div>
 
-              
+
               <div class="mt-1 pr-4 lg:col-span-2 sm:col-span-2 sm:mt-0 pl-0">
                 <div data-controller="multiselect" data-multiselect-items-value='<%= @interpreters_json %>' data-placeholder="Select Interpreters for this Pay Rate" <%= raw selected_interpreters(pay_rate.new_record?, @pr_interpreters_json) %>>
                   <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="pay_rate[interpreter_ids][]" id="pay_rate_interpreter_ids" style="display: none;"></select>
@@ -197,9 +197,9 @@
                 </div>
               </div>
             </div>
-            
-          
-  
+
+
+
           <!-- </div> -->
             <div class="bg-gray-50 mt-4 px-4 py-3 text-right sm:px-6">
                 <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
