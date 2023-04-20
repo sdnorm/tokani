@@ -1,0 +1,75 @@
+
+      <div class="" data-controller='radio-button'>
+        <div class="relative flex items-start">
+            <div class="flex h-6 items-center"> 
+                <%= radio_button_tag 'appointment[interpreter_type]', 'general', !specific_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "general_request"} %>
+            </div>
+            <div class="ml-3 text-sm leading-6">
+              <label for="small" class="font-medium text-gray-900">General Interpreter Request</label>
+              <p id="small-description" class="text-gray-500">You can specify gender and/or who can see the appointment.</p>
+              
+             
+                <%= field_set_tag nil, id: 'general_request', class: 'mb-3 mt-3', disabled: !@general_int_requested, data: {radio_button_target: "fieldset"} do %>
+              <%= hidden_field_tag 'appointment[interpreter_req_ids][]', [] %>
+              <div class="grid grid-cols-6 gap-6">
+                <div class="lg:col-span-3 sm:col-span-6">
+                <%= form.label :gender_request, class: 'block text-sm font-medium text-gray-700'  %>
+                <%= form.select :gender_req, options_for_select(gender_req_options, @appointment.gender_req), {include_blank: 'None'}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                </div >
+       
+                <div class="lg:col-span-3 sm:col-span-6">
+                <%= form.label :appointment_is_viewable_to, class: 'block text-sm font-medium text-gray-700'  %>
+                <%= form.select :viewable_by, options_for_select(viewable_filter_options, @appointment.viewable_by), {}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                </div>
+            </div>
+              <% end %>
+            </div>
+          </div>
+        <div class="relative flex items-start">
+            <div class="flex h-6 items-center">
+                <%= radio_button_tag 'appointment[interpreter_type]', 'specific', specific_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "specific_interpreters"} %>
+            </div>
+            <div class="ml-3 text-sm leading-6">
+              <label for="medium" class="font-medium text-gray-900">Offer to Specific Interpreters</label>
+              <p id="medium-description" class="text-gray-500">Search for and select the interpreters you want to offer this appointment to.</p>
+                <%= field_set_tag nil, id: 'specific_interpreters', class: 'mb-3', disabled: @general_int_requested, data: {radio_button_target: "fieldset"} do %>
+              <div class="input-group input-group-static mb-3">
+                <%= text_field_tag 'interpreter_automplete', '', data: {interpreter_autocomplete_target: 'input'}, class: "form-control" %>
+                <ul class="list-group mt-3" data-interpreter-autocomplete-target="results"></ul>
+              </div>
+              <template data-interpreter-autocomplete-target='chipTemplate'>
+                <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700 " data-controller="element" data-element-target="remove">
+                  <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"></span>
+                  <input type="hidden" name="appointment[interpreter_req_ids][]" value="">
+                  <div class="flex flex-auto flex-row-reverse">
+                    <div>
+                      <svg data-action="click->element#remove" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-tokanisecondary-400 rounded-full w-4 h-4 ml-2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </template>
+              <div class="flex" id="interpreter_list" data-interpreter-autocomplete-target='chipList'>
+                <% offered_interpreters.each do |oint| %>
+                  <div class="selected-option flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-tokanisecondary-100 bg-tokanisecondary-700 border border-tokanisecondary-700" data-controller="element" data-element-target="remove">
+                    <span class="selected-option-label text-xs font-normal leading-none max-w-full flex-initial"><%= oint.full_name %></span>
+                    <input type="hidden" name="appointment[interpreter_req_ids][]" value="<%= oint.id %>">
+                    <div class="flex flex-auto flex-row-reverse">
+                      <div>
+                        <svg data-action="click->element#remove" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x cursor-pointer hover:text-tokanisecondary-400 rounded-full w-4 h-4 ml-2">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </div>
+                    </div>  
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+       
+      </div>
+    <!-- </div>
+  </div> -->

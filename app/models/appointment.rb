@@ -34,6 +34,7 @@
 #  total_billed              :decimal(, )
 #  total_paid                :decimal(, )
 #  video_link                :string
+#  viewable_by               :integer
 #  visibility_status         :integer
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
@@ -95,12 +96,15 @@ class Appointment < ApplicationRecord
   belongs_to :requestor, class_name: "User"
   belongs_to :provider, optional: true
   belongs_to :recipient, optional: true
+  belongs_to :bill_rate, optional: true
+  belongs_to :pay_rate, optional: true
 
   has_many_attached :documents
 
   enum gender_req: {male: 1, female: 2, non_binary: 3}
   enum modality: {in_person: 1, phone: 2, video: 3}
-  enum interpreter_type: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
+  enum interpreter_type: {general: 1, specific: 2, assigned: 3}
+  enum viewable_by: {admin: -1, all: 0, staff: 1, independent_contractor: 2, agency: 3, volunteer: 4, none: 5}, _suffix: "itype_filter"
   enum cancel_type: {agency: 0, requestor: 1}
   enum visibility_status: {offered: 0, opened: 1}
 
@@ -116,19 +120,27 @@ class Appointment < ApplicationRecord
   before_create :gen_refnum
 
   after_create :send_created_notifications
-  after_create :create_offers, if: :no_assignemnt?
-  after_create :assign_interpreter, unless: :no_assignemnt?
-  after_update :update_offers, if: :unless_no_offers
+  after_create :create_offers, if: :no_assignment?
+  after_create :assign_interpreter, unless: :no_assignment?
+  # after_update :update_offers, if: :unless_no_offers
+  after_update :update_offers
+  after_update :add_assigned_int
   after_update :assign_interpreter, if: :assigned_interpreter_changed?
   before_update :send_edited_notifications
 
-  def no_assignemnt?
+  def no_assignment?
     assigned_interpreter.nil?
   end
 
   def assign_interpreter
     update(interpreter_id: assigned_interpreter)
     AppointmentStatus.create(appointment: self, name: AppointmentStatus.names["scheduled"], user: User.find(assigned_interpreter))
+  end
+
+  def add_assigned_int
+    if !interpreter_id.nil? && assigned_interpreter.nil?
+      update_columns(assigned_interpreter: interpreter_id)
+    end
   end
 
   #  **** per conversation on 2/23/22, the team is OK with the fact that this WILL create collisions.
@@ -196,15 +208,7 @@ class Appointment < ApplicationRecord
   end
 
   def update_offers
-    # return if current_status == "offered" || current_status == "scheduled" || current_status == "completed" || current_status == "cancelled"
-    # An empty array causes a delete, but nil, does nothing
-    # if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
-    #   if status != "opened"
-    #     AppointmentStatus.create!(name: "opened", user_id: creator_id, appointment_id: id)
-    #   end
-    #   return true
-    # end
-
+    return true if interpreter_req_ids.nil? || interpreter_req_ids == "" || interpreter_req_ids.class != Array
     current_offer_int_ids = requested_interpreters.map(&:user_id)
     new_offer_int_ids = interpreter_req_ids.compact_blank.uniq
 
@@ -375,6 +379,19 @@ class Appointment < ApplicationRecord
     if (check_for_change_fields & changed).any?
       NotificationsService.deliver_appointment_edited_notifications(account: agency, appointment: self)
     end
+  end
+
+  def can_schedule?
+    status == "opened" || status == "offered"
+  end
+  # commenting this out because standardrb showed two methods in this model with this name
+  # def end_time
+  #   Time.zone.at(start_time + duration)
+  # end
+
+  def to_tsrange
+    duration_in_seconds = duration * 60
+    start_time..(start_time + duration_in_seconds)
   end
 
   def video_modality?

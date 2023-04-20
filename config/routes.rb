@@ -207,10 +207,15 @@ Rails.application.routes.draw do
     # get "/dashboard", to: "dashboard#show", as: :user_root
     # resources :accounts do
     resources :appointments do
+      get :search
       member do
         get :interpreter_requests
+
+        get :schedule
+
         get :time_finish
         put :update_time_finish
+
         patch :status, to: "appointments#update_status"
       end
     end
@@ -218,12 +223,14 @@ Rails.application.routes.draw do
     resources :interpreters do
       collection do
         get :search
+        get :search_assigned_int
         get :fetch_appointments
         get :public
         get :appointments
         get :filter_appointments
         get :add_availability
         get :update_timezone_view
+        get :income
       end
       member do
         get :appointment_details

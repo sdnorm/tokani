@@ -72,7 +72,7 @@ class User < ApplicationRecord
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :notification_tokens, dependent: :destroy
 
-  has_many :interpreter_languages, dependent: :destroy, foreign_key: :interpreter_id
+  has_many :interpreter_languages, dependent: :destroy, inverse_of: :interpreter, foreign_key: :interpreter_id
   has_many :languages, through: :interpreter_languages
 
   has_one :requestor_detail, dependent: :destroy, foreign_key: :requestor_id, inverse_of: :requestor, autosave: true
@@ -98,6 +98,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :requestor_detail
   accepts_nested_attributes_for :appointment_statuses
   accepts_nested_attributes_for :languages
+  accepts_nested_attributes_for :interpreter_languages
 
   # We don't need users to confirm their email address on create,
   # just when they change it

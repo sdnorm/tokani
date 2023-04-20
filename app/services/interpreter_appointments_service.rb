@@ -17,8 +17,7 @@ class InterpreterAppointmentsService
     scope = filter_by_display_range(scope)
     scope = filter_by_modality(scope)
     scope = scope_by_date_range(scope)
-    scope = filter_by_search_query(scope)
-    order_by_sort(scope)
+    filter_by_search_query(scope)
   end
 
   private
@@ -30,6 +29,10 @@ class InterpreterAppointmentsService
     case @params[:status]
     when "all"
       scope.unscoped
+    when "processed"
+      # Special scope to show just several appointment status types
+      processed_statuses = ["finished", "verified", "exported"]
+      scope.by_appointment_specific_status(processed_statuses)
     else
       scope.by_appointment_specific_status(@params[:status])
     end
@@ -113,17 +116,5 @@ class InterpreterAppointmentsService
   def scope_by_range(scope, start_time, end_time)
     scope.where("appointments.start_time > ?", start_time.utc)
       .where("appointments.start_time < ?", end_time.utc)
-  end
-
-  def order_by_sort(scope)
-    return scope unless @params[:sort_by].present?
-
-    if @params[:sort_by][:date] == "true"
-      scope.sort_by_params("start_time", sort_direction)
-    elsif @params[:sort_by][:customer] == "true"
-      scope.sort_by_account_name
-    else
-      scope
-    end
   end
 end

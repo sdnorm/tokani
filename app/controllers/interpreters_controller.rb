@@ -3,7 +3,7 @@ class InterpretersController < ApplicationController
 
   before_action :authenticate_user!
   # Uncomment to enforce Pundit authorization
-  before_action :verify_authorized, except: :search
+  before_action :verify_authorized, except: [:search, :search_assigned_int]
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
@@ -18,11 +18,10 @@ class InterpretersController < ApplicationController
     # authorize @interpreters
   end
 
-  def search
+  def search_assigned_int
     name_query = params[:q]
     name_query = "%#{name_query}%"
 
-    # we need to tie language and modality into this search criteria eventually
     # language_id = params[:language_id]
     # modality = params[:modality]
 
@@ -36,6 +35,31 @@ class InterpretersController < ApplicationController
       else
         agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
         @interpreters = Account.find(agency_id).interpreters
+      end
+      @interpreters = @interpreters.where("last_name ilike ? or first_name ilike ?", name_query, name_query)
+    end
+
+    respond_to do |format|
+      format.html { render partial: "search_results" }
+    end
+  end
+
+  def search
+    name_query = params[:q]
+    name_query = "%#{name_query}%"
+
+    language_id = params[:language_id]
+    # modality = params[:modality]
+
+    if name_query.blank? || language_id.blank?
+      @interpreters = []
+    else
+      # @interpreters = Interpreter.joins(:interpreter_languages).where('interpreter_languages.language_id = :language_id', {language_id: language_id})
+      if agency_logged_in?
+        @interpreters = current_account.interpreters.joins(:interpreter_languages).where("interpreter_languages.language_id = :language_id", {language_id: language_id})
+      else
+        agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
+        @interpreters = Account.find(agency_id).interpreters.joins(:interpreter_languages).where("interpreter_languages.language_id = :language_id", {language_id: language_id})
       end
       @interpreters = @interpreters.where("last_name ilike ? or first_name ilike ?", name_query, name_query)
     end
@@ -99,7 +123,7 @@ class InterpretersController < ApplicationController
     @appointments_scheduled_count = @appointments.where(current_status: "scheduled").count
     @appointments_completed_count = @appointments.where(current_status: "finished").count
 
-    @pagy, @appointments = pagy(@appointments)
+    @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
   end
 
   def public
@@ -266,7 +290,7 @@ class InterpretersController < ApplicationController
   def appointments
     @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
     @appointments = @service.fetch_appointments
-    @pagy, @appointments = pagy(@appointments)
+    @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
     @statuses = ["all", "scheduled", "finished", "opened"]
     @modalities = ["in_person", "video", "phone"]
@@ -274,6 +298,21 @@ class InterpretersController < ApplicationController
   end
 
   def filter_appointments
+  end
+
+  def income
+    search_params = appointment_query_params
+    if search_params.blank? || search_params[:status].blank? || search_params[:status] == "all"
+      search_params[:status] = "processed"
+    end
+    @service = InterpreterAppointmentsService.new(current_user, search_params)
+    @appointments = @service.fetch_appointments
+    @pagy, @appointments = pagy(@appointments)
+
+    @statuses = ["all", "finished", "verified", "exported"]
+    @modalities = ["in_person", "video", "phone"]
+    @sort_by_filters = ["date"]
+    @show_payment_amount = true
   end
 
   private

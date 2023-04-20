@@ -3,6 +3,7 @@
 # Table name: time_offs
 #
 #  id             :bigint           not null, primary key
+#  date_range     :tsrange
 #  end_datetime   :datetime
 #  reason         :string
 #  start_datetime :datetime
@@ -23,7 +24,7 @@ class TimeOff < ApplicationRecord
 
   validate :start_is_less_than_end
   validates_presence_of :start_datetime, :end_datetime
-
+  before_save :make_date_range
   # Broadcast changes in realtime with Hotwire
   after_create_commit -> { broadcast_append_later_to :time_offs, target: "time_offs_table", locals: {time_off: self} }
   after_update_commit -> { broadcast_replace_later_to self }
@@ -40,5 +41,9 @@ class TimeOff < ApplicationRecord
       return false
     end
     true
+  end
+
+  def make_date_range
+    self.date_range = start_datetime..end_datetime
   end
 end
