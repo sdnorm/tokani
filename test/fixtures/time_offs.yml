@@ -3,6 +3,7 @@
 # Table name: time_offs
 #
 #  id             :bigint           not null, primary key
+#  date_range     :tsrange
 #  end_datetime   :datetime
 #  reason         :string
 #  start_datetime :datetime

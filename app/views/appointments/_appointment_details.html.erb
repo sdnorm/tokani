@@ -1,0 +1,41 @@
+<div class="grid grid-cols-2 gap-4 mt-5">
+    <div>
+      <ul class="list-none list-outside">
+        <li><i class="fa fa-calendar mr-4"></i> <%= appointment_start_date_and_time_in_user_time_zone(@appointment, current_user) %></li>
+        <li><i class="fa fa-male mr-4"></i> <%= @appointment.modality.titleize %></li>
+        <li><i class="fa fa-language mr-2"></i> <%= @appointment.language.name %></li>
+        <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
+        <li><i class="fa fa-book mr-3"></i> <%= @appointment.status.titleize %></li>
+        <% if @appointment.status == 'scheduled' %>
+          <dt class="text-sm font-medium text-tokanisecondary-600">Scheduled Interpreter</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <%= @appointment.interpreter.name %>
+          </dd>
+        <% else %>
+        <dt class="text-sm font-medium text-tokanisecondary-600">Requested Interpreters</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <% if appointment.requested_interpreters.any? %>
+            <% appointment.offered_interpreters.each do |req_int| %>
+              <%= req_int.full_name %>
+              <br>
+            <% end %>
+          <% else %>
+            <p>No interpreters requested.</p>
+          <br>
+        <% end %>
+      </dd>
+      <% end %>
+      </ul>
+    </div>
+    <div>
+      <ul class="list-none">
+        <li>Site: <%= @appointment.site.present? ? @appointment.site.name : "N/A" %></li>
+        <li>Department: <%= @appointment.department.present? ? @appointment.department.name : "N/A" %></li>
+        <li>Duration: <%= @appointment.duration_viewable %></li>
+        <li>Provider: <%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></li>
+        <li>Requester: <%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></li>
+      </ul>
+    </div>
+  </div>
+    <%= render partial: "appointment_actions", locals: {appointment: @appointment} %>
+  

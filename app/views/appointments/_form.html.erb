@@ -54,7 +54,7 @@
             <div class="lg:col-span-3 sm:col-span-6">
               <div class="form-group">
                 <%= form.label "Language*", class: "block text-sm font-medium text-gray-700" %>
-                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name), {prompt: "Please select A Language"}, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" %>
+                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name), {prompt: "Please select A Language"}, {class: 'form-control', data: {interpreter_autocomplete_target: "languageId"}}  %>
               </div>
             </div>
 
@@ -101,18 +101,9 @@
             </div>
           </div>
           </br>
-          <div class="col-span-6 sm:col-span-6 lg:col-span-6">
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-tokaniaccent-300"></div>
-              </div>
-              <div class="relative flex justify-center">
-                <span class="bg-white px-2 text-lg text-tokaniprimary-600">Interpreter Requests</span>
-              </div>
-            </div>
-          </div>
-          <%= render partial: "interpreter_request_fields", locals: {form: form, assigned_int: @assigned_interpreter, general_int: @general_int_requested, specific_int: @specific_int_requested, offered_interpreters: @requested_interpreters || []} %>
+          <%= render partial: "appointment_requests", locals: {form: form, assigned_int: @assigned_interpreter, general_int: @general_int_requested, specific_int: @specific_int_requested, offered_interpreters: @requested_interpreters || []} %>
         </div>
+       
         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
           <%= form.hidden_field :customer_id, value: @customer.id %>
           <%= form.hidden_field :creator_id, value: current_user.id %>

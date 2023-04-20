@@ -142,15 +142,20 @@ class RequestorsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_requestor
-    requestor = current_account.account_users.client.find_by(user_id: params[:id])
-    requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
-    requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
+    if agency_logged_in?
+      @requestor = User.find(params[:id])
+    else
 
-    # requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?
-    requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id])
+      requestor = current_account.account_users.client.find_by(user_id: params[:id])
+      requestor ||= current_account.account_users.site_admin.find_by(user_id: params[:id])
+      requestor ||= current_account.account_users.site_member.find_by(user_id: params[:id])
 
-    req_id = requestor.user_id
-    @requestor = User.find_by(id: req_id)
+      # requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id]) if customer_logged_in?
+      requestor ||= current_account.account_users.customer_admin.find_by(user_id: params[:id])
+
+      req_id = requestor.user_id
+      @requestor = User.find_by(id: req_id)
+    end
   rescue ActiveRecord::RecordNotFound
     redirect_to requestors_path
   end

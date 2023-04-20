@@ -7,7 +7,7 @@ module AppointmentsHelper
     Appointment.modalities.to_a.map { |entry| [entry[0].titleize, entry[0]] }
   end
 
-  def interpreter_filter_options
+  def viewable_filter_options
     [
       %w[Everyone all],
       ["Only Admin Staff", "admin"],
