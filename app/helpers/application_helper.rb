@@ -256,13 +256,21 @@ module ApplicationHelper
     #   {value: "(GMT-06:00) Central Time (US & Canada)", text: "(GMT-06:00) Central Time (US & Canada)"},
     #   {value: "(GMT-05:00) Eastern Time (US & Canada)", text: "(GMT-05:00) Eastern Time (US & Canada)"}
     # ].to_json
+#    [
+#      "(GMT-08:00) Pacific Time (US & Canada)",
+#      "(GMT-07:00) Mountain Time (US & Canada)",
+#      "(GMT-06:00) Central Time (US & Canada)",
+#      "(GMT-05:00) Eastern Time (US & Canada)",
+#      "(GMT-10:00) Hawaii",
+#      "(GMT-09:00) Alaska"
+#    ]
     [
-      "(GMT-08:00) Pacific Time (US & Canada)",
-      "(GMT-07:00) Mountain Time (US & Canada)",
-      "(GMT-06:00) Central Time (US & Canada)",
-      "(GMT-05:00) Eastern Time (US & Canada)",
-      "(GMT-10:00) Hawaii",
-      "(GMT-09:00) Alaska"
+      ["(GMT-08:00) Pacific Time (US & Canada)", "Pacific Time (US & Canada)"],
+      ["(GMT-07:00) Mountain Time (US & Canada)", "Mountain Time (US & Canada)"],
+      ["(GMT-06:00) Central Time (US & Canada)", "Central Time (US & Canada)"],
+      ["(GMT-05:00) Eastern Time (US & Canada)", "Eastern Time (US & Canada)"],
+      ["(GMT-10:00) Hawaii", "Pacific/Honolulu"],
+      ["(GMT-09:00) Alaska", "America/Juneau"]
     ]
   end
 
