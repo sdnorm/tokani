@@ -16,10 +16,7 @@ module Accounts
     end
 
     def require_subscription!
-      # return if Rails.env.development?
-      return if subscribed?
-
-      redirect_to pricing_path, notice: "Subscribe now to get access to our features!"
+      redirect_to pricing_path unless subscribed?
     end
   end
 end

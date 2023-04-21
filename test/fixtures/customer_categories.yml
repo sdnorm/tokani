@@ -5,7 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  appointment_prefix :string
 #  display_value      :string
-#  is_active          :boolean
+#  is_active          :boolean          default(TRUE)
 #  sort_order         :bigint
 #  telephone_prefix   :string
 #  video_prefix       :string
