@@ -137,7 +137,7 @@
                   <tr>
                     <th class="whitespace-nowrap bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :id, "Ref Numb" %></th>
                     <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900" scope="col"><%= sortable @appointments, :customer_id, "Customer Name" %></th>
-                    <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block" scope="col"><%= sortable @appointments, :status, "Status" %></th>
+                    <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block" scope="col"><%= sortable @appointments, :current_status, "Status" %></th>
                     <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900" scope="col"><%= sortable(@appointments, :start_time, "Date") %></th>
                   </tr>
                 </thead>
@@ -146,7 +146,7 @@
                     <tr class="bg-white">
                       <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
                         <time datetime="2020-07-11">
-                          <%= link_to appointment.ref_number, appointment_path(appointment), data: { turbo: false } %>
+                          <%= link_to appointment.ref_number, appointment_details_interpreter_path(appointment), data: { turbo: false } %>
                         </time>
                       </td>
                       <td class="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">

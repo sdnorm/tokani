@@ -28,7 +28,12 @@ class AppointmentsController < ApplicationController
     modality = @appointment.modality
     language_id = @appointment.language_id
     agency_id = @appointment.agency_id
-    agency_time_zone = Account.find(agency_id).agency_detail.time_zone
+
+    time_zone_to_use = if @appointment.time_zone.nil?
+      Account.find(agency_id).agency_detail.time_zone
+    else
+      @appointment.time_zone
+    end
 
     my_range = @appointment.to_tsrange
     duration_in_seconds = @appointment.duration.to_i * 60
@@ -42,7 +47,7 @@ class AppointmentsController < ApplicationController
     # @interpreters = Account.find(agency_id).interpreters
 
     # By availability
-    Time.use_zone(agency_time_zone) do
+    Time.use_zone(time_zone_to_use) do
       start_day = @appointment.start_time.wday
       updated_time = @appointment.start_time
     end
@@ -57,7 +62,7 @@ class AppointmentsController < ApplicationController
         # zone it was taken in.  For example, appointment intook for 11am on Thurday April 27 is stored as Thu, 27 Apr 2023 11:00:00.000000000 UTC +00:00,
         # with no offset to reflect the timezone it was intook in (for this example it is pacific).  So when we loop through on pacific time zone I am
         # not applying pacific offset....timezones and how appointment date/time is getting set in DB needs to get looked at!
-        new_time = if tz.name == agency_time_zone || tz.name == @appointment.time_zone
+        new_time = if tz.name == time_zone_to_use
           @appointment.start_time
         else
           Time.zone.at(@appointment.start_time)

@@ -1,5 +1,6 @@
 class AgenciesController < ApplicationController
   before_action :set_agency, only: [:show, :edit, :update, :destroy, :agency_detail_form, :agency_detail_update]
+  # before_action :require_subscription!, except: [:agency_detail_update, :agency_detail_form]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized

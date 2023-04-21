@@ -1,0 +1,61 @@
+<div>
+  <% form_url = checklist_item.new_record? ? checklist_items_path : checklist_item_path(checklist_item) %>
+  <%= form_with(model: checklist_item, url: form_url) do |form| %>
+    <% if checklist_item.new_record? %>
+      <%= form.hidden_field :user_id %>
+    <% end %>
+    <div class="mt-5 md:col-span-2 md:mt-0">
+      <div class="overflow-hidden shadow sm:rounded-md">
+        <div class="bg-white px-4 py-5 sm:p-6">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-8 sm:col-span-6">
+              <%= form.label "Checklist Type*", class: "block text-sm font-medium text-gray-700" %>
+
+              <% if @checklist_item.new_record? %>
+                <% if @avail_checklist_types.empty? %>
+                  <br><p><i>There are no more additional checklist types that can be applied to this interpreter.</i></p>
+                <% else %>
+                  <%= form.select :checklist_type_id, options_from_collection_for_select(@avail_checklist_types, 'id', 'name'), {}, {class: 'form-select' } %>
+                <% end %>
+              <% else %>
+                <b><%= checklist_item.checklist_type.name %></b>
+              <% end %>
+            </div>
+            <br>
+          </div>
+          <div class="col-span-8 sm:col-span-6">
+            <div class="form-check text-blueCoral" data-controller="checkbox">
+              <div class="flex h-5 items-center">
+                <%= check_box_tag 'exp_date_toggle', 'true', checklist_item.exp_date.present?, class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: { action: 'change->checkbox#toggleHide'} %> &nbsp;<%= form.label "Expiration Date", class: "block text-sm font-medium text-gray-700 mt-1" %>
+              </div>
+
+              <div class="ml-3 text-sm mt-4">
+                <div id="citem_exp_date_wrapper_<%= checklist_item.id  %>" class="<%= 'hidden' if checklist_item.exp_date.blank? %>" data-checkbox-target="toggleHide">
+                  <%= form.text_field :exp_date, class: "form-control", disabled: checklist_item.exp_date.blank? , data: {controller: "flatpickr"} %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-8 sm:col-span-6 mt-6">
+            <%= form.label "Document", class: "block text-sm font-medium text-gray-700" %>
+            <% if !checklist_item.new_record? && checklist_item.document.attached? %>
+              Currently attached: <%= link_to checklist_item.document.try(:filename), url_for(checklist_item.document) %>
+            <% end %>
+            <div class="col mt-3 input-group input-group-static justify-content-center" data-controller="form">
+              <%= form.label :upload_document, "Upload a new document" %>
+              <%= form.file_field :document, id: "#{checklist_item.id}_document_file_field" , class: "inputfile", data: { action: 'change->form#showFileName'}%>
+              <input class="form-control text-center" placeholder="(Choose File)" disabled="disabled" data-form-target="showFile" />
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+          <% if !checklist_item.new_record? || (checklist_item.new_record? && @avail_checklist_types.any?) %>
+            <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

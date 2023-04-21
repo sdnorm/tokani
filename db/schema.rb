@@ -372,7 +372,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_222517) do
     t.string "video_prefix"
     t.bigint "backport_id"
     t.bigint "sort_order"
-    t.boolean "is_active"
+    t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "account_id"
@@ -460,7 +460,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_222517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "account_id", null: false
-    t.boolean "is_active"
+    t.boolean "is_active", default: true
     t.index ["account_id"], name: "index_languages_on_account_id"
   end
 

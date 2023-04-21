@@ -116,7 +116,7 @@ class InterpretersController < ApplicationController
   end
 
   def dashboard
-    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
+    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params, current_account)
     @appointments = @service.fetch_appointments
 
     @created_appointments_count = @appointments.where(current_status: "offered").or(@appointments.where(current_status: "opened")).count

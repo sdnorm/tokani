@@ -1,6 +1,14 @@
-<%= content_for :title, t("shared.scaffold.edit.title", model: "Checklist Items") %>
+<%= content_for :title, "#{@interpreter.full_name} Checklist Items" %>
 <%= render partial: "shared/sidenav" %>
-<div class="flex flex-1 flex-col md:pl-64">
+<% if current_user.is_interpreter? %>
+  <div class="flex flex-wrap my-4 lg:px-4">
+    <div class="lg:w-1/4 w-full p-4">
+      <%= render partial: "shared/account_navbar" %>
+    </div>
+<% else %>
+  <div class="flex flex-1 flex-col md:pl-64">
+<% end %>
+
   <main class="flex-1">
     <div class="py-6">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -8,21 +16,52 @@
           <div class="sm:flex sm:items-center pb-6">
             <div class="sm:flex-auto">
               <h1 class="text-xl font-semibold text-gray-900">
-                <%= link_to @interpreter.full_name, interpreter_path(@interpreter), class: "text-tokanisecondary-500" %>
-                <span class="text-gray-400 font-light mx-2">\</span>
-                Checklist Items
+                <%= @interpreter.full_name %> - Checklist Items
               </h1>
             </div>
-          </div>
-          <div class="p-8 bg-white rounded shadow">
 
-            <%= render partial: 'checklist_items/item_form', locals: {citem: @new_checklist_item} %>
-
-            <div id="interpreter_checklist_items">
-              <% @checklist_items.each do |citem| %>
-                <%= render partial: 'checklist_items/item_form', locals: {citem: citem} %>
-              <% end %>
+            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <%= link_to t("shared.scaffold.new.title", model: "Checklist Item"), new_checklist_item_path(interpreter_id: @interpreter), class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
             </div>
+          </div>
+
+          <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6">Checklist Type</th>
+                  <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Expiration Date</th>
+                  <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Document</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Remove</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+              <% @checklist_items.each do |ci| %>
+                <tr>
+                  <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                    <%= link_to ci.checklist_type.name, edit_checklist_item_path(ci) %>
+                  </td>
+
+                  <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= ci.exp_date.present? ? ci.exp_date : "N/A" %></td>
+                  <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                    <% if ci.document.present? %>
+                      <%= link_to ci.document.try(:filename), url_for(ci.document) %>
+                    <% end %>
+                  </td>
+                  <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                    <a href="<%= edit_checklist_item_path(ci) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900"><i class="fa-regular fa-edit"></i></a>
+                  </td>
+                  <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                    <%= button_to url_for(controller: "checklist_items", action: "destroy", id: ci.id), method: :delete, class: "floated-right" do %>
+                      <i class="fa-regular fa-trash"></i>
+                    <% end %>
+                  </td>
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

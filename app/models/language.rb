@@ -3,7 +3,7 @@
 # Table name: languages
 #
 #  id         :bigint           not null, primary key
-#  is_active  :boolean
+#  is_active  :boolean          default(TRUE)
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -34,6 +34,8 @@ class Language < ApplicationRecord
   has_many :pay_rates, through: :pay_rate_languages
 
   validates :name, presence: true
+
+  attribute :is_active, :boolean, default: true
 
   def toggle_active!
     update! is_active: !is_active
