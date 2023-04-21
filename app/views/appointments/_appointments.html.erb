@@ -14,7 +14,7 @@
         <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">
           <%= sortable @appointments, :start_time, "Date" %>
         </th>
-        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell"><%= sortable @appointments, :status, "Status" %></th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell"><%= sortable @appointments, :current_status, "Status" %></th>
         <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
       </tr>
     </thead>
