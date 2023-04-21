@@ -50,13 +50,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_subscription
-    # return if Rails.env.development?
-    return if subscribed?
-
-    redirect_to pricing_path, notice: "Subscribe now to get access to our features!"
-  end
-
   private
 
   def require_account

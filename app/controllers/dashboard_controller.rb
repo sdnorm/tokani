@@ -25,7 +25,7 @@ class DashboardController < ApplicationController
     if @agency.agency_detail.nil?
       redirect_to agency_detail_form_path
     else
-      require_subscription
+      require_subscription!
 
       appointments = @agency.appointments
       @pagy, @appointments = pagy(appointments.sort_by_params(params[:sort], sort_direction))
