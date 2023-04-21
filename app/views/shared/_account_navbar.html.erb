@@ -24,4 +24,9 @@
   <% else%>
     <%= nav_link_to t(".interpreter_details"), interpreter_details_path, class: "block no-underline p-3 px-6", active_class: "bg-blue-600 text-white hover:text-white", inactive_class: "text-gray-700 hover:text-gray-700 hover:bg-gray-100", starts_with: "/interpreter_details" if policy(:interpreter).show_account_nav? %>
   <% end %>
+
+  <% if current_user.is_interpreter? %>
+    <%= nav_link_to "Checklist Items", interpreter_items_checklist_item_path(current_user), class: "block no-underline p-3 px-6", active_class: "bg-blue-600 text-white hover:text-white", inactive_class: "text-gray-700 hover:text-gray-700 hover:bg-gray-100", starts_with: "/checklist_items" %>
+  <% end %>
+
 </div>

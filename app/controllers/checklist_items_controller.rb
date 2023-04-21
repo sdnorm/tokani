@@ -4,6 +4,19 @@ class ChecklistItemsController < ApplicationController
   before_action :set_checklist_item, only: [:update, :destroy]
   before_action :verify_authorized_item, only: [:update, :destroy]
 
+  def new
+    @interpreter = current_account.interpreters.find(params[:interpreter_id])
+    @avail_checklist_types = @interpreter.available_checklist_types(current_account)
+    @checklist_item = @interpreter.checklist_items.build
+  end
+
+  def edit
+    @checklist_item = ChecklistItem.find(params[:id])
+    @interpreter = @checklist_item.user
+    verify_authorized(@interpreter)
+    @avail_checklist_types = @interpreter.available_checklist_types(current_account)
+  end
+
   def interpreter_items
     @interpreter = current_account.interpreters.find(params[:id])
     verify_authorized(@interpreter)
@@ -37,7 +50,6 @@ class ChecklistItemsController < ApplicationController
       redirect_to interpreter_items_checklist_item_path(@interpreter), notice: "#{@checklist_item.name} updated"
     else
       redirect_to interpreter_items_checklist_item_path(@interpreter), alert: "Error: #{@checklist_item.errors.full_messages.join("; ")}"
-      #      return render turbo_stream: turbo_stream.update("#{@checklist_item.id}_notice", partial: 'shared/error_messages', locals: {resource: @checklist_item})
     end
   end
 
