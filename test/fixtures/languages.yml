@@ -3,7 +3,7 @@
 # Table name: languages
 #
 #  id         :bigint           not null, primary key
-#  is_active  :boolean
+#  is_active  :boolean          default(TRUE)
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

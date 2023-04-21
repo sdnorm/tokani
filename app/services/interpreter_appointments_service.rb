@@ -3,15 +3,20 @@ class InterpreterAppointmentsService
   include ActionController::Helpers
   include Sortable
 
-  def initialize(user, params)
+  def initialize(user, params, current_account = nil)
     @user = user
     @params = params
+    @account = current_account
   end
 
   attr_accessor :params
 
   def fetch_appointments
-    scope = Appointment.all
+    scope = if @account.nil?
+      Appointment.all
+    else
+      @account.appointments
+    end
 
     scope = filter_by_status(scope)
     scope = filter_by_display_range(scope)
