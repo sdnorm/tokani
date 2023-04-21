@@ -78,5 +78,4 @@ class ChecklistItem < ApplicationRecord
     # The expiration date has changed. Need to clear out previously-sent notification sent setting.
     self.notifications_sent = false
   end
-
 end
