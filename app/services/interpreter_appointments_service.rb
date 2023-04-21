@@ -3,7 +3,7 @@ class InterpreterAppointmentsService
   include ActionController::Helpers
   include Sortable
 
-  def initialize(user, params, current_account=nil)
+  def initialize(user, params, current_account = nil)
     @user = user
     @params = params
     @account = current_account
@@ -14,7 +14,7 @@ class InterpreterAppointmentsService
   def fetch_appointments
     scope = if @account.nil?
       Appointment.all
-    else 
+    else
       @account.appointments
     end
 
