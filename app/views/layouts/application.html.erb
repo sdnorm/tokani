@@ -35,7 +35,7 @@
       <% end %>
       <div class="lg:px-0 h-full">
         <% unless current_user.blank? || controller_name == "static" %>
-          <%= render partial: 'shared/sidenav' %>
+          <%= render partial: 'shared/sidenav' if subscribed? %>
           <%= render partial: 'shared/customer_sidenav' %>
           <%= render partial: 'shared/interpreter_sidenav' %>
           <%= render partial: 'shared/site_admin_sidenav' %>
