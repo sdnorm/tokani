@@ -23,3 +23,7 @@
 every 1.hours do
   runner "DeliverAppointmentReminderNotificationsJob.perform_later"
 end
+
+every 1.day do
+  runner "ChecklistItemExpirationNotificationsJob.perform_later"
+end

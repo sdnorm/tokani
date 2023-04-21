@@ -1,0 +1,9 @@
+<div style="text-align: center;">
+  <h1 style="font-weight:400;line-height: 1.25;">
+    <%= @subject %>
+  </h1>
+
+  <p>The checklist item -- <%= @checklist_item.checklist_type.name %> -- is expiring for <%= @checklist_item.user.full_name %> on <%= @checklist_item.exp_date %>.</p>
+
+  <%= link_to "Update the Checklist Item", checklist_item_url(@checklist_item), style: "background:#38b2ac; color:#fff; border-radius: 4px; text-decoration: none; padding:.75rem 1rem;" %>
+</div>

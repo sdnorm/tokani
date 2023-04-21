@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_011859) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_222517) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -324,6 +324,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_011859) do
     t.date "exp_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notifications_sent", default: false
     t.index ["checklist_type_id"], name: "index_checklist_items_on_checklist_type_id"
     t.index ["user_id"], name: "index_checklist_items_on_user_id"
   end
@@ -490,6 +491,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_011859) do
     t.boolean "appointment_covered", default: true
     t.boolean "appointment_reminder", default: true
     t.string "sms_number"
+    t.boolean "checklist_item_expiration", default: true
   end
 
   create_table "notification_tokens", force: :cascade do |t|
