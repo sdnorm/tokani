@@ -5,7 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  appointment_prefix :string
 #  display_value      :string
-#  is_active          :boolean
+#  is_active          :boolean          default(TRUE)
 #  sort_order         :bigint
 #  telephone_prefix   :string
 #  video_prefix       :string
@@ -34,6 +34,8 @@ class CustomerCategory < ApplicationRecord
   validates :appointment_prefix, length: {maximum: 10}
 
   scope :active, -> { where(is_active: true) }
+
+  attribute :is_active, :boolean, default: true
 
   def modality_prefix(modality)
     case modality
