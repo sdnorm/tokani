@@ -110,6 +110,11 @@ class User < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :avatar, resizable_image: true
+  validates :time_zone, presence: false, inclusion: {in: :valid_timezones}, if: proc { |u| !u.time_zone.blank? }
+
+  def valid_timezones
+    [ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name } + ActiveSupport::TimeZone::MAPPING.keys].flatten.uniq
+  end
 
   # When ActionText rendering mentions in plain text
   def attachable_plain_text_representation(caption = nil)

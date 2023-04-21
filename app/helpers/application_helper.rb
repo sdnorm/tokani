@@ -258,33 +258,13 @@ module ApplicationHelper
   end
 
   def time_zone_select_options
-    # [
-    #   {value: "(GMT-10:00) Hawaii", text: "(GMT-10:00) Hawaii"},
-    #   {value: "(GMT-09:00) Alaska", text: "(GMT-09:00) Alaska"},
-    #   {value: "(GMT-08:00) Pacific Time (US & Canada)", text: "(GMT-08:00) Pacific Time (US & Canada)"},
-    #   {value: "(GMT-07:00) Mountain Time (US & Canada)", text: "(GMT-07:00) Mountain Time (US & Canada)"},
-    #   {value: "(GMT-06:00) Central Time (US & Canada)", text: "(GMT-06:00) Central Time (US & Canada)"},
-    #   {value: "(GMT-05:00) Eastern Time (US & Canada)", text: "(GMT-05:00) Eastern Time (US & Canada)"}
-    # ].to_json
-
-    # The format with the (GMT - timeoffset) doesn't work with Time.use_zone that is being used to check availability
-    # for scheduling an interpreter so removing that part for now - NW 4/18/23
-
-    # [
-    #   "(GMT-08:00) Pacific Time (US & Canada)",
-    #   "(GMT-07:00) Mountain Time (US & Canada)",
-    #   "(GMT-06:00) Central Time (US & Canada)",
-    #   "(GMT-05:00) Eastern Time (US & Canada)",
-    #   "(GMT-10:00) Hawaii",
-    #   "(GMT-09:00) Alaska"
-    # ]
     [
-      "Pacific Time (US & Canada)",
-      "Mountain Time (US & Canada)",
-      "Central Time (US & Canada)",
-      "Eastern Time (US & Canada)",
-      "Hawaii",
-      "Alaska"
+      ["(GMT-08:00) Pacific Time (US & Canada)", "Pacific Time (US & Canada)"],
+      ["(GMT-07:00) Mountain Time (US & Canada)", "Mountain Time (US & Canada)"],
+      ["(GMT-06:00) Central Time (US & Canada)", "Central Time (US & Canada)"],
+      ["(GMT-05:00) Eastern Time (US & Canada)", "Eastern Time (US & Canada)"],
+      ["(GMT-10:00) Hawaii", "Pacific/Honolulu"],
+      ["(GMT-09:00) Alaska", "America/Juneau"]
     ]
   end
 

@@ -27,7 +27,7 @@
 
             <div class="form-group">
               <%= form.label :time_zone %>
-              <%= form.time_zone_select :time_zone, nil, { default: browser_time_zone.name }, { class: "select" } %>
+              <%= form.select :time_zone, options_for_select(time_zone_select_options, form.object.time_zone), class: "select" %>
             </div>
 
             <% if I18n.available_locales.length > 1 %>

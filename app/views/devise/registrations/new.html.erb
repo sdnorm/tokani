@@ -50,7 +50,7 @@
 
     <div class="form-group">
       <%= f.label :time_zone %>
-      <%= f.time_zone_select :time_zone, nil, { default: browser_time_zone.name }, { class: "select" } %>
+      <%= f.select :time_zone, options_for_select(time_zone_select_options, browser_time_zone.name), class: "select" %>
       <p class="mt-3 text-sm text-gray-600">Time zone you are located in.</p>
     </div>
 
