@@ -174,7 +174,8 @@ module ApplicationHelper
   end
 
   def accounts_mgmt_highlight?
-    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients"
+    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients" ||
+        controller_name == "checklist_items"
       highlighted
     else
       unhighlighted
@@ -182,7 +183,8 @@ module ApplicationHelper
   end
 
   def accounts_mgmt_highlight_icon?
-    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients"
+    if controller_name == "requestors" || controller_name == "interpreters" || controller_name == "providers" || controller_name == "recipients" ||
+        controller_name == "checklist_items"
       highlighted_icon
     else
       unhighlighted_icon
