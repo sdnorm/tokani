@@ -29,10 +29,10 @@ class AppointmentsController < ApplicationController
     language_id = @appointment.language_id
     agency_id = @appointment.agency_id
 
-    if @appointment.time_zone.nil?
-      time_zone_to_use = Account.find(agency_id).agency_detail.time_zone
+    time_zone_to_use = if @appointment.time_zone.nil?
+      Account.find(agency_id).agency_detail.time_zone
     else
-      time_zone_to_use = @appointment.time_zone
+      @appointment.time_zone
     end
 
     my_range = @appointment.to_tsrange
