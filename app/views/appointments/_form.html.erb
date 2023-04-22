@@ -37,6 +37,12 @@
                   <%= form.text_field :start_time, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr", flatpickr_enable_time: true,  flatpickr_minute_increment: 15, flatpickr_date_format: "F j, Y h:i K"} %>
                 </div>
               </div>
+              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                <div class="form-group">
+                  <%= form.label "Time zone*", class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.select :time_zone, options_for_select(time_zone_select_options, default: current_user.time_zone) %>
+                </div>
+              </div>
               <div class="col-span-6 sm:col-span-3">
                 <div class="form-group">
                   <%= form.label "Duration (in minutes)*", class: "block text-sm font-medium text-gray-700" %>
