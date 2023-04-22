@@ -7,9 +7,9 @@
         <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
         <li><i class="fa fa-book mr-3"></i> <%= @appointment.status.titleize %></li>
         <% if @appointment.status == 'scheduled' %>
-          <dt class="text-sm font-medium text-tokanisecondary-600">Scheduled Interpreter</dt>
+          <dt class="text-sm font-medium text-tokanisecondary-600 mt-4">Scheduled Interpreter</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <%= @appointment.interpreter.name %>
+            <%= @appointment.interpreter.name %> (<%= link_to "view checklist items", interpreter_items_checklist_item_path(@appointment.interpreter) %>)
           </dd>
         <% else %>
         <dt class="text-sm font-medium text-tokanisecondary-600">Requested Interpreters</dt>
