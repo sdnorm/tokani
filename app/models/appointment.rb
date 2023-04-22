@@ -128,6 +128,8 @@ class Appointment < ApplicationRecord
   after_update :assign_interpreter, if: :assigned_interpreter_changed?
   before_update :send_edited_notifications
 
+  include Workflows::AppointmentWorkflow
+
   def no_assignment?
     assigned_interpreter.nil?
   end

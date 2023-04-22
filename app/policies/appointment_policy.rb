@@ -20,19 +20,32 @@ class AppointmentPolicy < ApplicationPolicy
     attr_reader :account, :scope
   end
 
-  def initialize(account, record, current_account_user)
-    @account = account
-    @record = record
-    @current_account_user = current_account_user
+  class AppointmentStatusesScope < Scope
+    def initialize(account_user, scope)
+      @account_user = account_user
+      @scope = scope
+    end
+
+    def resolve
+      # Only show cancel option
+      if is_agency? || is_customer?
+        # This should return :cancel
+        scope::ACTIONS.slice(:cancel).keys
+      end
+    end
+
+    attr_reader :account_user, :scope
   end
 
-  attr_reader :account, :record, :current_account_user
-
   def show_appointments_statuses?
-    account.customer? || current_account_user.interpreter?
+    is_agency?
   end
 
   def show_appointment_customers?
-    account.agency?
+    is_customer?
+  end
+
+  def cancel_appointment?
+    is_agency? || is_customer?
   end
 end

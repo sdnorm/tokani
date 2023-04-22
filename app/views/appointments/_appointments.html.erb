@@ -3,7 +3,7 @@
     <thead class="bg-gray-50">
       <tr>
         <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6"><%= sortable @appointments, :id, "Ref Numb" %></th>
-        <% if AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointment_customers? %>
+        <% if policy(:appointment).show_appointment_customers? %>
           <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">
             <%= sortable @appointments, :customer_id, "Customer" %>
           </th>
@@ -24,7 +24,7 @@
         <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
           <%= link_to appointment.ref_number, appointment_path(appointment), data: { turbo: false } %>
           <dl class="font-normal lg:hidden">
-            <% if AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointment_customers? %>
+            <% if policy(:appointment).show_appointment_customers? %>
               <dt class="sr-only">Customer</dt>
               <dd class="mt-1 truncate text-gray-700"><%= appointment.customer&.name %></dd>
             <% end %>
@@ -40,7 +40,7 @@
             <dd class="mt-1 truncate text-gray-500"><%= appointment.start_time.strftime("%B %-d at %l:%M %p") %></dd>
           </dl>
         </td>
-        <% if AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointment_customers? %>
+        <% if policy(:appointment).show_appointment_customers? %>
           <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.customer&.name %></td>
         <% end %>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.modality.titleize %></td>

@@ -63,8 +63,50 @@ class ApplicationPolicy
       scope.all
     end
 
+    # Check if account_user is an agency
+    # To do this, we iterate through the AGENCY_ROLES_TO_SHOW const
+    # and check each role on the account_user
+    def is_agency?
+      is_role_in_constant?(:AGENCY_ROLES_TO_SHOW)
+    end
+
+    # Same logic with `is_agency?`
+    def is_customer?
+      is_role_in_constant?(:CUSTOMER_ROLES)
+    end
+
+    # Check if account_user roles are in the specified role constant
+    def is_role_in_constant?(account_user_role_constant)
+      array = AccountUser.const_get(account_user_role_constant).map do |user_role|
+        account_user.send(user_role)
+      end
+
+      array.compact.any? { |bool| bool == true }
+    end
+
     private
 
     attr_reader :account_user, :scope
+  end
+
+  # Check if account_user is an agency
+  # To do this, we iterate through the AGENCY_ROLES_TO_SHOW const
+  # and check each role on the account_user
+  def is_agency?
+    is_role_in_constant?(:AGENCY_ROLES_TO_SHOW)
+  end
+
+  # Same logic with `is_agency?`
+  def is_customer?
+    is_role_in_constant?(:CUSTOMER_ROLES)
+  end
+
+  # Check if account_user roles are in the specified role constant
+  def is_role_in_constant?(account_user_role_constant)
+    array = AccountUser.const_get(account_user_role_constant).map do |user_role|
+      account_user.send(user_role)
+    end
+
+    array.compact.any? { |bool| bool == true }
   end
 end

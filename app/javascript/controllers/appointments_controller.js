@@ -78,6 +78,14 @@ export default class extends Controller {
   search() {
     Rails.fire(this.formTarget, "submit")
   }
+
+  submitForm(event) {
+    const confirmCancelBtn = document.querySelector("#confirm-cancel")
+
+    if (!confirmCancelBtn.click()) {
+      event.target.checked = false
+    }
+  }
 }
 
 // Helper methods
