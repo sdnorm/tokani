@@ -71,6 +71,6 @@ class NotificationSettingsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def notification_setting_params
     params.require(:notification_setting).permit(:sms, :sms_number, :appointment_offered, :appointment_scheduled, :appointment_cancelled,
-      :appointment_created, :appointment_declined, :appointment_reminder, :appointment_covered)
+      :appointment_created, :appointment_declined, :appointment_reminder, :appointment_covered, :checklist_item_expiration)
   end
 end
