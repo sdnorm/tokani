@@ -49,6 +49,16 @@
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:checklist_item_expiration, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_checklist_item_expiration" class="font-medium text-gray-700">Checklist Item Expiration</label>
+                      </div>
+                    </div>
+                  </div>
                 <% elsif current_user.is_agency_admin? %>
                   <div class="mt-4 space-y-4">
                     <div class="flex items-start">
@@ -81,6 +91,14 @@
                       </div>
                       <div class="ml-3 text-sm">
                         <label for="notification_setting_interpreter_cancelled" class="font-medium text-gray-700">Interpreter Cancelled</label>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex h-5 items-center">
+                        <%= form.check_box(:checklist_item_expiration, { class: 'h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500' }) %>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="notification_setting_checklist_item_expiration" class="font-medium text-gray-700">Checklist Item Expiration</label>
                       </div>
                     </div>
                   </div>
