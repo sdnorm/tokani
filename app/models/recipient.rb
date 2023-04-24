@@ -18,6 +18,7 @@
 # Indexes
 #
 #  index_recipients_on_customer_id  (customer_id)
+#  unique_email_customer_id         (email,customer_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -37,6 +38,8 @@ class Recipient < ApplicationRecord
   validates :first_name, presence: {message: "field is required"}
   validates :last_name, presence: {message: "field is required"}
   validates :customer_id, presence: {message: "field is required"}
+
+  validates_uniqueness_of :email, scope: :customer_id
 
   def view_name
     "#{first_name} #{last_name}"
