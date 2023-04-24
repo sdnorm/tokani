@@ -37,7 +37,7 @@
             <dt class="sr-only">Status</dt>
             <dd class="mt-1 truncate capitalize"><%= colored_appointment_status(appointment.status) %></dd>
             <dt class="sr-only">Start Time</dt>
-            <dd class="mt-1 truncate text-gray-500"><%= appointment.start_time.strftime("%B %-d at %l:%M %p") %></dd>
+            <dd class="mt-1 truncate text-gray-500"><%= appointment.start_time.strftime("%m-%d-%y at %l:%M %p") %></dd>
           </dl>
         </td>
         <% if AppointmentPolicy.new(current_account, @appointment, current_account_user).show_appointment_customers? %>
@@ -46,7 +46,7 @@
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.modality.titleize %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.language&.name %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment.duration %> minutes</td>
-        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%a %Y-%m-%d, %l:%M %p") %></td>
+        <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= appointment&.start_time&.strftime("%m-%d-%y, %l:%M %p") %></td>
         <td class="hidden px-3 py-4 text-sm lg:table-cell capitalize"><%= colored_appointment_status(appointment.status) %></td>
         <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
           <%= link_to fa_icon("pencil", class: "text-slate-400"), edit_appointment_path(appointment), class: "text-tokanisecondary-600 hover:text-tokanisecondary-900", target: "_top" %>
