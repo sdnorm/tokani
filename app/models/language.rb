@@ -35,6 +35,8 @@ class Language < ApplicationRecord
 
   validates :name, presence: true
 
+  scope :alphabetical, -> { order(name: :asc) }
+
   attribute :is_active, :boolean, default: true
 
   def toggle_active!

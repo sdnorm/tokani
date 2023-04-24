@@ -7,7 +7,7 @@ class CustomerCategoriesController < ApplicationController
 
   # GET /customer_categories
   def index
-    @pagy, @customer_categories = pagy(CustomerCategory.where(account_id: current_account.id).sort_by_params(params[:sort], sort_direction))
+    @pagy, @customer_categories = pagy(CustomerCategory.where(account_id: current_account.id).alphabetical.sort_by_params(params[:sort], sort_direction))
     # @pagy, @customer_categories = pagy(CustomerCategory.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
