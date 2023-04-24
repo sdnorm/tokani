@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :schedule, :time_finish, :update_time_finish]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :schedule, :time_finish, :update_time_finish, :cancel_appointment]
 
   before_action :authenticate_user!
   before_action :set_account
@@ -109,10 +109,11 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1 or /appointments/1.json
   def show
-    # @appt_status = AppointmentStatus.where(appointment_id: @appointment.id).order("updated_at DESC")
-    @appt_statuses = customer_logged_in? ?
-      AppointmentStatus.names.slice("cancelled") :
-      AppointmentStatus.names.slice("opened", "finished")
+    statuses = AppointmentPolicy::AppointmentStatusesScope.new(current_account_user, AppointmentStatus).resolve
+
+    statuses.reject! { |stat| stat == :cancel } if @appointment.can_cancel?
+
+    @appointment_statuses = statuses
   end
 
   # GET /appointments/new
@@ -261,6 +262,20 @@ class AppointmentsController < ApplicationController
       @appt_status.save ?
         format.json { render json: {status: @appointment.status} } :
         format.json { render json: {error: "Something went wrong while updating appointment's status!"} }
+    end
+  end
+
+  def cancel_appointment
+    authorize @appointment
+
+    respond_to do |format|
+      if @appointment.cancel!
+        format.html { redirect_to @appointment, notice: "Appointment was successfully cancelled." }
+        format.json { render :show, status: :created, location: @appointment }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -29,6 +29,7 @@ class AccountUser < ApplicationRecord
     :site_member,
     :tokani_admin,
     :customer_admin,
+    :customer_member,
     :requestor
   ]
 
