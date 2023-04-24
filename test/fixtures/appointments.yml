@@ -95,6 +95,8 @@ one:
   confirmation_notes: MyText
   home_health_appointment: false
   language: one
+  site: one
+  creator: one
 
 two:
   ref_number: MyString
@@ -119,3 +121,5 @@ two:
   confirmation_notes: MyText
   home_health_appointment: false
   language: two
+  site: one
+  creator: one

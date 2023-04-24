@@ -1,5 +1,7 @@
 <%= content_for :title, "Appointments ##{@appointment.ref_number}" %>
 <%= turbo_stream_from @appointment %>
+<% dropdown_item_classes = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" %>
+<% label_classes = "w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300" %>
 
 <div class="flex flex-1 flex-col md:pl-64" data-controller="appointments">
   <main class="flex-1">
@@ -7,7 +9,7 @@
       <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
         <div class="px-4 sm:px-6 lg:px-8">
           <div class="sm:flex sm:items-center pb-6">
-            <div class="sm:flex-auto"> 
+            <div class="sm:flex-auto">
               <h1 class="text-xl font-semibold text-tokaniprimary-400">
                 <%= link_to "Appointments", appointments_path, class: "text-tokanisecondary-500" %>
                 <span class="text-tokaniprimary-400 font-light mx-2">/</span>
@@ -16,17 +18,43 @@
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <% unless @appointment.verified? %>
-                <%= link_to "Time Finish", time_finish_appointment_path(@appointment), class: "btn btn-secondary" %>
+                <%= link_to "Time Finish", time_finish_appointment_path(@appointment), class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
               <% end %>
-              <%= link_to t("edit"), edit_appointment_path(@appointment), class: "btn btn-tokani_purple" %>
+              <%= link_to t("edit"), edit_appointment_path(@appointment), class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-tokanisecondary-600 py-2 px-3.5 text-sm font-medium text-tokanisecondary-600 shadow-sm hover:bg-tokanisecondary-600 hover:text-white focus:outline-none" %>
+            </div>
+          </div>
+          <div class="sm:flex sm:items-center pb-6">
+            <div class="sm:flex-auto">
+              <%= render partial: "appointment_actions", locals: {appointment: @appointment} %>
+            </div>
+            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <% if @appointment_statuses.present? %>
+                <div data-controller="dropdown" class="relative">
+                  <a data-action="click->dropdown#toggle click@window->dropdown#hide touch->dropdown#toggle touch@window->dropdown#hide" class="inline-flex items-center select-none dropdown" aria-label="Status">
+                    <p class="text-sm capitalize" id="statusesTextContainer">Change Status</p>
+                    <svg class="w-4 h-4 ml-2 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </a>
+                  <div data-dropdown-target="menu" class="hidden left-0 md:right-0 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
+                    <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md z-20">
+                      <div class="appointment-status-dropdown">
+                        <%= form_with url:  cancel_appointment_appointment_path(@appointment), method: :post do |form| %>
+                        <button id="confirm-cancel" type="submit" class="hidden" data-controller="appointments" data-turbo-confirm="Are you sure?"></button>
+                          <% @appointment_statuses.each do |status| %>
+                            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">
+                              <input name="status" class="<%= dropdown_item_classes %>" type="radio" id="status_<%= status %>" value="<%= status %>" data-action="change->appointments#submitForm" data-selected-value="<%= @appointment.current_status %>">
+                              <label class="form-check-label <%= label_classes %>" for="status_<%= status %>"><%= status.to_s.titleize %></label>
+                            </div>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="p-8 bg-white rounded shadow">
-
             <%= render partial: 'appointment_details', locals: { appointment: @appointment, appt_status: @appt_status } %>
-
-
-
           </div>
         </div>
       </div>

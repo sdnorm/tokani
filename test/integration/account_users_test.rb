@@ -5,6 +5,10 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
     @account = accounts(:company)
     @admin = users(:one)
     @regular_user = users(:two)
+    @agency_admin = account_users(:agency_admin)
+    @agency_member = account_users(:agency_member)
+    @customer_admin = account_users(:customer_admin)
+    @customer_member = account_users(:customer_member)
   end
 
   class AdminUsers < Jumpstart::AccountUsersTest
@@ -100,5 +104,61 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
     #   assert_redirected_to account_path(@account)
     #   assert_includes @account.account_users.pluck(:user_id), user.id
     # end
+  end
+
+  class AgencyAdminAccountUsers < Jumpstart::AccountUsersTest
+    setup do
+      sign_in @agency_admin.user
+    end
+
+    test "agency account user has the cancel appointment option" do
+      appointment = appointments(:one)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel"
+      end
+    end
+  end
+
+  class AgencyMemberAccountUsers < Jumpstart::AccountUsersTest
+    setup do
+      sign_in @agency_member.user
+    end
+
+    test "agency account member has the cancel appointment option" do
+      appointment = appointments(:one)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel"
+      end
+    end
+  end
+
+  class CustomerAdminAccountUsers < Jumpstart::AccountUsersTest
+    setup do
+      sign_in @customer_admin.user
+    end
+
+    test "agency account user has the cancel appointment option" do
+      appointment = appointments(:one)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel"
+      end
+    end
+  end
+
+  class CustomerMemberAccountUsers < Jumpstart::AccountUsersTest
+    setup do
+      sign_in @customer_member.user
+    end
+
+    test "agency account member has the cancel appointment option" do
+      appointment = appointments(:one)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel"
+      end
+    end
   end
 end
