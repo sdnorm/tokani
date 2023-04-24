@@ -8,7 +8,7 @@ class LanguagesController < ApplicationController
 
   # GET /languages
   def index
-    @pagy, @languages = pagy(current_account.account_languages.sort_by_params(params[:sort], sort_direction))
+    @pagy, @languages = pagy(current_account.account_languages.alphabetical.sort_by_params(params[:sort], sort_direction))
     # @pagy, @languages = pagy(Language.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit

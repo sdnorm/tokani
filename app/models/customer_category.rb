@@ -34,6 +34,7 @@ class CustomerCategory < ApplicationRecord
   validates :appointment_prefix, length: {maximum: 10}
 
   scope :active, -> { where(is_active: true) }
+  scope :alphabetical, -> { order(display_value: :asc) }
 
   attribute :is_active, :boolean, default: true
 
