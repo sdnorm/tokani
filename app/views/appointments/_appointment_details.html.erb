@@ -1,41 +1,52 @@
-<div class="grid grid-cols-2 gap-4 mt-5">
-    <div>
-      <ul class="list-none list-outside">
-        <li><i class="fa fa-calendar mr-4"></i> <%= appointment_start_date_and_time_in_user_time_zone(@appointment, current_user) %> <%= "(#{appointment.time_zone})" if appointment.time_zone %></li>
-        <li><i class="fa fa-male mr-4"></i> <%= @appointment.modality.titleize %></li>
-        <li><i class="fa fa-language mr-2"></i> <%= @appointment.language.name %></li>
-        <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
-        <li><i class="fa fa-book mr-3"></i> <%= @appointment.status.titleize %></li>
-        <% if @appointment.status == 'scheduled' %>
-          <dt class="text-sm font-medium text-tokanisecondary-600">Scheduled Interpreter</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <%= @appointment.interpreter.name %>
-          </dd>
-        <% else %>
-        <dt class="text-sm font-medium text-tokanisecondary-600">Requested Interpreters</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-        <% if appointment.requested_interpreters.any? %>
-            <% appointment.offered_interpreters.each do |req_int| %>
-              <%= req_int.full_name %>
-              <br>
-            <% end %>
-          <% else %>
-            <p>No interpreters requested.</p>
-          <br>
-        <% end %>
-      </dd>
-      <% end %>
-      </ul>
-    </div>
-    <div>
-      <ul class="list-none">
-        <li>Site: <%= @appointment.site.present? ? @appointment.site.name : "N/A" %></li>
-        <li>Department: <%= @appointment.department.present? ? @appointment.department.name : "N/A" %></li>
-        <li>Duration: <%= @appointment.duration_viewable %></li>
-        <li>Provider: <%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></li>
-        <li>Requester: <%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></li>
-      </ul>
-    </div>
+<div>
+  <div>
+    <dl class="grid grid-cols-1 sm:grid-cols-2">
+      <div class="px-4 pb-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Start Date & Time</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+          <%= appointment_start_date_and_time_in_user_time_zone(@appointment, current_user) %> <%= "(#{@appointment.time_zone})" if @appointment.time_zone %>
+        </dd>
+      </div>
+      <div class="px-4 pb-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Duration</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.duration_viewable %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Modality</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.modality.titleize %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Language</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.language.name %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Status</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.status.titleize %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">
+          <%=
+            @appointment.status == "scheduled" ? "Scheduled Interpreter" : "Requested Interpreter"
+          %>
+        </dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= appointment_interpreter_by_status(@appointment) %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Site</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.site.name %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Department</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.department.present? ? @appointment.department.name : "N/A" %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Provider</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Requester</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></dd>
+      </div>
+    </dl>
   </div>
-    <%= render partial: "appointment_actions", locals: {appointment: @appointment} %>
-  
+</div>

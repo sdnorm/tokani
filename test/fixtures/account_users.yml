@@ -50,3 +50,27 @@ invited_user:
 fake_processor:
   account: fake_processor
   user: fake_processor
+
+agency_admin:
+  account: company
+  user: admin
+  roles:
+    agency_admin: true
+
+agency_member:
+  account: company
+  user: admin
+  roles:
+    agency_member: true
+
+customer_admin:
+  account: company
+  user: admin
+  roles:
+    customer_admin: true
+
+customer_member:
+  account: company
+  user: admin
+  roles:
+    customer_member: true

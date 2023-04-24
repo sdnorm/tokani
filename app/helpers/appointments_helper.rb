@@ -35,4 +35,14 @@ module AppointmentsHelper
       status
     end
   end
+
+  def appointment_interpreter_by_status(appointment)
+    if appointment.status == "Scheduled"
+      appointment.interpreter.name
+    else
+      return "No interpreters requested" if appointment.requested_interpreters.blank?
+
+      appointment.offered_interpreters.map { |interpreter| interpreter.full_name }.to_sentence
+    end
+  end
 end
