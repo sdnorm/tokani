@@ -97,6 +97,7 @@ one:
   language: one
   site: one
   creator: one
+  current_status: opened
 
 two:
   ref_number: MyString
@@ -109,7 +110,6 @@ two:
   admin_notes: MyText
   notes: MyText
   details: MyText
-  # status: false
   interpreter_type: 1
   billing_notes: MyText
   canceled_by: 1
@@ -123,3 +123,30 @@ two:
   language: two
   site: one
   creator: one
+  current_status: opened
+
+cancelled:
+  ref_number: MyString
+  start_time: 2022-11-21 15:04:46
+  finish_time: 2022-11-21 15:04:46
+  duration: 1
+  modality: 1
+  sub_type: 1
+  gender_req: 1
+  admin_notes: MyText
+  notes: MyText
+  details: MyText
+  interpreter_type: 1
+  billing_notes: MyText
+  canceled_by: 1
+  cancel_reason_code: 1
+  lock_version: 1
+  time_zone: MyString
+  confirmation_date: 2022-11-21 15:04:46
+  confirmation_phone: MyString
+  confirmation_notes: MyText
+  home_health_appointment: false
+  language: two
+  site: one
+  creator: one
+  current_status: cancelled

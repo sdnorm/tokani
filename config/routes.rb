@@ -216,8 +216,7 @@ Rails.application.routes.draw do
         get :time_finish
         put :update_time_finish
 
-        patch :status, to: "appointments#update_status"
-        post :cancel_appointment
+        post :update_status
       end
     end
     resources :customers
