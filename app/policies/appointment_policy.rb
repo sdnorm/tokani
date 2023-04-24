@@ -27,10 +27,8 @@ class AppointmentPolicy < ApplicationPolicy
     end
 
     def resolve
-      # Only show cancel option
       if is_agency? || is_customer?
-        # This should return :cancel
-        scope::ACTIONS.slice(:cancel).keys
+        scope::ACTIONS
       end
     end
 
@@ -45,7 +43,12 @@ class AppointmentPolicy < ApplicationPolicy
     is_customer?
   end
 
-  def cancel_appointment?
+  def cancel?
     is_agency? || is_customer?
+  end
+
+  # Permit any user to open an appointment
+  def open?
+    account_user.present?
   end
 end

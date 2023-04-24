@@ -109,11 +109,10 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1 or /appointments/1.json
   def show
-    statuses = AppointmentPolicy::AppointmentStatusesScope.new(current_account_user, AppointmentStatus).resolve
+    scoped_statuses = AppointmentPolicy::AppointmentStatusesScope.new(current_account_user, AppointmentStatus).resolve
 
-    statuses.reject! { |stat| stat == :cancel } if @appointment.can_cancel?
-
-    @appointment_statuses = statuses
+    # Fetched from AppointmentWorkflow
+    @appointment_statuses = @appointment.allowed_actions(scoped_statuses)
   end
 
   # GET /appointments/new
@@ -253,15 +252,18 @@ class AppointmentsController < ApplicationController
   end
 
   def update_status
-    @appt_status = @appointment.appointment_statuses.new(
-      name: params.dig(:appointment, :status),
-      user_id: current_account.owner_id
-    )
+    status = params[:status]
+
+    authorize @appointment, :"#{status}?"
 
     respond_to do |format|
-      @appt_status.save ?
-        format.json { render json: {status: @appointment.status} } :
-        format.json { render json: {error: "Something went wrong while updating appointment's status!"} }
+      if @appointment.send(:"#{status}!")
+        format.html { redirect_to @appointment, notice: "Appointment status successfully updated." }
+        format.json { render :show, status: :ok, location: @appointment }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+      end
     end
   end
 
