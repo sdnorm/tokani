@@ -19,6 +19,7 @@
 # Indexes
 #
 #  index_recipients_on_customer_id  (customer_id)
+#  unique_email_customer_id         (email,customer_id) UNIQUE
 #
 # Foreign Keys
 #

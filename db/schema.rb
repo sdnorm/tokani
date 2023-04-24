@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_21_222517) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_24_090204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -717,6 +717,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_222517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_recipients_on_customer_id"
+    t.index ["email", "customer_id"], name: "unique_email_customer_id", unique: true
   end
 
   create_table "report_customers", force: :cascade do |t|
