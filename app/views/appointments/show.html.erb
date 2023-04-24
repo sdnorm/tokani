@@ -37,7 +37,7 @@
                   <div data-dropdown-target="menu" class="hidden left-0 md:right-0 absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 block">
                     <div class="overflow-hidden bg-white border border-gray-200 rounded shadow-md z-20">
                       <div class="appointment-status-dropdown">
-                        <%= form_with url:  cancel_appointment_appointment_path(@appointment), method: :post do |form| %>
+                        <%= form_with url:  update_status_appointment_path(@appointment), method: :post do |form| %>
                         <button id="confirm-cancel" type="submit" class="hidden" data-controller="appointments" data-turbo-confirm="Are you sure?"></button>
                           <% @appointment_statuses.each do |status| %>
                             <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 py-3 px-3">

@@ -111,11 +111,21 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
       sign_in @agency_admin.user
     end
 
-    test "agency account user has the cancel appointment option" do
+    test "agency admin has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
       assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel"
+        assert_select "label", text: "Cancel", count: 1
+        assert_select "label", text: "Open", count: 0
+      end
+    end
+
+    test "agency admin cannot see cancel appointment option when an appointment is already cancelled" do
+      appointment = appointments(:cancelled)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel", count: 0
+        assert_select "label", text: "Open", count: 1
       end
     end
   end
@@ -125,11 +135,21 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
       sign_in @agency_member.user
     end
 
-    test "agency account member has the cancel appointment option" do
+    test "agency member has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
       assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel"
+        assert_select "label", text: "Cancel", count: 1
+        assert_select "label", text: "Open", count: 0
+      end
+    end
+
+    test "agency member cannot see cancel appointment option when an appointment is already cancelled" do
+      appointment = appointments(:cancelled)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel", count: 0
+        assert_select "label", text: "Open", count: 1
       end
     end
   end
@@ -139,11 +159,21 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
       sign_in @customer_admin.user
     end
 
-    test "agency account user has the cancel appointment option" do
+    test "customer admin has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
       assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel"
+        assert_select "label", text: "Cancel", count: 1
+        assert_select "label", text: "Open", count: 0
+      end
+    end
+
+    test "customer admin cannot see cancel appointment option when an appointment is already cancelled" do
+      appointment = appointments(:cancelled)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel", count: 0
+        assert_select "label", text: "Open", count: 1
       end
     end
   end
@@ -153,11 +183,21 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
       sign_in @customer_member.user
     end
 
-    test "agency account member has the cancel appointment option" do
+    test "customer member has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
       assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel"
+        assert_select "label", text: "Cancel", count: 1
+        assert_select "label", text: "Open", count: 0
+      end
+    end
+
+    test "customer member cannot see cancel appointment option when an appointment is already cancelled" do
+      appointment = appointments(:cancelled)
+      get appointment_path(appointment)
+      assert_select ".appointment-status-dropdown" do
+        assert_select "label", text: "Cancel", count: 0
+        assert_select "label", text: "Open", count: 1
       end
     end
   end
