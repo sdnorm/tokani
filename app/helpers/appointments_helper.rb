@@ -38,7 +38,7 @@ module AppointmentsHelper
 
   def appointment_interpreter_by_status(appointment)
     if appointment.status == "Scheduled"
-      appointment.interpreter.name
+      "#{appointment.interpreter.name} (#{link_to "view checklist items", interpreter_items_checklist_item_path(@appointment.interpreter)})"
     else
       return "No interpreters requested" if appointment.requested_interpreters.blank?
 

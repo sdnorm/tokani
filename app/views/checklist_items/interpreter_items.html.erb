@@ -20,9 +20,11 @@
               </h1>
             </div>
 
-            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <%= link_to t("shared.scaffold.new.title", model: "Checklist Item"), new_checklist_item_path(interpreter_id: @interpreter), class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
-            </div>
+            <% if current_user.is_agency_admin? || current_user.is_interpreter? %>
+              <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <%= link_to t("shared.scaffold.new.title", model: "Checklist Item"), new_checklist_item_path(interpreter_id: @interpreter), class: "inline-flex items-center justify-center rounded-md border border-transparent bg-tokanisecondary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2 sm:w-auto" %>
+              </div>
+            <% end %>
           </div>
 
           <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
@@ -32,8 +34,10 @@
                   <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm uppercase font-semibold text-gray-900 sm:pl-6">Checklist Type</th>
                   <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Expiration Date</th>
                   <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Document</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Remove</th>
+                  <% if current_user.is_agency_admin? || current_user.is_interpreter? %>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Remove</th>
+                  <% end %>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
@@ -49,14 +53,16 @@
                       <%= link_to ci.document.try(:filename), url_for(ci.document) %>
                     <% end %>
                   </td>
-                  <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    <a href="<%= edit_checklist_item_path(ci) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900"><i class="fa-regular fa-edit"></i></a>
-                  </td>
-                  <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    <%= button_to url_for(controller: "checklist_items", action: "destroy", id: ci.id), method: :delete, class: "floated-right" do %>
-                      <i class="fa-regular fa-trash"></i>
-                    <% end %>
-                  </td>
+                  <% if current_user.is_agency_admin? || current_user.is_interpreter? %>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      <a href="<%= edit_checklist_item_path(ci) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900"><i class="fa-regular fa-edit"></i></a>
+                    </td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      <%= button_to url_for(controller: "checklist_items", action: "destroy", id: ci.id), method: :delete, class: "floated-right" do %>
+                        <i class="fa-regular fa-trash"></i>
+                      <% end %>
+                    </td>
+                  <% end %>
 
                 </tr>
               <% end %>
