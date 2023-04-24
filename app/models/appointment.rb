@@ -152,7 +152,7 @@ class Appointment < ApplicationRecord
     appointment_number = Appointment.where("created_at >= :date", date: "#{my_year}-01-01").count
     final_num = (appointment_number + 1).to_s.rjust(3, "0")
     # Added a temporary category code sample to bypass the bug here
-    self.ref_number = "#{category_code || [100, 101, 102].sample}-#{year_code}-#{final_num}"
+    self.ref_number = "#{category_code || [100, 101, 102].sample}#{year_code}-#{final_num}"
   end
 
   def create_status_for_new_appt
