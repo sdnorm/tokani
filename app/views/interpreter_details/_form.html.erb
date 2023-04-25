@@ -68,14 +68,14 @@
               <div class="col-span-6 sm:col-span-3">
                   <div class="form-group">
                       <%= form.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
-                      <%= form.select :interpreter_type, options_for_select(interpreter_type_options), {}, class: "form-control" %>
+                      <%= form.select :interpreter_type, options_for_select(interpreter_type_options, form.object.interpreter_type), {}, class: "form-control" %>
                     </div>
               </div>
 
               <div class="col-span-6 sm:col-span-3">
                   <div class="form-group">
                       <%= form.label :gender , class: "block text-sm font-medium text-gray-700" %>
-                      <%= form.select :gender, options_for_select(gender_options), {}, {class: 'form-control' } %>
+                      <%= form.select :gender, options_for_select(gender_options, form.object.gender), {}, {class: 'form-control' } %>
                     </div>
               </div>
 

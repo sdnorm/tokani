@@ -290,6 +290,7 @@ class InterpretersController < ApplicationController
   def appointments
     @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
     @appointments = @service.fetch_appointments
+    @appointments = @service.restrict_to_assigned_or_viewable(@appointments)
     @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
     @statuses = ["all", "scheduled", "finished", "opened"]
