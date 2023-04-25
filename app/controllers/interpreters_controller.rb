@@ -288,7 +288,7 @@ class InterpretersController < ApplicationController
   end
 
   def appointments
-    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
+    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params, current_account)
     @appointments = @service.fetch_appointments
     @appointments = @service.restrict_to_assigned_or_viewable(@appointments)
     @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
@@ -306,7 +306,7 @@ class InterpretersController < ApplicationController
     if search_params.blank? || search_params[:status].blank? || search_params[:status] == "all"
       search_params[:status] = "processed"
     end
-    @service = InterpreterAppointmentsService.new(current_user, search_params)
+    @service = InterpreterAppointmentsService.new(current_user, search_params, current_account)
     @appointments = @service.fetch_appointments
     @pagy, @appointments = pagy(@appointments)
 
