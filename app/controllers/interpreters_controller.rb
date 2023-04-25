@@ -243,6 +243,8 @@ class InterpretersController < ApplicationController
       redirect_to(my_scheduled_details_interpreter_path(@appointment))
     elsif @appointment.status == "opened"
       redirect_to(my_public_details_interpreter_path(@appointment))
+    elsif @appointment.status == "finished"
+      redirect_to(my_scheduled_details_interpreter_path(@appointment))
     else
       redirect_to(interpreter_dashboard_path, alert: "Could not find appointment in an offered or scheduled status.")
     end
