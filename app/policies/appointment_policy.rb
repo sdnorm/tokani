@@ -27,8 +27,10 @@ class AppointmentPolicy < ApplicationPolicy
     end
 
     def resolve
-      if is_agency? || is_customer?
-        scope::ACTIONS
+      if is_agency? || is_customer? || account_user.admin?
+        scope::AGENCY_AND_CUSTOMER_ACTIONS
+      else
+        scope::DEFAULT_ACTIONS
       end
     end
 
@@ -44,7 +46,7 @@ class AppointmentPolicy < ApplicationPolicy
   end
 
   def cancel?
-    is_agency? || is_customer?
+    @record.current_status&.in?(Workflows::AppointmentWorkflow::CANCELLABLE_STATUSES)
   end
 
   # Permit any user to open an appointment
