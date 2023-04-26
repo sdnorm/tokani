@@ -71,7 +71,7 @@ class Customer < Account
 
       AgencyCustomerCreationMailer.welcome(user, self).deliver_later
     else
-      raise "Could not save User in Customer#create_user_and_owner - #{user.errors.full_messages.join('; ')}"
+      raise "Could not save User in Customer#create_user_and_owner - #{user.errors.full_messages.join("; ")}"
     end
   end
 
