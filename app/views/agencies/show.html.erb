@@ -30,60 +30,60 @@
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Company Website</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.company_website %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.company_website %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Street address</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.line1 %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address&.line1 %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">City</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.city %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address&.city %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">State</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.state %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address&.state %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">ZIP / Postal code</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address.postal_code %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.physical_address&.postal_code %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.phone_number %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.phone_number %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Time Zone</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.time_zone %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.time_zone %></dd>
         </div>
 
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Primary Contact First Name</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.primary_contact_first_name %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.primary_contact_first_name %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Primary Contact Title</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.primary_contact_title %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.primary_contact_title %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Primary Contact Email</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.primary_contact_email %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.primary_contact_email %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Secondary Contact First Name</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.secondary_contact_first_name %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.secondary_contact_first_name %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Secondary Contact Title</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.secondary_contact_title %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.secondary_contact_title %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Secondary Contact Email</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.secondary_contact_email %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.secondary_contact_email %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Agency URL Address</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail.url %></dd>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= @agency.agency_detail&.url %></dd>
         </div>
       </dl>
     </div>
