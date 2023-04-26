@@ -55,7 +55,7 @@
         <div class="sm:col-span-2">
           <label for="region" class="block text-sm font-medium text-gray-700">State *</label>
           <div class="mt-1">
-            <%= physical_address.select :state, options_for_select(state_select_options, selected: physical_address.object.state), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+            <%= physical_address.select :state, options_for_select(state_select_options, selected: physical_address.object&.state), include_blank: false, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
           </div>
         </div>
 
@@ -76,7 +76,7 @@
         </div>
         <div class="sm:col-span-3">
           <label for="street-address" class="block text-sm font-medium text-gray-700">Time zone *</label>
-          <%= agency_detail.select :time_zone, options_for_select(time_zone_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %> 
+          <%= agency_detail.select :time_zone, options_for_select(time_zone_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
         </div>
       </div>
     </div>
@@ -134,7 +134,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="pt-8">
       <div>
         <h3 class="text-lg font-medium leading-6 text-gray-900">URL Address</h3>
@@ -153,11 +153,11 @@
   <% end %>
   <div class="pt-5">
     <div class="flex justify-end">
-      <% if form.object.new_record? %> 
-        <%= link_to t("cancel"), agencies_path, class: "mr-3 inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
+      <% if form.object.new_record? %>
+        <%= link_to t("cancel"), agencies_path, class: "mr-3 inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
         <%= form.button "Create Agency", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
       <% else %>
-        <%= link_to t("cancel"), agency_path(@agency), class: "mr-3 inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %> 
+        <%= link_to t("cancel"), agency_path(@agency), class: "mr-3 inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
         <%= form.button "Update Agency", class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
       <% end %>
     </div>
