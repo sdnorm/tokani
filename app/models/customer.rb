@@ -48,27 +48,31 @@ class Customer < Account
 
   # move to job so it retries
   def create_user_and_owner
-    user = User.create(
+    user = User.new(
       name: customer_detail.contact_name,
       email: customer_detail.email,
       password: SecureRandom.alphanumeric,
       terms_of_service: true,
       accepted_terms_at: Time.current
     )
-    update(owner_id: user.id)
-    account_users.create(user: user, roles: {"customer_admin" => true})
-    RequestorDetail.create(
-      allow_offsite: true,
-      allow_view_docs: true,
-      allow_view_checklist: true,
-      primary_phone: customer_detail.phone,
-      customer_id: customer_detail.customer_id,
-      requestor_id: user.id,
-      requestor_type: 4
-    )
-    CustomerRequestor.create(customer_id: customer_detail.customer_id, requestor_id: user.id)
+    if user.save
+      update(owner_id: user.id)
+      account_users.create(user: user, roles: {"customer_admin" => true})
+      RequestorDetail.create(
+        allow_offsite: true,
+        allow_view_docs: true,
+        allow_view_checklist: true,
+        primary_phone: customer_detail.phone,
+        customer_id: customer_detail.customer_id,
+        requestor_id: user.id,
+        requestor_type: 4
+      )
+      CustomerRequestor.create(customer_id: customer_detail.customer_id, requestor_id: user.id)
 
-    AgencyCustomerCreationMailer.welcome(user, self).deliver_later
+      AgencyCustomerCreationMailer.welcome(user, self).deliver_later
+    else
+      raise "Could not save User in Customer#create_user_and_owner - #{user.errors.full_messages.join('; ')}"
+    end
   end
 
   private
