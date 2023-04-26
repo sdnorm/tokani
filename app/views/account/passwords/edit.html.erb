@@ -24,7 +24,7 @@
         <div class="form-group" data-controller="password-visibility">
           <%= f.label :password, "New password", class: "block text-sm font-medium text-gray-700" %>
           <div class="relative mt-1 rounded-md shadow-sm">
-          <%= f.password_field :current_password, data: { password_visibility_target: "input"}, autocomplete: "current-password", placeholder: "New Password", class: "block w-full rounded-md border-gray-300 pr-10 focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %>
+          <%= f.password_field :password, data: { password_visibility_target: "input"}, autocomplete: "new-password", placeholder: "New Password", class: "block w-full rounded-md border-gray-300 pr-10 focus:border-tokanisecondary-500 focus:ring-tokanisecondary-500 sm:text-sm" %>
             <button type="button" data-action="password-visibility#toggle" class="text-gray-500 absolute inset-y-0 right-0 flex items-center pr-3">
               <span data-password-visibility-target="icon"><i class="fa-regular fa-eye"></i></span>
               <span data-password-visibility-target="icon" class="hidden"><i class="fa-regular fa-eye-slash"></i></span>
