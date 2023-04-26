@@ -5,6 +5,9 @@
       <li><i class="fa fa-male mr-4"></i> <%= @appointment.modality.titleize %></li>
       <li><i class="fa fa-language mr-2"></i> <%= @appointment.language.name %></li>
       <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
+      <% unless @appointment.notes.blank? %>
+        <li><i class="fa fa-notebook mr-3"></i> Appointment notes: <br> <%= simple_format(@appointment.notes) %></li>
+      <% end %>
     </ul>
   </div><!-- ... -->
   <div>
