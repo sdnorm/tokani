@@ -25,7 +25,7 @@
             <div class="col-span-6 lg:col-span-3">
               <div class="form-group">
                 <%= form.label :department_id, class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.select :department_id, options_for_select(departments, appointment.department_id), {}, {disabled: @field_disabled, class: 'form-control'} %>
+                <%= form.select :department_id, options_from_collection_for_select(departments, :id, :name, appointment.department_id), {}, {disabled: @field_disabled, class: 'form-control'} %>
               </div>
             </div>
             <div class="col-span-6 lg:col-span-2">
