@@ -25,7 +25,7 @@
             <div class="col-span-6 lg:col-span-3">
               <div class="form-group">
                 <%= form.label :department_id, class: 'block text-sm font-medium text-gray-700' %>
-                <%= form.select :department_id, options_for_select(departments, appointment.department_id), {}, {disabled: @field_disabled, class: 'form-control'} %>
+                <%= form.select :department_id, options_from_collection_for_select(departments, :id, :name, appointment.department_id), {}, {disabled: @field_disabled, class: 'form-control'} %>
               </div>
             </div>
             <div class="col-span-6 lg:col-span-2">
@@ -56,7 +56,7 @@
             <div class="col-span-6 lg:col-span-3">
               <div class="form-group">
                 <%= form.label "Language*", class: "block text-sm font-medium text-gray-700" %>
-                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name), {prompt: "Please select A Language"}, {class: 'form-control', data: {interpreter_autocomplete_target: "languageId"}}  %>
+                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name, appointment.language_id), {prompt: "Please select A Language"}, {class: 'form-control', data: {interpreter_autocomplete_target: "languageId"}}  %>
               </div>
             </div>
           </div>
@@ -88,10 +88,6 @@
                 <%= form.label :recipient_id, "Recipient", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.select :recipient_id, options_from_collection_for_select(recipients, :id, :view_name), {prompt: "Please select a Recipient"}, {class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s" } %>
               </div>
-            </div>
-            <div class="col-span-6 sm:col-span-6 lg:col-span-3">
-              <%= form.label :details, class: "block text-sm font-medium text-gray-700" %>
-              <%= form.text_field :details, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
             </div>
             <div class="col-span-6 sm:col-span-6 lg:col-span-3">
               <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
