@@ -79,6 +79,7 @@ class AgenciesController < ApplicationController
       if @agency.save
         @agency.update(agency: true)
         CreateAgencyOwnerUserAccountJob.perform_later(@agency.id)
+        CreateExampleAgencyDataJob.perform_later(@agency.id)
         format.html { redirect_to @agency, notice: "Agency was successfully created." }
         format.json { render :show, status: :created, location: @agency }
       else
