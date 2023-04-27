@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_24_090204) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_164445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -851,6 +851,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_090204) do
     t.text "otp_backup_codes"
     t.boolean "agency_admin"
     t.boolean "tokani_admin"
+    t.datetime "last_request_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
