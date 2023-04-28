@@ -32,5 +32,17 @@ module Workflows
         user_id: creator_id
       )
     end
+
+    def can_cancel?
+      return false if current_status == "cancelled"
+
+      true
+    end
+
+    def can_open?
+      return false if current_status == "opened"
+
+      true
+    end
   end
 end

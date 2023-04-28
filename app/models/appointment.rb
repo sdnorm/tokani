@@ -108,6 +108,20 @@ class Appointment < ApplicationRecord
   enum cancel_type: {agency: 0, requestor: 1}
   enum visibility_status: {offered: 0, opened: 1}
 
+  enum cancel_reason_code: {
+    no_language_resources: 0,
+    inclement_weather: 1,
+    technology_issues: 2,
+    interpreter_cancel: 3,
+    interpreter_no_show: 4,
+    recipient_cancel: 5,
+    rescheduled: 6,
+    duplicate_request: 7,
+    recipient_declined_services: 8,
+    interpreter_not_utilized: 9,
+    other: 10
+  }
+
   scope :by_status, ->(status) { where(status: status) }
   scope :by_appointment_specific_status, ->(name) { joins(:appointment_statuses).where(appointment_statuses: {name: name}) }
   scope :by_customer_name, ->(name) { includes(:customer).where(customer: {name: name}) }
@@ -405,5 +419,12 @@ class Appointment < ApplicationRecord
 
     errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?("https://", "http://")
     false
+  end
+
+  def cancel_reasons_for(current_account_user)
+    if current_account_user.agency_admin?
+
+    elsif current_account_user.customer_admin?
+    end
   end
 end

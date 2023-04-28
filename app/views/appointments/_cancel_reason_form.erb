@@ -1,0 +1,14 @@
+<% dropdown_item_classes = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" %>
+<% label_classes = "w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300" %>
+
+<%= form_with model: @appointment, url:  cancel_appointment_path(@appointment), method: :post do |form| %>
+  <div class="form-group flex items-end gap-4">
+    <div>
+      <%= form.label :cancel_reason, "Select a reason to cancel" %>
+      <%= form.select :cancel_reason, options_for_select(cancel_reason_dropdown_options, include_blank: "Select a reason") %>
+    </div>
+    <div>
+      <%= form.submit 'Submit', class: "h-auto inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
+    </div>
+  </div>
+<% end %>
