@@ -48,16 +48,16 @@
                     </div>
                   </div>
 
-                  <div class="row mt-4 mb-3 justify-content-center">
-                    <div class="col-7 text-blueCoral form-check rounded-2 mb-3 ps-5 mx-3" style="height:20vh;">
-                      <%= label_tag :customer_categories, "Select Customer Category:", class: 'text-blueCoral' %>
-
-                      <% if @customer_categories&.any? %>
-                        <%= select_tag 'report[customer_category_id]', options_from_collection_for_select(@customer_categories, 'id', 'display_value'), prompt: "All Customer Categories", class: 'form-select', style: 'width: 50%' %>
-                      <% else %>
-                        <p>No customer categories found.</p>
-                      <% end %>
+                  <div class="ml-3 mt-4 mb-2 justify-content-center">
+                   <div class="mx-3">
+                      Select Customer Category:
                     </div>
+
+                    <% if @customer_categories&.any? %>
+                      <%= select_tag 'report[customer_category_id]', options_from_collection_for_select(@customer_categories, 'id', 'display_value'), prompt: "All Customer Categories", class: 'form-select', style: 'width: 50%' %>
+                    <% else %>
+                      <p>No customer categories found.</p>
+                    <% end %>
                   </div>
 
                   <div class="mx-3">

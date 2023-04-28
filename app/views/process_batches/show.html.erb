@@ -1,25 +1,50 @@
+<%= content_for :title, t("shared.scaffold.new.title", model: "Process Batch") %>
+<div class="flex flex-1 flex-col md:pl-64">
+  <main class="flex-1">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-center pb-6">
+                <div class="sm:flex-auto">
+                  <h1 class="text-xl font-semibold text-gray-900">
+                    <%= link_to "Invoices", process_batches_path, class: "text-tokanisecondary-500" %>
+                      <span class="text-gray-400 font-light mx-2">\ Process Batch #<%= @process_batch.id %></span>
+                  </h1>
+                </div>
+                </div>
+                <div class="p-8 bg-white rounded shadow">
+                  <%= render partial: 'appointments' %>
+
+                  <br><br>
+
+                  <div class="grid grid-cols-3 gap-4">
+                    <div class="mx-auto">
+                      <%= link_to "Export to PDF", download_pdf_process_batch_path(@process_batch), class: 'btn btn-secondary' %>
+                    </div>
+                    <div class="mx-auto">
+                      <% if @process_batch.batch_type == 'customer' %>
+                        <%= link_to "Export to CSV", download_csv_process_batch_path(@process_batch), class: 'btn btn-secondary' %>
+                      <% else %>
+                        <%= link_to "Export to CSV", download_interpreter_csv_process_batch_path(@process_batch), class: 'btn btn-secondary' %>
+                      <% end %>
+                    </div>
+                    <div class="mx-auto">
+                      <%= button_to "Delete Process Batch", process_batch_path(@process_batch), method: 'delete', class: 'btn btn-primary' %>
+                    </div>
+                  </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+  </main>
+</div>
+
+
 <div class="card-header pb-0">
   <div class="card-body">
 
-    <%= render partial: 'appointments' %>
 
-    <br><br>
-
-    <div class="grid grid-cols-3 gap-4">
-      <div class="mx-auto">
-        <%= link_to "Export to PDF", download_pdf_process_batch_path(@process_batch), class: 'btn btn-secondary' %>
-      </div>
-      <div class="mx-auto">
-        <% if @process_batch.batch_type == 'customer' %>
-          <%= link_to "Export to CSV", download_csv_process_batch_path(@process_batch), class: 'btn btn-secondary' %>
-        <% else %>
-          <%= link_to "Export to CSV", download_interpreter_csv_process_batch_path(@process_batch), class: 'btn btn-secondary' %>
-        <% end %>
-      </div>
-      <div class="mx-auto">
-        <%= button_to "Delete Process Batch", process_batch_path(@process_batch), method: 'delete', class: 'btn btn-primary' %>
-      </div>
-    </div>
 
 
   </div>

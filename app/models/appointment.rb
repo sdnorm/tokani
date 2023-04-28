@@ -406,4 +406,10 @@ class Appointment < ApplicationRecord
     errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?("https://", "http://")
     false
   end
+
+  # Returns a decimal value of Total Paid / Total Billed
+  def profit_margin
+    (((total_billed - total_paid) / total_billed) * 100.0).round(0)
+  end
+
 end
