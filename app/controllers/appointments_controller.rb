@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :schedule, :time_finish, :update_time_finish, :cancel_appointment]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :interpreter_requests, :update_status, :schedule, :time_finish, :update_time_finish, :cancel]
 
   before_action :authenticate_user!
   before_action :set_account
@@ -267,11 +267,11 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  def cancel_appointment
+  def cancel
     authorize @appointment
 
     respond_to do |format|
-      if @appointment.cancel!
+      if @appointment.cancel! && @appointment.update(cancel_reason_code: appointment_params[:cancel_reason_code])
         format.html { redirect_to @appointment, notice: "Appointment was successfully cancelled." }
         format.json { render :show, status: :created, location: @appointment }
       else

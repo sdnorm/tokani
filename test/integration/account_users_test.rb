@@ -114,19 +114,13 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
     test "agency admin has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 1
-        assert_select "label", text: "Open", count: 0
-      end
+      assert_select "a", text: "Cancel", count: 1
     end
 
-    test "agency admin cannot see cancel appointment option when an appointment is already cancelled" do
+    test "agency admin does not have any options to update a cancelled appointment" do
       appointment = appointments(:cancelled)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 0
-        assert_select "label", text: "Open", count: 1
-      end
+      assert_select "a", text: "Open", count: 0
     end
   end
 
@@ -138,19 +132,13 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
     test "agency member has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 1
-        assert_select "label", text: "Open", count: 0
-      end
+      assert_select "a", text: "Cancel", count: 1
     end
 
-    test "agency member cannot see cancel appointment option when an appointment is already cancelled" do
+    test "agency member does not have any options to update a cancelled appointment" do
       appointment = appointments(:cancelled)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 0
-        assert_select "label", text: "Open", count: 1
-      end
+      assert_select "a", text: "Open", count: 0
     end
   end
 
@@ -162,19 +150,13 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
     test "customer admin has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 1
-        assert_select "label", text: "Open", count: 0
-      end
+      assert_select "a", text: "Cancel", count: 1
     end
 
-    test "customer admin cannot see cancel appointment option when an appointment is already cancelled" do
+    test "customer admin does not have any options to update a cancelled appointment" do
       appointment = appointments(:cancelled)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 0
-        assert_select "label", text: "Open", count: 1
-      end
+      assert_select "a", text: "Open", count: 0
     end
   end
 
@@ -186,19 +168,13 @@ class Jumpstart::AccountUsersTest < ActionDispatch::IntegrationTest
     test "customer member has the cancel appointment option when an appointment is opened" do
       appointment = appointments(:one)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 1
-        assert_select "label", text: "Open", count: 0
-      end
+      assert_select "a", text: "Cancel", count: 1
     end
 
-    test "customer member cannot see cancel appointment option when an appointment is already cancelled" do
+    test "customer member does not have any options to update a cancelled appointment" do
       appointment = appointments(:cancelled)
       get appointment_path(appointment)
-      assert_select ".appointment-status-dropdown" do
-        assert_select "label", text: "Cancel", count: 0
-        assert_select "label", text: "Open", count: 1
-      end
+      assert_select "a", text: "Open", count: 0
     end
   end
 end

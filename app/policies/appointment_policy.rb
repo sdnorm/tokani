@@ -51,6 +51,6 @@ class AppointmentPolicy < ApplicationPolicy
 
   # Permit any user to open an appointment
   def open?
-    account_user.present?
+    account_user.present? && @record.current_status != "cancelled"
   end
 end

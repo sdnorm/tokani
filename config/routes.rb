@@ -217,6 +217,7 @@ Rails.application.routes.draw do
         put :update_time_finish
 
         post :update_status
+        post :cancel
       end
     end
     resources :customers

@@ -45,4 +45,34 @@ module AppointmentsHelper
       appointment.offered_interpreters.map { |interpreter| interpreter.full_name }.to_sentence
     end
   end
+
+  def cancel_button_link(appointment)
+    return unless appointment.can_cancel?
+
+    link_to(
+      "Cancel", "", class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-red-500 py-2 px-3.5 text-sm font-medium text-red-600 shadow-sm hover:bg-red-500 hover:text-white focus:outline-none",
+      data: {
+        action: "click->appointments#showReason",
+        controller: "appointments",
+        do: "cancel"
+      }
+    )
+  end
+
+  def open_button_link(appointment)
+    return unless appointment.can_open?
+
+    link_to(
+      "Open", update_status_appointment_path(appointment, status: "open"),
+      class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-red-500 py-2 px-3.5 text-sm font-medium text-red-600 shadow-sm hover:bg-red-500 hover:text-white focus:outline-none",
+      method: :post
+    )
+  end
+
+  def cancel_reason_dropdown_options
+    arr = Appointment.cancel_reason_codes.keys.map(&:titleize)
+    duplicated_arr = arr.map { |elem| elem.downcase.gsub(/\s+/, "_") }
+
+    Array.new(arr.length) { |i| [arr[i].titleize, duplicated_arr[i]] }
+  end
 end

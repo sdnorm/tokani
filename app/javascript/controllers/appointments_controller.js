@@ -86,6 +86,13 @@ export default class extends Controller {
       event.target.checked = false
     }
   }
+
+  showReason(event) {
+    event.preventDefault()
+    const cancelForm = document.querySelector(".cancel-reason-container")
+
+    cancelForm.classList.toggle("hidden")
+  }
 }
 
 // Helper methods
