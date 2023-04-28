@@ -35,12 +35,15 @@ class Report < ApplicationRecord
 
   serialize :fields_to_show, Array
 
+  belongs_to :account
+
   # Financial Report Fields
   has_many :report_customers, dependent: :destroy
   has_many :customers, through: :report_customers, validate: false, class_name: "Account", foreign_key: :account_id
 
   # Fill Rate Report Fields
   belongs_to :customer, optional: true, class_name: "Account"
+  belongs_to :customer_category, optional: true
   belongs_to :interpreter, optional: true, class_name: "User"
   belongs_to :language, optional: true
 
@@ -78,7 +81,7 @@ class Report < ApplicationRecord
           csv << fields_to_add(appt)
         end
       when "fill_rate"
-        csv << fill_rate_report_fields_to_add
+        csv << fields_to_add
       end
     end
   end
@@ -100,10 +103,12 @@ class Report < ApplicationRecord
     headers
   end
 
-  def fields_to_add(appt)
+  def fields_to_add(appt = nil)
     case report_type
     when "financial"
       financial_report_fields_to_add(appt)
+    when "fill_rate"
+      fill_rate_report_fields_to_add
     end
   end
 
@@ -114,11 +119,11 @@ class Report < ApplicationRecord
     fields_to_show.each do |appt_field|
       case appt_field
       when "appt-number"
-        fields << appt.refnumber
+        fields << appt.ref_number
       when "date-of-service"
         fields << appt.start_time.to_date.to_s
       when "time-of-service"
-        fields << appt.start_time.strftime("%l:%M %p")
+        fields << appt.start_time.strftime("%l:%M %p %Z")
       when "customer-name"
         fields << appt.customer&.name
       when "site"
@@ -136,25 +141,26 @@ class Report < ApplicationRecord
       when "duration"
         fields << appt.duration_viewable
       when "datetime-start"
-        fields << appt.start_time.strftime("%Y-%m-%d %l:%M %p")
+        fields << appt.start_time.strftime("%Y-%m-%d %l:%M %p %Z")
       when "datetime-end"
-        fields << appt.finish_time&.strftime("%Y-%m-%d %l:%M %p")
+        fields << appt.finish_time&.strftime("%Y-%m-%d %l:%M %p %Z")
       when "actual-duration"
         fields << "#{appt.calculated_appointment_duration_in_hours} hours"
       when "amount-paid"
         fields << number_to_currency(appt.total_paid)
       when "amount-billed"
         fields << number_to_currency(appt.total_billed)
-      when "mileage-paid"
-        fields << "TODO"
-      when "mileage-billed"
-        fields << "TODO"
-      when "total-paid"
-        fields << "TODO"
-      when "total-billed"
-        fields << "TODO"
+      # Commenting the below fields out until we support Milegae reporting.
+      # when "mileage-paid"
+      #  fields << "TODO"
+      # when "mileage-billed"
+      #   fields << "TODO"
+      # when "total-paid"
+      #  fields << appt.total_paid
+      # when "total-billed"
+      #  fields << appt.total_billed
       when "profit-margin"
-        fields << "TODO"
+        fields << number_to_percentage(appt.profit_margin, precision: 0)
       end
     end
 
@@ -170,8 +176,8 @@ class Report < ApplicationRecord
         fields << customer&.name
       when "language"
         fields << language&.name
-      when "interpreter-name"
-        fields << interpreter&.name
+      # when "interpreter-name"
+      #  fields << interpreter&.name
       when "appointments-total"
         fields << service.total
       when "cancels-total"

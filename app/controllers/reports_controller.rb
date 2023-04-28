@@ -34,7 +34,7 @@ class ReportsController < ApplicationController
 
   def generate_csv
     csv_string = @report.to_csv
-    send_data csv_string, type: "text/csv", disposition: "attachment; filename=#{@report.report_type.titleize}Report.csv"
+    send_data csv_string, type: "text/csv", disposition: "attachment; filename='#{@report.report_type.titleize} Report.csv'"
   end
 
   def generate_pdf
@@ -59,8 +59,7 @@ class ReportsController < ApplicationController
   end
 
   def setup_form_vars
-    # @customer_categories = current_account.customer_categories.is_active.order('display_value ASC')
-    @customer_categories = CustomerCategory.active.order("display_value ASC")
+    @customer_categories = current_account.customer_categories.active.alphabetical
     @customers = current_account.customers.order("name ASC")
     @languages = current_account.languages.order("name ASC")
   end

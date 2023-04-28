@@ -71,6 +71,7 @@ class Account < ApplicationRecord
   has_many :checklist_types, dependent: :destroy
 
   has_many :agency_recipients, through: :customers, source: :recipients
+  has_many :customer_categories, dependent: :destroy
 
   accepts_nested_attributes_for :agency_detail
   accepts_nested_attributes_for :physical_address

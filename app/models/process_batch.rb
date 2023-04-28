@@ -122,7 +122,7 @@ class ProcessBatch < ApplicationRecord
     CSV.generate do |csv|
       csv << ["Customer", "Site", "Appointment ID", "Billing Details", "Amount Billed"]
       appointments.each do |appt|
-        csv << [appt.customer.name, appt&.site&.name || "", appt.refnumber, appt.billing_types, number_with_precision(appt.total_billed, precision: 2)]
+        csv << [appt.customer.name, appt&.site&.name || "", appt.ref_number, appt.billing_types, number_with_precision(appt.total_billed, precision: 2)]
       end
     end
   end
@@ -131,7 +131,7 @@ class ProcessBatch < ApplicationRecord
     CSV.generate do |csv|
       csv << ["Interpreter", "Appointment ID", "Amount Paid"]
       appointments.each do |appt|
-        csv << [appt.interpreter&.name || "(Interpreter not found)", appt.refnumber, number_with_precision(appt.total_paid, precision: 2)]
+        csv << [appt.interpreter&.name || "(Interpreter not found)", appt.ref_number, number_with_precision(appt.total_paid, precision: 2)]
       end
     end
   end
