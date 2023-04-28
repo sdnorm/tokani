@@ -420,11 +420,4 @@ class Appointment < ApplicationRecord
     errors.add(:video_link, "must start with https:// or http://") unless video_link.downcase.start_with?("https://", "http://")
     false
   end
-
-  def cancel_reasons_for(current_account_user)
-    if current_account_user.agency_admin?
-
-    elsif current_account_user.customer_admin?
-    end
-  end
 end

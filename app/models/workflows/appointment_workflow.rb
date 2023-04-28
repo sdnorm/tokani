@@ -41,6 +41,7 @@ module Workflows
 
     def can_open?
       return false if current_status == "opened"
+      return false if current_status == "cancelled"
 
       true
     end
