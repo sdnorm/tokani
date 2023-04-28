@@ -411,5 +411,4 @@ class Appointment < ApplicationRecord
   def profit_margin
     (((total_billed - total_paid) / total_billed) * 100.0).round(0)
   end
-
 end
