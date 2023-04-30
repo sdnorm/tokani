@@ -6,11 +6,11 @@ import { getMetaValue, findElement, removeElement, insertAfter } from "../helper
 Dropzone.autoDiscover = false
 
 export default class extends Controller {
-  static targets = [ "input", "existingImageInput", "dropHere" ]
+  static targets = ["input", "existingImageInput", "dropHere"]
   static values = {
-    images: {type: Array, default: []},
-    maxFiles: {type: Number, default: 1},
-    maxFileSize: {type: Number, default: 2}
+    images: { type: Array, default: [] },
+    maxFiles: { type: Number, default: 1 },
+    maxFileSize: { type: Number, default: 2 }
   }
 
   connect() {
@@ -104,7 +104,7 @@ class DirectUploadManager {
     })
   }
 
-// Private
+  // Private
   createHiddenInput() {
     const input = document.createElement("input")
     input.type = "hidden"
@@ -114,19 +114,7 @@ class DirectUploadManager {
   }
 
   directUploadWillStoreFileWithXHR(xhr) {
-    this.bindProgressEvent(xhr)
     this.emitDropzoneUploading()
-  }
-
-  bindProgressEvent(xhr) {
-    this.xhr = xhr
-    this.xhr.upload.addEventListener("progress", event => this.uploadRequestDidProgress(event))
-  }
-
-  uploadRequestDidProgress(event) {
-    const element = this.source.element
-    const progress = event.loaded / event.total * 100
-    findElement(this.file.previewTemplate, ".dz-upload").style.width = `${progress}%`
   }
 
   emitDropzoneUploading() {
@@ -157,23 +145,30 @@ function createDirectUpload(file, url, controller) {
 }
 
 function createDropZone(controller) {
+  const previewNode = document.querySelector("#custom-preview-template");
+  previewNode.id = "";
+  const previewTemplate = previewNode.parentNode.innerHTML;
+  previewNode.parentNode.removeChild(previewNode);
+
   return new Dropzone(controller.element, {
     url: controller.url,
+    previewTemplate: previewTemplate,
+    dictRemoveFile: "", // Override default text to only display trash icon
     headers: controller.headers,
     maxFiles: controller.maxFilesValue,
     maxFilesize: controller.maxFileSizeValue,
     acceptedFiles: controller.acceptedFiles,
     addRemoveLinks: controller.addRemoveLinks,
     autoQueue: false,
-    init: function() {
+    init: function () {
       let myDropzone = this;
       controller.imagesValue.forEach(img => {
         let mockFile = img
         mockFile.accepted = true
         mockFile.status = Dropzone.SUCCESS
         myDropzone.displayExistingFile(mockFile, mockFile.url, () => {
-         myDropzone.files.push(mockFile)
-         myDropzone._updateMaxFilesReachedClass()
+          myDropzone.files.push(mockFile)
+          myDropzone._updateMaxFilesReachedClass()
         })
 
 

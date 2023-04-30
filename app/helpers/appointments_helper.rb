@@ -25,7 +25,7 @@ module AppointmentsHelper
     color_class += case status
     when "scheduled"
       "bg-green-200 text-green-500"
-    when "processed", "finished"
+    when "processed", "finished", "Finished"
       "bg-blue-200 text-blue-500"
     else
       "bg-gray-100 text-gray-500"
