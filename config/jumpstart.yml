@@ -16,6 +16,7 @@ apns: false
 fcm: false
 collect_billing_address: true
 integrations:
+- appsignal
 - honeybadger
 payment_processors:
 - stripe
