@@ -155,6 +155,7 @@ class Agency < Account
         requestor_type: 4
       )
       CustomerRequestor.create!(customer_id: customer.id, requestor_id: cust_user.id)
+      AgencyCustomer.create!(agency_id: id, customer_id: customer.id)
     else
       raise "Could not save customer_user in Agency#create_example_agency_data - #{cust_user.errors.full_messages.join("; ")}"
     end
@@ -182,7 +183,7 @@ class Agency < Account
       site_id: site.id
     )
 
-    Provider.create!(
+    provider = Provider.create!(
       last_name: "Provider",
       first_name: "Example",
       email: "provider@example",
@@ -194,7 +195,7 @@ class Agency < Account
       customer_id: customer.id
     )
 
-    Recipient.create!(
+    recipient = Recipient.create!(
       last_name: "Recipient",
       first_name: "Example",
       email: "recipient@example",
@@ -206,53 +207,61 @@ class Agency < Account
       customer_id: customer.id
     )
 
-    # Commenting this appointment creation part out because it causes errors in the job....the appointment can be created
-    # in the console after the job is finished without errors - NW 4/27/23
-    # appointment_open = Appointment.new(
-    #   agency_id: self.id,
-    #   customer_id: customer.id,
-    #   site_id: site.id,
-    #   time_zone: "Pacific Time (US & Canada)",
-    #   start_time: Time.now + rand(1..10).days,
-    #   duration: 45,
-    #   modality: 1,
-    #   language_id: language.id,
-    #   requestor_id: cust_user.id,
-    #   provider_id: provider.id,
-    #   creator_id: self.owner_id,
-    #   interpreter_type: 1,
-    #   gender_req: 2,
-    #   viewable_by: 0,
-    #   visibility_status: 1
-    # )
-    # if appointment_open.save
-    #   AppointmentStatus.create(user_id: self.owner_id, appointment_id: appointment_open.id, name: "opened")
-    # else
-    #   raise "Could not save appointment_open in Agency#create_example_agency_data - #{appointment_open.errors.full_messages.join("; ")}"
-    # end
+    # create_example_appointments - open, offered, scheduled
 
-    # appointment_offered = Appointment.new(
-    #   agency_id: self.id,
-    #   customer_id: customer.id,
-    #   site_id: site.id,
-    #   time_zone: "Pacific Time (US & Canada)",
-    #   start_time: Time.now + rand(1..10).days,
-    #   duration: 60,
-    #   modality: 1,
-    #   language_id: language.id,
-    #   requestor_id: cust_user.id,
-    #   provider_id: provider.id,
-    #   creator_id: self.owner_id,
-    #   interpreter_type: 2,
-    #   visibility_status: 0,
-    # )
+    unless site.nil? || language.nil? || provider.nil? || cust_user.nil?
+      Appointment.create!(
+        agency_id: id,
+        customer_id: customer.id,
+        site_id: site.id,
+        time_zone: "Pacific Time (US & Canada)",
+        start_time: Time.now + rand(1..10).days,
+        duration: 45,
+        modality: 1,
+        language_id: language.id,
+        requestor_id: cust_user.id,
+        provider_id: provider.id,
+        creator_id: cust_user.id,
+        recipient_id: recipient.id,
+        interpreter_type: 1,
+        gender_req: 2,
+        viewable_by: 0
+      )
 
-    # if appointment_offered.save
-    #   RequestedInterpreter.new(user_id: interpreter.id, appointment_id: appointment_offered.id)
-    #   AppointmentStatus.create(user_id: self.owner_id, appointment_id: appointment_offered.id, name: "offered")
-    # else
-    #   raise "Could not save appointment_offered in Agency#create_example_agency_data - #{appointment_offered.errors.full_messages.join("; ")}"
-    # end
+      Appointment.create!(
+        agency_id: id,
+        customer_id: customer.id,
+        site_id: site.id,
+        time_zone: "Pacific Time (US & Canada)",
+        start_time: Time.now + rand(1..10).days,
+        duration: 60,
+        modality: 1,
+        language_id: language.id,
+        requestor_id: cust_user.id,
+        provider_id: provider.id,
+        creator_id: cust_user.id,
+        recipient_id: recipient.id,
+        interpreter_type: 2,
+        interpreter_req_ids: [interpreter.id]
+      )
+
+      Appointment.create!(
+        agency_id: id,
+        customer_id: customer.id,
+        site_id: site.id,
+        time_zone: "Pacific Time (US & Canada)",
+        start_time: Time.now + rand(1..10).days,
+        duration: 60,
+        modality: 1,
+        language_id: language.id,
+        requestor_id: cust_user.id,
+        provider_id: provider.id,
+        creator_id: cust_user.id,
+        recipient_id: recipient.id,
+        assigned_interpreter: interpreter.id
+      )
+
+    end
   end
 
   private
