@@ -22,7 +22,7 @@
   <% if current_user.interpreter_detail_filled_out? %>
     <%= nav_link_to t(".interpreter_details"), interpreter_detail_path(current_user.interpreter_detail), class: "block no-underline p-3 px-6", active_class: "bg-blue-600 text-white hover:text-white", inactive_class: "text-gray-700 hover:text-gray-700 hover:bg-gray-100", starts_with: "/interpreter_details" if policy(:interpreter).show_account_nav? %>
   <% else%>
-    <%= nav_link_to t(".interpreter_details"), interpreter_details_path, class: "block no-underline p-3 px-6", active_class: "bg-blue-600 text-white hover:text-white", inactive_class: "text-gray-700 hover:text-gray-700 hover:bg-gray-100", starts_with: "/interpreter_details" if policy(:interpreter).show_account_nav? %>
+    <%= nav_link_to t(".interpreter_details"), new_interpreter_detail_path, class: "block no-underline p-3 px-6", active_class: "bg-blue-600 text-white hover:text-white", inactive_class: "text-gray-700 hover:text-gray-700 hover:bg-gray-100", starts_with: "/interpreter_details" if policy(:interpreter).show_account_nav? %>
   <% end %>
 
   <% if current_user.is_interpreter? %>

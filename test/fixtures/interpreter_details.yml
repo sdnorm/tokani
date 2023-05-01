@@ -15,6 +15,7 @@
 #  ssn                     :string
 #  start_date              :date
 #  state                   :string
+#  time_zone               :string
 #  zip                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null

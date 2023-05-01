@@ -15,6 +15,7 @@
 #  ssn                     :string
 #  start_date              :date
 #  state                   :string
+#  time_zone               :string
 #  zip                     :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
@@ -38,8 +39,7 @@ class InterpreterDetail < ApplicationRecord
   enum interpreter_type: {staff: 1, independent_contractor: 2, agency: 3, volunteer: 4}
   enum gender: {unspecified: 0, male: 1, female: 2, non_binary: 3}, _suffix: "gender"
 
-  validates :interpreter_type, presence: true
-  validates :gender, presence: true
+  validates_presence_of :interpreter_type, :time_zone, :gender
 
   validates :address, :city, :zip, presence: {message: "is required"}
   validates :state, presence: {message: "is required"}, allow_blank: false

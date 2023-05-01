@@ -46,7 +46,7 @@
             <% if current_user.interpreter_detail_filled_out? %>
               <%= link_to t(".interpreter_details"), interpreter_detail_path(current_user.interpreter_detail), class: "no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap" if policy(:interpreter).show_account_nav? %>
             <% else %>
-              <%= link_to t(".interpreter_details"), interpreter_details_path, class: "no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap" if policy(:interpreter).show_account_nav? %>
+              <%= link_to t(".interpreter_details"), new_interpreter_detail_path, class: "no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap" if policy(:interpreter).show_account_nav? %>
             <% end %>
 
             <% if current_user.is_interpreter? %>
@@ -81,7 +81,7 @@
                 <% if current_user.interpreter_detail_filled_out? %>
                   <%= link_to t(".interpreter_details"), interpreter_detail_path(current_user.interpreter_detail), class: "no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap" if policy(:interpreter).show_account_nav? %>
                 <% else%>
-                  <%= link_to t(".interpreter_details"), interpreter_details_path, class: "no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap" if policy(:interpreter).show_account_nav? %>
+                  <%= link_to t(".interpreter_details"), new_interpreter_detail_path, class: "no-underline block px-6 py-3 text-gray-800 bg-white  hover:bg-primary-50 transition ease-in-out duration-200 whitespace-nowrap" if policy(:interpreter).show_account_nav? %>
                 <% end %>
 
                 <% if current_user.is_interpreter? %>

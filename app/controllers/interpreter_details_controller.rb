@@ -3,6 +3,7 @@ class InterpreterDetailsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_interpreter_user!
   before_action :set_interpreter_detail, only: [:show, :edit, :update, :destroy]
+  before_action :set_notification_setting, only: [:edit, :new]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -13,7 +14,7 @@ class InterpreterDetailsController < ApplicationController
     @interpreter_detail_fields = %w[
       interpreter_type address city dob drivers_license emergency_contact_name
       emergency_contact_phone gender interpreter_type primary_phone ssn start_date state zip
-      languages
+      languages time_zone
     ]
   end
 
@@ -22,12 +23,12 @@ class InterpreterDetailsController < ApplicationController
     @interpreter_detail = InterpreterDetail.new
 
     # Uncomment to authorize with Pundit
-    # authorize @interpreter_detail
+    authorize @interpreter_detail
   end
 
   # GET /interpreter_details/1/edit
   def edit
-    @notification_setting = current_user&.notification_setting || NotificationSetting.new
+    authorize @interpreter_detail
 
     @languages_json = current_account.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
     @interpreter_languages_json = current_user.languages.pluck(:id, :name).map { |u| {value: u[0], text: u[1]} }.to_json
@@ -38,7 +39,7 @@ class InterpreterDetailsController < ApplicationController
     @interpreter_detail = InterpreterDetail.new(interpreter_detail_params)
 
     # Uncomment to authorize with Pundit
-    # authorize @interpreter_detail
+    authorize @interpreter_detail
 
     respond_to do |format|
       if @interpreter_detail.save
@@ -53,6 +54,8 @@ class InterpreterDetailsController < ApplicationController
 
   # PATCH/PUT /interpreter_details/1 or /interpreter_details/1.json
   def update
+    authorize @interpreter_detail
+
     respond_to do |format|
       if @interpreter_detail.update(interpreter_detail_params)
         format.html { redirect_to @interpreter_detail, notice: "Interpreter detail was successfully updated." }
@@ -66,6 +69,8 @@ class InterpreterDetailsController < ApplicationController
 
   # DELETE /interpreter_details/1 or /interpreter_details/1.json
   def destroy
+    authorize @interpreter_detail
+
     @interpreter_detail.destroy
     respond_to do |format|
       format.html { redirect_to interpreter_details_url, status: :see_other, notice: "Interpreter detail was successfully destroyed." }
@@ -74,6 +79,8 @@ class InterpreterDetailsController < ApplicationController
   end
 
   def update_languages
+    authorize @interpreter_detail
+
     @interpreter_detail = current_user&.interpreter_detail
 
     respond_to do |format|
@@ -107,7 +114,7 @@ class InterpreterDetailsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def interpreter_detail_params
     params.require(:interpreter_detail).permit(:interpreter_type, :gender, :primary_phone, :interpreter_id, :ssn, :dob, :address,
-      :city, :state, :zip, :start_date, :drivers_license, :emergency_contact_name, :emergency_contact_phone)
+      :city, :state, :zip, :start_date, :drivers_license, :emergency_contact_name, :emergency_contact_phone, :time_zone)
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:interpreter_detail).permit(policy(@interpreter_detail).permitted_attributes)
@@ -119,5 +126,10 @@ class InterpreterDetailsController < ApplicationController
 
   def authenticate_interpreter_user!
     redirect_to "/", alert: "Unauthorized access for non-interpreter users." unless current_account_user.interpreter?
+  end
+
+  def set_notification_setting
+    @notification_setting ||= current_user&.notification_setting
+    @notification_setting ||= NotificationSetting.new
   end
 end

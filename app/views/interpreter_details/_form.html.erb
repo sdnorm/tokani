@@ -28,21 +28,28 @@
               </div>
 
 
-              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                 <div class="form-group">
-                  <%= form.label :SSN, class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.label :SSN, "SSN", class:" block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :ssn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
               </div>
 
-              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+              <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                <div class="form-group">
+                  <%= form.label :time_zone, "Time Zone *", class:" block text-sm font-medium text-gray-700" %>
+                  <%= form.select :time_zone, options_for_select(time_zone_select_options), class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                 <div class="form-group">
                   <%= form.label :drivers_license, class:" block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :drivers_license, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
                 </div>
               </div>
 
-              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+              <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                 <div class="form-group">
                   <%= form.label :birth_date, class:" block text-sm font-medium text-gray-700" %>
                   <%= form.text_field :dob, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm", data: {controller: "flatpickr"} %>
@@ -66,20 +73,18 @@
               </div>
 
               <div class="col-span-6 sm:col-span-3">
-                  <div class="form-group">
-                      <%= form.label :interpreter_type, class: "block text-sm font-medium text-gray-700" %>
-                      <%= form.select :interpreter_type, options_for_select(interpreter_type_options, form.object.interpreter_type), {}, class: "form-control" %>
-                    </div>
+                <div class="form-group">
+                  <%= form.label :interpreter_type, "Interpreter Type *", class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.select :interpreter_type, options_for_select(interpreter_type_options, form.object.interpreter_type), {}, class: "form-control" %>
+                  </div>
               </div>
 
               <div class="col-span-6 sm:col-span-3">
-                  <div class="form-group">
-                      <%= form.label :gender , class: "block text-sm font-medium text-gray-700" %>
-                      <%= form.select :gender, options_for_select(gender_options, form.object.gender), {}, {class: 'form-control' } %>
-                    </div>
+                <div class="form-group">
+                  <%= form.label :gender, "Gender *" , class: "block text-sm font-medium text-gray-700" %>
+                  <%= form.select :gender, options_for_select(gender_options, form.object.gender), {}, {class: 'form-control' } %>
+                  </div>
               </div>
-
-
 
               <div class="col-span-6">
                 <div class="form-group">
@@ -111,16 +116,16 @@
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <div>
-                  <%= form.hidden_field :interpreter_id, value: current_user.id %>
-                  <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-tokani_purple" %>
+            <div>
+              <%= form.hidden_field :interpreter_id, value: current_user.id %>
+              <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-tokani_purple" %>
 
-                  <% if form.object.new_record? %>
-                    <%= link_to t("cancel"), interpreter_details_path, class: "btn btn-white" %>
-                  <% else %>
-                    <%= link_to t("cancel"), interpreter_detail_path(@interpreter_detail), class: "btn btn-white" %>
-                  <% end %>
-                </div>
+              <% if form.object.new_record? %>
+                <%= link_to t("cancel"), interpreter_details_path, class: "btn btn-white" %>
+              <% else %>
+                <%= link_to t("cancel"), interpreter_detail_path(@interpreter_detail), class: "btn btn-white" %>
+              <% end %>
+              </div>
           </div>
         </div>
       </div>
