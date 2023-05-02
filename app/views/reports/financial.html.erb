@@ -28,22 +28,28 @@
                       </div>
                     </div>
                   </div>
-                  <div class="mx-3">
-                    Select Modality:
-                  </div>
-                  <div class="row mt-4 mb-3 align-items-center justify-content-center">
-                    <div class="col-4 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:26vh; overflow-y:auto">
-                      <div class="ml-4">
-                        <%= check_box_tag 'report[in_person]', true, false, class: "form-check-input" %> In Person<br>
-                        <%= check_box_tag 'report[phone]', true, false, class: "form-check-input" %> Phone<br>
-                        <%= check_box_tag 'report[video]', true, false, class: "form-check-input" %> Video<br>
-                      </div>
+                  <div data-controller="select-all-or-none">
+                    <div class="mx-3">
+                      Select Modality:
                     </div>
+                    <label class="ml-3 mt-2">
+                      <input type="checkbox" data-select-all-or-none-target="checkboxName" data-checkbox-val="checkbox" data-action="select-all-or-none#toggle" />
+                      <span>Select All / Deselect All</span>
+                    </label>
+                    <div class="row mt-4 mb-3 align-items-center justify-content-center">
+                      <div class="col-4 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:26vh; overflow-y:auto">
+                        <div class="ml-4">
+                          <%= check_box_tag 'report[in_person]', true, false, class: "form-check-input", data: { select_all_or_none_target: 'checkboxes'} %> In Person<br>
+                          <%= check_box_tag 'report[phone]', true, false, class: "form-check-input", data: { select_all_or_none_target: 'checkboxes'} %> Phone<br>
+                          <%= check_box_tag 'report[video]', true, false, class: "form-check-input", data: { select_all_or_none_target: 'checkboxes'} %> Video<br>
+                        </div>
+                      </div>
 
-                    <div class="col-md-6 mx-3">
-                      Select Interpreter Type:
-                      <div class="input-group input-group-static">
-                        <%= form.select :interpreter_type, interpreter_type_options, {prompt: 'All'}, {class: 'form-select', style: 'clear: both'} %>
+                      <div class="col-md-6 mx-3">
+                        Select Interpreter Type:
+                        <div class="input-group input-group-static">
+                          <%= form.select :interpreter_type, interpreter_type_options, {prompt: 'All'}, {class: 'form-select', style: 'clear: both'} %>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -60,28 +66,36 @@
                     <% end %>
                   </div>
 
-                  <div class="mx-3">
-                    Select Agency Customer(s):
-                  </div>
+                  <div data-controller="select-all-or-none">
 
-                  <div data-controller="customer-sites">
-                    <div class="row mt-4 mb-3 justify-content-center">
-                      <div class="col-7 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:40vh; overflow-y:auto">
-                        <% @customers.each do |customer| %>
-                          <div class="ml-4">
-                            <%= check_box_tag 'report[customer_ids][]', customer.id, false, class: "form-check-input", data: {action: 'change->customer-sites#customerSelected', customer_sites_target: "checkbox" } %>
-                            <%= customer.name %>
-                          </div>
-                        <% end %>
+                    <div class="mx-3">
+                      Select Agency Customer(s):
+                    </div>
+
+                    <label class="ml-3 mt-2">
+                      <input type="checkbox" data-select-all-or-none-target="checkboxName" data-checkbox-val="checkbox" data-action="select-all-or-none#toggle" />
+                      <span>Select All / Deselect All</span>
+                    </label>
+
+                    <div data-controller="customer-sites">
+                      <div class="row mt-4 mb-3 justify-content-center">
+                        <div class="col-7 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:40vh; overflow-y:auto">
+                          <% @customers.each do |customer| %>
+                            <div class="ml-4">
+                              <%= check_box_tag 'report[customer_ids][]', customer.id, false, class: "form-check-input", data: {action: 'change->customer-sites#customerSelected', customer_sites_target: "checkbox", select_all_or_none_target: 'checkboxes'} %>
+                              <%= customer.name %>
+                            </div>
+                          <% end %>
+                        </div>
                       </div>
-                    </div>
 
-                    <div data-customer-sites-target="sites" class="hidden">
-                      <%= render template: 'sites/dropdown_for_reports' %>
-                    </div>
+                      <div data-customer-sites-target="sites" class="hidden">
+                        <%= render template: 'sites/dropdown_for_reports' %>
+                      </div>
 
-                    <div data-customer-sites-target="departments" class="hidden">
-                      <%= render template: 'sites/departments_dropdown_for_reports' %>
+                      <div data-customer-sites-target="departments" class="hidden">
+                        <%= render template: 'sites/departments_dropdown_for_reports' %>
+                      </div>
                     </div>
                   </div>
 
@@ -92,17 +106,26 @@
                     </div>
                   </div>
 
-                  <div class="mx-3">
-                    Select fields to show on report:
-                  </div>
-                  <div class="row mt-4 mb-3 justify-content-center">
-                    <div class="col-7 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:80vh; overflow-y:auto">
-                      <% reportable_fields.each do |key, value| %>
-                        <div class="ml-4">
-                          <%= check_box_tag 'report[fields_to_show][]', key, false, class: "form-check-input" %>
-                          <%= value %>
-                        </div>
-                      <% end %>
+                  <div data-controller="select-all-or-none">
+
+                    <div class="mx-3">
+                      Select fields to show on report:
+                    </div>
+
+                    <label class="ml-3 mt-2">
+                      <input type="checkbox" data-select-all-or-none-target="checkboxName" data-checkbox-val="checkbox" data-action="select-all-or-none#toggle" />
+                      <span>Select All / Deselect All</span>
+                    </label>
+
+                    <div class="row mt-4 mb-3 justify-content-center">
+                      <div class="col-7 text-blueCoral form-check border rounded-2 border-grey border-2 mb-3 ps-5 mx-3" style="height:80vh; overflow-y:auto">
+                        <% reportable_fields.each do |key, value| %>
+                          <div class="ml-4">
+                            <%= check_box_tag 'report[fields_to_show][]', key, false, class: "form-check-input", data: { select_all_or_none_target: 'checkboxes'} %>
+                            <%= value %>
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
                   </div>
 
