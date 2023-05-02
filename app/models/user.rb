@@ -23,6 +23,7 @@
 #  invited_by_type        :string
 #  last_name              :string
 #  last_otp_timestep      :integer
+#  last_request_at        :datetime
 #  otp_backup_codes       :text
 #  otp_required_for_login :boolean
 #  otp_secret             :string
@@ -56,7 +57,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, andle :trackable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :omniauthable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, :timeoutable
 
   has_noticed_notifications
   has_person_name

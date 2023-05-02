@@ -24,10 +24,22 @@ class AppointmentStatus < ApplicationRecord
   # after_update_commit -> { broadcast_replace_later_to self }
   # after_destroy_commit -> { broadcast_remove_to :appointment_statuses, target: dom_id(self, :index) }
 
-  # Used in dropdown
-  ACTIONS = {
-    :cancel => :cancelled
-  }
+  AGENCY_AND_CUSTOMER_ACTIONS = [
+    # KEY (state) => VALUE (action)
+    {:created => :cancel},
+    {:offered => :cancel},
+    {:scheduled => :cancel},
+    {:cancelled => :open},
+    {:verified => :cancel},
+    {:exported => :cancel},
+    {:opened => :cancel}
+  ]
+
+  DEFAULT_ACTIONS = [
+    # KEY (state) => VALUE (action)
+    {:opened => :schedule},
+    {:scheduled => :open}
+  ]
 
   belongs_to :user
   belongs_to :appointment

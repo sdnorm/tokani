@@ -9,23 +9,23 @@
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Company name</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Company name *</label>
             <div class="mt-1">
               <%= form.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. Westside Hospital" %>
             </div>
           </div>
           <%= form.fields_for :customer_detail do |customer_detail| %>
           <div class="sm:col-span-3">
-            <label for="last-name" class="block text-sm font-medium text-gray-700">Category</label>
+            <label for="last-name" class="block text-sm font-medium text-gray-700">Category *</label>
             <div class="mt-1">
-              <%= customer_detail.select :customer_category_id,  options_from_collection_for_select(customer_categories, :id, :display_value, customer.customer_detail.customer_category_id ), {prompt: "Select A Customer Category..."}, {class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' } %> 
+              <%= customer_detail.select :customer_category_id,  options_from_collection_for_select(customer_categories, :id, :display_value, customer.customer_detail.customer_category_id ), {prompt: "Select A Customer Category..."}, {class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' } %>
             </div>
           </div>
           <% end %>
           <%= form.fields_for :physical_address do |physical_address| %>
           <%= physical_address.hidden_field :address_type, value: "physical" %>
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Street address 1</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Street address 1 *</label>
             <div class="mt-1">
               <%= physical_address.text_field :line1, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. 1 Hospital Way" %>
             </div>
@@ -39,21 +39,21 @@
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">City</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">City *</label>
             <div class="mt-1">
               <%= physical_address.text_field :city, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. San Francisco" %>
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">State</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">State *</label>
             <div class="mt-1">
-              <%= physical_address.select :state, options_for_select(state_select_options), class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              <%= physical_address.select :state, options_for_select(state_select_options, selected: physical_address.object&.state), include_blank: false, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Postal code</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Postal code *</label>
             <div class="mt-1">
               <%= physical_address.text_field :postal_code, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. 70707" %>
             </div>
@@ -68,14 +68,14 @@
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
           <%= form.fields_for :customer_detail do |customer_detail| %>
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Contact's name</label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Contact's name *</label>
             <div class="mt-1">
               <%= customer_detail.text_field :contact_name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. Jerry" %>
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email address *</label>
             <div class="mt-1">
               <%= customer_detail.text_field :email, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. name@email.com" %>
             </div>
@@ -89,7 +89,7 @@
           </div>
 
           <div class="sm:col-span-2">
-            <label for="street-address" class="block text-sm font-medium text-gray-700">Phone number</label>
+            <label for="street-address" class="block text-sm font-medium text-gray-700">Phone number *</label>
             <div class="mt-1">
               <%= customer_detail.text_field :phone, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ex. 123-456-7890" %>
             </div>
@@ -110,12 +110,12 @@
           <legend class="sr-only">Appointment Modalitites</legend>
           <div class="relative flex items-start">
             <div class="flex h-5 items-center">
-              <%= customer_detail.check_box :appointments_in_person, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>  
+              <%= customer_detail.check_box :appointments_in_person, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
             </div>
             <div class="ml-3 text-sm">
               <%= customer_detail.label :appointments_in_person, class:"font-medium text-gray-700" %>
               <p id="in_person_appointments" class="text-gray-500">This customer books in-person appointments.</p>
-            </div> 
+            </div>
           </div>
           <div class="relative flex items-start">
             <div class="flex h-5 items-center">
@@ -147,8 +147,8 @@
           </div>
         </div>
       </div>
-      
-      <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">        
+
+      <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
         <% if form.object.new_record? %>
           <%= link_to t("cancel"), customers_path, class:"inline-flex justify-center rounded-md border bg-transparent border-tokaniprimary-600 py-2 px-3.5 text-sm font-medium text-tokaniprimary-600 shadow-sm hover:bg-tokaniprimary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
         <% else %>

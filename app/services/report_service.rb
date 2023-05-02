@@ -15,7 +15,8 @@ class ReportService
     scope = filter_by_site(scope)
     scope = filter_by_department(scope)
     scope = filter_by_language(scope)
-    filter_by_customer(scope)
+    scope = filter_by_customer(scope)
+    filter_by_customer_category(scope)
   end
 
   def filter_by_account(scope)
@@ -70,5 +71,31 @@ class ReportService
 
     scope.joins(:customer)
       .where(customer: {id: @report.customers.collect(&:id)})
+  end
+
+  def filter_by_customer_category(scope)
+    return scope if @report.customer_category_id.blank?
+
+    # None of these scoped joins worked for me. Feel free to update this to use joins if you have time.
+
+    # scope.joins(:customer).joins(customer: :customer_detail)
+    #      .where(customer_details: {account_id: @report.account_id, id: @report.customer_category_id})
+
+    # scope.joins("INNER JOIN customer_details ON customer_details.customer_id = appointment.customer_id")
+    #      .merge( CustomerDetail.where(customer_category_id: @report.customer_category_id).joins("INNER JOIN customer_details ON customer_details.customer_id = appointments.customer_id") )
+
+    # joins("INNER JOIN customer_details ON customer_details.customer_id = appointment.customer_id WHERE customer_details.customer_category_id = ?", @report.customer_category_id)
+
+    # Instead we just duplicate the scope, iterate over it checking the deeply nested relation,
+    # then add a scope of the matching IDs to the main scope that the method returns.
+    duped_scope = scope.dup
+    ids = []
+    duped_scope.each do |appt|
+      next unless appt.customer&.customer_detail&.customer_category_id == @report.customer_category_id
+
+      ids << appt.id
+    end
+
+    scope.where(appointments: {id: ids})
   end
 end

@@ -25,6 +25,46 @@ class InterpreterAppointmentsService
     filter_by_search_query(scope)
   end
 
+  # The conditionals here make it prohibitively complex to check all these conditions via SQL/scope,
+  # hence the implementation via iterating over appointment objects directly.
+  def restrict_to_assigned_or_viewable(appointments)
+    filtered_ids = []
+    appointments.each do |appointment|
+      # Interpreters should never see appointments only viewable by Admin or None
+      next if ["admin", "none"].include?(appointment.viewable_by)
+
+      # Interpreter assigned
+      if appointment.interpreter == @user
+        filtered_ids << appointment.id
+        next
+      end
+
+      # Skip appointments they've already rejected
+      rejected_request = appointment.requested_interpreters.where(rejected: true).where(user_id: @user.id).first
+      next if rejected_request.present?
+
+      # Interpreter offered
+      if appointment.offered_interpreters.map(&:id).include?(@user.id)
+        filtered_ids << appointment.id
+        next
+      end
+
+      # Need to nest these conditions because they are an AND. i.e. show only Language, Gender AND Interpreter Type matches
+      if @user.languages.map(&:id).include?(appointment.language_id) # Language
+        if appointment.gender_req.nil? ||
+            (appointment.gender_req.present? && appointment.gender_req == @user.interpreter_detail&.gender) # Gender
+          if appointment.viewable_by.nil? ||
+              (appointment.viewable_by.present? && appointment.viewable_by == @user.interpreter_detail&.interpreter_type) # Interpreter Type
+            filtered_ids << appointment.id
+            next
+          end
+        end
+      end
+    end
+
+    Appointment.where(id: filtered_ids.uniq)
+  end
+
   private
 
   def filter_by_status(scope)

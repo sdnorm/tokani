@@ -118,7 +118,7 @@ class InterpretersController < ApplicationController
   def dashboard
     @service = InterpreterAppointmentsService.new(current_user, appointment_query_params, current_account)
     @appointments = @service.fetch_appointments
-
+    @appointments = @service.restrict_to_assigned_or_viewable(@appointments)
     @created_appointments_count = @appointments.where(current_status: "offered").or(@appointments.where(current_status: "opened")).count
     @appointments_scheduled_count = @appointments.where(current_status: "scheduled").count
     @appointments_completed_count = @appointments.where(current_status: "finished").count
@@ -243,6 +243,8 @@ class InterpretersController < ApplicationController
       redirect_to(my_scheduled_details_interpreter_path(@appointment))
     elsif @appointment.status == "opened"
       redirect_to(my_public_details_interpreter_path(@appointment))
+    elsif @appointment.status == "finished"
+      redirect_to(my_scheduled_details_interpreter_path(@appointment))
     else
       redirect_to(interpreter_dashboard_path, alert: "Could not find appointment in an offered or scheduled status.")
     end
@@ -288,8 +290,9 @@ class InterpretersController < ApplicationController
   end
 
   def appointments
-    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params)
+    @service = InterpreterAppointmentsService.new(current_user, appointment_query_params, current_account)
     @appointments = @service.fetch_appointments
+    @appointments = @service.restrict_to_assigned_or_viewable(@appointments)
     @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
     @statuses = ["all", "scheduled", "finished", "opened"]
@@ -305,7 +308,7 @@ class InterpretersController < ApplicationController
     if search_params.blank? || search_params[:status].blank? || search_params[:status] == "all"
       search_params[:status] = "processed"
     end
-    @service = InterpreterAppointmentsService.new(current_user, search_params)
+    @service = InterpreterAppointmentsService.new(current_user, search_params, current_account)
     @appointments = @service.fetch_appointments
     @pagy, @appointments = pagy(@appointments)
 

@@ -22,17 +22,17 @@ module ReportsHelper
      "actual-duration" => "Actual Hours (Time End - Time Start)",
      "amount-paid" => "Amount Paid (interpreting hours)",
      "amount-billed" => "Amount Billed",
-     "mileage-paid" => "Mileage Paid",
-     "mileage-billed" => "Mileage Billed",
-     "total-paid" => "Total Paid",
-     "total-billed" => "Total Billed",
+     # "mileage-paid" => "Mileage Paid",
+     # "mileage-billed" => "Mileage Billed",
+     # "total-paid" => "Total Paid",
+     # "total-billed" => "Total Billed",
      "profit-margin" => "Profit Margin"}
   end
 
   def fill_rate_reportable_fields
     {"customer-name" => "Customer Name",
      "language" => "Language",
-     "interpreter-name" => "Interpreter",
+     # "interpreter-name" => "Interpreter",
      "appointments-total" => "Total # of Appointments",
      "cancels-total" => "Total # of Client Cancellations",
      "net-requests" => "Net Requests (total appointments - total cancels)",

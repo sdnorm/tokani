@@ -19,7 +19,7 @@
                 <%= form.text_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3">
-                <%= form.label :srn, class: "block text-sm font-medium text-gray-700" %>
+                <%= form.label :srn, "Service Recipient Number", class: "block text-sm font-medium text-gray-700" %>
                 <%= form.text_field :srn, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-sm" %>
               </div>
               <div class="col-span-6 sm:col-span-3">
@@ -33,23 +33,23 @@
               <div class="col-span-6 sm:col-span-3 mt-4">
                 <div class="relative flex items-start">
                   <div class="flex h-5 items-center">
-                    <%= form.check_box :allow_text, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>  
+                    <%= form.check_box :allow_text, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
                   </div>
                   <div class="ml-3 text-sm">
                     <%= form.label :allow_text, class:"font-medium text-gray-700" %>
                     <p id="allow_text" class="text-gray-500">This recipient gets text notifications.</p>
-                  </div> 
+                  </div>
                 </div>
               </div>
               <div class="col-span-6 sm:col-span-3 mt-4">
                 <div class="relative flex items-start">
                   <div class="flex h-5 items-center">
-                    <%= form.check_box :allow_email, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>  
+                    <%= form.check_box :allow_email, class:"h-4 w-4 rounded border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500" %>
                   </div>
                   <div class="ml-3 text-sm">
                     <%= form.label :allow_email, class:"font-medium text-gray-700" %>
                     <p id="allow_email" class="text-gray-500">This recipient gets email notifications.</p>
-                  </div> 
+                  </div>
                 </div>
               </div>
 
@@ -57,7 +57,7 @@
                 <div class="col-span-3 sm:col-span-6">
                   <div class="form-group">
                     <%= form.label "Customer*", class: "block text-sm font-medium text-gray-700" %>
-                    <%= form.select :customer_id,  options_from_collection_for_select(customers, :id, :name, recipient.customer_id ), {prompt: "Select A Customer..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'provider_site_id', select_group_select_clear_target_param: 'provider_department_id' }} %> 
+                    <%= form.select :customer_id,  options_from_collection_for_select(customers, :id, :name, recipient.customer_id ), {prompt: "Select A Customer..."}, {class: 'form-control',  data: {action: 'change->select-group#updateSelectRemote', select_group_url_param: select_list_sites_path, select_group_select_key_param: 'customer_id', select_group_select_update_target_param: 'provider_site_id', select_group_select_clear_target_param: 'provider_department_id' }} %>
                   </div>
                 </div>
               <% end %>
@@ -72,8 +72,8 @@
             <% end %>
             <%= form.button button_text(form.send(:submit_default_value)), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
           </div>
-        </div> 
-      </div> 
+        </div>
+      </div>
     </div>
   <% end %>
 </div>

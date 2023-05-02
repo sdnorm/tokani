@@ -1,8 +1,8 @@
 <table>
   <tr>
-    <th width="40%"></th>
-    <th width="15%"></th>
     <th width="30%"></th>
+    <th width="15%"></th>
+    <th width="40%"></th>
     <th width="15%"></th>
   </tr>
   <% @appointments.each do |customer_name, sites_hash| %>
@@ -40,7 +40,7 @@
           <td>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <%= appt.refnumber rescue 'REFNUMBER' %>
+            <%= appt.ref_number rescue "APPT-#{appt.id}".slice(0, 10) %>
           </td>
           <td></td>
           <td><%= number_to_currency(appt.total_billed) %> Billed (<%= appt.billing_types %>)</td>

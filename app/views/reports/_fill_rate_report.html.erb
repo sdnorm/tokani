@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <% csv_headers = @report.csv_headers %>
+    <% csv_headers.each do |header| %>
+      <th><%= header %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% fields = @report.fields_to_add %>
+    <% fields.each do |field| %>
+      <td><%= field %></td>
+    <% end %>
+  </tr>
+</table>

@@ -23,6 +23,7 @@
 #  invited_by_type        :string
 #  last_name              :string
 #  last_otp_timestep      :integer
+#  last_request_at        :datetime
 #  otp_backup_codes       :text
 #  otp_required_for_login :boolean
 #  otp_secret             :string
