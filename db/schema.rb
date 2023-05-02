@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_26_164445) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_151256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -434,6 +434,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_164445) do
     t.string "emergency_contact_name"
     t.string "emergency_contact_phone"
     t.uuid "interpreter_id"
+    t.string "time_zone"
     t.index ["interpreter_id"], name: "index_interpreter_details_on_interpreter_id"
   end
 
