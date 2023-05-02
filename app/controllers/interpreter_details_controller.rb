@@ -2,7 +2,7 @@ class InterpreterDetailsController < ApplicationController
   include CurrentHelper
   before_action :authenticate_user!
   before_action :authenticate_interpreter_user!
-  before_action :set_interpreter_detail, only: [:show, :edit, :update, :destroy, :update_languages]
+  before_action :set_interpreter_detail, only: [:show, :edit, :update, :destroy]
   before_action :set_notification_setting, only: [:edit, :new]
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -78,7 +78,7 @@ class InterpreterDetailsController < ApplicationController
   end
 
   def update_languages
-    authorize @interpreter_detail
+    # authorize @interpreter_detail
 
     @interpreter_detail = current_user&.interpreter_detail
 
