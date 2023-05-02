@@ -3,7 +3,7 @@ class InterpreterDetailsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_interpreter_user!
   before_action :set_interpreter_detail, only: [:show, :edit, :update, :destroy]
-  before_action :set_notification_setting, only: [:edit, :new]
+  before_action :set_notification_setting, only: [:edit, :new, :show, :create]
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized

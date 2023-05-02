@@ -5,6 +5,7 @@ class InterpretersController < ApplicationController
   # Uncomment to enforce Pundit authorization
   before_action :verify_authorized, except: [:search, :search_assigned_int]
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  before_action :verify_interpreter_detail
 
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
@@ -323,6 +324,12 @@ class InterpretersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def verify_authorized
     raise Pundit::NotAuthorizedError if customer_logged_in?
+  end
+
+  def verify_interpreter_detail
+    return if current_user.interpreter_detail_filled_out?
+
+    redirect_to new_interpreter_detail_path
   end
 
   def set_interpreter
