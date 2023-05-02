@@ -9,7 +9,7 @@ class InterpretersController < ApplicationController
 
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
-    :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details]
+    :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details, :edit_time_finish]
 
   # GET /interpreters
   def index
@@ -317,6 +317,10 @@ class InterpretersController < ApplicationController
     @modalities = ["in_person", "video", "phone"]
     @sort_by_filters = ["date"]
     @show_payment_amount = true
+  end
+
+  def edit_time_finish
+    setup_form_vars
   end
 
   private

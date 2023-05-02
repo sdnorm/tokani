@@ -246,6 +246,7 @@ Rails.application.routes.draw do
         post :time_finish
         patch :update_timezone
         get :availabilities
+        get :edit_time_finish
       end
     end
     resources :requestors
