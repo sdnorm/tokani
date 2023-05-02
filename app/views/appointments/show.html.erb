@@ -8,15 +8,15 @@
         <div class="px-4 sm:px-6 lg:px-8">
           <div class="sm:flex sm:items-center pb-6">
             <div class="sm:flex-auto">
-              <h1 class="text-xl font-semibold text-tokaniprimary-400">
+              <h1 class="text-xl font-semibold text-tokaniprimary-400  flex gap-2" title="<%= @appointment.status.titleize %>">
                 <%= link_to "Appointments", appointments_path, class: "text-tokanisecondary-500" %>
                 <span class="text-tokaniprimary-400 font-light mx-2">/</span>
-              <%= @appointment.ref_number %>
+              <%= @appointment.ref_number %> <%= colored_appointment_status @appointment.status.titleize %>
               </h1>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <% unless @appointment.verified? %>
-                <%= link_to "Time Finish", time_finish_appointment_path(@appointment), class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400" %>
+                <%= link_to "Time Finish", time_finish_appointment_path(@appointment), class: "btn bg-tokaniprimary-500 text-white hover:text-white hover:bg-tokaniprimary-400", data: { turbo: false } %>
               <% end %>
               <%= link_to t("edit"), edit_appointment_path(@appointment), class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-tokanisecondary-600 py-2 px-3.5 text-sm font-medium text-tokanisecondary-600 shadow-sm hover:bg-tokanisecondary-600 hover:text-white focus:outline-none" %>
             </div>

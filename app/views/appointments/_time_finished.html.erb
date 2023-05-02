@@ -1,0 +1,42 @@
+<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+  <div>
+    <dl class="grid grid-cols-1 sm:grid-cols-2">
+      <div class="px-4 pb-4 sm:col-span-1 sm:px-0 pr-0 md:pr-3 pb-5">
+        <dt class="text-sm font-medium leading-6 text-gray-900">End Date</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+          <%= @appointment.finish_time.strftime("%A %B %d, %Y") %>
+        </dd>
+      </div>
+      <div class="px-4 pb-4 sm:col-span-1 sm:px-0 pr-0 md:pr-3 pb-5">
+        <dt class="text-sm font-medium leading-6 text-gray-900">End Time</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+          <%= @appointment.finish_time.strftime("%I:%M %p %Z %z") %>
+        </dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Billing Notes</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+          <%= @appointment.billing_notes %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+  <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+    <dt class="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+    <dd class="mt-2 text-sm text-gray-900">
+      <% @appointment.documents.each do |doc| %>
+        <div class="my-3 pb-3 border-b border-gray-100 grid grid-cols-1 md:grid-cols-3">
+          <div>
+            <%= image_tag url_for(doc), class: "w-48" %>
+          </div>
+          <div class="flex items-center mt-5 m:0">
+            <span class="text-xs"><%= doc.blob&.filename.to_s %></span>
+          </div>
+          <div class="mt-5 m:0 flex items-center justify-start md:justify-end">
+            <%= link_to 'Download', rails_blob_url(doc, disposition: 'attachment'), download: doc.blob.filename.to_s, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+          </div>
+        </div>
+      <% end %>
+    </dd>
+  </div>
+</div>
