@@ -17,9 +17,10 @@
 #
 # Indexes
 #
-#  index_providers_on_customer_id    (customer_id)
-#  index_providers_on_department_id  (department_id)
-#  index_providers_on_site_id        (site_id)
+#  index_providers_on_customer_id     (customer_id)
+#  index_providers_on_department_id   (department_id)
+#  index_providers_on_site_id         (site_id)
+#  unique_provider_email_customer_id  (email,customer_id) UNIQUE
 #
 # Foreign Keys
 #
