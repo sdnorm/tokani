@@ -41,6 +41,7 @@ class Agency < Account
       first_name: agency_detail.primary_contact_first_name,
       last_name: agency_detail.primary_contact_last_name,
       terms_of_service: true,
+      time_zone: agency_detail.time_zone,
       accepted_terms_at: Time.current
     )
     if user.save
@@ -63,8 +64,8 @@ class Agency < Account
       name: "Example Bill Rate",
       hourly_bill_rate: 0.1e3,
       is_active: true,
-      minimum_time_charged: 45,
-      round_time: "round_down",
+      minimum_time_charged: 60,
+      round_time: "round_up",
       round_increment: 20,
       after_hours_overage: 0.3e2,
       regular_hours_start_seconds: 25200,
@@ -75,7 +76,7 @@ class Agency < Account
       cancel_rate_trigger: 48,
       default_rate: true,
       in_person: true,
-      phone: false,
+      phone: true,
       video: true
     )
     PayRate.create!(
@@ -94,11 +95,12 @@ class Agency < Account
     )
 
     interpreter = User.new(
-      email: "interpreter@example.com",
+      email: Faker::Internet.email(domain: "example"),
       password: SecureRandom.alphanumeric,
       first_name: "Example",
       last_name: "Interpreter",
       terms_of_service: true,
+      time_zone: "Pacific Time (US & Canada)",
       accepted_terms_at: Time.current
     )
     if interpreter.save
@@ -111,6 +113,7 @@ class Agency < Account
         state: "CA",
         zip: "12345",
         primary_phone: "123-123-1234",
+        time_zone: "Pacific Time (US & Canada)",
         interpreter_id: interpreter.id
       )
       InterpreterLanguage.create!(language_id: language.id, interpreter_id: interpreter.id)
@@ -124,7 +127,7 @@ class Agency < Account
     )
     CustomerDetail.create!(
       contact_name: "Example Customer",
-      email: "customer@example.com",
+      email: Faker::Internet.email(domain: "example"),
       fax: "333-333-3333",
       notes: "example notes",
       phone: "222-222-2222",
@@ -138,6 +141,7 @@ class Agency < Account
       name: customer.customer_detail.contact_name,
       email: customer.customer_detail.email,
       password: SecureRandom.alphanumeric,
+      time_zone: "Pacific Time (US & Canada)",
       terms_of_service: true,
       accepted_terms_at: Time.current
     )
