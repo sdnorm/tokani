@@ -1,3 +1,11 @@
+<% if @appointment.finish_time.present? %>
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto"></div>
+    <div class="mb-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <%= link_to t("edit"), edit_time_finish_interpreter_path(@appointment), class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-tokanisecondary-600 py-2 px-3.5 text-sm font-medium text-tokanisecondary-600 shadow-sm hover:bg-tokanisecondary-600 hover:text-white focus:outline-none", data: { turbo: false } %>
+    </div>
+  </div>
+<% end %>
 <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
   <div>
     <dl class="grid grid-cols-1 sm:grid-cols-2">
@@ -16,7 +24,21 @@
       <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Billing Notes</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-          <%= @appointment.billing_notes %>
+          <% if @appointment.billing_notes.present? %>
+            <%= @appointment.billing_notes %>
+          <% else %>
+            <span class="italic">No billing notes</span>
+          <% end %>
+        </dd>
+      </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Admin Notes</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+          <% if @appointment.admin_notes.present? %>
+            <%= @appointment.admin_notes %>
+          <% else %>
+            <span class="italic">No admin notes</span>
+          <% end %>
         </dd>
       </div>
     </dl>
@@ -24,18 +46,24 @@
   <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
     <dt class="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
     <dd class="mt-2 text-sm text-gray-900">
-      <% @appointment.documents.each do |doc| %>
-        <div class="my-3 pb-3 border-b border-gray-100 grid grid-cols-1 md:grid-cols-3">
-          <div>
-            <%= image_tag url_for(doc), class: "w-48" %>
+      <% if @appointment.documents.present? %>
+        <% @appointment.documents.each do |doc| %>
+          <div class="my-3 pb-3 border-b border-gray-100 grid grid-cols-1 md:grid-cols-3">
+            <div>
+              <%= image_tag url_for(doc), class: "w-48" %>
+            </div>
+            <div class="flex items-center mt-5 m:0">
+              <span class="text-xs"><%= doc.blob&.filename.to_s %></span>
+            </div>
+            <div class="mt-5 m:0 flex items-center justify-start md:justify-end">
+              <%= link_to 'Download', rails_blob_url(doc, disposition: 'attachment'), download: doc.blob.filename.to_s, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+            </div>
           </div>
-          <div class="flex items-center mt-5 m:0">
-            <span class="text-xs"><%= doc.blob&.filename.to_s %></span>
-          </div>
-          <div class="mt-5 m:0 flex items-center justify-start md:justify-end">
-            <%= link_to 'Download', rails_blob_url(doc, disposition: 'attachment'), download: doc.blob.filename.to_s, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
-          </div>
-        </div>
+        <% end %>
+      <% else %>
+        <span class="italic">
+          No attachments found
+        </span>
       <% end %>
     </dd>
   </div>
