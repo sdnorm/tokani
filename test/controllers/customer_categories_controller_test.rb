@@ -22,7 +22,7 @@ class CustomerCategoriesControllerTest < ActionDispatch::IntegrationTest
       post customer_categories_url, params: {customer_category: {display_value: "Legal", telephone_prefix: "LT", video_prefix: "VL", appointment_prefix: "ML"}}
     end
 
-    assert_redirected_to customer_category_url(CustomerCategory.last)
+    assert_redirected_to customer_categories_url
   end
 
   test "should show customer_category" do
