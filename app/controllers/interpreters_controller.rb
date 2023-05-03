@@ -161,7 +161,8 @@ class InterpretersController < ApplicationController
   def claim_public
     @appointment.update(interpreter_id: current_user.id)
     AppointmentStatus.create!(appointment: @appointment, name: AppointmentStatus.names["scheduled"], user: current_user)
-    redirect_to(interpreter_dashboard_path, alert: "Assignment successfully accepted.")
+
+    redirect_to(appointment_details_interpreter_path(@appointment), alert: "Assignment successfully accepted.")
   end
 
   def decline_offered
