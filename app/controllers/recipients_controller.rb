@@ -1,6 +1,7 @@
 class RecipientsController < ApplicationController
   include CurrentHelper
   before_action :set_recipient, only: [:show, :edit, :update, :destroy]
+  before_action :set_customers, only: [:new, :create, :edit]
 
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -29,11 +30,6 @@ class RecipientsController < ApplicationController
   # GET /recipients/new
   def new
     @recipient = Recipient.new
-    if current_account.agency?
-      customer_ids = current_account.agency_customers.pluck(:customer_id)
-      @customers = Customer.where(id: customer_ids)
-
-    end
     # grab_account_customers_when_needed
     # Uncomment to authorize with Pundit
     # authorize @recipient
@@ -42,10 +38,6 @@ class RecipientsController < ApplicationController
   # GET /recipients/1/edit
   def edit
     # grab_account_customers_when_needed
-    if current_account.agency?
-      customer_ids = current_account.agency_customers.pluck(:customer_id)
-      @customers = Customer.where(id: customer_ids)
-    end
   end
 
   # POST /recipients or /recipients.json
@@ -116,6 +108,13 @@ class RecipientsController < ApplicationController
       @recipient.customer_id = current_account.id if action_name == "create"
     elsif action_name == "create"
       @recipient.customer_id = current_account.id
+    end
+  end
+
+  def set_customers
+    if current_account.agency?
+      customer_ids = current_account.agency_customers.pluck(:customer_id)
+      @customers ||= Customer.where(id: customer_ids)
     end
   end
 end

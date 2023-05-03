@@ -17,9 +17,10 @@
 #
 # Indexes
 #
-#  index_providers_on_customer_id    (customer_id)
-#  index_providers_on_department_id  (department_id)
-#  index_providers_on_site_id        (site_id)
+#  index_providers_on_customer_id     (customer_id)
+#  index_providers_on_department_id   (department_id)
+#  index_providers_on_site_id         (site_id)
+#  unique_provider_email_customer_id  (email,customer_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -42,6 +43,8 @@ class Provider < ApplicationRecord
   validates :first_name, presence: {message: "field is required"}
   validates :last_name, presence: {message: "field is required"}
   validates :customer_id, presence: {message: "field is required"}
+
+  validates_uniqueness_of :email, scope: :customer_id
 
   def view_name
     "#{first_name} #{last_name}"
