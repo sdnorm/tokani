@@ -40,7 +40,7 @@ class LanguagesController < ApplicationController
 
     respond_to do |format|
       if @language.save
-        format.html { redirect_to @language, notice: "Language was successfully created." }
+        format.html { redirect_to :languages, notice: "Language was successfully created." }
         format.json { render :show, status: :created, location: @language }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -47,6 +47,12 @@
         <dt class="text-sm font-medium leading-6 text-gray-900">Requester</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2"><%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></dd>
       </div>
+      <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Admin Notes</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+          <%= @appointment.admin_notes %>
+        </dd>
+      </div>
     </dl>
   </div>
 </div>

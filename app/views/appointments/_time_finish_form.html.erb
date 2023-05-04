@@ -7,7 +7,7 @@
       </div>
       <div class="sm:col-span-1 sm:px-0 text-right">
         <% unless @appointment.less_than_24_hours_left_until_appointment? %>
-          <%= button_to "I Can No Longer Attend", cancel_coverage_interpreter_path(@appointment), type: :button, data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-red-600 py-2 px-3.5 text-sm font-medium text-red-600 shadow-sm hover:bg-red-600 hover:text-white focus:outline-none" if current_account_user.interpreter? %>
+          <%= button_to "I Can No Longer Attend", cancel_coverage_interpreter_path(@appointment), type: :button, data: { turbo_method: "post", turbo_confirm: "Are you sure?" }, class: "inline-flex items-center justify-center rounded-lg border bg-transparent border-red-600 py-2 px-3.5 text-sm font-medium text-red-600 shadow-sm hover:bg-red-600 hover:text-white focus:outline-none" if current_account_user.interpreter? && @appointment.finish_time.blank? %>
         <% end %>
       </div>
     </div>
@@ -21,7 +21,7 @@
                   <label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
                 </dt>
                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                  <%= form.date_field :submitted_finish_date, class: "block w-full flex-1 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", required: true %>
+                  <%= form.date_field :submitted_finish_date, class: "block w-full flex-1 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", required: true, value: @appointment.finish_time&.to_date %>
                 </dd>
               </div>
               <div class="px-4 sm:col-span-1 sm:px-0 pr-0 md:pr-3 pb-5">
@@ -29,7 +29,7 @@
                   <label for="end-time" class="block text-sm font-medium text-gray-700">End Time</label>
                 </dt>
                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                  <%= form.time_field :submitted_finish_time, class: "block w-full flex-1 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", required: true %>
+                  <%= form.time_field :submitted_finish_time, class: "block w-full flex-1 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", required: true, value: @appointment.finish_time&.strftime("%H:%M:%S") %>
                 </dd>
               </div>
               <div class="px-4 sm:col-span-1 sm:px-0 pr-0 md:pr-3 pb-5">
@@ -53,6 +53,9 @@
                         </svg>
                         <div class="flex text-sm text-gray-600">
                           <%= form.file_field :documents, direct_upload: true, multiple: true, data: { dropzone_target: 'input' } %>
+                          <% @docs_list.each do |doc| %>
+                            <%= hidden_field_tag 'appointment[documents][]', doc[:signed_id], data: {dropzone_target: "existingImageInput"} %>
+                          <% end %>
                           <span class="dropzone-msg-desc">Drop & Drag files (or click here) to upload documents</span>
                         </div>
                         <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
