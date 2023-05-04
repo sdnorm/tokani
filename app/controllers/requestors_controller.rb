@@ -128,8 +128,12 @@ class RequestorsController < ApplicationController
       @sites = current_account.account_sites.order("name ASC")
 
       if @requestor.update!(requestor_params)
-
-        format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully updated." }
+        notice = if @requestor.unconfirmed_email_updated
+          "Requestor was successfully updated.<br> A confirmation email was sent to #{@requestor.unconfirmed_email}."
+        else
+          "Requestor was successfully updated."
+        end
+        format.html { redirect_to requestor_path(@requestor), notice: notice }
         format.json { render :show, status: :ok, location: @requestor }
       else
         format.html { render :edit, status: :unprocessable_entity }
