@@ -5,7 +5,7 @@ class InterpretersController < ApplicationController
   # Uncomment to enforce Pundit authorization
   before_action :verify_authorized, except: [:search, :search_assigned_int]
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  before_action :verify_interpreter_detail, except: [:search, :search_assigned_int]
+  before_action :verify_interpreter_detail, except: [:index, :show, :new, :edit, :update, :destroy, :search, :search_assigned_int]
 
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
   before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
@@ -106,7 +106,12 @@ class InterpretersController < ApplicationController
   def update
     respond_to do |format|
       if @interpreter.update(interpreter_params)
-        format.html { redirect_to interpreter_path(@interpreter), notice: "Interpreter was successfully updated." }
+        notice = if @interpreter.unconfirmed_email_updated
+          "Interpreter was successfully updated.<br> A confirmation email was sent to #{@interpreter.unconfirmed_email}."
+        else
+          "Interpreter was successfully updated."
+        end
+        format.html { redirect_to interpreter_path(@interpreter), notice: notice }
         format.json { render :show, status: :ok, location: @interpreter }
       else
         setup_edit_form_vars
@@ -328,6 +333,7 @@ class InterpretersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def verify_authorized
+    puts "\n\ncustomer_logged_in? : #{customer_logged_in?}\n\n"
     raise Pundit::NotAuthorizedError if customer_logged_in?
   end
 
