@@ -1,15 +1,11 @@
 class BillRatesController < ApplicationController
+  before_action :verify_authorized_agency_admins_only
   before_action :set_bill_rate, only: [:show, :edit, :update, :destroy]
-
-  # Uncomment to enforce Pundit authorization
-  # after_action :verify_authorized
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # GET /bill_rates
   def index
     # This assumes billrate is only accessible to agency-type accounts
     @pagy, @bill_rates = pagy(BillRate.where(account_id: current_account.id).sort_by_params(params[:sort], sort_direction))
-    # @pagy, @bill_rates = pagy(BillRate.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit
     # authorize @bill_rates
