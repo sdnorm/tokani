@@ -17,4 +17,10 @@ module Authorization
     flash[:alert] = t("unauthorized")
     redirect_back fallback_location: root_path
   end
+
+  def verify_authorized_agency_admins_only
+    unless current_user.is_agency_admin?
+      redirect_to root_path, alert: "You are not authorized to access that page."
+    end
+  end
 end

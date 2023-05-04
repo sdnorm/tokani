@@ -423,6 +423,8 @@ class Appointment < ApplicationRecord
 
   # Returns a decimal value of Total Paid / Total Billed
   def profit_margin
+    return nil unless total_billed.present? && total_paid.present?
+
     (((total_billed - total_paid) / total_billed) * 100.0).round(0)
   end
 end

@@ -1,6 +1,5 @@
 class ProcessBatchesController < ApplicationController
-  include CurrentHelper
-
+  before_action :verify_authorized_agency_admins_only
   before_action :set_process_batch, only: %i[show download_pdf download_csv download_interpreter_csv destroy]
 
   def index
@@ -59,6 +58,10 @@ class ProcessBatchesController < ApplicationController
   end
 
   private
+
+  def verify_authorized
+    raise Pundit::NotAuthorizedError unless current_user.is_agency_admin?
+  end
 
   def setup_appointments
     case @process_batch.batch_type
