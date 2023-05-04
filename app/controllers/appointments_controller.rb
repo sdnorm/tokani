@@ -271,7 +271,7 @@ class AppointmentsController < ApplicationController
     authorize @appointment
 
     respond_to do |format|
-      if @appointment.cancel! && @appointment.update(cancel_reason_code: appointment_params[:cancel_reason_code])
+      if @appointment.cancel! && @appointment.send("#{appointment_params[:cancel_reason_code]}!".to_sym)
         format.html { redirect_to @appointment, notice: "Appointment was successfully cancelled." }
         format.json { render :show, status: :created, location: @appointment }
       else
