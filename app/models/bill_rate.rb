@@ -161,9 +161,6 @@ class BillRate < ApplicationRecord
     end
     true
   end
-<<<<<<< HEAD
-=======
-
   def is_default?
     default_rate
   end
@@ -174,5 +171,4 @@ class BillRate < ApplicationRecord
     errors.add(:base, "Must select at least one modality")
     false
   end
->>>>>>> c76339ca (TL-67, TL-79, TL-80, TK-260 (#494))
 end
