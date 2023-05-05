@@ -12,7 +12,7 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @appointments = AppointmentsFilteringService.new(current_user, filtering_params, @appointments).fetch_appointments
+    @appointments = AppointmentsFilteringService.new(current_user, current_account, filtering_params, @appointments).fetch_appointments
     @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
     @statuses = ["all", "scheduled", "finished"]

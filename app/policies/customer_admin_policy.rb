@@ -19,6 +19,6 @@ class CustomerAdminPolicy < ApplicationPolicy
   end
 
   def customer_admin?
-    @account_user.customer_admin?
+    @account_user&.customer_admin?
   end
 end
