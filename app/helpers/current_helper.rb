@@ -13,15 +13,15 @@ module CurrentHelper
   end
 
   def customer_logged_in?
-    current_account_user.customer_admin?
+    current_account_user&.customer_admin?
   end
 
   def agency_logged_in?
-    current_account_user.agency_admin? || current_account_user.agency_member?
+    current_account_user&.agency_admin? || current_account_user&.agency_member?
   end
 
   def requestor_logged_in?
-    current_account_user.site_admin? || current_account_user.site_member? || current_account_user.client? || current_account_user.customer_admin?
+    current_account_user&.site_admin? || current_account_user&.site_member? || current_account_user&.client? || current_account_user&.customer_admin?
   end
 
   def current_account_admin?
