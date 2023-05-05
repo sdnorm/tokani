@@ -47,7 +47,7 @@ class ApplicationPolicy
   end
 
   def show_billing?
-    account_user.admin?
+    account_user&.admin?
   end
 
   class Scope

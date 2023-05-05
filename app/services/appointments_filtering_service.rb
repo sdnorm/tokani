@@ -3,8 +3,9 @@ class AppointmentsFilteringService
   include ActionController::Helpers
   include Sortable
 
-  def initialize(user, params, scope)
+  def initialize(user, account, params, scope)
     @user = user
+    @account = account
     @params = params
     @scope = scope
   end
@@ -12,7 +13,9 @@ class AppointmentsFilteringService
   attr_accessor :params
 
   def fetch_appointments
-    return @scope if @params.values.blank?
+    return filter_by_user_account_type(@scope) if @params.values.blank?
+
+    @scope = filter_by_user_account_type(@scope)
     @scope = filter_by_status(@scope)
     @scope = filter_by_customer(@scope)
     @scope = filter_by_modality(@scope)
@@ -22,6 +25,15 @@ class AppointmentsFilteringService
   end
 
   private
+
+  def filter_by_user_account_type(scope)
+    return scope if @user.is_agency_admin?
+
+    customer_id = @user&.requestor_detail&.customer_id
+    return scope if customer_id.nil?
+
+    scope.where(customer_id: customer_id)
+  end
 
   def filter_by_status(scope)
     return scope unless @params[:status].present?

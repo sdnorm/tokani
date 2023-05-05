@@ -12,6 +12,10 @@ class RequestorsController < ApplicationController
       customer_ids = current_account.agency_customers.pluck(:customer_id)
       @requestor_accounts = CustomerRequestor.where(customer_id: customer_ids).pluck(:requestor_id)
 
+    elsif requestor_logged_in?
+      customer_id = current_user&.requestor_detail&.customer_id
+      @requestor_accounts = CustomerRequestor.where(customer_id: customer_id).pluck(:requestor_id)
+
     else
       @requestor_accounts = current_account.account_users.client.pluck(:user_id)
       @requestor_accounts << current_account.account_users.site_member.pluck(:user_id)

@@ -17,6 +17,6 @@ class SiteAdminPolicy < ApplicationPolicy
   end
 
   def site_admin?
-    @account_user.site_admin?
+    @account_user&.site_admin?
   end
 end

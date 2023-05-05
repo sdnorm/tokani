@@ -17,6 +17,6 @@ class InterpreterPolicy < ApplicationPolicy
   end
 
   def pure_interpreter?
-    @account_user.interpreter?
+    @account_user&.interpreter?
   end
 end
