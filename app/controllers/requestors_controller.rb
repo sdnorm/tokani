@@ -112,7 +112,8 @@ class RequestorsController < ApplicationController
 
     respond_to do |format|
       if @requestor.save
-        AccountUser.create!(account_id: current_account.id, user_id: @requestor.id, roles: req_type)
+        # AccountUser.create!(account_id: current_account.id, user_id: @requestor.id, roles: req_type)
+        AccountUser.create!(account_id: @requestor.requestor_detail.customer_id, user_id: @requestor.id, roles: req_type)
         CustomerRequestor.create!(requestor_id: @requestor.id, customer_id: @requestor.requestor_detail.customer_id)
         AgencyAdminRequestorCreationMailer.welcome(@requestor).deliver_later
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully created." }
