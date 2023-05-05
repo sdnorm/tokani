@@ -43,8 +43,11 @@ class BillRate < ApplicationRecord
 
   has_many :customers, through: :bill_rate_customers, class_name: "Account", foreign_key: :account_id
   enum round_time: {round_closest: 1, round_down: 2, round_up: 3}
+
   validate :check_default_or_language_rate
   validate :cannot_deactivate_last_active_rate, on: :update
+  validates :name, presence: true
+  validate :must_select_at_least_one_modality
 
   def start_hour(column, use_time_libs: false)
     return nil if self[column].blank?
@@ -158,4 +161,18 @@ class BillRate < ApplicationRecord
     end
     true
   end
+<<<<<<< HEAD
+=======
+
+  def is_default?
+    default_rate
+  end
+
+  def must_select_at_least_one_modality
+    return if modality_list.present?
+
+    errors.add(:base, "Must select at least one modality")
+    false
+  end
+>>>>>>> c76339ca (TL-67, TL-79, TL-80, TK-260 (#494))
 end

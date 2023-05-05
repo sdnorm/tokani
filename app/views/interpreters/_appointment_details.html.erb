@@ -1,22 +1,26 @@
-<div class="grid grid-cols-2 gap-4 mt-5">
+<div class="grid grid-cols-3 gap-2 mt-5">
   <div>
-    <ul class="list-none list-outside">
+    <ul class="list-none list-outside text-sm leading-6 text-gray-700">
       <li><i class="fa fa-calendar mr-4"></i> <%= appointment_start_date_and_time_in_user_time_zone(@appointment, current_user) %></li>
       <li><i class="fa fa-male mr-4"></i> <%= @appointment.modality.titleize %></li>
       <li><i class="fa fa-language mr-2"></i> <%= @appointment.language.name %></li>
-      <li><i class="fa fa-book mr-3"></i> <%= @appointment.customer.name %></li>
+      <li><i class="fa-solid fa-hourglass-half mr-3"></i><%= @appointment.duration_viewable %></li>
+    </ul>
+  </div>
+  <div>
+    <ul class="list-none text-sm leading-6 text-gray-700">
+      <li><i class="fa-solid fa-city"></i></i> <%= @appointment.customer.name %></li>
+      <li><i class="fa-solid fa-building mr-3"></i><%= @appointment.site.present? ? @appointment.site.name : "N/A" %></li>
+      <li><i class="fa-solid fa-street-view mr-3"></i><%= @appointment.department.present? ? @appointment.department.name : "No Department Specified" %></li>
+    </ul>
+  </div>
+  <div>
+    <ul class="list-none text-sm leading-6 text-gray-700">
+      <li><i class="fa-solid fa-chalkboard-user mr-3"></i><%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></li>
+      <li><i class="fa-solid fa-user-pen mr-3"></i><%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></li>
       <% unless @appointment.notes.blank? %>
         <li><i class="fa fa-notebook mr-3"></i> Appointment notes: <br> <%= simple_format(@appointment.notes) %></li>
       <% end %>
-    </ul>
-  </div><!-- ... -->
-  <div>
-    <ul class="list-none">
-      <li>Site: <%= @appointment.site.present? ? @appointment.site.name : "N/A" %></li>
-      <li>Department: <%= @appointment.department.present? ? @appointment.department.name : "N/A" %></li>
-      <li>Duration: <%= @appointment.duration_viewable %></li>
-      <li>Provider: <%= @appointment.provider.present? ? @appointment.provider.view_name : "N/A" %></li>
-      <li>Requester: <%= @appointment.requestor.present? ? @appointment.requestor.full_name : "N/A" %></li>
     </ul>
   </div>
 </div>
