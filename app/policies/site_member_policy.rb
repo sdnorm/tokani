@@ -17,6 +17,6 @@ class SiteMemberPolicy < ApplicationPolicy
   end
 
   def site_member?
-    @account_user.site_member?
+    @account_user.site_member? || @account_user.client?
   end
 end

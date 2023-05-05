@@ -125,6 +125,17 @@ class Agency < Account
       name: "Example Hospital",
       customer: true
     )
+    Address.create!(
+      addressable_type: "Account",
+      address_type: "physical",
+      line1: "11 Example Way",
+      line2: "",
+      city: "Example",
+      state: "CA",
+      postal_code: "66654",
+      addressable_id: customer.id
+    )
+
     CustomerDetail.create!(
       contact_name: "Example Customer",
       email: Faker::Internet.email(domain: "example"),
