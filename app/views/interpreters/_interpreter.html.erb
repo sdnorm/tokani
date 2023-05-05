@@ -9,7 +9,12 @@
         <dt class="text-sm font-medium text-tokanisecondary-600">Email Address</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= interpreter.email %></dd>
       </div>
-      
+      <% unless interpreter.unconfirmed_email.blank? %>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600">New Email Address <small><i>(pending confirmation)</i></small></dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= interpreter.unconfirmed_email %></dd>
+        </div>
+      <% end %>
       <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
         <dt class="text-sm font-medium text-tokanisecondary-600">Address</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= interpreter.interpreter_detail.address %><br>

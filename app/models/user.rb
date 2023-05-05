@@ -105,8 +105,13 @@ class User < ApplicationRecord
   # just when they change it
   before_create :skip_confirmation!
 
+  before_update :set_unconfirmed_email_attr
+
   # Protect admin flag from editing
   attr_readonly :admin
+
+  # Attribute that is set if the unconfirmed email has changed
+  attr_accessor :unconfirmed_email_updated
 
   # Validations
   validates :name, presence: true
@@ -163,5 +168,13 @@ class User < ApplicationRecord
 
   def send_interpreter_creation_mailer(agency)
     InterpreterCreationMailer.welcome(self, agency).deliver_later
+  end
+
+  private
+
+  def set_unconfirmed_email_attr
+    if unconfirmed_email_changed?
+      self.unconfirmed_email_updated = true
+    end
   end
 end

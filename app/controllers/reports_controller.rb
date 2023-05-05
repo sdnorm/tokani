@@ -1,6 +1,5 @@
 class ReportsController < ApplicationController
-  include CurrentHelper
-
+  before_action :verify_authorized_agency_admins_only
   before_action :set_report, only: [:generate_csv, :generate_pdf]
 
   def index
@@ -34,7 +33,7 @@ class ReportsController < ApplicationController
 
   def generate_csv
     csv_string = @report.to_csv
-    send_data csv_string, type: "text/csv", disposition: "attachment; filename='#{@report.report_type.titleize} Report.csv'"
+    send_data csv_string, type: "text/csv", disposition: "attachment; filename=#{@report.report_type.titleize} Report.csv"
   end
 
   def generate_pdf

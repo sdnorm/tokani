@@ -53,7 +53,8 @@ class InterpreterAppointmentsService
       if @user.languages.map(&:id).include?(appointment.language_id) # Language
         if appointment.gender_req.nil? ||
             (appointment.gender_req.present? && appointment.gender_req == @user.interpreter_detail&.gender) # Gender
-          if appointment.viewable_by.nil? ||
+
+          if appointment.viewable_by.nil? || appointment.viewable_by == "all" ||
               (appointment.viewable_by.present? && appointment.viewable_by == @user.interpreter_detail&.interpreter_type) # Interpreter Type
             filtered_ids << appointment.id
             next

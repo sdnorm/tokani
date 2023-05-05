@@ -9,18 +9,23 @@
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= get_customer(requestor.requestor_detail) %></dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt class="text-sm font-medium text-tokanisecondary-600">Site </dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= get_site(requestor.requestor_detail) %></dd>
-          </div>
-          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt class="text-sm font-medium text-tokanisecondary-600">Department </dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= get_department(requestor.requestor_detail) %></dd>
-          </div>
+          <dt class="text-sm font-medium text-tokanisecondary-600">Site </dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= get_site(requestor.requestor_detail) %></dd>
+        </div>
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+          <dt class="text-sm font-medium text-tokanisecondary-600">Department </dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= get_department(requestor.requestor_detail) %></dd>
+        </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-tokanisecondary-600">Email Address</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= requestor.email %></dd>
         </div>
-        
+        <% unless requestor.unconfirmed_email.blank? %>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+            <dt class="text-sm font-medium text-tokanisecondary-600">New Email Address <small><i>(pending confirmation)</i></small></dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= requestor.unconfirmed_email %></dd>
+          </div>
+        <% end %>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
           <dt class="text-sm font-medium text-tokanisecondary-600">Phone</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><%= requestor.requestor_detail.primary_phone %></dd>
