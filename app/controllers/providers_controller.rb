@@ -12,6 +12,10 @@ class ProvidersController < ApplicationController
       customer_ids = current_account.agency_customers.pluck(:customer_id)
       @pagy, @providers = pagy(Provider.where(customer_id: customer_ids).sort_by_params(params[:sort], sort_direction))
 
+    elsif requestor_logged_in?
+      customer_id = current_user&.requestor_detail&.customer_id
+      @pagy, @providers = pagy(Provider.where(customer_id: customer_id).sort_by_params(params[:sort], sort_direction))
+
     else
       customer = current_account.id
       @pagy, @providers = pagy(Provider.where(customer_id: customer).sort_by_params(params[:sort], sort_direction))
