@@ -17,7 +17,25 @@
           <% if @appointment.finish_time.present? %>
             <%= render "appointments/time_finished" %>
           <% else %>
+
+          <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6 mb-6">
+            <div>
+              <div class="grid grid-cols-1 sm:grid-cols-2">
+                <div class="sm:col-span-1 sm:px-0">
+                  <h3 class="text-lg font-medium leading-6 text-tokanisecondary-500"><%= @appointment.ref_number %></h3>
+                  <p class="mt-1 text-sm text-gray-500">Appointment Details</p>
+                </div>
+              </div>
+              <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
+                <div>
+                    <%= render "appointment_details" %> 
+                </div>
+              </div>
+            </div>
+          </div>
+          
             <%= render "appointments/time_finish_form", url_opts: { url: time_finish_interpreter_path(@appointment), method: :post } %>
+            
           <% end %>
         </div>
       </div>
