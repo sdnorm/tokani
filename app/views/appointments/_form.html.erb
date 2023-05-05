@@ -54,13 +54,13 @@
             <div class="col-span-6 lg:col-span-3">
               <div class="form-group">
                 <%= form.label "Modality*", class: "block text-sm font-medium text-gray-700" %>
-                <%= form.select :modality, options_for_select(appt_modality_options, appointment.modality), {prompt: "Please select An Modality"}, {data: {action: 'change->toggle-video-link#toggle' }, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s"} %>
+                <%= form.select :modality, options_for_select(appt_modality_options, appointment.modality), {prompt: "Please select a Modality"}, {data: {action: 'change->toggle-video-link#toggle' }, class: "form-control focus:border-tokanisecondary-500 focus:outline-none focus:ring-tokanisecondary-500 sm:text-s"} %>
               </div>
             </div>
             <div class="col-span-6 lg:col-span-3">
               <div class="form-group">
                 <%= form.label "Language*", class: "block text-sm font-medium text-gray-700" %>
-                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name, appointment.language_id), {prompt: "Please select A Language"}, {class: 'form-control', data: {interpreter_autocomplete_target: "languageId"}}  %>
+                <%= form.select :language_id, options_from_collection_for_select(languages, :id, :name), {prompt: "Please select a Language"}, {class: 'form-control', data: {interpreter_autocomplete_target: "languageId"}}  %>
               </div>
             </div>
             <div class="col-span-12 sm:col-span-12 lg:col-span-3">

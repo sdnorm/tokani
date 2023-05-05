@@ -138,9 +138,13 @@ class AppointmentsController < ApplicationController
 
     @departments ||= []
 
-    @languages = current_account.account_languages
+    if agency_logged_in?
+      @languages = current_account.account_languages
+    else
+      agency_id = AgencyCustomer.find_by(customer_id: current_account.id).agency_id
+      @languages = Language.where(account_id: agency_id)
+    end
 
-    # @interpreters = current_account.interpreters
     requestor_ids = @customer.requestor_details.pluck(:requestor_id)
     @requestors = User.where(id: requestor_ids)
 
