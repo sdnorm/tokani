@@ -9,14 +9,15 @@ class RecipientsController < ApplicationController
 
   # GET /recipients
   def index
-    recipients = if current_account.agency?
+    recipients = if agency_logged_in?
       current_account.agency_recipients
+    elsif requestor_logged_in?
+      customer_id = current_user&.requestor_detail&.customer_id
+      Recipient.where(customer_id: customer_id)
     else
       current_account.recipients
     end
-    # elsif current_account.customer?
-    #   current_account.recipients
-    # end
+
     @pagy, @recipients = pagy(recipients.sort_by_params(params[:sort], sort_direction))
 
     # Uncomment to authorize with Pundit

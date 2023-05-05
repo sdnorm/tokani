@@ -12,7 +12,7 @@ class ApplicationPolicy
 
   def initialize(account_user, record)
     # Comment out to allow guest users
-    raise Pundit::NotAuthorizedError, "must be logged in" unless account_user
+    #raise Pundit::NotAuthorizedError, "must be logged in" unless account_user
 
     @account_user = account_user
     @record = record
@@ -47,7 +47,7 @@ class ApplicationPolicy
   end
 
   def show_billing?
-    account_user.admin?
+    account_user&.admin?
   end
 
   class Scope
