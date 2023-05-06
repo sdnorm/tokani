@@ -161,6 +161,7 @@ class BillRate < ApplicationRecord
     end
     true
   end
+  
   def is_default?
     default_rate
   end
