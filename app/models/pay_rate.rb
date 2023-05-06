@@ -35,6 +35,7 @@ class PayRate < ApplicationRecord
   scope :active, -> { where(is_active: true) }
 
   validate :check_default_or_language_rate
+  validate :cannot_deactivate_last_active_rate, on: :update
 
   # has_many :accounts, through: :pay_rate_customers, validate: false, class_name: "Account", foreign_key: :account_id
 
@@ -54,15 +55,31 @@ class PayRate < ApplicationRecord
     interpreters.map { |int| [int.first_name, int.last_name].join(" ") }.sort.join(", ")
   end
 
+  def is_default?
+    default_rate
+  end
+
+  private
+
+  def cannot_deactivate_last_active_rate
+    return if is_active
+
+    default_rate = account.pay_rates.where.not(id: id)
+      .where(is_active: true)
+      .where(default_rate: true)
+
+    if default_rate.blank?
+      errors.add(:base, "Cannot deactive the only default pay rate")
+      return false
+    end
+    true
+  end
+
   def check_default_or_language_rate
     if language_ids.present? && !default_rate == false
       errors.add(:base, "Cannot have default and language specific rate")
       return false
     end
     true
-  end
-
-  def is_default?
-    default_rate
   end
 end
