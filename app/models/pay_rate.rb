@@ -85,10 +85,6 @@ class PayRate < ApplicationRecord
     true
   end
 
-  def is_default?
-    default_rate
-  end
-
   def must_select_at_least_one_modality
     return if modality_list.present?
 
