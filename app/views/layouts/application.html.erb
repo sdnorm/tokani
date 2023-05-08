@@ -8,6 +8,8 @@
       <%= Jumpstart.config.application_name %>
     </title>
 
+    <meta name="user-session" content="<%= user_session %>" />
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= viewport_meta_tag %>
@@ -27,7 +29,7 @@
     <%= yield :head %>
   </head>
 
-  <body class="h-full font-sans antialiased font-normal leading-normal bg-gray-50">
+  <body data-controller="session-timeout" class="h-full font-sans antialiased font-normal leading-normal bg-gray-50">
     <div class="main flex flex-col">
       <%= render partial: "shared/flash" %>
       <% unless content_for?(:sidenav) %>
