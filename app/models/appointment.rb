@@ -123,7 +123,7 @@ class Appointment < ApplicationRecord
   }
 
   scope :by_status, ->(status) { where(status: status) }
-  scope :by_appointment_specific_status, ->(name) { joins(:appointment_statuses).where(appointment_statuses: {name: name}) }
+  scope :by_appointment_specific_status, ->(current_status) { where current_status: }
   scope :by_customer_name, ->(name) { includes(:customer).where(customer: {name: name}) }
   scope :sort_by_account_name, -> { includes(:customer).order("accounts.name ASC") }
 

@@ -15,7 +15,7 @@ class AppointmentsController < ApplicationController
     @appointments = AppointmentsFilteringService.new(current_user, current_account, filtering_params, @appointments).fetch_appointments
     @pagy, @appointments = pagy(@appointments.sort_by_params(params[:sort], sort_direction))
 
-    @statuses = ["all", "scheduled", "finished"]
+    @statuses = AppointmentStatus.names.keys.append("all")
     @customer_names = @appointments.map(&:customer).pluck(:name).uniq
     @modalities = Appointment.modalities.keys
 
