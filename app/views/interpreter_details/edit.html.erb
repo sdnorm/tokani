@@ -1,6 +1,6 @@
 <div class="flex flex-wrap my-4 lg:px-4">
   <div class="lg:w-1/4 w-full p-4">
-    <%= render partial: "shared/account_navbar" %>
+    <%= render partial: "shared/account_navbar" if policy(:interpreter_detail).interpreter_detail_show_account_nav? %>
   </div>
 
   <%= content_for :title, t("shared.scaffold.edit.title", model: "Interpreter Detail") %>

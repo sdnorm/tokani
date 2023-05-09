@@ -89,10 +89,19 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                  <div class="form-group">
+                      <%= interpreter_detail.label "Time Zone*" , class: "block text-sm font-medium text-gray-700" %>
+                      <%= interpreter_detail.select :time_zone, options_for_select(time_zone_select_options), {class: 'form-control' } %>
+                    </div>
+                  </div>
+                </div>
+
             <% end %>
             <% if !form.object.new_record? %>
             <div class="col-span-12 sm:col-span-12">
-             
+
               <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages for this Interpreter" <%= raw selected_languages(@interpreter.new_record?, @interpreter_languages_json) %>>
               <!-- <div data-controller="multiselect" data-multiselect-items-value='<%= @languages_json %>' data-placeholder="Select Languages" data-multiselect-selected-value='<%= raw @interpreter_languages_json %>'>> -->
                 <select multiple="multiple" class="hidden multiselect__hidden" data-multiselect-target="hidden" name="user[language_ids][]" id="user_language_ids" style="display: none;"></select>
@@ -110,7 +119,7 @@
             <% action = form.object.new_record? ? "Create" : "Update" %>
             <%= form.button button_text("#{action} Interpreter"), class:"inline-flex justify-center rounded-md border border-transparent bg-tokanisecondary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-tokanisecondary-700 focus:outline-none focus:ring-2 focus:ring-tokanisecondary-500 focus:ring-offset-2" %>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   <% end %>

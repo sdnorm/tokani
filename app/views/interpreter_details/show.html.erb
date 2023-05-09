@@ -2,7 +2,7 @@
 <%= turbo_stream_from @interpreter_detail %>
 <div class="flex flex-wrap my-4 lg:px-4">
   <div class="w-full mb-4 lg:w-1/4 lg:p-4">
-    <%= render partial: "shared/account_navbar" %>
+    <%= render partial: "shared/account_navbar" if policy(:interpreter_detail).interpreter_detail_show_account_nav? %>
   </div>
 
   <div class="w-full lg:w-3/4 lg:p-4">

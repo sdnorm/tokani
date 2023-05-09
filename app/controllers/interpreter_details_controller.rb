@@ -124,6 +124,8 @@ class InterpreterDetailsController < ApplicationController
   end
 
   def authenticate_interpreter_user!
+    return if current_account_user.agency_admin?
+
     redirect_to "/", alert: "Unauthorized access for non-interpreter users." unless current_account_user.interpreter?
   end
 

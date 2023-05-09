@@ -393,7 +393,8 @@ class InterpretersController < ApplicationController
         :address,
         :city,
         :state,
-        :zip
+        :zip,
+        :time_zone
       ]
     )
   end
