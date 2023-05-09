@@ -7,19 +7,19 @@ class InterpreterDetailPolicy < ApplicationPolicy
   end
 
   def edit?
-    is_admin_or_interpreter?
+    is_admin_or_interpreter? || is_agency_admin?
   end
 
   def new?
-    is_admin_or_interpreter?
+    is_admin_or_interpreter? || is_agency_admin?
   end
 
   def create?
-    is_admin_or_interpreter?
+    is_admin_or_interpreter? || is_agency_admin?
   end
 
   def update?
-    is_admin_or_interpreter?
+    is_admin_or_interpreter? || is_agency_admin?
   end
 
   def destroy?
@@ -30,9 +30,17 @@ class InterpreterDetailPolicy < ApplicationPolicy
     is_admin_or_interpreter?
   end
 
+  def interpreter_detail_show_account_nav?
+    account_user.interpreter?
+  end
+
   private
 
   def is_admin_or_interpreter?
     account_user.admin? || account_user.interpreter?
+  end
+
+  def is_agency_admin?
+    account_user.agency_admin?
   end
 end
