@@ -1,7 +1,8 @@
 
       <div class="" data-controller='radio-button'>
+        <%= hidden_field_tag '_type_selected', (specific_int ? 'specific_interpreters' : 'general_request'), data: {radio_button_target: "typeselected"} %>
         <div class="relative flex items-start">
-            <div class="flex h-6 items-center"> 
+            <div class="flex h-6 items-center">
                 <%= radio_button_tag 'appointment[interpreter_type]', 'general', !specific_int, class: 'h-4 w-4 border-gray-300 text-tokanisecondary-600 focus:ring-tokanisecondary-500', data: {action: "click->radio-button#selectFieldset", radio_button_fieldset_param: "general_request"} %>
             </div>
             <div class="ml-3 text-sm leading-6">
