@@ -1,6 +1,7 @@
 class SitesController < ApplicationController
   include CurrentHelper
 
+  before_action :authenticate_user!
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   # Uncomment to enforce Pundit authorization
