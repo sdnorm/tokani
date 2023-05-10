@@ -1,5 +1,20 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include CurrentHelper
   invisible_captcha only: :create
+
+  def resend_confirmation
+    if !agency_logged_in?
+      return redirect_to "/", alert: "Please sign in to do that."
+    end
+
+    user = User.find_by(id: params[:id])
+    if user.present?
+      user.send_confirmation_instructions
+      redirect_back fallback_location: root_url, notice: "Confirmation instructions successfully sent."
+    else
+      redirect_back fallback_location: root_url, alert: "Unable to send confirmations instructions. User not found."
+    end
+  end
 
   protected
 
