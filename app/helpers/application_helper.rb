@@ -241,6 +241,11 @@ module ApplicationHelper
     starts_at.strftime("%B %-d at %l:%M %p")
   end
 
+  def appointment_finish_time_in_user_time_zone(appointment, user)
+    finish_at = appointment.finish_time.in_time_zone(user.time_zone)
+    finish_at.strftime('%B %-d at %l:%M %p')
+  end
+
   def lpad_number(number)
     return "00" if number.nil?
     format("%02d", number)
