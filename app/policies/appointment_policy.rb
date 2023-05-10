@@ -49,6 +49,10 @@ class AppointmentPolicy < ApplicationPolicy
     @record.current_status&.in?(Workflows::AppointmentWorkflow::CANCELLABLE_STATUSES)
   end
 
+  def my_scheduled_details?
+    @record.interpreter_id == account_user.user_id
+  end
+
   # Permit any user to open an appointment
   def open?
     account_user.present? && @record.current_status != "cancelled"
