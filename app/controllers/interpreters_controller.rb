@@ -8,7 +8,7 @@ class InterpretersController < ApplicationController
   before_action :verify_interpreter_detail, except: [:index, :show, :new, :edit, :update, :destroy, :search, :search_assigned_int]
 
   before_action :set_interpreter, only: [:show, :edit, :update, :destroy, :availabilities, :update_timezone]
-  before_action :set_appointment, only: [:my_public_details, :my_scheduled_details, :my_assigned_details, :claim_public,
+  before_action :set_appointment, only: [:my_public_details, :my_assigned_details, :claim_public,
     :decline_offered, :accept_offered, :cancel_coverage, :time_finish, :appointment_details, :edit_time_finish]
 
   # GET /interpreters
@@ -150,6 +150,9 @@ class InterpretersController < ApplicationController
   end
 
   def my_scheduled_details
+    @appointment = current_account.appointments.find_by(id: params[:id])
+    authorize @appointment
+
     setup_form_vars
   end
 
