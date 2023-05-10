@@ -398,7 +398,7 @@ class Appointment < ApplicationRecord
   end
 
   def can_schedule?
-    status == "opened" || status == "offered"
+    status.in? ["opened", "offered", "scheduled"]
   end
   # commenting this out because standardrb showed two methods in this model with this name
   # def end_time
