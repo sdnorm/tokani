@@ -116,6 +116,7 @@ Rails.application.routes.draw do
     get "session/otp", to: "sessions#otp"
     get "/check_session_timeout" => "session_timeout#check_session_timeout"
     get "/session_timeout" => "session_timeout#render_timeout"
+    post "/users/registrations/:id/resend_confirmation" => "users/registrations#resend_confirmation"
   end
 
   resources :announcements, only: [:index, :show]

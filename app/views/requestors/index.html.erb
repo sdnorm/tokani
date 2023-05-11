@@ -26,7 +26,10 @@
                     <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 lg:table-cell">Site</th>
                     <th scope="col" class="hidden px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900 sm:table-cell">Role</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Phone</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900">Edit</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900"></th>
+                    <% if agency_logged_in? %>
+                      <th scope="col" class="px-3 py-3.5 text-left text-sm uppercase font-semibold text-gray-900" style="min-widtH: 260px;"></th>
+                    <% end %>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -50,7 +53,12 @@
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= requestor.requestor_detail.requestor_type.titleize %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= requestor.requestor_detail.primary_phone %></td>
                     <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      <a href="<%= edit_requestor_path(requestor) %>" class="text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= requestor.id %></span></a>
+                      <a href="<%= edit_requestor_path(requestor) %>" class="inline-block text-tokanisecondary-600 hover:text-tokanisecondary-900">Edit<span class="sr-only">, <%= requestor.id %></span></a>
+                    </td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      <% if agency_logged_in? && !requestor.confirmed? %>
+                        <%= link_to "Not confirmed. Resend email?", "/users/registrations/#{requestor.id}/resend_confirmation", class: "inline-block items-center justify-center rounded-lg border bg-transparent border-red-500 py-2 px-3.5 text-sm font-medium text-red-600 shadow-sm hover:bg-red-600 hover:text-white focus:outline-none", data: { turbo_method: :post, turbo_confirm: t("are_you_sure") } %>
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>

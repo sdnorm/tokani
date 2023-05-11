@@ -112,6 +112,7 @@ class RequestorsController < ApplicationController
 
     respond_to do |format|
       if @requestor.save
+        @requestor.update(confirmed_at: nil)
         # AccountUser.create!(account_id: current_account.id, user_id: @requestor.id, roles: req_type)
         AccountUser.create!(account_id: @requestor.requestor_detail.customer_id, user_id: @requestor.id, roles: req_type)
         CustomerRequestor.create!(requestor_id: @requestor.id, customer_id: @requestor.requestor_detail.customer_id)
@@ -119,7 +120,6 @@ class RequestorsController < ApplicationController
         format.html { redirect_to requestor_path(@requestor), notice: "Requestor was successfully created." }
         format.json { render :show, status: :created, location: @requestor }
       else
-
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @requestor.errors, status: :unprocessable_entity }
       end
