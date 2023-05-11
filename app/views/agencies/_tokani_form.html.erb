@@ -149,6 +149,16 @@
         </div>
       </div>
     </div>
+
+
+    <% if agency.new_record? && current_account_user.admin? %>
+      <div class="pt-8">
+        <div class="sm:col-span-2">
+          <%= form.check_box :outside_billing, class: "form-checkbox mr-1", style: "clear: both;" %> <label for="agency_outside_billing" class="inline-block text-sm font-medium text-gray-700">This agency will use outside billing (subscribe them to the free Premium plan)</label>
+        </div>
+      </div>
+    <% end %>
+
   </div>
   <% end %>
   <div class="pt-5">

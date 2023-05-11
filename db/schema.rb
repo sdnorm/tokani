@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_03_111128) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_09_033249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_03_111128) do
     t.boolean "is_active", default: true
     t.boolean "agency"
     t.integer "account_users_count", default: 0
+    t.boolean "outside_billing", default: false
     t.index ["created_at"], name: "index_accounts_on_created_at"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end

@@ -140,6 +140,7 @@ class AgenciesController < ApplicationController
     # params.fetch(:agency, {})
     params.require(:agency).permit(
       :name,
+      :outside_billing,
       physical_address_attributes: [
         :id,
         :line1,
@@ -166,7 +167,6 @@ class AgenciesController < ApplicationController
         :url,
         :time_zone,
         time_zones: []
-
       ]
     )
 

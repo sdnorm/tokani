@@ -11,6 +11,7 @@
 #  extra_billing_info  :text
 #  is_active           :boolean          default(TRUE)
 #  name                :string           not null
+#  outside_billing     :boolean          default(FALSE)
 #  personal            :boolean          default(FALSE)
 #  subdomain           :string
 #  created_at          :datetime         not null
@@ -90,6 +91,8 @@ class Account < ApplicationRecord
   # To require a domain or subdomain, add the presence validation
   validates :domain, exclusion: {in: RESERVED_DOMAINS, message: :reserved}, uniqueness: {allow_blank: true}
   validates :subdomain, exclusion: {in: RESERVED_SUBDOMAINS, message: :reserved}, format: {with: /\A[a-zA-Z0-9]+[a-zA-Z0-9\-_]*[a-zA-Z0-9]+\Z/, message: :format, allow_blank: true}, uniqueness: {allow_blank: true}
+
+  after_create :handle_outside_billing
 
   def self.available_timezones
     list = ["Alaska", "Hawaii", "Arizona", "Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"]
@@ -171,5 +174,12 @@ class Account < ApplicationRecord
   # Attributes to sync to the Stripe Customer
   def stripe_attributes(*args)
     {address: billing_address&.to_stripe}.compact
+  end
+
+  def handle_outside_billing
+    return unless outside_billing
+
+    set_payment_processor :fake_processor, allow_fake: true
+    payment_processor.subscribe
   end
 end

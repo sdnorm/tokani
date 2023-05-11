@@ -11,6 +11,7 @@
 #  extra_billing_info  :text
 #  is_active           :boolean          default(TRUE)
 #  name                :string           not null
+#  outside_billing     :boolean          default(FALSE)
 #  personal            :boolean          default(FALSE)
 #  subdomain           :string
 #  created_at          :datetime         not null
