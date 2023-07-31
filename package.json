@@ -22,7 +22,7 @@
     "clipboard": "^2.0.8",
     "debounce": "^1.2.1",
     "dropzone": "^6.0.0-beta.2",
-    "esbuild": "^0.17.18",
+    "esbuild": "^0.18.17",
     "esbuild-rails": "^1.0.4",
     "flatpickr": "^4.6.10",
     "flowbite": "^1.6.5",
