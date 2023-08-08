@@ -32,7 +32,7 @@
     "local-time": "^2.1.0",
     "postcss": "^8.4.23",
     "postcss-import": "^15.1.0",
-    "slim-select": "2.5.0",
+    "slim-select": "2.6.0",
     "stimulus-autocomplete": "^3.1.0",
     "stimulus-flatpickr": "^3.0.0-0",
     "stimulus-password-visibility": "^2.1.1",

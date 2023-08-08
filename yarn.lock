@@ -1131,10 +1131,10 @@ signal-exit@^4.0.1:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.0.1.tgz#96a61033896120ec9335d96851d902cc98f0ba2a"
   integrity sha512-uUWsN4aOxJAS8KOuf3QMyFtgm1pkb6I+KRZbRF/ghdf5T7sM+B1lLLzPDxswUjkmHyxQAVzEgG35E3NzDM9GVw==
 
-slim-select@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/slim-select/-/slim-select-2.5.0.tgz#002d21886e59be5cb4bb0feb3ba6268001d54ed4"
-  integrity sha512-mGYtf57SMCG+9fhlqDYWXF0+K6EYHnYMplBFv1ku67MXFvM19PKeCSmLQoVAfAzQ3rgpql26iSl5XOI49zc0rQ==
+slim-select@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/slim-select/-/slim-select-2.6.0.tgz#d588aedaaf18c74f6508d62ec7ef3a5533de37f0"
+  integrity sha512-ubIyC+IOaLpq+Ls5Eo5sXq2QSPfAGNkfKKqHzUuTSKvaDKkCn+4rK+GrBqvnpXk5YYwidluSCG0X6pwJlOKhtw==
 
 source-map-js@^1.0.2:
   version "1.0.2"
