@@ -312,7 +312,7 @@ GEM
     noticed (1.6.2)
       http (>= 4.0.0)
       rails (>= 5.2.0)
-    oj (3.14.3)
+    oj (3.16.0)
     omniauth (2.1.1)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
@@ -559,7 +559,7 @@ DEPENDENCIES
   name_of_person (~> 1.0)
   nokogiri (>= 1.12.5)
   noticed (~> 1.6)
-  oj (~> 3.14)
+  oj (~> 3.16)
   omniauth (~> 2.1)
   omniauth-rails_csrf_protection (~> 1.0)
   overcommit
